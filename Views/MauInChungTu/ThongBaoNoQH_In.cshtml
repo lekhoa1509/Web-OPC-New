@@ -2,8 +2,9 @@
 @{ ViewBag.Title = "Phiếu Xuất Kho";
     string ten_dt = Request.Cookies["ten_dt"] != null ? HttpUtility.UrlDecode(Request.Cookies["ten_dt"].Value) : "";
     string Dia_Chi = Request.Cookies["Dia_Chi"] != null ? HttpUtility.UrlDecode(Request.Cookies["Dia_Chi"].Value) : "";
-    string Dvcs = Request.Cookies["Dvcs"] != null ? HttpUtility.UrlDecode(Request.Cookies["Dvcs"].Value) : "";}
-    
+    string Dvcs = Request.Cookies["Dvcs"] != null ? HttpUtility.UrlDecode(Request.Cookies["Dvcs"].Value) : "";
+    string Dvcs1 = Request.Cookies["Dvcs"] != null ? HttpUtility.UrlDecode(Request.Cookies["Dvcs1"].Value) : "";}
+
 @using System.Data;
 <!DOCTYPE html>
 <html>
@@ -409,154 +410,159 @@
     </style>
 </head>
 <body>
-        <div class="forms-container">
-            <form class="data-form" id="data-form">
-                <div style="display:flex;justify-content:space-between;align-items:center">
-                    <div style=" display: flex; justify-content: space-between; align-items: center;text-align:left">
-                        <div style="text-align: left;">
-                            <img src="~/assets/images/logo.png" alt="" class="img-fluid">
-                        </div>
-                        <div style="text-align: right;">
-                            <h3 style="font-size: 13px;">CTY CỔ PHẦN DƯỢC PHẨM OPC</h3>
-                            <h5>Chi Nhánh Cần Thơ</h5>
-                            <h5>Số:................/KT-OPCCNCT</h5>
-                        </div>
+    <div class="forms-container">
+        <form class="data-form" id="data-form">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+                <div style=" display: flex; justify-content: space-between; align-items: center;text-align:left">
+                    <div style="text-align: left;">
+                        <img src="~/assets/images/logo.png" alt="" class="img-fluid">
+                    </div>
+                    <div style="text-align: right;">
+                        <h3 style="font-size: 13px;">CTY CỔ PHẦN DƯỢC PHẨM OPC</h3>
+                        <h5>@Dvcs</h5>
+                        <h5>Số:................/KT-@Dvcs1</h5>
+                    </div>
 
-                    </div>
-                    <div style="text-align:right">
-                        <h5>Cộng Hòa Xã Hội Chủ Nghĩa Việt Nam</h5>
-                        <h5 style="text-decoration:underline">Độc lập - Tự do - Hạnh Phúc</h5>
-                        <br />
-                    </div>
                 </div>
-                <br />
-                <div>
-                    <h3 style="font-size: 25px; color: black; font-weight: bold">THÔNG BÁO NỢ QUÁ HẠN</h3>
+                <div style="text-align:right">
+                    <h5>Cộng Hòa Xã Hội Chủ Nghĩa Việt Nam</h5>
+                    <h5 style="text-decoration:underline">Độc lập - Tự do - Hạnh Phúc</h5>
                     <br />
                 </div>
-                <div style="justify-content:start;display:flex">
-                    <div style="text-align:left">
-                        <h5 style="color:black;font-weight:bold">Kính gửi: @ten_dt</h5>
-                    </div>
-                </div>
+            </div>
+            <br />
+            <div>
+                <h3 style="font-size: 25px; color: black; font-weight: bold">THÔNG BÁO NỢ QUÁ HẠN</h3>
                 <br />
-                <div style="width:700px;justify-content:start">
-                    <div style="word-wrap:break-word">
-                        <h5 style="text-align:left">Công Ty Cổ Phần Dược Phẩm OPC - Chi Nhánh Cần Thơ trân trọng thông báo đến quý khách hàng có số dư nợ mà Quý Khách hàng chưa thanh toán cho chúng tôi tính đến ngày 24/07/2023 là: <span style="color: black;font-weight:bold">
-    @foreach (DataRow row3 in Model.Tables[1].Rows)
-    {
-@row3["Tong_No"]}  Đồng
-</span></h5>
-
-                    </div>
+            </div>
+            <div style="justify-content:start;display:flex">
+                <div style="text-align:left">
+                    <h5 style="color:black;font-weight:bold">Kính gửi: @ten_dt</h5>
                 </div>
-                <br />
-                <div>
-                    <h5 style="margin-left:20px;text-align:left">Trong đó nợ quá hạn là: <span style="color:black;font-weight:bold">
-    @foreach (DataRow row3 in Model.Tables[1].Rows)
-    {
-        @row3["Tong_No"]
-    }  Đồng
-                </span>, bao gồm các hóa đơn sau:</h5>
-                </div>
-
-                <!--<div style="margin-left:-250px;text-align:left">
-                    <h5>Đơn vị xuất hàng: Kho thành phẩm Cửa hàng Quận 10</h5>
-                    <h5 style="margin-left:-5px">Địa chỉ: 134/1 Tô Hiến Thành, P15, Quận 10, TP.HCM</h5>-->
-                @*<h5 style="margin-left: 40px">Đơn vị nhận hàng:@Request.Cookies["Ten_dt"].Value</h5>*@
-                <!--<h5 style="margin-left: -120px">Diễn giải: Xuất hàng giao cho khách</h5>
-                </div>-->
-
-
-                <div style="margin-top:10px">
-                    <table border="1" border-collapse="collapse" style="width:700px">
-                        <tr style="font-size:10px;font-weight:bold;color:black">
-                            <th style="padding:10px">STT</th>
-                            <th>SỐ HÓA ĐƠN</th>
-                            <th>NGÀY XUẤT</th>
-                            <th>TIỀN NỢ</th>
-                            <th>HẠN THANH TOÁN</th>
-                            <th>NGÀY QUÁ HẠN</th>
-                        </tr>
-                        <tbody>
-
+            </div>
+            <br />
+            <div style="width:700px;justify-content:start">
+                <div style="word-wrap:break-word">
+                    <h5 style="text-align:left">
+                        Công Ty Cổ Phần Dược Phẩm OPC - Chi Nhánh Cần Thơ trân trọng thông báo đến quý khách hàng có số dư nợ mà Quý Khách hàng chưa thanh toán cho chúng tôi tính đến ngày 24/07/2023 là: <span style="color: black;font-weight:bold">
                             @foreach (DataRow row3 in Model.Tables[0].Rows)
-                                {
-                            <tr class="table2-data hidden-row" data-soct="@row3["Ma_Dt"]">
+                            {
+                @row3["Tong_No"]}  Đồng
+                        </span>
+                    </h5>
 
-                                <td style="text-align:center;">@row3["STT"]</td>
-                                <td style="text-align:center;">@row3["So_Ct"]</td>
-                                <td style="text-align:center;">@row3["Ngay_Ct1"]</td>
-                                <td class="num" style="text-align:right">@row3["Tong_No"]</td>
-                                <td style="text-align:center;">@row3["Han_Thanh_Toan"] </td>
-                                <td class="num" style="text-align:center">@row3["So_Ngay_Qua_Han"]</td>
-                            </tr>
-                                }
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <td colspan="3" style="font-weight:bold;color:black;text-align:center">Tổng cộng</td>
-                                <td class="num" style="text-align:right;font-weight:bold;">@foreach (DataRow row3 in Model.Tables[1].Rows)
+                </div>
+            </div>
+            <br />
+            <div>
+                <h5 style="margin-left:20px;text-align:left">
+                    Trong đó nợ quá hạn là: <span style="color:black;font-weight:bold">
+                        @foreach (DataRow row3 in Model.Tables[2].Rows)
+                        {
+            @row3["Tong_No"]}  Đồng
+                    </span>, bao gồm các hóa đơn sau:
+                </h5>
+            </div>
+
+            <!--<div style="margin-left:-250px;text-align:left">
+                <h5>Đơn vị xuất hàng: Kho thành phẩm Cửa hàng Quận 10</h5>
+                <h5 style="margin-left:-5px">Địa chỉ: 134/1 Tô Hiến Thành, P15, Quận 10, TP.HCM</h5>-->
+            @*<h5 style="margin-left: 40px">Đơn vị nhận hàng:@Request.Cookies["Ten_dt"].Value</h5>*@
+            <!--<h5 style="margin-left: -120px">Diễn giải: Xuất hàng giao cho khách</h5>
+            </div>-->
+
+
+            <div style="margin-top:10px">
+                <table border="1" border-collapse="collapse" style="width:700px">
+                    <tr style="font-size:10px;font-weight:bold;color:black">
+                        <th style="padding:10px">STT</th>
+                        <th>SỐ HÓA ĐƠN</th>
+                        <th>NGÀY XUẤT</th>
+                        <th>TIỀN NỢ</th>
+                        <th>HẠN THANH TOÁN</th>
+                        <th>NGÀY QUÁ HẠN</th>
+                    </tr>
+                    <tbody>
+
+                        @foreach (DataRow row3 in Model.Tables[1].Rows)
+                        {
+            <tr class="table2-data hidden-row" data-soct="@row3["Ma_Dt"]">
+
+                <td style="text-align:center;">@row3["STT"]</td>
+                <td style="text-align:center;">@row3["So_Ct"]</td>
+                <td style="text-align:center;">@row3["Ngay_Ct1"]</td>
+                <td class="num" style="text-align:right">@row3["Tong_No"]</td>
+                <td style="text-align:center;">@row3["Han_Thanh_Toan"] </td>
+                <td class="num" style="text-align:center">@row3["So_Ngay_Qua_Han"]</td>
+            </tr>}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3" style="font-weight:bold;color:black;text-align:center">Tổng cộng</td>
+                            <td class="num" style="text-align:right;font-weight:bold;">
+                                @foreach (DataRow row3 in Model.Tables[2].Rows)
                                 {
                                     @row3["Tong_No"]
-                                }</td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                        </tfoot>
+                                }
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tfoot>
 
-                    </table>
+            </table>
+            <br />
+            <div style="width:700px;word-wrap:break-word">
+                <h5>Kính đề nghị Quý Khách Hàng vui lòng đối chiếu và xác nhận số liệu gửi về Công Ty Cố Phần Dược Phẩm OPC - Chi Nhánh Cần Thơ trước ngày <span style="color:black;font-weight:bold">26/06/2023</span>. Đồng thời sớm thanh toán số dư nợ quá hạn trên cho Chi Nhánh chúng tôi bằng tiền mặt hoặc chuyển vào tài khoản: Công Ty Cố Phẩn Dược Phẩm OPC - Chi Nhánh Cần Thơ.</h5>
+            </div>
+
+            <div>
+                <h5>Số tài khoản:  1890201002962 tại Ngân Hàng Nông Nghiệp và Phát Triển Nông Thôn Việt Nam - Chi nhánh Cần Thơ II.</h5>
+
+
+            </div>
+            <div style="display:flex;justify-content:start;text-align:center">
+                <div style="text-align:left">
+                    <h5>Khi cần đối chiếu xin liên hệ:</h5>
                     <br />
-                    <div style="width:700px;word-wrap:break-word">
-                        <h5>Kính đề nghị Quý Khách Hàng vui lòng đối chiếu và xác nhận số liệu gửi về Công Ty Cố Phần Dược Phẩm OPC - Chi Nhánh Cần Thơ trước ngày <span style="color:black;font-weight:bold">26/06/2023</span>. Đồng thời sớm thanh toán số dư nợ quá hạn trên cho Chi Nhánh chúng tôi bằng tiền mặt hoặc chuyển vào tài khoản: Công Ty Cố Phẩn Dược Phẩm OPC - Chi Nhánh Cần Thơ.</h5>
-                    </div>
-
-                    <div>
-                        <h5>Số tài khoản:  1890201002962 tại Ngân Hàng Nông Nghiệp và Phát Triển Nông Thôn Việt Nam - Chi nhánh Cần Thơ II.</h5>
-
-
-                    </div>
-                    <div style="display:flex;justify-content:start;text-align:center">
-                        <div style="text-align:left">
-                            <h5>Khi cần đối chiếu xin liên hệ:</h5>
-                            <br />
-                        </div>
-                        <div style="text-align:right;margin-left:10px">
-                            <h5>- Hoàng Ngọc (KTCN): 0932 856849</h5>
-                            <h5>- Minh Tùng (KTCN): 0989 146322</h5>
-                        </div>
-                    </div>
-                    <div>
-                        <h5 style="font-style:italic">Trân trọng!</h5>
-                    </div>
-                    <br />
-                    @*<h4 style="margin-left:auto">P. KHCU &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Thủ kho&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Xưởng sản xuất</h4>*@
-                    <div style="display:inline-block">
-                        <h4 style="display:inline-block;margin-left:50px">Khách Hàng Xác Nhận</h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <h4 style="display:inline-block;margin-left:80px">Giám Đốc</h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <h4 style="display:inline-block;margin-left:100px">Kế Toán</h4>
-                    </div><br />
-                    <div style="display:flex">
-                        <h5 style="font-style:italic;text-align:left;margin-left:50px">(Ký, đóng dấu, ghi rõ họ tên)</h5>
-
-                    </div>
                 </div>
+                <div style="text-align:right;margin-left:10px">
+                    <h5>- Hoàng Ngọc (KTCN): 0932 856849</h5>
+                    <h5>- Minh Tùng (KTCN): 0989 146322</h5>
+                </div>
+            </div>
+            <div>
+                <h5 style="font-style:italic">Trân trọng!</h5>
+            </div>
+            <br />
+            @*<h4 style="margin-left:auto">P. KHCU &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Thủ kho&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Xưởng sản xuất</h4>*@
+            <div style="display:inline-block">
+                <h4 style="display:inline-block;margin-left:50px">Khách Hàng Xác Nhận</h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <h4 style="display:inline-block;margin-left:80px">Giám Đốc</h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <h4 style="display:inline-block;margin-left:100px">Kế Toán</h4>
+            </div><br />
+            <div style="display:flex">
+                <h5 style="font-style:italic;text-align:left;margin-left:50px">(Ký, đóng dấu, ghi rõ họ tên)</h5>
 
-            </form>
+            </div>
         </div>
-        <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 
-        <script>document.getElementById("dropdownInput").addEventListener("input", function () {
-                var inputValue = this.value;
-                var options = document.querySelectorAll("#dropdownList option");
+    </form>
+</div>
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 
-                for (var i = 0; i < options.length; i++) {
-                    if (options[i].getAttribute("value") === inputValue) {
-                        document.getElementById("selectedOption").value = inputValue;
-                        break;
-                    }
-                }
-            });</script>
+<script>
+    document.getElementById("dropdownInput").addEventListener("input", function () {
+        var inputValue = this.value;
+        var options = document.querySelectorAll("#dropdownList option");
+
+        for (var i = 0; i < options.length; i++) {
+            if (options[i].getAttribute("value") === inputValue) {
+                document.getElementById("selectedOption").value = inputValue;
+                break;
+            }
+        }
+    });</script>
 
 </body>
 
