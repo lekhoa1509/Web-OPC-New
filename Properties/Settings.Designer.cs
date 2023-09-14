@@ -121,5 +121,14 @@ namespace web4.Properties {
                 return ((string)(this["Dvcs"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Dvcs1 {
+            get {
+                return ((string)(this["Dvcs1"]));
+            }
+        }
     }
 }

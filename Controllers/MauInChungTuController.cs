@@ -127,7 +127,8 @@ namespace web4.Controllers
                                 Ma_Dt = reader["ma_dt"].ToString(),
                                 Ten_Dt = reader["ten_dt"].ToString(),
                                 Dia_Chi = reader["Dia_Chi"].ToString(),
-                                Dvcs = reader["Dvcs"].ToString()
+                                Dvcs = reader["Dvcs"].ToString(),
+                                Dvcs1 = reader["Dvcs1"].ToString()
                             };
                             dataItems.Add(dataItem);
                         }
