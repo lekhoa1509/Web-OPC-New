@@ -1,9 +1,14 @@
-﻿﻿﻿﻿
+﻿﻿﻿﻿﻿
 @{ ViewBag.Title = "Phiếu Xác Nhận Thanh Toán";
     string ten_dt = Request.Cookies["ten_dt"] != null ? HttpUtility.UrlDecode(Request.Cookies["ten_dt"].Value) : "";
     string Dia_Chi = Request.Cookies["Dia_Chi"] != null ? HttpUtility.UrlDecode(Request.Cookies["Dia_Chi"].Value) : "";
     string Dvcs = Request.Cookies["Dvcs"] != null ? HttpUtility.UrlDecode(Request.Cookies["Dvcs"].Value) : "";
+    string extractedText = "";
 
+    if (Dvcs.Length > 10) // Đảm bảo chuỗi có ít nhất 10 ký tự trước khi cắt
+    {
+        extractedText = Dvcs.Substring(10); // Cắt 10 ký tự đầu tiên
+    }
 
 
 }
@@ -19,6 +24,7 @@
     <style>
         * {
             font-family: 'Times New Roman';
+            color: black;
         }
 
         page {
@@ -411,8 +417,8 @@
     <div class="forms-container">
         <form class="data-form" id="data-form">
             <div>
-                <h3 style="margin-left:-500px; font-size:13px;">CÔNG TY CỔ PHẦN DƯỢC PHẨM OPC</h3>
-                <h3 style="font-weight:bold;color:black; font-size:13px;margin-left:-500px">@Dvcs</h3>
+                <h3 style="margin-left:-450px; font-size:13px;">CÔNG TY CỔ PHẦN DƯỢC PHẨM OPC</h3>
+                <h3 style="font-weight:bold;color:black; font-size:13px;margin-left:-450px">@Dvcs</h3>
             </div>
 
             <br />
@@ -421,18 +427,18 @@
                 <h3 style="font-size: 25px; color: black; font-weight: bold">XÁC NHẬN THANH TOÁN</h3>
                 <br />
             </div>
-            <div style="text-align:left;margin-left:-280px">
+            <div style="margin-left:-280px">
                 <h5>-Căn cứ Luật thương mại số 36/2005/QH11 ngày 14/06/2005;</h5>
-                <h5 style="margin-left:-45px">-Căn cứ vào hợp đồng số: ...../thỏa thuận của đôi bên.</h5>
+                <h5 style="margin-left:300px;text-align:left">-Căn cứ vào hợp đồng số: ................../thỏa thuận của đôi bên.</h5>
             </div>
             <br />
             <div class="flex-container">
-                <h5 style="display: inline-block;color:black;font-weight:bold">Khách hàng: <span style="font-size: 15px;">@ten_dt</span></h5>
+                <h5 style="display: inline-block;color:black;font-weight:bold;margin-left:30px">Khách hàng: <span style="font-size: 15px;">@ten_dt</span></h5>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <h5 style="display: inline-block; color: black; font-weight: bold"></h5>
             </div>
-            <div style="text-align:left;color:black;font-weight:bold; font-size:15px;">
-                <h5>Địa chỉ: @Dia_Chi</h5>
+            <div style="color:black;font-weight:bold; font-size:15px;">
+                <h5 style="text-align:left;margin-left:30px">Địa chỉ: @Dia_Chi</h5>
             </div>
 
             <br />
@@ -441,14 +447,14 @@
             </div>
 
             <div style="text-align:left">
-                <h5 style="font-size: 13px">Khi thanh toán ngay, Quý khách hàng được chiết khấu 2% trên giá trị thanh toán của những hóa đơn cụ thể như sau: </h5>
+                <h5 style="font-size: 14px">Khi thanh toán ngay, Quý khách hàng được chiết khấu 2% trên giá trị thanh toán của những hóa đơn cụ thể như sau: </h5>
             </div><br />
             <div>
-                <table border="1" border-collapse="collapse">
+                <table border="1" border-collapse="collapse" style="width:600px">
                     <tr style="font-size:10px;font-weight:bold;color:black">
                         <th style="padding:10px">SỐ</th>
                         <th>NGÀY HĐ</th>
-                        <th>NGÀY THU</th>
+                        <th>NGÀY ĐẾN HẠN</th>
                         <th>TIỀN HĐ</th>
                         <th>CKTT</th>
                         <th>TIỀN THANH TOÁN</th>
@@ -462,6 +468,7 @@
                                     @row3["Ngay_Ct1"]
                                 </td>
                                 <td style="padding:10px">
+                                    @row3["Han_Thanh_Toan"]
                                 </td>
                                 <td style="padding:10px;text-align:right">@row3["Tong_Tien"]</td>
                                 <td style="padding:10px;text-align:right">@row3["CKTT"]</td>
@@ -485,10 +492,10 @@
                     </table>
                     <br />
                     <div style="text-align:left">
-                        <h5 style="word-wrap: break-word;font-size:15px">Khách hàng đã thanh toán số tiền;...................., nhận chiết khấu thanh toán số tiền:...................</h5>
+                        <h5 style="word-wrap: break-word;font-size:15px">Khách hàng đã thanh toán số tiền:...................., nhận chiết khấu thanh toán số tiền:...................</h5>
                     </div><br />
                     <div style="text-align:right">
-                        <h4>Đà Nẵng, ngày&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tháng&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;năm&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h4>
+                        <h4 class="branch">@extractedText, ngày&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tháng&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;năm&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h4>
                     </div>
                     @*<h4 style="margin-left:auto">P. KHCU &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Thủ kho&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Xưởng sản xuất</h4>*@
                     <div style="display:inline-block">
@@ -497,7 +504,7 @@
                         <h4 style="display:inline-block">Người lập bảng</h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     </div><br />
                     <div>
-                        <h5 style="font-style:italic;text-align:left;margin-left:40px">(Ký, ghi họ tên)</h5>
+                        <h5 style="font-style:italic;text-align:left;margin-left:60px">(Ký, ghi họ tên)</h5>
                     </div>
                 </div>
                 <button class="print-button" onclick="printDataForm()" id="print">In Data</button>
@@ -520,7 +527,28 @@
 
 
         </script>
+        <script>
+            // Lấy tất cả các phần tử có class "branch"
+            var branches = document.querySelectorAll('.branch');
 
+            // Duyệt qua từng phần tử và xử lý chuỗi dữ liệu
+            branches.forEach(function (branch) {
+                var text = branch.textContent;
+
+                // Tìm và loại bỏ phần "Chi nhánh"
+                var branchName = text.replace('Chi nhánh', '').trim();
+
+                // Tạo một thẻ <a> mới và gán nội dung
+                var newLink = document.createElement('a');
+                newLink.textContent = branchName;
+
+                // Thêm thẻ <a> vào trước phần tử hiện tại
+                branch.parentNode.insertBefore(newLink, branch);
+
+                // Loại bỏ phần tử hiện tại
+                branch.remove();
+            });
+        </script>
     </body>
 
 </html>

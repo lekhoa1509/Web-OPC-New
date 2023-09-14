@@ -1,4 +1,7 @@
-﻿@{ ViewBag.Title = "OPC Bao Cao | OPCPHARMA"; }
+﻿@{ ViewBag.Title = "OPC Bao Cao | OPCPHARMA";
+    @model System.Data.DataSet
+}
+@using System.Data;
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
@@ -6,14 +9,17 @@
     <title> OPC Bao Cao | OPCPHARMA </title>
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <link href="~/Styles/main.css" rel='stylesheet' type='text/css' media="all">
-    <link rel="stylesheet" href="~/Styles/loader.css">
     @*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">*@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="~/Styles/loader.css">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <style>
-        a {
-            text-decoration: none;
+        body {
+            font-family: 'Helvetica Neue', Helvetica, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
         }
 
         .collapsed {
@@ -23,17 +29,7 @@
         .contentList {
             display: none;
         }
-        .text-loading {
-            position: fixed;
-            bottom: 10px;
-            color: black;
-            left: 10px;
-            font-size: 13px;
-            z-index: 1001;
-            background-color: rgba(255, 255, 255, 0.9); /* Background color for the span */
-            padding: 5px 10px;
-            display: none;
-        }
+
         .tabs {
             display: inline-block;
             /* bottom: 0;
@@ -107,12 +103,10 @@
                 .tab-control ul li {
                     text-align: center;
                 }
-
     </style>
 </head>
 <body>
-    <div class="loader" style="z-index:1000"></div>
-    <span id="spanText" class="text-loading">[usp_LookupKH_SAP]</span>
+    <div class="loader" style="z-index:1"></div>
     <div class="sidebar close">
         <div class="logo-details">
             <img src="~/Images/opc.png" style="height:50px;width:50px;margin-left:10px">
@@ -125,7 +119,7 @@
                     <span class="link_name">Trang chủ</span>
                 </a>
                 <ul class="sub-menu blank">
-                    <li><a class="link_name" href="/Home/MauIn">Trang chủ</a></li>
+                    <li><a class="link_name" href="#">Trang chủ</a></li>
                 </ul>
             </li>
             <li id="active">
@@ -135,33 +129,35 @@
                         <span class="link_name">Danh mục</span>
                     </a>
                     <ul class="sub-menu blank">
-                        <li class="liTitle"><a class="link_name" href="/DanhMuc/DanhMuc">Danh mục</a></li>
+                        <li><a class="link_name" href="/DanhMuc/DanhMuc">Danh mục</a></li>
                     </ul>
                     @*<i class='bx bxs-chevron-down arrow'></i>*@
                 </div>
-                <!--<ul class="sub-menu">
-                                    <li><a class="link_name" href="#">Danh mục</a></li>
-                                    <li>
-                                        @if (string.Equals(ViewBag.UserName, "admin", StringComparison.OrdinalIgnoreCase) ||
-                string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase))
-                                        {
+
+                <ul class="sub-menu">
+                    <li><a class="link_name" href="#">Danh mục</a></li>
+                    <li class="liTitle">
+                        @if (string.Equals(ViewBag.UserName, "admin", StringComparison.OrdinalIgnoreCase) ||
+string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase))
+                        {
 
 
-                                            <a href="/DanhMuc/ViewDanhMucKH_Fill" onclick="runReport()"> Khách hàng</a>
-                                        }
-                                        else if (string.Equals(ViewBag.UserName, "OPCHCM001", StringComparison.OrdinalIgnoreCase))
-                                        {
+                            <a href="/DanhMuc/ViewDanhMucKH_Fill" onclick="runReport()"> Khách hàng</a>
+                        }
+                        else if (string.Equals(ViewBag.UserName, "OPCHCM001", StringComparison.OrdinalIgnoreCase))
+                        {
 
 
-                                            <a href="/DanhMuc/ViewDanhMucKH_FillCN" onclick="runReport()"> Khách hàng</a>
-                                        }
-                                        else
-                                        {
-                                            <a href="/DanhMuc/ViewDanhMucKHCN" onclick="runReport()"> Khách hàng</a>
-                                        }
+                            <a href="/DanhMuc/ViewDanhMucKH_FillCN" onclick="runReport()"> Khách hàng</a>
+                        }
+                        else
+                        {
+                            <a href="/DanhMuc/ViewDanhMucKHCN" onclick="runReport()"> Khách hàng</a>
+                        }
 
-                                    </li>-->
-                <!--</ul>-->
+                    </li>
+
+                </ul>
             </li>
             <li>
                 <div class="iocn-link">
@@ -172,10 +168,10 @@
 
                 </div>
                 <ul class="sub-menu">
-                    <li class="liTitle"><a class="link_name" href="/Home/MauIn">Mẫu In</a></li>
+                    <li><a class="link_name" href="/Home/MauIn">Mẫu In</a></li>
                     <li class="liTitle"><a href="/MauInChungTu/MauInNLCB_Fill">1.Chứng Từ Phiếu Nhập</a></li>
                     <li class="liTitle"><a href="/MauInChungTu/PhieuNhapXNTT_Fill">2.Phiếu Xác Nhận Thanh Toán</a></li>
-                    <li class="liTitle"><a href="/MauInChungTu/PhieuXuatKho_Fill">3.Phiếu Xuất Kho</a></li>
+                    <li class="liTitle"><a href="/MauInChungTu/PhieuXuatKho_SO">3.Phiếu Xuất Kho</a></li>
                     <li class="liTitle"><a href="/MauInChungTu/ThongBaoNoQH_Fill">4.Thông Báo Nợ QH</a></li>
                     @*<li><a href="#">Login Form</a></li>
                         <li><a href="#">Card Design</a></li>*@
@@ -195,7 +191,6 @@
                     <li>
                         <a href="#">1.Báo Cáo Quản Trị</a>
                         <ul>
-
                             @if (string.Equals(ViewBag.UserName, "admin", StringComparison.OrdinalIgnoreCase))
                             {
 
@@ -252,6 +247,8 @@
             </li>
 
 
+
+
             <li onclick="logout()">
                 <a>
                     <i class='bx bx-log-out'></i>
@@ -274,7 +271,6 @@
                 <i class='bx bx-search'></i>
             </div>
         </nav>
-
         <div class="home-content">
             @*phân quyền user*@
             @if (string.Equals(ViewBag.UserName, "admin", StringComparison.OrdinalIgnoreCase) ||
@@ -316,13 +312,7 @@
     </section>
     <div class="tab-control">
         <ul class="tabs" style="background-color: #1d1b31; bottom: 0; left: 0; right: 0;">
-            <li class="tab tabSelected"><a href="#">Home</a></li>
-            @*<li class="tab selected"><a href="#">Some Thing 2</a><a class="closeTab" href="">✕</a></li>*@
-            @*<li class="tab selected"><a href="#">Some Thing 3</a><a class="closeTab" href="">✕</a></li>
-                <li class="tab selected"><a href="#">Some Thing 4</a><a class="closeTab" href="">✕</a></li>
-                <li class="tab selected"><a href="#">Some Thing 2</a><a class="closeTab" href="">✕</a></li>
-                <li class="tab selected"><a href="#">Some Thing 3</a><a class="closeTab" href="">✕</a></li>
-                <li class="tab selected"><a href="#">Some Thing 4</a><a class="closeTab" href="">✕</a></li>*@
+            <li class="tab selected" style="padding-right:10px"><a href="#">Home</a></li>
         </ul>
     </div>
     <script>
@@ -339,19 +329,8 @@
             window.location.href = "/home/DoiMatKhau"
         }
     </script>
-    <script>
-        document.querySelectorAll(".iocn-link").forEach(link => {
-            link.addEventListener("click", () => {
-                // Tìm submenu của liên kết hiện tại
-                const subMenu = link.querySelector(".sub-menu");
 
-                // Toggle class "showSubMenu" để hiển thị hoặc ẩn submenu
-                subMenu.classList.toggle("showSubMenu");
-            });
-        });
-    </script>
     <script>
-        //icon chuc nang sidebar
         let reportLi = document.querySelector(".report-li");
         reportLi.addEventListener("click", (e) => {
             console.log("Clicked on report-li");
@@ -368,15 +347,13 @@
         }
 
         let sidebar = document.querySelector(".sidebar");
-        // Sửa lớp CSS từ "close" thành "showSidebar"
-        sidebar.classList.remove("close");
-        sidebar.classList.add("showSidebar");
         let sidebarBtn = document.querySelector(".bx-menu");
         console.log(sidebarBtn);
         sidebarBtn.addEventListener("click", () => {
             sidebar.classList.toggle("close");
         });
     </script>
+
     <script>
 
         //function showLoader() {
@@ -397,14 +374,14 @@
             hideLoader();
         });
     </script>
-    <script>
-        function runReport() {
-            // Hiển thị thẻ span có id là "spanText"
-            showLoader();
-            const spanElement = document.getElementById("spanText");
-            spanElement.style.display = "block";
-        }
-    </script>
+    @*<script>
+            function runReport() {
+                // Hiển thị thẻ span có id là "spanText"
+                showLoader();
+                const spanElement = document.getElementById("spanText");
+                spanElement.style.display = "block";
+            }
+        </script>*@
     <script>
         window.onload = function () {
             var username = localStorage.getItem("username");
@@ -433,25 +410,7 @@
             applyCheckboxAndColumnState();
         });
     </script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            // Lấy danh sách tất cả các thẻ <a> có class "closeTab"
-            const closeTabLinks = document.querySelectorAll(".closeTab");
 
-            // Lặp qua từng thẻ <a> và thêm sự kiện click vào chúng
-            closeTabLinks.forEach(function (link) {
-                link.addEventListener("click", function (event) {
-                    event.preventDefault(); // Ngăn chặn hành vi mặc định của thẻ <a>
-
-                    // Ẩn phần tử <li> chứa thẻ <a> đã được click
-                    const liElement = link.closest("li");
-                    if (liElement) {
-                        liElement.style.display = "none";
-                    }
-                });
-            });
-        });
-    </script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const subMenuLinks = document.querySelectorAll(".liTitle a");
@@ -481,9 +440,9 @@
                     const newTab = document.createElement("li");
                     newTab.classList.add("tab", "selected");
                     newTab.innerHTML = `
-                                        <a href="${subMenuLinkHref}">${tabTitle}</a>
-                                        <a class="closeTab" href="">✕</a>
-                                    `;
+                                            <a href="${subMenuLinkHref}">${tabTitle}</a>
+                                            <a class="closeTab" href="">✕</a>
+                                        `;
                     tabControlTabs.appendChild(newTab);
 
                     // Chuyển view tới thẻ li tương ứng
@@ -502,8 +461,8 @@
                 currentTab.classList.add("tab", "selected");
                 const tabInfo = JSON.parse(localStorage.getItem(currentTabTitleView1));
                 currentTab.innerHTML = `
-                                    <a href="${tabInfo.href}">${currentTabTitleView1}</a>
-                                    <a class="closeTab" href="">✕</a>
+                                        <a href="${tabInfo.href}">${currentTabTitleView1}</a>
+                                        <a class="closeTab" href="">✕</a>
 `;
                 tabControlTabs.appendChild(currentTab);
             }
@@ -571,9 +530,9 @@
                 const newTab = document.createElement("li");
                 newTab.classList.add("tab", "selected");
                 newTab.innerHTML = `
-                                <a href="${tabHref}">${tabTitle}</a>
-                                <a class="closeTab" href="">✕</a>
-                                `;
+                                    <a href="${tabHref}">${tabTitle}</a>
+                                    <a class="closeTab" href="">✕</a>
+                                    `;
                 tabControlTabs.appendChild(newTab);
 
                 // Sự kiện khi người dùng nhấp vào nút đóng tab
@@ -643,7 +602,7 @@
             }
         });
 
-                                // ...
+                                    // ...
     </script>
 </body>
 </html>

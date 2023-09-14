@@ -678,12 +678,20 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
 
                             // ...
     </script>
+    <script>//Ham set thoi gian xoa cookie sau moi 15p
+        // Mảng để lưu các tab
+        const tabArray = JSON.parse(localStorage.getItem("tabsArray")) || [];
+        const currentTabTitleView1 = localStorage.getItem("currentTabView1"); // Sử dụng biến "currentTabView1" cho View 1
 
+        // Hàm để xóa mảng tabArray
+        function clearTabArray() {
+            tabArray.length = 0; // Xóa tất cả các phần tử của mảng
+            localStorage.setItem("tabsArray", JSON.stringify(tabArray)); // Lưu mảng trống vào Local Storage
+        }
 
+        // Sử dụng hàm setInterval để gọi hàm clearTabArray sau mỗi 15 phút (900,000 milliseconds)
+        setInterval(clearTabArray, 900000);
 
-
-
-
-
+    </script>
 </body>
 </html>

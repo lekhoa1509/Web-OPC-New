@@ -426,7 +426,8 @@
                         <datalist id="dropdownList">
                             @foreach (var item in ViewBag.DataItems)
                             {
-                <option value="@item.Ma_Dt" data-ten="@item.Ten_Dt" data-diachi="@item.Dia_Chi" data-dvcs="@item.Dvcs">@item.Ten_Dt</option>}
+                                <option value="@item.Ma_Dt" data-ten="@item.Ten_Dt" data-diachi="@item.Dia_Chi" data-dvcs="@item.Dvcs">@item.Ten_Dt</option>
+}
                         </datalist>
                         <input type="hidden" name="Ma_Dt" id="selectedOption">
 
@@ -483,8 +484,8 @@
                 </div>
 
                 <!--<div style="margin-left:-250px;text-align:left">
-                <h5>Đơn vị xuất hàng: Kho thành phẩm Cửa hàng Quận 10</h5>
-                <h5 style="margin-left:-5px">Địa chỉ: 134/1 Tô Hiến Thành, P15, Quận 10, TP.HCM</h5>-->
+            <h5>Đơn vị xuất hàng: Kho thành phẩm Cửa hàng Quận 10</h5>
+            <h5 style="margin-left:-5px">Địa chỉ: 134/1 Tô Hiến Thành, P15, Quận 10, TP.HCM</h5>-->
                 @*<h5 style="margin-left: 40px">Đơn vị nhận hàng:@Request.Cookies["Ten_dt"].Value</h5>*@
                 <!--<h5 style="margin-left: -120px">Diễn giải: Xuất hàng giao cho khách</h5>
             </div>-->
@@ -600,8 +601,33 @@
 
 
         </script>
+        <script>
+            // Set the "Từ Ngày" input to the first day of the current month
+            function setFirstDayOfCurrentMonth() {
+                const currentDate = new Date();
+                const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+                const formattedDate = formatDate(firstDayOfMonth);
 
-</body>
+                document.getElementById("tu_ngay").value = formattedDate;
+            }
+            function setCurrentDate() {
+                const currentDate = new Date();
+                const formattedToDate = formatDate(currentDate);
+                document.getElementById("den_ngay").value = formattedToDate;
+            }
+            // Format the date as "yyyy-mm-dd" for input type="date"
+            function formatDate(date) {
+                const year = date.getFullYear();
+                const month = (date.getMonth() + 1).toString().padStart(2, "0");
+                const day = date.getDate().toString().padStart(2, "0");
+                return `${year}-${month}-${day}`;
+            }
 
-</html>
+            // Call the function to set the "Từ Ngày" input on page load
+            setFirstDayOfCurrentMonth();
+            setCurrentDate();</script>
+        <script>
+</body >
+
+</html >
 
