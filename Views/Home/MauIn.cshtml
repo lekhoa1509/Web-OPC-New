@@ -1,4 +1,4 @@
-﻿@{ ViewBag.Title = "OPC Bao Cao | OPCPHARMA"; }
+﻿﻿@{ ViewBag.Title = "OPC Bao Cao | OPCPHARMA"; }
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
@@ -23,6 +23,7 @@
         .contentList {
             display: none;
         }
+
         .tabs {
             display: inline-block;
             /* bottom: 0;
@@ -96,7 +97,24 @@
                 .tab-control ul li {
                     text-align: center;
                 }
+        .tab.selected-tab {
+            background-color: #3763a3; /* Màu nền của tab */
+        }
 
+            .tab.selected-tab a {
+                color: white /* Màu nền của tab */
+            }
+
+        .selected-tab {
+            background-color: #007bff; /* Màu sắc của tab khi được chọn */
+            color: #fff; /* Màu văn bản của tab khi được chọn */
+        }
+
+        /* Đảm bảo các tab khác không được chọn có màu sắc mặc định */
+        .tab:not(.selected-tab) {
+            background-color: #f8f9fa; /* Màu sắc mặc định của tab */
+            color: #000; /* Màu văn bản mặc định của tab */
+        }
     </style>
 </head>
 <body>
@@ -127,7 +145,7 @@
                     </ul>
                     @*<i class='bx bxs-chevron-down arrow'></i>*@
                 </div>
-                <!--<ul class="sub-menu">
+                <ul class="sub-menu">
                                     <li><a class="link_name" href="#">Danh mục</a></li>
                                     <li>
                                         @if (string.Equals(ViewBag.UserName, "admin", StringComparison.OrdinalIgnoreCase) ||
@@ -148,10 +166,10 @@
                                             <a href="/DanhMuc/ViewDanhMucKH" onclick="runReport()"> Khách hàng</a>
                                         }
 
-                                    </li>-->
+                                    </li>
                 @*<li><a href="#">JavaScript</a></li>
                     <li><a href="#">PHP & MySQL</a></li>*@
-                <!--</ul>-->
+                </ul>
             </li>
             <li id="active">
                 <div class="iocn-link">
@@ -166,9 +184,9 @@
                     <li class="liTitle"><a href="/MauInChungTu/MauInNLCB_Fill">1.Chứng Từ Phiếu Nhập</a></li>
                     <li class="liTitle"><a href="/MauInChungTu/PhieuNhapXNTT_Fill">2.Phiếu Xác Nhận Thanh Toán</a></li>
                     <li class="liTitle"><a href="/MauInChungTu/PhieuXuatKho_SO">3.Phiếu Xuất Kho</a></li>
-                    <li class="liTitle"><a href="/MauInChungTu/ThongBaoNoQH_Fill">4.Thông Báo Nợ QH</a></li>    
+                    <li class="liTitle"><a href="/MauInChungTu/ThongBaoNoQH_Fill">4.Thông Báo Nợ QH</a></li>
                     @*<li><a href="#">Login Form</a></li>
-        <li><a href="#">Card Design</a></li>*@
+                        <li><a href="#">Card Design</a></li>*@
                 </ul>
             </li>
 
@@ -297,7 +315,7 @@
     <div class="tab-control">
         <ul class="tabs" style="background-color: #1d1b31; bottom: 0; left: 0; right: 0;">
             <li class="tab tabSelected"><a href="#">Home</a></li>
-           
+
             @*<li class="tab selected"><a href="#">Some Thing 3</a><a class="closeTab" href="">✕</a></li>
                 <li class="tab selected"><a href="#">Some Thing 4</a><a class="closeTab" href="">✕</a></li>
                 <li class="tab selected"><a href="#">Some Thing 2</a><a class="closeTab" href="">✕</a></li>
@@ -394,6 +412,160 @@
 
         };
     </script>
+    <script>
+        //Ham set thoi gian xoa cookie sau moi 5p
+        // Mảng để lưu các tab
+        const tabArray = JSON.parse(localStorage.getItem("tabsArray")) || [];
+        const currentTabTitleView1 = localStorage.getItem("currentTabView1"); // Sử dụng biến "currentTabView1" cho View 1
 
+        // Hàm để xóa mảng tabArray
+        function clearTabArray() {
+            tabArray.length = 0; // Xóa tất cả các phần tử của mảng
+            localStorage.setItem("tabsArray", JSON.stringify(tabArray)); // Lưu mảng trống vào Local Storage
+            window.location.reload();
+        }
+
+        // Sử dụng hàm setInterval để gọi hàm clearTabArray sau mỗi 5 phút (300,000 milliseconds)
+        setInterval(clearTabArray, 300000);
+
+    </script>
+    <script>
+        //đoạn cập nhật tab selected để chọn tab đổi màu
+        document.addEventListener("DOMContentLoaded", function () {
+            const tabControlTabs = document.querySelector(".tab-control .tabs");
+
+            // Lấy tất cả các tab
+            const tabs = tabControlTabs.querySelectorAll(".tab");
+
+            // Xử lý sự kiện khi người dùng click vào một tab
+            tabs.forEach(function (tab) {
+                tab.addEventListener("click", function (event) {
+                    // Lấy tên của tab được click
+                    const tabTitle = tab.querySelector("a").textContent;
+
+                    // Cập nhật biến selected bằng tên của tab
+                    selected = tabTitle;
+
+                    // Lưu giá trị mới vào Local Storage
+                    localStorage.setItem("selected", selected);
+
+                    // Cập nhật màu sắc hoặc thực hiện các hành động khác dựa trên giá trị mới của selected
+                    // Ví dụ: Đổi màu tab đã chọn
+                    tabs.forEach(function (otherTab) {
+                        otherTab.classList.remove("selected-tab");
+                    });
+                    tab.classList.add("selected-tab");
+
+                    // Đối với các tác vụ khác bạn muốn thực hiện khi tab được chọn, hãy thêm mã vào đây.
+
+                    // ...
+                });
+            });
+
+            // Lấy tất cả các phần tử liTitle
+            const liTitleElements = document.querySelectorAll(".liTitle");
+
+            // Xử lý sự kiện khi người dùng click vào một liTitle
+            liTitleElements.forEach(function (liTitle) {
+                liTitle.addEventListener("click", function (event) {
+                    // Lấy tiêu đề của liTitle
+                    const liTitleText = liTitle.querySelector("a").textContent;
+
+                    // Cập nhật biến selected bằng tiêu đề của liTitle
+                    selected = liTitleText;
+
+                    // Lưu giá trị mới vào Local Storage
+                    localStorage.setItem("selected", selected);
+
+                    // Tại đây, bạn có thể thực hiện các hành động khác sau khi cập nhật selected từ liTitle.
+
+                    // Ví dụ: Đổi màu cho tab đã chọn
+                    tabs.forEach(function (tab) {
+                        tab.classList.remove("selected-tab");
+                        if (tab.querySelector("a").textContent === selected) {
+                            tab.classList.add("selected-tab");
+                        }
+                    });
+
+                    // Đối với các tác vụ khác bạn muốn thực hiện khi liTitle được chọn, hãy thêm mã vào đây.
+
+                    // ...
+                });
+            });
+
+            // Nếu có giá trị selected trong Local Storage, cập nhật giao diện dựa trên giá trị đó
+            if (selected) {
+                tabs.forEach(function (tab) {
+                    if (tab.querySelector("a").textContent === selected) {
+                        tab.classList.add("selected-tab");
+                    }
+                });
+            }
+
+            hideLoader();
+        });
+
+    </script>
+    <script>
+        //đoạn mã tìm tab có title trùng với biến selected sau đó đổi màu tab đó
+        document.addEventListener("DOMContentLoaded", function () {
+            // Lấy giá trị selected từ Local Storage
+            const selected = localStorage.getItem("selected");
+
+            // Lấy tất cả các tab
+            const tabs = document.querySelectorAll(".tab");
+
+            // Lặp qua tất cả các tab và kiểm tra nếu có tab có title bằng với giá trị selected
+            tabs.forEach(function (tab) {
+                const tabTitle = tab.querySelector("a").textContent;
+                if (tabTitle === selected) {
+                    // Đổi màu cho tab này
+                    tab.classList.add("selected-tab");
+                }
+            });
+        });
+
+    </script>
+    <script>
+        subMenuLinks.forEach(function (subMenuLink) {
+            subMenuLink.addEventListener("click", function (event) {
+                event.preventDefault();
+
+                const tabTitle = subMenuLink.textContent;
+                const subMenuLinkHref = subMenuLink.getAttribute("href");
+
+                // Cập nhật biến selected với giá trị của tabTitle
+                localStorage.setItem("selected", tabTitle);
+                console.log("selected:", tabTitle); // Thêm log để kiểm tra giá trị của selected
+
+                // Kiểm tra xem tab đã tồn tại trong mảng hay chưa
+                const tabExists = tabsArray.some(tab => tab.title === tabTitle);
+
+                // Nếu tab chưa tồn tại, thêm nó vào mảng
+                if (!tabExists) {
+                    tabsArray.push({ title: tabTitle, href: subMenuLinkHref });
+                    localStorage.setItem("tabsArray", JSON.stringify(tabsArray));
+                }
+
+                // Thêm tab vào giao diện
+                const newTab = document.createElement("li");
+                newTab.classList.add("tab", "selected");
+                newTab.innerHTML = `
+                            <a href="${subMenuLinkHref}">${tabTitle}</a>
+                            <a class="closeTab" href="">✕</a>
+                        `;
+                tabControlTabs.appendChild(newTab);
+
+                // Chuyển view tới thẻ li tương ứng
+                if (subMenuLinkHref) {
+                    // Lưu trạng thái hiện tại vào Local Storage trước khi chuyển trang
+                    localStorage.setItem("currentTabView1", tabTitle);
+                    localStorage.setItem("currentTabHrefView1", subMenuLinkHref);
+                    window.location.href = subMenuLinkHref;
+                }
+            });
+        });
+
+    </script>
 </body>
 </html>

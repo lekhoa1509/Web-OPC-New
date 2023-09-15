@@ -103,7 +103,19 @@
                 .tab-control ul li {
                     text-align: center;
                 }
+        .tab.selected-tab {
+            pointer-events: none;
+            background-color: #3763a3; /* Màu nền của tab */
+        }
 
+            .tab.selected-tab a {
+                pointer-events: none;
+                color: white /* Màu nền của tab */
+            }
+
+            .tab.selected-tab .closeTab {
+                pointer-events: auto;
+            }
     </style>
 </head>
 <body>
@@ -130,7 +142,7 @@
                         <span class="link_name">Danh mục</span>
                     </a>
                     <ul class="sub-menu blank">
-                        <li  class="liTitle"><a class="link_name" href="/DanhMuc/DanhMuc">Danh mục</a></li>
+                        <li class="liTitle"><a class="link_name" href="/DanhMuc/DanhMuc">Danh mục</a></li>
                     </ul>
                     @*<i class='bx bxs-chevron-down arrow'></i>*@
                 </div>
@@ -175,7 +187,7 @@
                     <li class="liTitle"><a href="/MauInChungTu/PhieuXuatKho_SO">3.Phiếu Xuất Kho</a></li>
                     <li class="liTitle"><a href="/MauInChungTu/ThongBaoNoQH_Fill">4.Thông Báo Nợ QH</a></li>
                     @*<li><a href="#">Login Form</a></li>
-        <li><a href="#">Card Design</a></li>*@
+                        <li><a href="#">Card Design</a></li>*@
                 </ul>
             </li>
 
@@ -276,21 +288,42 @@
     <div class="tab-control">
         <ul class="tabs" style="background-color: #1d1b31; bottom: 0; left: 0; right: 0;">
             <li class="tab tabSelected"><a href="#">Home</a></li>
-         
+
         </ul>
     </div>
     <script>
+        // ham xu ly dang nhap va xoa mang tabArray
         function logout() {
-            window.location.href = "/home/login"
-        }
-        document.getElementById("TOP1").innerHTML = Response.innerHTML.g;
+            // Làm rỗng mảng tabArray
+            const tabArray = JSON.parse(localStorage.getItem("tabsArray")) || [];
+            tabArray.length = 0;
+            localStorage.setItem("tabsArray", JSON.stringify(tabArray));
 
+            // Điều hướng đến trang đăng nhập
+            window.location.href = "/home/login";
+        }
+
+        // Cập nhật nội dung của phần tử có id "TOP1" bằng một giá trị Response mới
+        // (Lưu ý: Đảm bảo rằng bạn đã khai báo và gán giá trị cho biến Response trước đó)
+        document.getElementById("TOP1").innerHTML = Response;
+
+        // Bắt sự kiện click cho các phần tử có lớp "sub-menu" trong #leftside-navigation
         $("#leftside-navigation .sub-menu > a").click(function (e) {
-            $("#leftside-navigation ul ul").slideUp(), $(this).next().is(":visible") || $(this).next().slideDown(),
-                e.stopPropagation()
-        })
+            // Ẩn tất cả các phần tử con ul ul của #leftside-navigation
+            $("#leftside-navigation ul ul").slideUp();
+
+            // Hiển thị phần tử con ul của phần tử a đang được click (nếu nó chưa hiển thị)
+            if (!$(this).next().is(":visible")) {
+                $(this).next().slideDown();
+            }
+
+            // Ngăn chặn sự kiện click lan ra ngoài
+            e.stopPropagation();
+        });
+
         function ChangPassword() {
-            window.location.href = "/home/DoiMatKhau"
+            // Điều hướng đến trang thay đổi mật khẩu
+            window.location.href = "/home/DoiMatKhau";
         }
     </script>
     <script>
@@ -367,9 +400,9 @@
                     const newTab = document.createElement("li");
                     newTab.classList.add("tab", "selected");
                     newTab.innerHTML = `
-                                        <a href="${subMenuLinkHref}">${tabTitle}</a>
-                                        <a class="closeTab" href="">✕</a>
-                                    `;
+                                                <a href="${subMenuLinkHref}">${tabTitle}</a>
+                                                <a class="closeTab" href="">✕</a>
+                                            `;
                     tabControlTabs.appendChild(newTab);
 
                     // Chuyển view tới thẻ li tương ứng
@@ -388,8 +421,8 @@
                 currentTab.classList.add("tab", "selected");
                 const tabInfo = JSON.parse(localStorage.getItem(currentTabTitleView1));
                 currentTab.innerHTML = `
-                                    <a href="${tabInfo.href}">${currentTabTitleView1}</a>
-                                    <a class="closeTab" href="">✕</a>
+                                            <a href="${tabInfo.href}">${currentTabTitleView1}</a>
+                                            <a class="closeTab" href="">✕</a>
 `;
                 tabControlTabs.appendChild(currentTab);
             }
@@ -457,9 +490,9 @@
                 const newTab = document.createElement("li");
                 newTab.classList.add("tab", "selected");
                 newTab.innerHTML = `
-                                <a href="${tabHref}">${tabTitle}</a>
-                                <a class="closeTab" href="">✕</a>
-                                `;
+                                        <a href="${tabHref}">${tabTitle}</a>
+                                        <a class="closeTab" href="">✕</a>
+                                        `;
                 tabControlTabs.appendChild(newTab);
 
                 // Sự kiện khi người dùng nhấp vào nút đóng tab
@@ -529,7 +562,162 @@
             }
         });
 
-                                // ...
+        // ...
+    </script>
+    <script>
+        //Ham set thoi gian xoa cookie sau moi 5p
+        // Mảng để lưu các tab
+        const tabArray = JSON.parse(localStorage.getItem("tabsArray")) || [];
+        const currentTabTitleView1 = localStorage.getItem("currentTabView1"); // Sử dụng biến "currentTabView1" cho View 1
+
+        // Hàm để xóa mảng tabArray
+        function clearTabArray() {
+            tabArray.length = 0; // Xóa tất cả các phần tử của mảng
+            localStorage.setItem("tabsArray", JSON.stringify(tabArray)); // Lưu mảng trống vào Local Storage
+            window.location.reload();
+        }
+
+        // Sử dụng hàm setInterval để gọi hàm clearTabArray sau mỗi 5 phút (300,000 milliseconds)
+        setInterval(clearTabArray, 300000);
+
+    </script>
+    <script>
+        //đoạn cập nhật tab selected để chọn tab đổi màu
+        document.addEventListener("DOMContentLoaded", function () {
+            const tabControlTabs = document.querySelector(".tab-control .tabs");
+
+            // Lấy tất cả các tab
+            const tabs = tabControlTabs.querySelectorAll(".tab");
+
+            // Xử lý sự kiện khi người dùng click vào một tab
+            tabs.forEach(function (tab) {
+                tab.addEventListener("click", function (event) {
+                    // Lấy tên của tab được click
+                    const tabTitle = tab.querySelector("a").textContent;
+
+                    // Cập nhật biến selected bằng tên của tab
+                    selected = tabTitle;
+
+                    // Lưu giá trị mới vào Local Storage
+                    localStorage.setItem("selected", selected);
+
+                    // Cập nhật màu sắc hoặc thực hiện các hành động khác dựa trên giá trị mới của selected
+                    // Ví dụ: Đổi màu tab đã chọn
+                    tabs.forEach(function (otherTab) {
+                        otherTab.classList.remove("selected-tab");
+                    });
+                    tab.classList.add("selected-tab");
+
+                    // Đối với các tác vụ khác bạn muốn thực hiện khi tab được chọn, hãy thêm mã vào đây.
+
+                    // ...
+                });
+            });
+
+            // Lấy tất cả các phần tử liTitle
+            const liTitleElements = document.querySelectorAll(".liTitle");
+
+            // Xử lý sự kiện khi người dùng click vào một liTitle
+            liTitleElements.forEach(function (liTitle) {
+                liTitle.addEventListener("click", function (event) {
+                    // Lấy tiêu đề của liTitle
+                    const liTitleText = liTitle.querySelector("a").textContent;
+
+                    // Cập nhật biến selected bằng tiêu đề của liTitle
+                    selected = liTitleText;
+
+                    // Lưu giá trị mới vào Local Storage
+                    localStorage.setItem("selected", selected);
+
+                    // Tại đây, bạn có thể thực hiện các hành động khác sau khi cập nhật selected từ liTitle.
+
+                    // Ví dụ: Đổi màu cho tab đã chọn
+                    tabs.forEach(function (tab) {
+                        tab.classList.remove("selected-tab");
+                        if (tab.querySelector("a").textContent === selected) {
+                            tab.classList.add("selected-tab");
+                        }
+                    });
+
+                    // Đối với các tác vụ khác bạn muốn thực hiện khi liTitle được chọn, hãy thêm mã vào đây.
+
+                    // ...
+                });
+            });
+
+            // Nếu có giá trị selected trong Local Storage, cập nhật giao diện dựa trên giá trị đó
+            if (selected) {
+                tabs.forEach(function (tab) {
+                    if (tab.querySelector("a").textContent === selected) {
+                        tab.classList.add("selected-tab");
+                    }
+                });
+            }
+
+            hideLoader();
+        });
+
+    </script>
+    <script>
+        //đoạn mã tìm tab có title trùng với biến selected sau đó đổi màu tab đó
+        document.addEventListener("DOMContentLoaded", function () {
+            // Lấy giá trị selected từ Local Storage
+            const selected = localStorage.getItem("selected");
+
+            // Lấy tất cả các tab
+            const tabs = document.querySelectorAll(".tab");
+
+            // Lặp qua tất cả các tab và kiểm tra nếu có tab có title bằng với giá trị selected
+            tabs.forEach(function (tab) {
+                const tabTitle = tab.querySelector("a").textContent;
+                if (tabTitle === selected) {
+                    // Đổi màu cho tab này
+                    tab.classList.add("selected-tab");
+                }
+            });
+        });
+
+    </script>
+    <script>
+        subMenuLinks.forEach(function (subMenuLink) {
+            subMenuLink.addEventListener("click", function (event) {
+                event.preventDefault();
+
+                const tabTitle = subMenuLink.textContent;
+                const subMenuLinkHref = subMenuLink.getAttribute("href");
+
+                // Cập nhật biến selected với giá trị của tabTitle
+                localStorage.setItem("selected", tabTitle);
+                console.log("selected:", tabTitle); // Thêm log để kiểm tra giá trị của selected
+
+                // Kiểm tra xem tab đã tồn tại trong mảng hay chưa
+                const tabExists = tabsArray.some(tab => tab.title === tabTitle);
+
+                // Nếu tab chưa tồn tại, thêm nó vào mảng
+                if (!tabExists) {
+                    tabsArray.push({ title: tabTitle, href: subMenuLinkHref });
+                    localStorage.setItem("tabsArray", JSON.stringify(tabsArray));
+                }
+
+                // Thêm tab vào giao diện
+                const newTab = document.createElement("li");
+                newTab.classList.add("tab", "selected");
+                newTab.innerHTML = `
+                            <a href="${subMenuLinkHref}">${tabTitle}</a>
+                            <a class="closeTab" href="">✕</a>
+                        `;
+                tabControlTabs.appendChild(newTab);
+
+                // Chuyển view tới thẻ li tương ứng
+                if (subMenuLinkHref) {
+                    // Lưu trạng thái hiện tại vào Local Storage trước khi chuyển trang
+                    localStorage.setItem("currentTabView1", tabTitle);
+                    localStorage.setItem("currentTabHrefView1", subMenuLinkHref);
+                    window.location.href = subMenuLinkHref;
+                }
+            });
+        });
+
     </script>
 </body>
 </html>

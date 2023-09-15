@@ -1,4 +1,4 @@
-﻿@{ ViewBag.Title = "OPC Bao Cao | OPCPHARMA";
+﻿﻿@{ ViewBag.Title = "OPC Bao Cao | OPCPHARMA";
     @model System.Data.DataSet
 }
 @using System.Data;
@@ -374,14 +374,14 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
             hideLoader();
         });
     </script>
-    @*<script>
+    <script>
             function runReport() {
                 // Hiển thị thẻ span có id là "spanText"
                 showLoader();
                 const spanElement = document.getElementById("spanText");
                 spanElement.style.display = "block";
             }
-        </script>*@
+        </script>
     <script>
         window.onload = function () {
             var username = localStorage.getItem("username");
@@ -440,9 +440,9 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                     const newTab = document.createElement("li");
                     newTab.classList.add("tab", "selected");
                     newTab.innerHTML = `
-                                            <a href="${subMenuLinkHref}">${tabTitle}</a>
-                                            <a class="closeTab" href="">✕</a>
-                                        `;
+                                                <a href="${subMenuLinkHref}">${tabTitle}</a>
+                                                <a class="closeTab" href="">✕</a>
+                                            `;
                     tabControlTabs.appendChild(newTab);
 
                     // Chuyển view tới thẻ li tương ứng
@@ -461,8 +461,8 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                 currentTab.classList.add("tab", "selected");
                 const tabInfo = JSON.parse(localStorage.getItem(currentTabTitleView1));
                 currentTab.innerHTML = `
-                                        <a href="${tabInfo.href}">${currentTabTitleView1}</a>
-                                        <a class="closeTab" href="">✕</a>
+                                            <a href="${tabInfo.href}">${currentTabTitleView1}</a>
+                                            <a class="closeTab" href="">✕</a>
 `;
                 tabControlTabs.appendChild(currentTab);
             }
@@ -530,9 +530,9 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                 const newTab = document.createElement("li");
                 newTab.classList.add("tab", "selected");
                 newTab.innerHTML = `
-                                    <a href="${tabHref}">${tabTitle}</a>
-                                    <a class="closeTab" href="">✕</a>
-                                    `;
+                                        <a href="${tabHref}">${tabTitle}</a>
+                                        <a class="closeTab" href="">✕</a>
+                                        `;
                 tabControlTabs.appendChild(newTab);
 
                 // Sự kiện khi người dùng nhấp vào nút đóng tab
@@ -602,7 +602,7 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
             }
         });
 
-                                    // ...
+                                        // ...
     </script>
 </body>
 </html>

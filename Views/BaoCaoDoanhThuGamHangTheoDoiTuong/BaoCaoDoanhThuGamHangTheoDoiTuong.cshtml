@@ -477,6 +477,19 @@
             background-color: cornflowerblue; /* Màu nền tab khi active */
             color: #fff; /* Màu chữ khi active */
         }
+        .tab.selected-tab {
+            pointer-events: none;
+            background-color: #3763a3; /* Màu nền của tab */
+        }
+
+            .tab.selected-tab a {
+                pointer-events: none;
+                color: white /* Màu nền của tab */
+            }
+
+            .tab.selected-tab .closeTab {
+                pointer-events: auto;
+            }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
@@ -664,28 +677,29 @@
                         <tbody>
                             @foreach (DataRow row2 in Model.Tables[0].Rows)
                             {
-                <tr>
+                                <tr>
 
-                    <td>@row2["ma_DvCs1"]</td>
-                    <td>@row2["ten_DvCs"]</td>
-                    <td>@row2["Ma_dt"]</td>
-                    <td>@row2["Ten_dt"]</td>
-                    <td>@row2["Ma_TDV"]</td>
-                    <td>@row2["Ten_TDV"]</td>
-                    <td>@row2["Dia_Chi"]</td>
-                    <td>@row2["Nhom_KH"]</td>
-                    <td>@row2["Loai_KH"]</td>
-                    <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Doanh_Thu_OPC"]))</td>
-                    <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Doanh_Thu_Con"]))</td>
-                    <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Doanh_Thu_Sui"]))</td>
-                    <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Doanh_Thu_TW25"]))</td>
-                    <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Doanh_Thu_Phien"]))</td>
+                                    <td>@row2["ma_DvCs1"]</td>
+                                    <td>@row2["ten_DvCs"]</td>
+                                    <td>@row2["Ma_dt"]</td>
+                                    <td>@row2["Ten_dt"]</td>
+                                    <td>@row2["Ma_TDV"]</td>
+                                    <td>@row2["Ten_TDV"]</td>
+                                    <td>@row2["Dia_Chi"]</td>
+                                    <td>@row2["Nhom_KH"]</td>
+                                    <td>@row2["Loai_KH"]</td>
+                                    <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Doanh_Thu_OPC"]))</td>
+                                    <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Doanh_Thu_Con"]))</td>
+                                    <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Doanh_Thu_Sui"]))</td>
+                                    <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Doanh_Thu_TW25"]))</td>
+                                    <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Doanh_Thu_Phien"]))</td>
 
-                    <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Doanh_Thu_Khac"]))</td>
-                    <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Tong_Thuc_Hien"]))</td>
-                    <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Tong_OPC_Con_Sui"]))</td>
+                                    <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Doanh_Thu_Khac"]))</td>
+                                    <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Tong_Thuc_Hien"]))</td>
+                                    <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Tong_OPC_Con_Sui"]))</td>
 
-                </tr>}
+                                </tr>
+}
 
 
 
@@ -934,9 +948,9 @@
                 const newTab = document.createElement("li");
                 newTab.classList.add("tab", "selected");
                 newTab.innerHTML = `
-                            <a href="${tabHref}">${tabTitle}</a>
-                            <a class="closeTab" href="">✕</a>
-                        `;
+                                <a href="${tabHref}">${tabTitle}</a>
+                                <a class="closeTab" href="">✕</a>
+                            `;
                 tabControlTabs.appendChild(newTab);
 
                 // Sự kiện khi người dùng nhấp vào nút đóng tab
@@ -1087,7 +1101,208 @@
             hideLoader();
         });
     </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Lấy đường dẫn hiện tại của view
+            const currentViewHref = window.location.href;
+            console.log("Href là:", window.location.href);
 
+            // Lấy mảng tabsArray từ Local Storage
+            let tabsArray = JSON.parse(localStorage.getItem("tabsArray")) || [];
+
+            // Khai báo index của tab cần cập nhật
+            const tabIndexToUpdate = 1; // Thay đổi số này để chọn vị trí index cụ thể
+
+            // Kiểm tra xem tabIndexToUpdate có hợp lệ trong mảng không
+            if (tabIndexToUpdate >= 0 && tabIndexToUpdate < tabsArray.length) {
+                // Cập nhật đường dẫn href của tab tại vị trí index đã chọn
+                tabsArray[tabIndexToUpdate].href = currentViewHref;
+
+                // Lưu lại tabsArray đã được cập nhật vào Local Storage
+                localStorage.setItem("tabsArray", JSON.stringify(tabsArray));
+            }
+
+            hideLoader();
+        });
+    </script>
+    <script>
+        // Lấy đường dẫn hiện tại của trang web
+        const currentViewHref = window.location.href;
+
+        // Lấy mảng tabsArray từ Local Storage
+        const tabsArray = JSON.parse(localStorage.getItem("tabsArray")) || [];
+
+        let tabIndex = -1; // Khởi tạo vị trí index mặc định là -1
+
+        // Duyệt qua mảng tabsArray để tìm vị trí index của tab có href trùng với đường dẫn hiện tại
+        for (let i = 0; i < tabsArray.length; i++) {
+            if (tabsArray[i].href === currentViewHref) {
+                tabIndex = i;
+                break; // Khi tìm thấy tab thì thoát khỏi vòng lặp
+            }
+        }
+
+        // Kiểm tra vị trí index của tab
+        if (tabIndex !== -1) {
+            console.log("Vị trí index của tab có href trùng với đường dẫn hiện tại là: " + tabIndex);
+        } else {
+            console.log("Không tìm thấy tab có href trùng với đường dẫn hiện tại.");
+        }
+
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const tabControlTabs = document.querySelector(".tab-control .tabs");
+
+            // Lấy tất cả các tab
+            const tabs = tabControlTabs.querySelectorAll(".tab");
+
+            // Xử lý sự kiện khi người dùng click vào một tab
+            tabs.forEach(function (tab) {
+                tab.addEventListener("click", function (event) {
+                    // Lấy tên của tab được click
+                    const tabTitle = tab.querySelector("a").textContent;
+
+                    // Cập nhật biến selected bằng tên của tab
+                    selected = tabTitle;
+
+                    // Lưu giá trị mới vào Local Storage
+                    localStorage.setItem("selected", selected);
+
+                    // Cập nhật màu sắc hoặc thực hiện các hành động khác dựa trên giá trị mới của selected
+                    // Ví dụ: Đổi màu tab đã chọn
+                    tabs.forEach(function (otherTab) {
+                        otherTab.classList.remove("selected-tab");
+                    });
+                    tab.classList.add("selected-tab");
+
+                    // Đối với các tác vụ khác bạn muốn thực hiện khi tab được chọn, hãy thêm mã vào đây.
+
+                    // ...
+                });
+            });
+
+            // Nếu có giá trị selected trong Local Storage, cập nhật giao diện dựa trên giá trị đó
+            if (selected) {
+                tabs.forEach(function (tab) {
+                    if (tab.querySelector("a").textContent === selected) {
+                        tab.classList.add("selected-tab");
+                    }
+                });
+            }
+
+            hideLoader();
+        });
+
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Lấy giá trị selected từ Local Storage
+            const selected = localStorage.getItem("selected");
+
+            // Lấy tất cả các tab
+            const tabs = document.querySelectorAll(".tab");
+
+            // Lặp qua tất cả các tab và kiểm tra nếu có tab có title bằng với giá trị selected
+            tabs.forEach(function (tab) {
+                const tabTitle = tab.querySelector("a").textContent;
+                if (tabTitle === selected) {
+                    // Đổi màu cho tab này
+                    tab.classList.add("selected-tab");
+                }
+            });
+        });
+
+    </script>
+    <script>
+        subMenuLinks.forEach(function (subMenuLink) {
+            subMenuLink.addEventListener("click", function (event) {
+                event.preventDefault();
+
+                const tabTitle = subMenuLink.textContent;
+                const subMenuLinkHref = subMenuLink.getAttribute("href");
+
+                // Cập nhật biến selected với giá trị của tabTitle
+                localStorage.setItem("selected", tabTitle);
+                console.log("selected:", tabTitle); // Thêm log để kiểm tra giá trị của selected
+
+                // Kiểm tra xem tab đã tồn tại trong mảng hay chưa
+                const tabExists = tabsArray.some(tab => tab.title === tabTitle);
+
+                // Nếu tab chưa tồn tại, thêm nó vào mảng
+                if (!tabExists) {
+                    tabsArray.push({ title: tabTitle, href: subMenuLinkHref });
+                    localStorage.setItem("tabsArray", JSON.stringify(tabsArray));
+                }
+
+                // Thêm tab vào giao diện
+                const newTab = document.createElement("li");
+                newTab.classList.add("tab", "selected");
+                newTab.innerHTML = `
+                                                                <a href="${subMenuLinkHref}">${tabTitle}</a>
+                                                                <a class="closeTab" href="">✕</a>
+                                                            `;
+                tabControlTabs.appendChild(newTab);
+
+                // Chuyển view tới thẻ li tương ứng
+                if (subMenuLinkHref) {
+                    // Lưu trạng thái hiện tại vào Local Storage trước khi chuyển trang
+                    localStorage.setItem("currentTabView1", tabTitle);
+                    localStorage.setItem("currentTabHrefView1", subMenuLinkHref);
+                    window.location.href = subMenuLinkHref;
+                }
+            });
+        });
+
+    </script>
+    <script>
+        subMenuLinks.forEach(function (subMenuLink) {
+            subMenuLink.addEventListener("click", function (event) {
+                event.preventDefault();
+
+                const tabTitle = subMenuLink.textContent;
+                const subMenuLinkHref = subMenuLink.getAttribute("href");
+
+                // Kiểm tra xem tabTitle có trùng với selected không
+                const selected = localStorage.getItem("selected");
+                if (selected === tabTitle) {
+                    // Nếu trùng, không làm gì cả và thoát khỏi sự kiện click
+                    return;
+                }
+
+                // Cập nhật biến selected với giá trị của tabTitle
+                localStorage.setItem("selected", tabTitle);
+                console.log("selected:", tabTitle);
+
+                // Kiểm tra xem tab đã tồn tại trong mảng hay chưa
+                const tabExists = tabsArray.some(tab => tab.title === tabTitle);
+
+                // Nếu tab chưa tồn tại, thêm nó vào mảng
+                if (!tabExists) {
+                    tabsArray.push({ title: tabTitle, href: subMenuLinkHref });
+                    localStorage.setItem("tabsArray", JSON.stringify(tabsArray));
+                }
+
+                // Thêm tab vào giao diện
+                const newTab = document.createElement("li");
+                newTab.classList.add("tab", "selected");
+                newTab.innerHTML = `
+                                                        <a href="${subMenuLinkHref}">${tabTitle}</a>
+                                                        <a class="closeTab" href="">✕</a>
+                                                    `;
+                tabControlTabs.appendChild(newTab);
+
+                // Chuyển view tới thẻ li tương ứng
+                if (subMenuLinkHref) {
+                    // Lưu trạng thái hiện tại vào Local Storage trước khi chuyển trang
+                    localStorage.setItem("currentTabView1", tabTitle);
+                    localStorage.setItem("currentTabHrefView1", subMenuLinkHref);
+                    window.location.href = subMenuLinkHref;
+                }
+            });
+        });
+
+    </script>
 </body>
 
 </html>

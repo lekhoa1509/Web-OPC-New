@@ -1,4 +1,4 @@
-﻿﻿﻿﻿﻿
+﻿﻿﻿﻿﻿﻿
 @{ ViewBag.Title = "Phiếu Xác Nhận Thanh Toán";
     string ten_dt = Request.Cookies["ten_dt"] != null ? HttpUtility.UrlDecode(Request.Cookies["ten_dt"].Value) : "";
     string Dia_Chi = Request.Cookies["Dia_Chi"] != null ? HttpUtility.UrlDecode(Request.Cookies["Dia_Chi"].Value) : "";
@@ -9,7 +9,6 @@
     {
         extractedText = Dvcs.Substring(10); // Cắt 10 ký tự đầu tiên
     }
-
 
 }
 @using System.Data;
@@ -427,18 +426,18 @@
                 <h3 style="font-size: 25px; color: black; font-weight: bold">XÁC NHẬN THANH TOÁN</h3>
                 <br />
             </div>
-            <div style="margin-left:-280px">
-                <h5>-Căn cứ Luật thương mại số 36/2005/QH11 ngày 14/06/2005;</h5>
-                <h5 style="margin-left:300px;text-align:left">-Căn cứ vào hợp đồng số: ................../thỏa thuận của đôi bên.</h5>
+            <div style="width:600px">
+                <h5 style="text-align:left">-Căn cứ Luật thương mại số 36/2005/QH11 ngày 14/06/2005;</h5>
+                <h5 style="text-align:left">-Căn cứ vào hợp đồng số: ................../thỏa thuận của đôi bên.</h5>
             </div>
             <br />
-            <div class="flex-container">
-                <h5 style="display: inline-block;color:black;font-weight:bold;margin-left:30px">Khách hàng: <span style="font-size: 15px;">@ten_dt</span></h5>
+            <div class="flex-container" style="width:600px">
+                <h5 style="display: inline-block;color:black;font-weight:bold;text-align:left">Khách hàng: <span style="font-size: 15px;">@ten_dt</span></h5>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <h5 style="display: inline-block; color: black; font-weight: bold"></h5>
             </div>
-            <div style="color:black;font-weight:bold; font-size:15px;">
-                <h5 style="text-align:left;margin-left:30px">Địa chỉ: @Dia_Chi</h5>
+            <div style="color:black;font-weight:bold; font-size:15px;width:600px">
+                <h5 style="text-align:left">Địa chỉ: @Dia_Chi</h5>
             </div>
 
             <br />
@@ -446,18 +445,18 @@
                 <h5>Điều kiện thanh toán: </h5>
             </div>
 
-            <div style="text-align:left">
-                <h5 style="font-size: 14px">Khi thanh toán ngay, Quý khách hàng được chiết khấu 2% trên giá trị thanh toán của những hóa đơn cụ thể như sau: </h5>
+            <div style="width:600px">
+                <h5 style="font-size: 14px;text-align:left">Khi thanh toán ngay, Quý khách hàng được chiết khấu 2% trên giá trị thanh toán của những hóa đơn cụ thể như sau: </h5>
             </div><br />
             <div>
                 <table border="1" border-collapse="collapse" style="width:600px">
                     <tr style="font-size:10px;font-weight:bold;color:black">
                         <th style="padding:10px">SỐ</th>
-                        <th>NGÀY HĐ</th>
-                        <th>NGÀY ĐẾN HẠN</th>
-                        <th>TIỀN HĐ</th>
-                        <th>CKTT</th>
-                        <th>TIỀN THANH TOÁN</th>
+                        <th style="width:100px">NGÀY HĐ</th>
+                        <th style="width:100px">NGÀY ĐẾN HẠN</th>
+                        <th style="width:120px">TIỀN HĐ</th>
+                        <th style="width:120px">CKTT</th>
+                        <th styl="width:100px">TIỀN THANH TOÁN</th>
                     </tr>
                     <tbody>
                         @foreach (DataRow row3 in Model.Tables[0].Rows)
@@ -496,6 +495,7 @@
                     </div><br />
                     <div style="text-align:right">
                         <h4 class="branch">@extractedText, ngày&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tháng&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;năm&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h4>
+
                     </div>
                     @*<h4 style="margin-left:auto">P. KHCU &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Thủ kho&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Xưởng sản xuất</h4>*@
                     <div style="display:inline-block">
@@ -504,7 +504,7 @@
                         <h4 style="display:inline-block">Người lập bảng</h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     </div><br />
                     <div>
-                        <h5 style="font-style:italic;text-align:left;margin-left:60px">(Ký, ghi họ tên)</h5>
+                        <h5 style="font-style:italic;text-align:left;margin-left:10px">(Ký, ghi họ tên)</h5>
                     </div>
                 </div>
                 <button class="print-button" onclick="printDataForm()" id="print">In Data</button>
