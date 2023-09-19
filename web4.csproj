@@ -228,7 +228,9 @@
     <Compile Include="Controllers\BaoCaoBanHangCNController.cs" />
     <Compile Include="Controllers\BaoCaoBanHangTDVController.cs" />
     <Compile Include="Controllers\BaoCaoDoanhThuGamHangTheoDoiTuongController.cs" />
+    <Compile Include="Controllers\BaoCaoHopDongController.cs" />
     <Compile Include="Controllers\BaoCaoTienVeCNController.cs" />
+    <Compile Include="Controllers\BKHoaDonGiaoHangController.cs" />
     <Compile Include="Controllers\ChartController.cs" />
     <Compile Include="Controllers\DanhMucController.cs" />
     <Compile Include="Controllers\DoanhThuChiNhanhController.cs" />
@@ -238,6 +240,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\BKHoaDonGiaoHang.cs" />
     <Compile Include="Models\StudentMarkDetails.cs" />
     <Compile Include="Models\Chart.cs" />
     <Compile Include="Models\Account.cs" />
@@ -954,6 +957,9 @@
     <Content Include="Views\Home\Verify.cshtml" />
     <Content Include="Views\MauInChungTu\ThongBaoNoQH_Fill.cshtml" />
     <Content Include="Views\MauInChungTu\ThongBaoNoQH_In.cshtml" />
+    <Content Include="Views\BKHoaDonGiaoHang\BangKeHoaDonGiaoHang.cshtml" />
+    <Content Include="Views\BaoCaoHopDong\BaoCaoHopDongMar.cshtml" />
+    <Content Include="Views\BaoCaoHopDong\BaoCaoHopDongMar_Fill.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
