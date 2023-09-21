@@ -19,6 +19,7 @@ namespace web4.Models
         public string From_date { get; set; }
         public string To_date { get; set; }
         public string Ma_DvCs { get; set; }
+        public string UserName { get; set; }
     }
 
 }

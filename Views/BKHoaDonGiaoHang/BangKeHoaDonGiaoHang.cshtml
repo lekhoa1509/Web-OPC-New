@@ -1,11 +1,12 @@
-﻿@{ ViewBag.Title = "Bang Ke Hoa Don Giao Hang"; }
+﻿@{ ViewBag.Title = "Bang Ke Hoa Don Giao Hang";
+    string Ma_TDV = Request.Cookies["Ma_TDV"] != null ? HttpUtility.UrlDecode(Request.Cookies["Ma_TDV"].Value) : "";
+  
+}
 @using System.Data;
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-
-
     <style>
         a:hover {
             background-color: lightskyblue;
@@ -463,6 +464,7 @@
             .tab.selected-tab .closeTab {
                 pointer-events: auto;
             }
+
         table {
             border-collapse: collapse;
             width: 300px;
@@ -539,7 +541,7 @@
         </div>
         <ul class="nav-links" style="justify-content: center; display:flex;margin-left:10px">
             <li>
-                <form id="dateForm" action="BangKeHoaDonGiaoHang" method="post" onsubmit="handleFormSubmit(event)">
+                <form id="dateForm" action="BangKeHoaDonGiaoHang_Main" method="post" onsubmit="handleFormSubmit(event)">
                     <div id="locBC">
                         <span id="spanText" class="text-loading">[usp_BKHoaDonGiaoHang_SAP]</span>
                         <a>Từ Ngày</a><br /><br />
@@ -548,14 +550,43 @@
                         <a>Đến Ngày</a><br /><br />
                         <input class="den_ngay" id="den_ngay" placeholder=" Đến Ngày" name="To_date" type="DATE" format="YYYY-MM-DD" value="@Request.QueryString["To_date"]" /><br /><br />
                         <script>$("#den_ngay").datetimepicker({ timepicker: false, format: 'Y-m-d' });</script>
-                        <input type="text" id="dropdownInput" list="dropdownList" placeholder="Tìm kiếm danh mục">
-                        <datalist id="dropdownList">
-                            @foreach (var item in ViewBag.DataItems)
-                            {
-                                <option value="@item.So_Ct_E">@item.So_Ct_E</option>
-}
-                        </datalist>
-                        <input type="hidden" name="Ma_Dt" id="selectedOption">
+                        @*<input type="text" id="dropdownInput" list="dropdownList" placeholder="Tìm kiếm danh mục">
+        <datalist id="dropdownList">
+            @foreach (var item in ViewBag.DataItems)
+            {
+                <option value="@item.So_Ct_E">@item.So_Ct_E</option>
+            }
+        </datalist>
+        <input type="hidden" name="Ma_Dt" id="selectedOption">*@
+                        <!-- Dropdown Mã TDV -->
+                        <div style="width:auto; height:100px">
+                            <span style="display:inline-block; width:auto;">
+                                <h6>Tên TDV: </h6>
+                            </span>
+                            <select id="dropdownMaTDV" class="js-example-basic-single" style="width:200px">
+                                @foreach (var item in ViewBag.DataTDV)
+                                {
+                                    <option value="@item.Ma_TDV">@item.Ma_TDV-@item.Ten_TDV</option>
+                                }
+                            </select>
+                        </div>
+
+                        <!-- Dropdown Số hóa đơn -->
+                        <div style="width:auto; height:100px">
+                            <span style="display:inline-block; width:auto;">
+                                <h6>Số hóa đơn: </h6>
+                            </span>
+                            <select id="dropdownSoHoaDon" class="js-example-basic-single" style="width:200px">
+                                @foreach (var soHoaDon in ViewBag.DataItems)
+                                {
+                                    <option value="@soHoaDon.So_Ct_E">@soHoaDon.So_Ct_E</option>
+                                }
+                            </select>
+                        </div>
+
+
+
+
                     </div>
                     <div>
                         <button class="submit" type="submit" onclick="runReport()"> Chạy Báo Cáo </button>
@@ -572,6 +603,21 @@
         </a>
         <h4>Bảng Kê Hóa Đơn Giao Hàng</h4>
     </header>
+    @*<div style="width:auto; height:100px; position:relative; left:20%; margin-top:-50px;">
+            <span style="display:inline-block; width:auto;">
+                <h6>Tên TDV: </h6>
+            </span>
+            <select id="dropdownTenTDV" class="js-example-basic-single">
+                @foreach (var item in ViewBag.DataTDV)
+                {
+                    <option value="@item.So_Ct_E">@item.Ten_TDV</option>
+                }
+            </select>
+
+
+        </div>*@
+
+
     <!-- =======  Data-Table  = Start  ========================== -->
     <div class="tab-control">
         <ul class="tabs" style="background-color: #1d1b31; left: 0; right: 0;top:500px">
@@ -608,7 +654,7 @@
                     <table id="example" class="table table-striped table-bordered">
                         <thead class="table-dark">
                             <tr>
-                                <th>Status</th>
+
                                 <th>Số Hóa Đơn</th>
                                 <th>Tên Đối Tượng</th>
                                 <th>Tên Vật Tư</th>
@@ -617,23 +663,23 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td class="status-cell"><div class="status-indicator"></div></td>
+
                                 <td class="editable">
-                                    <div class="selected-value"></div>
-                                    <!-- Đây là dropdown ẩn -->
-                                    <select class="dropdown-list">
+                                    <select class="sohd-dropdown">
+                                        <option value="">Chọn số hóa đơn</option>
                                         @foreach (var item in ViewBag.DataItems)
                                         {
                                             <option value="@item.So_Ct_E">@item.So_Ct_E</option>
                                         }
                                     </select>
                                 </td>
-                                <td class="editable"><input type="text" value="Value 2"></td>
-                                <td class="editable"><input type="text" value="Value 3"></td>
-                                <td class="editable"><input type="text" value="Value 4"></td>
+                                <td class="editable tdo-hoten"></td>
+                                <td class="editable tenvt"></td>
+                                <td class="editable tongtien"></td>
                             </tr>
+
                             <tr>
-                                <td class="status-cell"><div class="status-indicator"></div></td>
+
                                 <td class="editable"><input type="text" value="Value 4"></td>
                                 <td class="editable"><input type="text" value="Value 5"></td>
                                 <td class="editable"><input type="text" value="Value 6"></td>
@@ -658,7 +704,17 @@
     <script src="~/assets/js/pdfmake.min.js"></script>
     <script src="~/assets/js/vfs_fonts.js"></script>
     <script src="~/assets/js/custom.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+    @*<script>
+        // Lấy giá trị từ bộ nhớ cục bộ
+        var selectedValue = localStorage.getItem('selectedValue'); // hoặc sessionStorage
 
+        // Gửi giá trị selectedValue lên server
+        window.location.href = '/BKHoaDonGiaoHang/BangKeHoaDonGiaoHang?selectedValue=' + selectedValue;
+
+
+    </script>*@
     <script>
         // Set the "Từ Ngày" input to the first day of the current month
         function setFirstDayOfCurrentMonth() {
@@ -703,50 +759,7 @@
             spanElement.style.display = "block";
         }
     </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const checkboxes = document.querySelectorAll('input[name="myCheckbox"]');
-            const table = document.getElementById('example');
 
-            checkboxes.forEach((checkbox, index) => {
-                checkbox.addEventListener('change', function () {
-                    const columnIndex = index;
-                    const rows = table.querySelectorAll('tr');
-
-                    rows.forEach(row => {
-                        const cells = row.querySelectorAll('td, th');
-                        cells[columnIndex].style.display = this.checked ? '' : 'none';
-                    });
-                });
-            });
-        });
-    </script>
-    <script>
-        // Hàm lưu trạng thái checkbox vào Local Storage
-        function saveCheckboxState() {
-            const checkboxes = document.querySelectorAll('input[name="myCheckbox"]');
-            const checkboxState = {};
-
-            checkboxes.forEach((checkbox, index) => {
-                checkboxState[index] = checkbox.checked;
-            });
-
-            localStorage.setItem('checkboxState', JSON.stringify(checkboxState));
-        }
-
-        // Lưu trạng thái khi người dùng bỏ chọn checkbox
-        // Lắng nghe sự kiện thay đổi của các checkbox
-        document.addEventListener('DOMContentLoaded', function () {
-            const checkboxes = document.querySelectorAll('input[name="myCheckbox"]');
-
-            checkboxes.forEach(checkbox => {
-                checkbox.addEventListener('change', function () {
-                    localStorage.setItem(checkbox.value, checkbox.checked);
-                });
-            });
-        });
-
-    </script>
     <script>
 
         function handleFormSubmit(event) {
@@ -858,9 +871,9 @@
                 }
 
                 newTab.innerHTML = `
-                                                <a href="${tabHref}">${tabTitle}</a>
-                                                <a class="closeTab" href="">✕</a>
-                                            `;
+                                                                                            <a href="${tabHref}">${tabTitle}</a>
+                                                                                            <a class="closeTab" href="">✕</a>
+                                                                                        `;
                 tabControlTabs.appendChild(newTab);
 
                 // Sự kiện khi người dùng nhấp vào nút đóng tab
@@ -891,9 +904,9 @@
                 const newTab = document.createElement("li");
                 newTab.classList.add("tab", "selected");
                 newTab.innerHTML = `
-                                                    <a href="${tabHref}">${tabTitle}</a>
-                                                    <a class="closeTab" href="">✕</a>
-                                                `;
+                                                                                                <a href="${tabHref}">${tabTitle}</a>
+                                                                                                <a class="closeTab" href="">✕</a>
+                                                                                            `;
                 tabControlTabs.appendChild(newTab);
 
                 // Sự kiện khi người dùng nhấp vào nút đóng tab
@@ -1093,9 +1106,9 @@
                 const newTab = document.createElement("li");
                 newTab.classList.add("tab", "selected");
                 newTab.innerHTML = `
-                                        <a href="${subMenuLinkHref}">${tabTitle}</a>
-                                        <a class="closeTab" href="">✕</a>
-                                    `;
+                                                                                    <a href="${subMenuLinkHref}">${tabTitle}</a>
+                                                                                    <a class="closeTab" href="">✕</a>
+                                                                                `;
                 tabControlTabs.appendChild(newTab);
 
                 // Chuyển view tới thẻ li tương ứng
@@ -1141,9 +1154,9 @@
                 const newTab = document.createElement("li");
                 newTab.classList.add("tab", "selected");
                 newTab.innerHTML = `
-                                    <a href="${subMenuLinkHref}">${tabTitle}</a>
-                                    <a class="closeTab" href="">✕</a>
-                                `;
+                                                                                <a href="${subMenuLinkHref}">${tabTitle}</a>
+                                                                                <a class="closeTab" href="">✕</a>
+                                                                            `;
                 tabControlTabs.appendChild(newTab);
 
                 // Chuyển view tới thẻ li tương ứng
@@ -1157,124 +1170,166 @@
         });
 
     </script>
-    <script>
-        // JavaScript to make table cells editable
-        const editableCells = document.querySelectorAll('.editable');
+    @*<script>
+            // JavaScript to make table cells editable
+            const editableCells = document.querySelectorAll('.editable');
 
-        editableCells.forEach(cell => {
-            cell.addEventListener('click', () => {
-                // Create an input element
-                const input = document.createElement('input');
-                input.type = 'text';
-                input.value = cell.textContent.trim();
+            editableCells.forEach(cell => {
+                cell.addEventListener('click', () => {
+                    // Create an input element
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.value = cell.textContent.trim();
 
-                // Clear the cell and append the input element
-                cell.innerHTML = '';
-                cell.appendChild(input);
+                    // Clear the cell and append the input element
+                    cell.innerHTML = '';
+                    cell.appendChild(input);
 
-                // Focus on the input
-                input.focus();
+                    // Focus on the input
+                    input.focus();
 
-                // Update cell content when input loses focus
-                input.addEventListener('blur', () => {
-                    cell.textContent = input.value;
+                    // Update cell content when input loses focus
+                    input.addEventListener('blur', () => {
+                        cell.textContent = input.value;
+                    });
                 });
             });
-        });
 
-        // JavaScript to add a new row when the "add-row" cell is clicked
-        const addRowCell = document.querySelector('.add-row');
-        addRowCell.addEventListener('click', () => {
-            const tbody = addRowCell.parentNode;
-            const newRow = document.createElement('tr');
-            newRow.innerHTML = '<td class="status-cell"><div class="status-indicator"></div></td><td class="editable"><input type="text" value=""></td><td class="editable"><input type="text" value=""></td><td class="editable"><input type="text" value=""></td>';
-            tbody.insertBefore(newRow, addRowCell);
-        });
-
-        // JavaScript to handle row highlighting
-        const statusCells = document.querySelectorAll('.status-cell');
-
-        statusCells.forEach(cell => {
-            cell.addEventListener('click', () => {
-                // Remove the highlight class from all rows
-                document.querySelectorAll('tr.selected-row').forEach(row => {
-                    row.classList.remove('selected-row');
-                });
-
-                // Highlight the clicked row
-                const row = cell.parentNode;
-                row.classList.add('selected-row');
+            // JavaScript to add a new row when the "add-row" cell is clicked
+            const addRowCell = document.querySelector('.add-row');
+            addRowCell.addEventListener('click', () => {
+                const tbody = addRowCell.parentNode;
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = '<td class="status-cell"><div class="status-indicator"></div></td><td class="editable"><input type="text" value=""></td><td class="editable"><input type="text" value=""></td><td class="editable"><input type="text" value=""></td>';
+                tbody.insertBefore(newRow, addRowCell);
             });
-        });
-    </script>
-    <script>
-        document.getElementById("dropdownInput").addEventListener("input", function () {
-            var inputValue = this.value;
-            var options = document.querySelectorAll("#dropdownList option");
 
-            for (var i = 0; i < options.length; i++) {
-                if (options[i].getAttribute("value") === inputValue) {
-                    document.getElementById("selectedOption").value = inputValue;
+            // JavaScript to handle row highlighting
+            const statusCells = document.querySelectorAll('.status-cell');
 
-                    break;
-                }
-            }
-        });
+            statusCells.forEach(cell => {
+                cell.addEventListener('click', () => {
+                    // Remove the highlight class from all rows
+                    document.querySelectorAll('tr.selected-row').forEach(row => {
+                        row.classList.remove('selected-row');
+                    });
 
+                    // Highlight the clicked row
+                    const row = cell.parentNode;
+                    row.classList.add('selected-row');
+                });
+            });
+        </script>*@
+    @*<script>
+            document.getElementById("dropdownInput").addEventListener("input", function () {
+                var inputValue = this.value;
+                var options = document.querySelectorAll("#dropdownList option");
 
+                for (var i = 0; i < options.length; i++) {
+                    if (options[i].getAttribute("value") === inputValue) {
+                        document.getElementById("selectedOption").value = inputValue;
 
-        document.addEventListener("DOMContentLoaded", function () {
-            var runReportButton = document.getElementById("runReportButton");
-
-            if (runReportButton) {
-                runReportButton.addEventListener("click", function () {
-                    var dropdownInput = document.getElementById("dropdownInput");
-                    var selectedOption = document.querySelector("#dropdownList option[value='" + dropdownInput.value + "']");
-
-                    if (selectedOption) {
-                        var tenDt = selectedOption.text.toString();
-                        var selectedDiaChi = selectedOption.getAttribute('data-diachi');
-                        var selectedDvcs = selectedOption.getAttribute('data-Dvcs');
-                        var selectedDvcs1 = selectedOption.getAttribute('data-dvcs1');
-                        document.cookie = `Ten_Dt=${encodeURIComponent(tenDt)}; expires=Thu, 01 Jan 2099 00:00:00 UTC; path=/;`;
-                        document.cookie = 'Dia_Chi=' + selectedDiaChi;
-                        document.cookie = 'Dvcs=' + selectedDvcs;
-                        document.cookie = 'Dvcs1=' + selectedDvcs1;
+                        break;
                     }
-                });
-            }
-        });
+                }
+            });
 
 
-    </script>
-    <script>
-        // Lấy danh sách tất cả các ô có class "editable"
-        const editableCells = document.querySelectorAll('.editable');
 
-        editableCells.forEach(cell => {
-            cell.addEventListener('click', () => {
-                // Tìm phần tử dropdown trong ô
-                const dropdown = cell.querySelector('.dropdown-list');
+            document.addEventListener("DOMContentLoaded", function () {
+                var runReportButton = document.getElementById("runReportButton");
 
-                // Hiển thị dropdown
-                dropdown.style.display = 'block';
+                if (runReportButton) {
+                    runReportButton.addEventListener("click", function () {
+                        var dropdownInput = document.getElementById("dropdownInput");
+                        var selectedOption = document.querySelector("#dropdownList option[value='" + dropdownInput.value + "']");
 
-                // Xử lý sự kiện khi chọn một giá trị từ dropdown
-                dropdown.addEventListener('change', () => {
-                    // Lấy giá trị đã chọn
-                    const selectedValue = dropdown.value;
+                        if (selectedOption) {
+                            var tenDt = selectedOption.text.toString();
+                            var selectedDiaChi = selectedOption.getAttribute('data-diachi');
+                            var selectedDvcs = selectedOption.getAttribute('data-Dvcs');
+                            var selectedDvcs1 = selectedOption.getAttribute('data-dvcs1');
+                            document.cookie = `Ten_Dt=${encodeURIComponent(tenDt)}; expires=Thu, 01 Jan 2099 00:00:00 UTC; path=/;`;
+                            document.cookie = 'Dia_Chi=' + selectedDiaChi;
+                            document.cookie = 'Dvcs=' + selectedDvcs;
+                            document.cookie = 'Dvcs1=' + selectedDvcs1;
+                        }
+                    });
+                }
+            });
 
-                    // Gán giá trị đã chọn vào phần tử div để hiển thị
-                    const selectedValueDiv = cell.querySelector('.selected-value');
-                    selectedValueDiv.textContent = selectedValue;
 
-                    // Ẩn dropdown sau khi đã chọn giá trị
-                    dropdown.style.display = 'none';
+        </script>*@
+    @*<script>
+            // Lấy danh sách tất cả các ô có class "editable"
+            const editableCells = document.querySelectorAll('.editable');
+
+            editableCells.forEach(cell => {
+                cell.addEventListener('click', () => {
+                    // Tìm phần tử dropdown trong ô
+                    const dropdown = cell.querySelector('.dropdown-list');
+
+                    // Hiển thị dropdown
+                    dropdown.style.display = 'block';
+
+                    // Xử lý sự kiện khi chọn một giá trị từ dropdown
+                    dropdown.addEventListener('change', () => {
+                        // Lấy giá trị đã chọn
+                        const selectedValue = dropdown.value;
+
+                        // Gán giá trị đã chọn vào phần tử div để hiển thị
+                        const selectedValueDiv = cell.querySelector('.selected-value');
+                        selectedValueDiv.textContent = selectedValue;
+
+                        // Ẩn dropdown sau khi đã chọn giá trị
+                        dropdown.style.display = 'none';
+                    });
                 });
             });
-        });
 
+        </script>*@
+
+
+    <script>
+        $(document).ready(function () {
+            $("#dropdownTenTDV").select2(); // Kích hoạt Select2 trên dropdown
+        });
     </script>
+    <script>
+        // Lấy giá trị ban đầu của dropdown khi trang web được nạp
+        var selectedValue = document.getElementById("dropdownTenTDV").value;
+        localStorage.setItem("selectedValue", selectedValue);
+
+        // Xử lý sự kiện thay đổi dropdown Ma_TDV
+        document.getElementById("dropdownTenTDV").addEventListener("change", function () {
+            selectedValue = this.value; // Lấy giá trị đã chọn khi dropdown thay đổi
+
+            // Cập nhật giá trị trong localStorage
+            localStorage.setItem("selectedValue", selectedValue);
+
+            // Gửi form hoặc làm bất kỳ điều gì bạn cần thực hiện ở đây sau khi đã cập nhật giá trị.
+            // Ví dụ: document.getElementById("myForm").submit();
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            // Xử lý sự kiện thay đổi dropdown Ma_TDV
+            $('#dropdownTenTDV').change(function () {
+                $('#myForm').submit(); // Gửi lại form khi Ma_TDV thay đổi
+            });
+
+        });
+    </script>
+    <script>
+    // Lấy danh sách SoHoaDonList từ ViewBag
+    var soHoaDonList = @Html.Raw(Json.Encode(ViewBag.SoHoaDonList));
+
+    // In danh sách ra console
+    console.log(soHoaDonList);
+    </script>
+
+
 </body>
 
 </html>

@@ -960,6 +960,7 @@
     <Content Include="Views\BKHoaDonGiaoHang\BangKeHoaDonGiaoHang.cshtml" />
     <Content Include="Views\BaoCaoHopDong\BaoCaoHopDongMar.cshtml" />
     <Content Include="Views\BaoCaoHopDong\BaoCaoHopDongMar_Fill.cshtml" />
+    <Content Include="Views\BKHoaDonGiaoHang\BangKeHoaDonGiaoHang_Main.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
 using DevExpress.DataProcessing.InMemoryDataProcessor;
+using System.Web.UI.WebControls;
 
 namespace web4.Controllers
 {
@@ -55,7 +56,7 @@ namespace web4.Controllers
                 Response.Cookies["MA_DVCS"].Value = Acc.Ma_DvCs.ToString();
 
                 con.Close();
-              
+                ViewBag.UserName = Acc.Name.ToString();
                 return View("About"); 
             }
             else
@@ -64,41 +65,29 @@ namespace web4.Controllers
                 return View("Login");
             }
         }
-        public ActionResult About()
+        public ActionResult About(Account Acc)
         {
-            //DataSet ds = new DataSet();
-            //connectSQL();
-            //Top10.Ma_DvCs = Request.Cookies["MA_DVCS"].Value;
+        //{
+        //    connectSQL();
+        //    con.Open();
+        //    string username = "";
+        //    sqlc.Connection = con;
+        //    sqlc.CommandText = "select * from view_user where Tendangnhap ='" + Acc.Name + "'And matkhau='" + Acc.Password + "'and ma_DvCs='" + Acc.Ma_DvCs + "'";
+        //    dt = sqlc.ExecuteReader();
+        //    if (dt.Read())
+        //    {
+        //        Response.Cookies["UserName"].Value = Acc.Name.ToString();
+        //        Response.Cookies["MA_DVCS"].Value = Acc.Ma_DvCs.ToString();
 
+        //        con.Close();
 
-            //DateTime firstDayOfMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-
-
-            //DateTime currentDate = DateTime.Now;
-
-            //string Pname = "[usp_Top10DoanhThu_SAP]";
-
-
-            //using (SqlCommand cmd = new SqlCommand(Pname, con))
-            //{
-            //    cmd.CommandTimeout = 950;
-            //    cmd.Connection = con;
-            //    cmd.CommandType = CommandType.StoredProcedure;
-            //    Top10.From_date = firstDayOfMonth.ToString();
-            //    Top10.To_date = currentDate.ToString();
-
-            //    using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
-            //    {
-            //        cmd.Parameters.AddWithValue("@_Tu_Ngay", Top10.From_date);
-            //        cmd.Parameters.AddWithValue("@_Den_Ngay", Top10.To_date);
-            //        cmd.Parameters.AddWithValue("@_ma_dvcs", Top10.Ma_DvCs);
-            //        sda.Fill(ds);
-            //    }
-            //}
-            //var username = Request.Cookies["UserName"].Value;
-            //ViewBag.Username = username;
-            var username = Request.Cookies["UserName"].Value;
-            ViewBag.Username = username;
+        //        return View("About");
+        //    }
+        //    else
+        //    {
+        //        ViewBag.Message = "Sai Mật Khẩu";
+        //        return View("Login");
+        //    }
             return View();
         }
        

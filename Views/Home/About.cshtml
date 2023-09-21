@@ -1,5 +1,6 @@
 ﻿@{ ViewBag.Title = "OPC Bao Cao | OPCPHARMA";
     @model System.Data.DataSet
+   
 }
 @using System.Data;
 <!DOCTYPE html>
@@ -370,7 +371,8 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                                 </tr>
                                 <tr style="height:30px">
                                     <td style="text-align: left">
-                                        @if (string.Equals(ViewBag.UserName, "admin", StringComparison.OrdinalIgnoreCase))
+                                        @if (string.Equals(ViewBag.UserName, "admin", StringComparison.OrdinalIgnoreCase) ||
+string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase))
                                         {
                                             <li style=" list-style-type: none;" class="liTitle">
                                                 <a href="/DoanhThuChiNhanh/DoanhThuChiNhanh_Admin_Fill">2.Doanh Thu Chi Nhánh Theo Gam</a>
@@ -495,7 +497,7 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                         <table style="width:500px;height:200px; border-collapse: collapse;overflow:scroll">
 
                             <tr class="title">
-                                <th colspan="4" class="top10" style="font-size:18px;padding:5px;height:10px">BÁO CÁO HỢP ĐỒNG</th>
+                                <th colspan="4" class="top10" style="font-size:18px;padding:5px;height:10px">BÁO CÁO PHÂN TÍCH KHUYẾN MÃI</th>
                             </tr>
 
                             <tbody style="float:left">

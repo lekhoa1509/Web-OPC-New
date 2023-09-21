@@ -438,26 +438,32 @@
                 </div>
                 <div style="justify-content:start;display:flex">
                     <div style="text-align:left">
-                        <h5 style="color:black;font-weight:bold">Kính gửi: QUẦY THUỐC MINH CHI</h5>
+                        <h5 style="color:black;font-weight:bold">Kính gửi: @ten_dt</h5>
                     </div>
                 </div>
                 <br />
                 <div style="width:700px;justify-content:start">
                     <div style="word-wrap:break-word">
-                        <h5 style="text-align:left">Công Ty Cổ Phần Dược Phẩm OPC - Chi Nhánh Cần Thơ trân trọng thông báo đến quý khách hàng có số dư nợ mà Quý Khách hàng chưa thanh toán cho chúng tôi tính đến ngày 24/07/2023 là: <span style="color: black;font-weight:bold">
-    @foreach (DataRow row3 in Model.Tables[1].Rows)
-    {
-@row3["Tong_No"]}  Đồng
-</span></h5>
+                        <h5 style="text-align:left">
+                            Công Ty Cổ Phần Dược Phẩm OPC - Chi Nhánh Cần Thơ trân trọng thông báo đến quý khách hàng có số dư nợ mà Quý Khách hàng chưa thanh toán cho chúng tôi tính đến ngày  <span style="color: black;font-weight:bold">
+                                @foreach (DataRow row3 in Model.Tables[3].Rows)
+                                {
+                                    @row3["Den_Ngay"]} 
+                            </span> là: <span style="color: black;font-weight:bold">
+                                @foreach (DataRow row3 in Model.Tables[0].Rows)
+                                {
+                                    @row3["Tong_No"]}  Đồng
+                            </span>
+                        </h5>
 
                     </div>
                 </div>
                 <br />
                 <div>
                     <h5 style="margin-left:20px;text-align:left">Trong đó nợ quá hạn là: <span style="color:black;font-weight:bold">
-    @foreach (DataRow row3 in Model.Tables[1].Rows)
+    @foreach (DataRow row3 in Model.Tables[2].Rows)
     {
-        @row3["Tong_No"]
+        @row3["Tong_No2"]
     }  Đồng
                 </span>, bao gồm các hóa đơn sau:</h5>
                 </h5>
@@ -501,7 +507,7 @@
                             <td class="num" style="text-align:right;font-weight:bold;">
                                 @foreach (DataRow row3 in Model.Tables[2].Rows)
                                 {
-                                    @row3["Tong_No"]
+                                    @row3["Tong_No2"]
                                 }
                         </td>
                         <td></td>
@@ -512,7 +518,13 @@
                     </table>
                     <br />
                     <div style="width:700px;word-wrap:break-word">
-                        <h5>Kính đề nghị Quý Khách Hàng vui lòng đối chiếu và xác nhận số liệu gửi về Công Ty Cố Phần Dược Phẩm OPC - Chi Nhánh Cần Thơ trước ngày <span style="color:black;font-weight:bold">26/06/2023</span>. Đồng thời sớm thanh toán số dư nợ quá hạn trên cho Chi Nhánh chúng tôi bằng tiền mặt hoặc chuyển vào tài khoản: Công Ty Cố Phẩn Dược Phẩm OPC - Chi Nhánh Cần Thơ.</h5>
+                        <h5>
+                            Kính đề nghị Quý Khách Hàng vui lòng đối chiếu và xác nhận số liệu gửi về Công Ty Cố Phần Dược Phẩm OPC - Chi Nhánh Cần Thơ trước ngày  <span style="color: black;font-weight:bold">
+                                @foreach (DataRow row3 in Model.Tables[3].Rows)
+                                {
+                                    @row3["HanNgay"]}
+                            </span>. Đồng thời sớm thanh toán số dư nợ quá hạn trên cho Chi Nhánh chúng tôi bằng tiền mặt hoặc chuyển vào tài khoản: Công Ty Cố Phẩn Dược Phẩm OPC - Chi Nhánh Cần Thơ.
+                        </h5>
                     </div>
 
                     <div>
