@@ -130,5 +130,14 @@ namespace web4.Properties {
                 return ((string)(this["Dvcs1"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Ma_TDV {
+            get {
+                return ((string)(this["Ma_TDV"]));
+            }
+        }
     }
 }

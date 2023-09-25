@@ -29,7 +29,7 @@
         <div class="row-col">
             <div class="banner-agileits-btm">
                 <div class="w3layouts_more-buttn">
-                    <a href="/Home/Login">Xem</a>
+                    <a href="/Home/Login" onclick="deleteTab()">Xem</a>
                 </div>
             </div>
 
@@ -38,7 +38,18 @@
     <script type='text/javascript' src='Scripts/jquery-2.2.3.min.js'></script>
 
     <!--scripts-->
+    <script>
+        // ham xu ly dang nhap va xoa mang tabArray
+        function deleteTab() {
+            // Làm rỗng mảng tabArray
+            const tabArray = JSON.parse(localStorage.getItem("tabsArray")) || [];
+            tabArray.length = 0;
+            localStorage.setItem("tabsArray", JSON.stringify(tabArray));
 
+           
+        }
+
+    </script>
 
 </body>
 </html> 

@@ -961,6 +961,8 @@
     <Content Include="Views\BaoCaoHopDong\BaoCaoHopDongMar.cshtml" />
     <Content Include="Views\BaoCaoHopDong\BaoCaoHopDongMar_Fill.cshtml" />
     <Content Include="Views\BKHoaDonGiaoHang\BangKeHoaDonGiaoHang_Main.cshtml" />
+    <Content Include="Views\BaoCaoHopDong\BaoCaoChiTietHD_Fill.cshtml" />
+    <Content Include="Views\BaoCaoHopDong\BaoCaoChiTietHD.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

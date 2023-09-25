@@ -16,6 +16,7 @@ namespace web4.Models
         public string Ma_TDV { get; set; }
         public string Ten_TDV { get; set; }
         public decimal Tong_Tien { get; set; }
+        public string SelectedMaTDV { get; set; }
         public string From_date { get; set; }
         public string To_date { get; set; }
         public string Ma_DvCs { get; set; }

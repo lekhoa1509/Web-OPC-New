@@ -3,6 +3,7 @@
   
 }
 @using System.Data;
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -551,19 +552,21 @@
                         <input class="den_ngay" id="den_ngay" placeholder=" Đến Ngày" name="To_date" type="DATE" format="YYYY-MM-DD" value="@Request.QueryString["To_date"]" /><br /><br />
                         <script>$("#den_ngay").datetimepicker({ timepicker: false, format: 'Y-m-d' });</script>
                         @*<input type="text" id="dropdownInput" list="dropdownList" placeholder="Tìm kiếm danh mục">
-        <datalist id="dropdownList">
-            @foreach (var item in ViewBag.DataItems)
-            {
-                <option value="@item.So_Ct_E">@item.So_Ct_E</option>
-            }
-        </datalist>
-        <input type="hidden" name="Ma_Dt" id="selectedOption">*@
+                            <datalist id="dropdownList">
+                                @foreach (var item in ViewBag.DataItems)
+                                {
+                                    <option value="@item.So_Ct_E">@item.So_Ct_E</option>
+                                }
+                            </datalist>
+                            <input type="hidden" name="Ma_Dt" id="selectedOption">*@
                         <!-- Dropdown Mã TDV -->
+
                         <div style="width:auto; height:100px">
                             <span style="display:inline-block; width:auto;">
                                 <h6>Tên TDV: </h6>
                             </span>
-                            <select id="dropdownMaTDV" class="js-example-basic-single" style="width:200px">
+                            <select id="dropdownMaTDV" class="select2" style="width:200px" name="selectedValue">
+                                <option value="">Chọn mã TDV</option>
                                 @foreach (var item in ViewBag.DataTDV)
                                 {
                                     <option value="@item.Ma_TDV">@item.Ma_TDV-@item.Ten_TDV</option>
@@ -571,18 +574,22 @@
                             </select>
                         </div>
 
-                        <!-- Dropdown Số hóa đơn -->
                         <div style="width:auto; height:100px">
                             <span style="display:inline-block; width:auto;">
                                 <h6>Số hóa đơn: </h6>
                             </span>
-                            <select id="dropdownSoHoaDon" class="js-example-basic-single" style="width:200px">
+                            <select id="dropdownSoHoaDon" class="select2" style="width:200px">
                                 @foreach (var soHoaDon in ViewBag.DataItems)
                                 {
                                     <option value="@soHoaDon.So_Ct_E">@soHoaDon.So_Ct_E</option>
                                 }
                             </select>
                         </div>
+
+
+
+
+
 
 
 
@@ -707,14 +714,14 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
     @*<script>
-        // Lấy giá trị từ bộ nhớ cục bộ
-        var selectedValue = localStorage.getItem('selectedValue'); // hoặc sessionStorage
+            // Lấy giá trị từ bộ nhớ cục bộ
+            var selectedValue = localStorage.getItem('selectedValue'); // hoặc sessionStorage
 
-        // Gửi giá trị selectedValue lên server
-        window.location.href = '/BKHoaDonGiaoHang/BangKeHoaDonGiaoHang?selectedValue=' + selectedValue;
+            // Gửi giá trị selectedValue lên server
+            window.location.href = '/BKHoaDonGiaoHang/BangKeHoaDonGiaoHang?selectedValue=' + selectedValue;
 
 
-    </script>*@
+        </script>*@
     <script>
         // Set the "Từ Ngày" input to the first day of the current month
         function setFirstDayOfCurrentMonth() {
@@ -759,7 +766,15 @@
             spanElement.style.display = "block";
         }
     </script>
+    <script>
 
+        // JavaScript trong view chứa dropdown
+        document.getElementById("dropdownMaTDV").addEventListener("change", function () {
+            var selectedValue = this.value;
+            localStorage.setItem("selectedValue", selectedValue);
+        });
+
+    </script>
     <script>
 
         function handleFormSubmit(event) {
@@ -836,6 +851,8 @@
 
 
     </script>
+
+
     <script>
         // Hàm kiểm tra và chuyển hướng về trang Home nếu mảng tabsArray rỗng
         function checkAndRedirectToHome() {
@@ -871,9 +888,9 @@
                 }
 
                 newTab.innerHTML = `
-                                                                                            <a href="${tabHref}">${tabTitle}</a>
-                                                                                            <a class="closeTab" href="">✕</a>
-                                                                                        `;
+                                                                                                                <a href="${tabHref}">${tabTitle}</a>
+                                                                                                                <a class="closeTab" href="">✕</a>
+                                                                                                            `;
                 tabControlTabs.appendChild(newTab);
 
                 // Sự kiện khi người dùng nhấp vào nút đóng tab
@@ -904,9 +921,9 @@
                 const newTab = document.createElement("li");
                 newTab.classList.add("tab", "selected");
                 newTab.innerHTML = `
-                                                                                                <a href="${tabHref}">${tabTitle}</a>
-                                                                                                <a class="closeTab" href="">✕</a>
-                                                                                            `;
+                                                                                                                    <a href="${tabHref}">${tabTitle}</a>
+                                                                                                                    <a class="closeTab" href="">✕</a>
+                                                                                                                `;
                 tabControlTabs.appendChild(newTab);
 
                 // Sự kiện khi người dùng nhấp vào nút đóng tab
@@ -1106,9 +1123,9 @@
                 const newTab = document.createElement("li");
                 newTab.classList.add("tab", "selected");
                 newTab.innerHTML = `
-                                                                                    <a href="${subMenuLinkHref}">${tabTitle}</a>
-                                                                                    <a class="closeTab" href="">✕</a>
-                                                                                `;
+                                                                                                        <a href="${subMenuLinkHref}">${tabTitle}</a>
+                                                                                                        <a class="closeTab" href="">✕</a>
+                                                                                                    `;
                 tabControlTabs.appendChild(newTab);
 
                 // Chuyển view tới thẻ li tương ứng
@@ -1154,9 +1171,9 @@
                 const newTab = document.createElement("li");
                 newTab.classList.add("tab", "selected");
                 newTab.innerHTML = `
-                                                                                <a href="${subMenuLinkHref}">${tabTitle}</a>
-                                                                                <a class="closeTab" href="">✕</a>
-                                                                            `;
+                                                                                                    <a href="${subMenuLinkHref}">${tabTitle}</a>
+                                                                                                    <a class="closeTab" href="">✕</a>
+                                                                                                `;
                 tabControlTabs.appendChild(newTab);
 
                 // Chuyển view tới thẻ li tương ứng
@@ -1289,10 +1306,21 @@
 
         </script>*@
 
+    @*<script>
+            $(document).ready(function () {
+                // Kích hoạt Select2 cho dropdown
 
+            });
+        </script>*@
+    <script>
+        $(document).ready(function () {
+            $("#dropdownMaTDV").select2(); // Kích hoạt Select2 trên dropdown
+        });
+    </script>
     <script>
         $(document).ready(function () {
             $("#dropdownTenTDV").select2(); // Kích hoạt Select2 trên dropdown
+            $("#dropdownSoHoaDon").select2();
         });
     </script>
     <script>
@@ -1321,14 +1349,34 @@
 
         });
     </script>
+
     <script>
-    // Lấy danh sách SoHoaDonList từ ViewBag
-    var soHoaDonList = @Html.Raw(Json.Encode(ViewBag.SoHoaDonList));
+        $(document).ready(function () {
+            $("#dropdownMaTDV").change(function () {
+                var selectedValue = $(this).val();
+                console.log("Selected value: " + selectedValue);
 
-    // In danh sách ra console
-    console.log(soHoaDonList);
+                // Cập nhật giá trị lên Local Storage
+                localStorage.setItem("selectedValue", selectedValue);
+
+                // Gửi giá trị lên controller bằng Ajax
+                $.ajax({
+                    url: '/BKHoaDonGiaoHang/BangKeHoaDonGiaoHang_Main',
+                    type: 'POST',
+                    data: { selectedValue: selectedValue },
+                    success: function (result) {
+                        // Xử lý kết quả từ controller nếu cần
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            });
+
+            // ...
+        });
+
     </script>
-
 
 </body>
 
