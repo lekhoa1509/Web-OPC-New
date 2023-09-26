@@ -666,7 +666,10 @@
                     <div>
                         <button class="submit" type="submit" onclick="runReport()"> Chạy Báo Cáo </button>
                     </div>
+                    <div>
+                        <button id="loadMoreButton">Tải Thêm</button>
 
+                    </div>
                 </form>
             </li>
         </ul>
@@ -726,8 +729,6 @@
                                 <th>Loại DT Gam Hàng OPC theo CTKM</th>
                                 <th>Loại DT Gam Hàng OPC Điều Chỉnh CTKM</th>
                                 <th>Gam hàng OPC DX Tăng Giảm</th>
-                                <th>Loại DT Gam Hàng OPCBD Điều Chỉnh CTKM</th>
-                                <th>Gam hàng OPCBD DX tăng giảm </th>
                                 <th>Loại DT Gam Hàng OPCBD Theo CTKM</th>
                                 <th>Loại DT Gam Hàng OPCBD Điều Chỉnh CTKM</th>
                                 <th>Gam Hàng OPCBD DX Tăng Giảm</th>
@@ -748,59 +749,60 @@
                         <tbody>
                             @foreach (DataRow row2 in Model.Tables[0].Rows)
                             {
-                            <tr>
-                                <td>@row2["Phan_loai_HD_TH"]</td>
-                                <td>@row2["Ma_Nhom_DV"]</td>
-                                <td>@row2["MA_DV"]</td>
-                                <td>@row2["Ten_DV"]</td>
-                                <td>@row2["Ma_KH_Tai_TD_Xuat_HD"]</td>
-                                <td>@row2["Ten_KH_Tai_TD_Xuat_HD"]</td>
-                                <td>@row2["Nhom_KH_Tai_TD_Xuat_HD"]</td>
-                                <td>@row2["Loai_KH_Tai_TD_Xuat_HD"]</td>
-                                <td>@row2["Nam/Thang"]</td>
-                                <td>@row2["Nam/Quy"]</td>
-                                <td>@row2["OPC"]</td>
-                                <td>@row2["OPCBD"]</td>
-                                <td>@row2["HD2"]</td>
-                                <td>@row2["TW25"]</td>
-                                <td>@row2["Phien"]</td>
-                                <td>@row2["Khac"]</td>
-                                <td>@row2["Doanh_Thu_(-VAT)"]</td>
-                                <td>@row2["Gia_Tri_Code_KM"]</td>
-                                <td>@row2["GTC_Loai_Tru_PLHD_KHTT_OPC"]</td>
-                                <td>@row2["Doanh_Thu_loai_Tru_OPCBD"]</td>
-                                <td>@row2["Doanh_Thu_Loai_Tru_HD2"]</td>
-                                <td>@row2["Tong_Doanh_Thu_Code_Km_Loai_Tru"]</td>
-                                <td>@row2["Ma_KH_Hien_Tai"]</td>
-                                <td>@row2["Ma_KH_Hien_Tai"]</td>
-                                <td>@row2["Ma_KH_TH_PLHD_KHTT_OPC"]</td>
-                                <td>@row2["So_HD_Nguyen_Tac"]</td>
-                                <td>@row2["So_PLHD_KHTT_OPC"]</td>
-                                <td>@row2["Nhom_KH_HT"]</td>
-                                <td>@row2["Loai_KH_HT"]</td>
-                                <td>@row2["Ten_KH_TH_PLHD_OPC"]</td>
-                                <td>@row2["Danh_Dau_Thang"]</td>
-                                <td>@row2["Ghi_Chu"]</td>
-                                <td>@row2["Ma_DV_thuc_hien_PLHD_KHTT_OPC"]</td>
-                                <td>@row2["Loai_DT_Gam_Hang_OPC_Theo_CTKM"]</td>
-                                <td>@row2["Loai_DT_Gam_Hang_OPC_DieuChinh_CTKM"]</td>
-                                <td>@row2["Gam_hang_OPC_DX_Tang_Giam"]</td>
-                                <td>@row2["Loai_DT_Gam_Hang_OPCBD_Theo_CTKM"]</td>
-                                <td>@row2["Loai_DT_Gam_Hang_OPCBD_DieuChinh_CTKM"]</td>
-                                <td>@row2["Gam_hang_OPCBD_DX_Tang_Giam"]</td>
-                                <td>@row2["Loai_DT_Gam_Hang_HD2_Theo_CTKM"]</td>
-                                <td>@row2["Loai_DT_Gam_Hang_HD2_DieuChinh_CTKM"]</td>
-                                <td>@row2["Gam_hang_HD2_DX_Tang_Giam"]</td>
-                                <td>@row2["DT_Q3"]</td>
-                                <td>@row2["DT_Q4"]</td>
-                                <td>@row2["Tong_Doanh_Thu_3Gam"]</td>
-                                <td>@row2["Hoan_Thanh_PLHD"]</td>
-                                <td>@row2["Hoan_Thanh_PLHD_Q1"]</td>
-                                <td>@row2["Hoan_Thanh_PLHD_Q2"]</td>
-                                <td>@row2["Hoan_Thanh_PLHD_Q3"]</td>
-                                <td>@row2["Hoan_Thanh_PLHD_Q4"]</td>
-                                <td>@row2["Tong_Doanh_Thu"]</td>
-                            </tr>
+                                <tr>
+                                    <td>@row2["Phan_loai_HD_TH"]</td>
+                                    <td>@row2["Ma_Nhom_DV"]</td>
+                                    <td>@row2["MA_DV"]</td>
+                                    <td>@row2["Ten_DV"]</td>
+                                    <td>@row2["Ma_KH_Tai_TD_Xuat_HD"]</td>
+                                    <td>@row2["Ten_KH_Tai_TD_Xuat_HD"]</td>
+                                    <td>@row2["Nhom_KH_Tai_TD_Xuat_HD"]</td>
+                                    <td>@row2["Loai_KH_Tai_TD_Xuat_HD"]</td>
+                                    <td>@row2["Nam/Thang"]</td>
+                                    <td>@row2["Nam/Quy"]</td>
+                                    <td>@row2["OPC"]</td>
+                                    <td>@row2["OPCBD"]</td>
+                                    <td>@row2["HD2"]</td>
+                                    <td>@row2["TW25"]</td>
+                                    <td>@row2["Phien"]</td>
+                                    <td>@row2["Khac"]</td>
+                                    <td>@row2["Doanh_Thu_(-VAT)"]</td>
+                                    <td>@row2["Gia_Tri_Code_KM"]</td>
+                                    <td>@row2["GTC_Loai_Tru_PLHD_KHTT_OPC"]</td>
+                                    <td>@row2["Doanh_thu_Loai_Tru_OPC"]</td>
+                                    <td>@row2["Doanh_Thu_loai_Tru_OPCBD"]</td>
+                                    <td>@row2["Doanh_Thu_Loai_Tru_HD2"]</td>
+                                    <td>@row2["Tong_Doanh_Thu_Code_Km_Loai_Tru"]</td>
+                                    <td>@row2["Doanh_Thu_ThucHien_PLHD_KHTT"]</td>
+                                    <td>@row2["Ma_KH_Hien_Tai"]</td>
+                                    <td>@row2["Ma_KH_TH_PLHD_KHTT_OPC"]</td>
+                                    <td>@row2["So_HD_Nguyen_Tac"]</td>
+                                    <td>@row2["So_PLHD_KHTT_OPC"]</td>
+                                    <td>@row2["Nhom_KH_HT"]</td>
+                                    <td>@row2["Loai_KH_HT"]</td>
+                                    <td>@row2["Ten_KH_TH_PLHD_OPC"]</td>
+                                    <td>@row2["Danh_Dau_Thang"]</td>
+                                    <td>@row2["Ghi_Chu"]</td>
+                                    <td>@row2["Ma_DV_thuc_hien_PLHD_KHTT_OPC"]</td>
+                                    <td>@row2["Loai_DT_Gam_Hang_OPC_Theo_CTKM"]</td>
+                                    <td>@row2["Loai_DT_Gam_Hang_OPC_DieuChinh_CTKM"]</td>
+                                    <td>@row2["Gam_hang_OPC_DX_Tang_Giam"]</td>
+                                    <td>@row2["Loai_DT_Gam_Hang_OPCBD_Theo_CTKM"]</td>
+                                    <td>@row2["Loai_DT_Gam_Hang_OPCBD_DieuChinh_CTKM"]</td>
+                                    <td>@row2["Gam_hang_OPCBD_DX_Tang_Giam"]</td>
+                                    <td>@row2["Loai_DT_Gam_Hang_HD2_Theo_CTKM"]</td>
+                                    <td>@row2["Loai_DT_Gam_Hang_HD2_DieuChinh_CTKM"]</td>
+                                    <td>@row2["Gam_hang_HD2_DX_Tang_Giam"]</td>
+                                    <td>@row2["DT_Q3"]</td>
+                                    <td>@row2["DT_Q4"]</td>
+                                    <td>@row2["Tong_Doanh_Thu_3Gam"]</td>
+                                    <td>@row2["Hoan_Thanh_PLHD"]</td>
+                                    <td>@row2["Hoan_Thanh_PLHD_Q1"]</td>
+                                    <td>@row2["Hoan_Thanh_PLHD_Q2"]</td>
+                                    <td>@row2["Hoan_Thanh_PLHD_Q3"]</td>
+                                    <td>@row2["Hoan_Thanh_PLHD_Q4"]</td>
+                                    <td>@row2["Tong_Doanh_Thu"]</td>
+                                </tr>
                             }
 
 
@@ -864,6 +866,20 @@
             spanElement.style.display = "block";
         }
     </script>
+    <script>
+        $(document).ready(function () {
+            $('#example').DataTable({
+                paging: true, // Cho phép phân trang
+                pageLength: 100, // Số dòng trên mỗi trang
+                lengthMenu: [100, 200, 500], // Tuỳ chọn số dòng trên mỗi trang
+                searching: true, // Cho phép tìm kiếm
+                ordering: true, // Cho phép sắp xếp
+                order: [[8, 'desc']], // Sắp xếp theo cột Năm/Tháng mặc định
+                // Thêm các tùy chọn và tùy chỉnh khác nếu cần
+            });
+        });
+    </script>
+
     @*<script>
             document.addEventListener('DOMContentLoaded', function () {
                 const checkboxes = document.querySelectorAll('input[name="myCheckbox"]');
@@ -978,6 +994,37 @@
         });
 
     </script>
+
+    <script>
+        $(document).ready(function () {
+            var start = 0;
+            var length = 100;
+
+            // Sự kiện khi người dùng nhấp vào nút "Tải Thêm"
+            $('#loadMoreButton').on('click', function () {
+                // Thực hiện cuộc gọi AJAX để lấy thêm dữ liệu
+                $.ajax({
+                    url: '/BaoCaoHopDongController/LoadMoreData', // Đường dẫn đến phương thức LoadMoreData trong Controller
+                    type: 'POST',
+                    data: {
+                        start: start,
+                        length: length
+                    },
+                    success: function (data) {
+                        // Xử lý dữ liệu trả về và cập nhật bảng hoặc danh sách
+                        // Thêm dữ liệu mới vào bảng hoặc danh sách
+
+                        // Cập nhật biến 'start' để lấy 100 dòng tiếp theo trong lần tải tiếp theo
+                        start += length;
+                    },
+                    error: function () {
+                        alert('Đã xảy ra lỗi khi tải thêm dữ liệu.');
+                    }
+                });
+            });
+        });
+    </script>
+
     @*<script>
             $(document).ready(function () {
                 calculateTotal();
