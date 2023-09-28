@@ -35,6 +35,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -963,6 +964,8 @@
     <Content Include="Views\BKHoaDonGiaoHang\BangKeHoaDonGiaoHang_Main.cshtml" />
     <Content Include="Views\BaoCaoHopDong\BaoCaoChiTietHD_Fill.cshtml" />
     <Content Include="Views\BaoCaoHopDong\BaoCaoChiTietHD.cshtml" />
+    <Content Include="Views\MauInChungTu\BangDoiChieuCongNo_Fill.cshtml" />
+    <Content Include="Views\MauInChungTu\BangDoiChieuCongNo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

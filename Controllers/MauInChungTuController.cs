@@ -296,5 +296,13 @@ namespace web4.Controllers
             }
             return View(ds);
         }
+        public ActionResult BangDoiChieuCongNo_Fill()
+        {
+            return View();
+        }
+        public ActionResult BangDoiChieuCongNo()
+        {
+            return View();
+        }
     }
 }
