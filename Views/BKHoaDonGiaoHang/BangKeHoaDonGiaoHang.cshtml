@@ -1227,24 +1227,34 @@
                 var selectedValue = $(this).val();
                 console.log("Selected value: " + selectedValue);
 
-                // Cập nhật giá trị lên Local Storage
-                localStorage.setItem("selectedValue", selectedValue);
+                // Đặt giá trị vào cookie với tên là "selectedValue"
+                document.cookie = "selectedValue=" + selectedValue;
 
-                // Gửi giá trị lên controller bằng Ajax
-                $.ajax({
-                    url: '/BKHoaDonGiaoHang/BangKeHoaDonGiaoHang_Main',
-                    type: 'POST',
-                    data: { selectedValue: selectedValue },
-                    success: function (result) {
+                // Sau khi đặt giá trị vào cookie, bạn có thể truy cập nó ở đâu trong trang web.
 
-                   
-                    },
-                    error: function (error) {
-                        console.log(error);
-                    }
-                });
+                // Ví dụ: Đọc giá trị từ cookie và log ra console
+                var cookieValue = getCookie("selectedValue");
+                console.log("Value from cookie: " + cookieValue);
             });
         });
+
+        // Hàm để đọc giá trị từ cookie bằng tên
+        function getCookie(cookieName) {
+            var name = cookieName + "=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var cookieArray = decodedCookie.split(';');
+            for (var i = 0; i < cookieArray.length; i++) {
+                var cookie = cookieArray[i];
+                while (cookie.charAt(0) == ' ') {
+                    cookie = cookie.substring(1);
+                }
+                if (cookie.indexOf(name) == 0) {
+                    return cookie.substring(name.length, cookie.length);
+                }
+            }
+            return "";
+        }
+
 
     </script>
 

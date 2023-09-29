@@ -8,7 +8,10 @@ using System.Net;
 using System.Data.SqlClient;
 using System.Data;
 using Microsoft.AspNetCore.Mvc;
-
+using OfficeOpenXml;
+using OfficeOpenXml.Style;
+using System.IO;
+using OfficeOpenXml.Table;
 namespace web4.Controllers
 {
     public class MauInChungTuController : Controller
@@ -305,5 +308,33 @@ namespace web4.Controllers
         {
             return View();
         }
+        public ActionResult ExportToExcel()
+        {
+            var fileName = "MyExcelFile.xlsx";
+            var downloadFolderPath = @"Downloads"; // Đường dẫn đến thư mục download trên ổ đĩa C
+            var filePath = Path.Combine(downloadFolderPath, fileName);
+
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
+            using (var package = new ExcelPackage(new FileInfo(filePath)))
+            {
+                // Đặt tên duy nhất cho sheet của bạn, ví dụ: "MySheet"
+                var worksheet = package.Workbook.Worksheets.Add("MySheet");
+
+                // Điền dữ liệu vào tệp Excel
+                worksheet.Cells["A1"].Value = "Hello";
+                worksheet.Cells["B1"].Value = "World";
+
+                // Lưu tệp Excel
+                package.Save();
+            }
+
+            // Đọc dữ liệu tệp Excel đã lưu
+            byte[] fileBytes = System.IO.File.ReadAllBytes(filePath);
+
+            // Trả về tệp Excel đã tạo cho người dùng để tải về
+            return File(fileBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
+        }
+
     }
 }

@@ -124,7 +124,7 @@ namespace web4.Controllers
         {
             string fromDate = "20230901"; // Thay đổi giá trị ngày theo nhu cầu
             string toDate = "20230926";
-            string Ma_TDV = selectedValue;
+            string Ma_TDV = Request.Cookies["selectedValue"].Value; 
             string ma_dvcs = Request.Cookies["Ma_dvcs"].Value;
             connectSQL();
             System.Diagnostics.Debug.WriteLine("Ma_TDV có trong hàm load là: " + Ma_TDV);
@@ -162,7 +162,7 @@ namespace web4.Controllers
         }
         public ActionResult BangKeHoaDonGiaoHang_Main(string selectedValue)
         {
-            string Ma_TDV = selectedValue;
+            string Ma_TDV = Request.Cookies["selectedValue"].Value; 
             List<BKHoaDonGiaoHang> dmDList = LoadDmHDWithMaTDV(Ma_TDV);
             string ma_dvcs = Request.Cookies["Ma_dvcs"].Value;
             string fromDate = "20230901"; // Thay đổi giá trị ngày theo nhu cầu
