@@ -506,7 +506,7 @@
         </div>
         <ul class="nav-links" style="justify-content: center; display:flex;margin-left:10px">
             <li>
-                <form id="dateForm" action="BaoCaoHopDongMar" method="post" onsubmit="handleFormSubmit(event)">
+                <form id="dateForm" action="BaoCaoChiTietHD" method="post" onsubmit="handleFormSubmit(event)">
                     <div id="locBC">
                         <span id="spanText" class="text-loading">[usp_BaoCaoHopDongMAR_SAP]</span>
                         <a>Từ Ngày</a><br /><br />
@@ -694,7 +694,7 @@
                             <tr>
                                 <th>Phân Loại HD TH</th>
                                 <th>Mã nhóm DV</th>
-                                <th>Mã DV</th>
+                                @*<th>Mã DV</th>
                                 <th>Tên DV</th>
                                 <th>Mã KH tại TD xuất HD</th>
                                 <th>Tên KH tại thời điểm xuất HD</th>
@@ -733,8 +733,8 @@
                                 <th>Loại DT Gam Hàng OPCBD Điều Chỉnh CTKM</th>
                                 <th>Gam Hàng OPCBD DX Tăng Giảm</th>
                                 <th>Loại DT Gam hàng HD2 Theo CTKM</th>
-                                <th>Loại DT Gam hàng HD2 Điều chỉnh CTKM</th>
-                                <th>Gam hàng HD2 DX Tăng giảm</th>
+                                <th>Loại DT Gam hàng HD2 Điều chỉnh CTKM</th>*@
+                                @*<th>Gam hàng HD2 DX Tăng giảm</th>
                                 <th>Doanh Thu Q3</th>
                                 <th>Doanh Thu Q4</th>
                                 <th>Tổng doanh thu 3 Gam</th>
@@ -743,7 +743,7 @@
                                 <th>Hoàn Thành PLHD Q2</th>
                                 <th>Hoàn Thành PLHD Q3</th>
                                 <th>Hoàn Thành PLHD Q4</th>
-                                <th>Tổng Doanh Thu</th>
+                                <th>Tổng Doanh Thu</th>*@
                             </tr>
                         </thead>
                         <tbody>
@@ -752,7 +752,7 @@
                                 <tr>
                                     <td>@row2["Phan_loai_HD_TH"]</td>
                                     <td>@row2["Ma_Nhom_DV"]</td>
-                                    <td>@row2["MA_DV"]</td>
+                                    @*<td>@row2["MA_DV"]</td>
                                     <td>@row2["Ten_DV"]</td>
                                     <td>@row2["Ma_KH_Tai_TD_Xuat_HD"]</td>
                                     <td>@row2["Ten_KH_Tai_TD_Xuat_HD"]</td>
@@ -791,8 +791,8 @@
                                     <td>@row2["Loai_DT_Gam_Hang_OPCBD_DieuChinh_CTKM"]</td>
                                     <td>@row2["Gam_hang_OPCBD_DX_Tang_Giam"]</td>
                                     <td>@row2["Loai_DT_Gam_Hang_HD2_Theo_CTKM"]</td>
-                                    <td>@row2["Loai_DT_Gam_Hang_HD2_DieuChinh_CTKM"]</td>
-                                    <td>@row2["Gam_hang_HD2_DX_Tang_Giam"]</td>
+                                    <td>@row2["Loai_DT_Gam_Hang_HD2_DieuChinh_CTKM"]</td>*@
+                                    @*<td>@row2["Gam_hang_HD2_DX_Tang_Giam"]</td>
                                     <td>@row2["DT_Q3"]</td>
                                     <td>@row2["DT_Q4"]</td>
                                     <td>@row2["Tong_Doanh_Thu_3Gam"]</td>
@@ -801,7 +801,7 @@
                                     <td>@row2["Hoan_Thanh_PLHD_Q2"]</td>
                                     <td>@row2["Hoan_Thanh_PLHD_Q3"]</td>
                                     <td>@row2["Hoan_Thanh_PLHD_Q4"]</td>
-                                    <td>@row2["Tong_Doanh_Thu"]</td>
+                                    <td>@row2["Tong_Doanh_Thu"]</td>*@
                                 </tr>
                             }
 

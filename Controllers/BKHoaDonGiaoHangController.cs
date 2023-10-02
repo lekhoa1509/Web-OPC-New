@@ -202,7 +202,7 @@ namespace web4.Controllers
                     cmd.Parameters.AddWithValue("@_Tu_Ngay", fromDate);
                     cmd.Parameters.AddWithValue("@_Den_Ngay",toDate);
                     cmd.Parameters.AddWithValue("@_Ma_CbNv", Ma_TDV);
-                    cmd.Parameters.AddWithValue("@_ma_dvcs", ma_dvcs);
+                    //cmd.Parameters.AddWithValue("@_ma_dvcs", ma_dvcs);
 
                     sda.Fill(ds);
                 }
@@ -210,6 +210,61 @@ namespace web4.Controllers
 
             return View(ds);
         }
+        public ActionResult FilterHD(Account Acc)
+        {
+            DataSet ds = new DataSet();
+            string Ma_TDV = Request.Cookies["selectedValue"].Value;
+            connectSQL();
+            List<BKHoaDonGiaoHang> dmDList = LoadDmHDWithMaTDV(Ma_TDV);
+            string Pname = "[usp_BKHoaDonGiaoHang_SAP]";
+            Response.Cookies["From_date"].Value = Acc.From_date.ToString();
+            Response.Cookies["To_Date"].Value = Acc.To_date.ToString();
+            string SelectHD = Request.Cookies["selectedHD"].Value;
+            var distinctDataTDV = dmDList
+              .GroupBy(x => x.Ten_TDV)
+              .Select(x => x.First())
+              .ToList();
+            var distinctDataItems = dmDList
+  .GroupBy(x => x.So_Ct_E)
+  .Select(x => x.First())
+  .ToList();
+            ViewBag.DataTDV = distinctDataTDV;
+            ViewBag.DataItems = distinctDataItems;
+            using (SqlCommand cmd = new SqlCommand(Pname, con))
+            {
+                cmd.CommandTimeout = 950;
+
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                {
+                    cmd.Parameters.AddWithValue("@_Tu_Ngay", Acc.From_date);
+                    cmd.Parameters.AddWithValue("@_Den_Ngay", Acc.To_date);
+
+                    sda.Fill(ds);
+
+                }
+            }
+
+            // Sử dụng LINQ để lọc các giá trị có cột So_Ct_E bằng với SelectHD
+            var filteredRows = ds.Tables[0].AsEnumerable()
+          .Where(row => row.Field<string>("So_Ct_E") == SelectHD);
+
+            if (filteredRows.Any())
+            {
+                var filteredDataTable = filteredRows.CopyToDataTable();
+                ViewBag.DataSet = filteredDataTable;
+            }
+            else
+            {
+                // Không có dữ liệu thỏa mãn điều kiện, bạn có thể xử lý thông báo hoặc thực hiện hành động khác ở đây
+                ViewBag.DataSet = new DataTable(); // Tạo DataTable trống để tránh lỗi
+            }
+
+            return View("BangKeHoaDonGiaoHang_Main");
+        }
+
 
 
 

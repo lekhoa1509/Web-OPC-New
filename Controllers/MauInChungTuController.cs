@@ -7,6 +7,8 @@ using System.Web.Mvc;
 using System.Net;
 using System.Data.SqlClient;
 using System.Data;
+using System.Drawing;
+using OfficeOpenXml.Drawing;
 using Microsoft.AspNetCore.Mvc;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
@@ -310,31 +312,42 @@ namespace web4.Controllers
         }
         public ActionResult ExportToExcel()
         {
-            var fileName = "MyExcelFile.xlsx";
-            var downloadFolderPath = @"Downloads"; // Đường dẫn đến thư mục download trên ổ đĩa C
-            var filePath = Path.Combine(downloadFolderPath, fileName);
+            var fileName = $"MauThongBaoNoQH{DateTime.Now.ToString("_yyyyMMddHHmmss")}.xlsx";
+            var userDownloadsFolder = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\Downloads";
+            var filePath = Path.Combine(userDownloadsFolder, fileName);
 
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
             using (var package = new ExcelPackage(new FileInfo(filePath)))
             {
-                // Đặt tên duy nhất cho sheet của bạn, ví dụ: "MySheet"
                 var worksheet = package.Workbook.Worksheets.Add("MySheet");
 
-                // Điền dữ liệu vào tệp Excel
-                worksheet.Cells["A1"].Value = "Hello";
-                worksheet.Cells["B1"].Value = "World";
+                // Đường dẫn đến hình ảnh trong thư mục 'image'
+                var imagePath = "D:/New OPC/Web-OPC-New/Images/opc.png"; // Thay thế bằng đường dẫn thật
 
-                // Lưu tệp Excel
+                // Chèn hình ảnh từ tệp hình vào ô A1
+                ExcelPicture picture = worksheet.Drawings.AddPicture("MyPicture", new FileInfo(imagePath));
+                picture.From.Column = 1; // Cột A
+                picture.From.Row = 1;    // Dòng 1
+                picture.SetSize(30, 30); // Đặt kích thước cho hình ảnh
+
                 package.Save();
             }
 
-            // Đọc dữ liệu tệp Excel đã lưu
             byte[] fileBytes = System.IO.File.ReadAllBytes(filePath);
 
-            // Trả về tệp Excel đã tạo cho người dùng để tải về
-            return File(fileBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
+            // Tạo đối tượng ContentResult để trả về file Excel và mã JavaScript
+            var result = new ContentResult
+            {
+                Content = $"<!DOCTYPE html><html><head><script>showSuccessAlert();</script></head><body></body></html>",
+                ContentType = "text/html",
+            };
+
+            // Trả về ContentResult
+            return result;
         }
+
+
 
     }
 }
