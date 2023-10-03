@@ -1,6 +1,6 @@
 ﻿@{ ViewBag.Title = "Bang Ke Hoa Don Giao Hang";
     string Ma_TDV = Request.Cookies["Ma_TDV"] != null ? HttpUtility.UrlDecode(Request.Cookies["Ma_TDV"].Value) : "";
-    }
+}
 @using System.Data;
 <!DOCTYPE html>
 <html lang="en">
@@ -648,7 +648,6 @@
                             <tbody>
                             </tbody>
                         </table>*@
-
                     <table id="example" class="table table-striped table-bordered">
                         <thead class="table-dark">
                             <tr>
@@ -658,82 +657,54 @@
                                 <th>Mã Vật Tư</th>
                                 <th>Tên Vật Tư</th>
                                 <th>Tổng Tiền</th>
-                                <th>Chức năng</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @if (ViewBag.DataSet != null && ViewBag.DataSet.Rows.Count > 0)
+                            @foreach (DataRow row in Model.Tables[0].Rows)
                             {
-                                foreach (DataRow row2 in ViewBag.DataSet.Rows)
-                                {
-
                                     <tr>
-                                        <td style="text-align:right" class="editable">
-                                            <span class="editable" data-field="So_Ct_E">
-                                                @row2["So_Ct_E"]
+                                        <td style="text-align:right">
+                                            <span class="editable" data-field="So_Ct">
+                                                @row["So_Ct"]
                                             </span>
-                                            <input type="hidden" class="edit-input" value="@row2["So_Ct_E"]">
+                                            <input type="hidden" class="edit-input" value="@row["So_Ct"]">
                                         </td>
-                                        <td style="text-align:right" class="editable">
+                                        <td style="text-align:right">
                                             <span class="editable" data-field="Ma_Dt">
-                                                @row2["Ma_Dt"]
+                                                @row["Ma_Dt"]
                                             </span>
-                                            <input type="hidden" class="edit-input" value="@row2["Ma_Dt"]">
+                                            <input type="hidden" class="edit-input" value="@row["Ma_Dt"]">
                                         </td>
-                                        <td style="text-align:center" class="editable">
+                                        <td style="text-align:center">
                                             <span class="editable" data-field="Ten_Dt">
-                                                @row2["Ten_Dt"]
+                                                @row["Ten_Dt"]
                                             </span>
-                                            <input type="hidden" class="edit-input" value="@row2["Ten_Dt"]">
+                                            <input type="hidden" class="edit-input" value="@row["Ten_Dt"]">
                                         </td>
-                                        <td style="text-align:right" class="editable">
+                                        <td style="text-align:right">
                                             <span class="editable" data-field="Ma_Vt">
-                                                @row2["Ma_Vt"]
+                                                @row["Ma_Vt"]
                                             </span>
-                                            <input type="hidden" class="edit-input" value="@row2["Ma_Vt"]">
+                                            <input type="hidden" class="edit-input" value="@row["Ma_Vt"]">
                                         </td>
-                                        <td style="text-align:center" class="editable">
+                                        <td style="text-align:center">
                                             <span class="editable" data-field="Ten_Vt">
-                                                @row2["Ten_Vt"]
+                                                @row["Ten_Vt"]
                                             </span>
-                                            <input type="hidden" class="edit-input" value="@row2["Ten_Vt"]">
+                                            <input type="hidden" class="edit-input" value="@row["Ten_Vt"]">
                                         </td>
-                                        <td style="text-align:right" class="editable">
+                                        <td style="text-align:right">
                                             <span class="editable" data-field="Tong_Tien">
-                                                @String.Format("{0:n0}", Convert.ToDecimal(row2["Tong_Tien"]))
+                                                @String.Format("{0:n0}", Convert.ToDecimal(row["Tong_Tien"]))
                                             </span>
-                                            <input type="hidden" class="edit-input" value="@row2["Tong_Tien"]">
+                                            <input type="hidden" class="edit-input" value="@row["Tong_Tien"]">
                                         </td>
-                                        <td><button><a href="#">Lưu</a></button></td>
                                     </tr>
-                                    @*<tr>
-
-                                            <td class="editable">
-                                                <select class="sohd-dropdown">
-                                                    <option value="">Chọn số hóa đơn</option>
-                                                    @foreach (var soHoaDon in ViewBag.DataItems)
-                                                    {
-                                                        <option value="@soHoaDon.So_Ct_E">@soHoaDon.So_Ct_E</option>
-                                                    }
-                                                </select>
-                                            </td>
-                                            <td class="editable madoituong"></td>
-                                            <td class="editable tendt"></td>
-                                            <td class="editable mavt"></td>
-                                            <td class="editable tenvt"></td>
-                                            <td class="editable tongtien"></td>
-                                        </tr>*@
-                                }
+                                
                             }
-                            else
-                            {
-                                <p>Không có dữ liệu phù hợp.</p>
-                            }
-                            <tr class="add-row">
-                                <td colspan="7" style="text-align:center">Click here to add a new row</td>
-                            </tr>
                         </tbody>
                     </table>
+
 
                 </div>
             </div>
@@ -749,64 +720,8 @@
     <script src="~/assets/js/pdfmake.min.js"></script>
     <script src="~/assets/js/vfs_fonts.js"></script>
     <script src="~/assets/js/custom.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $(".editable").on("click", function () {
-                var cell = $(this);
-                var oldValue = cell.text();
-                var inputField = $("<input type='text'>").val(oldValue);
-
-                inputField.on("blur", function () {
-                    var newValue = inputField.val();
-                    if (newValue !== oldValue) {
-                        cell.text(newValue);
-                        // Ở đây, bạn có thể thực hiện cập nhật vào cơ sở dữ liệu hoặc thực hiện các hành động khác.
-                    }
-                });
-
-                cell.empty().append(inputField);
-                inputField.focus();
-            });
-        });
-    </script>
-    <script>
-    $(document).ready(function () {
-        $(".add-row").on("click", function () {
-            var newRow = $("<tr></tr>");
-
-            // Tạo dropdown và gán id cho nó
-            var dropdownCell = $("<td></td>");
-            var dropdown = $("<select></select>")
-                .attr("id", "dropdownSoHoaDon")
-                .addClass("select2")
-                .css("width", "200px");
-            dropdown.append('<option value="">Chọn số hóa đơn</option>');
-
-            // Lặp qua danh sách soHoaDon và thêm các option vào dropdown
-            @foreach (var soHoaDon in ViewBag.DataItems)
-            {
-                <text>
-                dropdown.append('<option value="@soHoaDon.So_Ct_E">@soHoaDon.So_Ct_E</option>');
-                </text>
-            }
-
-            dropdownCell.append(dropdown);
-            newRow.append(dropdownCell);
-
-            // Tạo các ô cho hàng mới (nếu cần)
-            for (var i = 0; i < 6; i++) {
-                newRow.append("<td></td>");
-            }
-
-            // Thêm hàng mới dưới dòng "add-row-trigger"
-            newRow.insertBefore($(this));
-        });
-    });
-    </script>
-
 
     <script>
         // Set the "Từ Ngày" input to the first day of the current month
@@ -1007,9 +922,9 @@
                 }
 
                 newTab.innerHTML = `
-                                                                                                <a href="${tabHref}">${tabTitle}</a>
-                                                                                                <a class="closeTab" href="">✕</a>
-                                                                                            `;
+                                                                            <a href="${tabHref}">${tabTitle}</a>
+                                                                            <a class="closeTab" href="">✕</a>
+                                                                        `;
                 tabControlTabs.appendChild(newTab);
 
                 // Sự kiện khi người dùng nhấp vào nút đóng tab
@@ -1040,9 +955,9 @@
                 const newTab = document.createElement("li");
                 newTab.classList.add("tab", "selected");
                 newTab.innerHTML = `
-                                                                                                    <a href="${tabHref}">${tabTitle}</a>
-                                                                                                    <a class="closeTab" href="">✕</a>
-                                                                                                `;
+                                                                                <a href="${tabHref}">${tabTitle}</a>
+                                                                                <a class="closeTab" href="">✕</a>
+                                                                            `;
                 tabControlTabs.appendChild(newTab);
 
                 // Sự kiện khi người dùng nhấp vào nút đóng tab
@@ -1242,9 +1157,9 @@
                 const newTab = document.createElement("li");
                 newTab.classList.add("tab", "selected");
                 newTab.innerHTML = `
-                                                                                        <a href="${subMenuLinkHref}">${tabTitle}</a>
-                                                                                        <a class="closeTab" href="">✕</a>
-                                                                                    `;
+                                                                    <a href="${subMenuLinkHref}">${tabTitle}</a>
+                                                                    <a class="closeTab" href="">✕</a>
+                                                                `;
                 tabControlTabs.appendChild(newTab);
 
                 // Chuyển view tới thẻ li tương ứng
@@ -1290,9 +1205,9 @@
                 const newTab = document.createElement("li");
                 newTab.classList.add("tab", "selected");
                 newTab.innerHTML = `
-                                                                                    <a href="${subMenuLinkHref}">${tabTitle}</a>
-                                                                                    <a class="closeTab" href="">✕</a>
-                                                                                `;
+                                                                <a href="${subMenuLinkHref}">${tabTitle}</a>
+                                                                <a class="closeTab" href="">✕</a>
+                                                            `;
                 tabControlTabs.appendChild(newTab);
 
                 // Chuyển view tới thẻ li tương ứng
@@ -1306,56 +1221,56 @@
         });
 
     </script>
-    @*<script>
-            // JavaScript to make table cells editable
-            const editableCells = document.querySelectorAll('.editable');
+    <script>
+        // JavaScript to make table cells editable
+        const editableCells = document.querySelectorAll('.editable');
 
-            editableCells.forEach(cell => {
-                cell.addEventListener('click', () => {
-                    // Create an input element
-                    const input = document.createElement('input');
-                    input.type = 'text';
-                    input.value = cell.textContent.trim();
+        editableCells.forEach(cell => {
+            cell.addEventListener('click', () => {
+                // Create an input element
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.value = cell.textContent.trim();
 
-                    // Clear the cell and append the input element
-                    cell.innerHTML = '';
-                    cell.appendChild(input);
+                // Clear the cell and append the input element
+                cell.innerHTML = '';
+                cell.appendChild(input);
 
-                    // Focus on the input
-                    input.focus();
+                // Focus on the input
+                input.focus();
 
-                    // Update cell content when input loses focus
-                    input.addEventListener('blur', () => {
-                        cell.textContent = input.value;
-                    });
+                // Update cell content when input loses focus
+                input.addEventListener('blur', () => {
+                    cell.textContent = input.value;
                 });
             });
+        });
 
-            // JavaScript to add a new row when the "add-row" cell is clicked
-            const addRowCell = document.querySelector('.add-row');
-            addRowCell.addEventListener('click', () => {
-                const tbody = addRowCell.parentNode;
-                const newRow = document.createElement('tr');
-                newRow.innerHTML = '<td class="status-cell"><div class="status-indicator"></div></td><td class="editable"><input type="text" value=""></td><td class="editable"><input type="text" value=""></td><td class="editable"><input type="text" value=""></td>';
-                tbody.insertBefore(newRow, addRowCell);
-            });
+        // JavaScript to add a new row when the "add-row" cell is clicked
+        const addRowCell = document.querySelector('.add-row');
+        addRowCell.addEventListener('click', () => {
+            const tbody = addRowCell.parentNode;
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = '<td class="status-cell"><div class="status-indicator"></div></td><td class="editable"><input type="text" value=""></td><td class="editable"><input type="text" value=""></td><td class="editable"><input type="text" value=""></td>';
+            tbody.insertBefore(newRow, addRowCell);
+        });
 
-            // JavaScript to handle row highlighting
-            const statusCells = document.querySelectorAll('.status-cell');
+        // JavaScript to handle row highlighting
+        const statusCells = document.querySelectorAll('.status-cell');
 
-            statusCells.forEach(cell => {
-                cell.addEventListener('click', () => {
-                    // Remove the highlight class from all rows
-                    document.querySelectorAll('tr.selected-row').forEach(row => {
-                        row.classList.remove('selected-row');
-                    });
-
-                    // Highlight the clicked row
-                    const row = cell.parentNode;
-                    row.classList.add('selected-row');
+        statusCells.forEach(cell => {
+            cell.addEventListener('click', () => {
+                // Remove the highlight class from all rows
+                document.querySelectorAll('tr.selected-row').forEach(row => {
+                    row.classList.remove('selected-row');
                 });
+
+                // Highlight the clicked row
+                const row = cell.parentNode;
+                row.classList.add('selected-row');
             });
-        </script>*@
+        });
+    </script>
     <script>
         document.getElementById("dropdownInput").addEventListener("input", function () {
             var inputValue = this.value;
@@ -1396,7 +1311,34 @@
 
 
     </script>
+    <script>
+        // Lấy danh sách tất cả các ô có class "editable"
+        const editableCells = document.querySelectorAll('.editable');
 
+        editableCells.forEach(cell => {
+            cell.addEventListener('click', () => {
+                // Tìm phần tử dropdown trong ô
+                const dropdown = cell.querySelector('.dropdown-list');
+
+                // Hiển thị dropdown
+                dropdown.style.display = 'block';
+
+                // Xử lý sự kiện khi chọn một giá trị từ dropdown
+                dropdown.addEventListener('change', () => {
+                    // Lấy giá trị đã chọn
+                    const selectedValue = dropdown.value;
+
+                    // Gán giá trị đã chọn vào phần tử div để hiển thị
+                    const selectedValueDiv = cell.querySelector('.selected-value');
+                    selectedValueDiv.textContent = selectedValue;
+
+                    // Ẩn dropdown sau khi đã chọn giá trị
+                    dropdown.style.display = 'none';
+                });
+            });
+        });
+
+    </script>
 
 
     <script>
@@ -1414,7 +1356,54 @@
 
     </script>
 
+    <script>
+        $(document).ready(function () {
+            // Lưu tất cả các ô đang chỉnh sửa và giá trị gốc của mỗi ô
+            var editedCells = {};
 
+            // Xử lý sự kiện click vào ô để chỉnh sửa
+            $('.editable').click(function () {
+                var $this = $(this);
+                var field = $this.data('field');
+                var originalValue = $this.text();
+
+                // Tạo trường input và đặt giá trị bằng giá trị gốc
+                var $input = $('<input class="edit-input" type="text" value="' + originalValue + '">');
+
+                // Thay thế nội dung của ô bằng trường input
+                $this.html($input);
+
+                // Lưu trường input và giá trị gốc vào biến editedCells
+                editedCells[field] = {
+                    $input: $input,
+                    originalValue: originalValue
+                };
+
+                // Xử lý sự kiện khi trường input mất focus (người dùng kết thúc chỉnh sửa)
+                $input.blur(function () {
+                    var $input = $(this);
+                    var newValue = $input.val();
+                    var field = $this.data('field');
+
+                    // Kiểm tra nếu giá trị đã thay đổi
+                    if (newValue !== editedCells[field].originalValue) {
+                        // Cập nhật giá trị của ô
+                        $this.text(newValue);
+
+                        // Xóa trường input
+                        $input.remove();
+                    } else {
+                        // Nếu không có thay đổi, giữ nguyên giá trị gốc
+                        $this.text(originalValue);
+                        $input.remove();
+                    }
+                });
+
+                // Tự động focus vào trường input
+                $input.focus();
+            });
+        });
+    </script>
     <script>
         $(document).ready(function () {
             $("#dropdownMaTDV").select2(); // Kích hoạt Select2 trên dropdown
@@ -1428,37 +1417,25 @@
     </script>
 
     <script>
-        // Hàm để đọc giá trị từ cookie bằng tên
-        function getCookie(cookieName) {
-            var name = cookieName + "=";
-            var decodedCookie = decodeURIComponent(document.cookie);
-            var cookieArray = decodedCookie.split(';');
-            for (var i = 0; i < cookieArray.length; i++) {
-                var cookie = cookieArray[i];
-                while (cookie.charAt(0) == ' ') {
-                    cookie = cookie.substring(1);
-                }
-                if (cookie.indexOf(name) == 0) {
-                    return cookie.substring(name.length, cookie.length);
-                }
-            }
-            return "";
-        }
-
-        // Lấy giá trị từ cookie và gán cho dropdown khi trang được tải
-        $(document).ready(function () {
-            var selectedValue = getCookie("selectedValue");
+        // JavaScript trong view mới
+        document.addEventListener("DOMContentLoaded", function () {
+            var selectedValue = localStorage.getItem("selectedValue");
             if (selectedValue) {
-                // Nếu có giá trị trong cookie, gán cho dropdown
-                $("#dropdownMaTDV").val(selectedValue);
+                // Tìm dropdown và thiết lập giá trị đã chọn từ Local Storage
+                var dropdown = document.getElementById("dropdownMaTDV");
+                var option = dropdown.querySelector('option[value="' + selectedValue + '"]');
+                if (option) {
+                    option.selected = true;
+                }
             }
         });
+
     </script>
     <script>
         $(document).ready(function () {
             $("#dropdownSoHoaDon").change(function () {
                 var selectedHD = $(this).val();
-                console.log("Selected Hoa Don: " + selectedHD);
+                console.log("Selected HD: " + selectedHD);
 
                 // Đặt giá trị vào cookie với tên là "selectedValue"
                 document.cookie = "selectedHD=" + selectedHD;
@@ -1467,7 +1444,7 @@
 
                 // Ví dụ: Đọc giá trị từ cookie và log ra console
                 var cookieValue = getCookie("selectedHD");
-                console.log("HoaDon from cookie: " + cookieValue);
+                console.log("Value from cookie: " + cookieValue);
             });
         });
 
@@ -1490,8 +1467,7 @@
 
 
     </script>
-
 </body>
 
-</html >
+</html>
 

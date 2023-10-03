@@ -24,38 +24,45 @@ namespace web4.Controllers
         {
             con.ConnectionString = "Data source= " + "118.69.109.109" + ";database=" + "SAP_OPC" + ";uid=sa;password=Hai@thong";
         }
-        public List<BKHoaDonGiaoHang> LoadDmHD(string fromDate, string toDate)
+        public List<BKHoaDonGiaoHang> LoadDmTDV()
         {
-         
             string ma_dvcs = Request.Cookies["Ma_dvcs"].Value;
             connectSQL();
 
             List<BKHoaDonGiaoHang> dataItems = new List<BKHoaDonGiaoHang>();
+
             using (SqlConnection connection = new SqlConnection(con.ConnectionString))
             {
                 connection.Open();
 
-                using (SqlCommand command = new SqlCommand("[usp_BKHoaDonGiaoHang_SAP]", connection))
+                using (SqlCommand command = new SqlCommand("[usp_DanhSachTDV]", connection))
                 {
                     command.CommandTimeout = 950;
                     command.CommandType = CommandType.StoredProcedure;
 
-                    command.Parameters.AddWithValue("@_Tu_Ngay", fromDate);
-                    command.Parameters.AddWithValue("@_Den_Ngay", toDate);
                     command.Parameters.AddWithValue("@_ma_dvcs", ma_dvcs);
-                  // Thêm tham số Ma_TDV vào truy vấn
 
-                    using (SqlDataReader reader = command.ExecuteReader())
+                    using (SqlDataAdapter sda = new SqlDataAdapter(command))
                     {
-                        while (reader.Read())
+                        DataSet ds = new DataSet();
+                        sda.Fill(ds);
+
+                        // Kiểm tra xem DataSet có bảng dữ liệu hay không
+                        if (ds.Tables.Count > 0)
                         {
-                            BKHoaDonGiaoHang dataItem = new BKHoaDonGiaoHang
+                            DataTable dt = ds.Tables[0];
+
+                            foreach (DataRow row in dt.Rows)
                             {
-                                So_Ct_E = reader["So_Ct_E"].ToString(),
-                                Ten_TDV = reader["Ten_TDV"].ToString(),
-                                Ma_TDV = reader["Ma_TDV"].ToString(),
-                            };
-                            dataItems.Add(dataItem);
+                                BKHoaDonGiaoHang dataItem = new BKHoaDonGiaoHang
+                                {
+                                    Ma_CbNv = row["Ma_CbNv"].ToString(),
+                                    hoten = row["hoten"].ToString(),
+                                    Ma_Dvcs = row["Ma_Dvcs"].ToString()
+                                };
+
+                                dataItems.Add(dataItem);
+                            }
                         }
                     }
                 }
@@ -65,16 +72,17 @@ namespace web4.Controllers
         }
 
 
+
         public ActionResult BangKeHoaDonGiaoHang()
         {
             string fromDate = "20230901"; // Thay đổi giá trị ngày theo nhu cầu
             string toDate = "20230926";   // Thay đổi giá trị đến ngày theo nhu cầu
-            //string Ma_TDV = Request.Cookies["Ma_TDV"].Value; // Sử dụng giá trị selectedValue
+                                          //string Ma_TDV = Request.Cookies["Ma_TDV"].Value; // Sử dụng giá trị selectedValue
             string ma_dvcs = Request.Cookies["Ma_dvcs"].Value;
-         
-      
+
+
             // Gọi LoadDmHD với Ma_TDV để lấy dữ liệu đã lọc theo Ma_TDV
-            List<BKHoaDonGiaoHang> dmDList = LoadDmHD(fromDate, toDate);
+            List<BKHoaDonGiaoHang> dmDList = LoadDmTDV();
 
             var distinctDataTDV = dmDList
                 .GroupBy(x => x.Ten_TDV)
@@ -87,12 +95,12 @@ namespace web4.Controllers
            .ToList();
 
 
-            ViewBag.DataTDV = distinctDataTDV;
+            ViewBag.DataTDV = dmDList;
             ViewBag.DataItems = distinctDataItems;
 
             DataSet ds = new DataSet();
             connectSQL();
-            string Pname = "[usp_BKHoaDonGiaoHang_SAP]";
+            string Pname = "[usp_DanhSachTDV]";
 
             using (SqlCommand cmd = new SqlCommand(Pname, con))
             {
@@ -104,8 +112,7 @@ namespace web4.Controllers
 
                 using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
                 {
-                    cmd.Parameters.AddWithValue("@_Tu_Ngay", fromDate);
-                    cmd.Parameters.AddWithValue("@_Den_Ngay", toDate);
+
                     cmd.Parameters.AddWithValue("@_ma_dvcs", ma_dvcs);
                     sda.Fill(ds);
                 }
@@ -148,7 +155,7 @@ namespace web4.Controllers
                         {
                             BKHoaDonGiaoHang dataItem = new BKHoaDonGiaoHang
                             {
-                                So_Ct_E = reader["So_Ct_E"].ToString(),
+                                So_Ct = reader["So_Ct"].ToString(),
                                 Ten_TDV = reader["Ten_TDV"].ToString(),
                                 Ma_TDV = reader["Ma_TDV"].ToString(),
                             };
@@ -165,11 +172,11 @@ namespace web4.Controllers
             string Ma_TDV = Request.Cookies["selectedValue"].Value; 
             List<BKHoaDonGiaoHang> dmDList = LoadDmHDWithMaTDV(Ma_TDV);
             string ma_dvcs = Request.Cookies["Ma_dvcs"].Value;
-            string fromDate = "20230901"; // Thay đổi giá trị ngày theo nhu cầu
-            string toDate = "20230926";
-       
+            string fromDate = Request.Cookies["From_date"]?.Value;
+            string toDate = Request.Cookies["To_date"]?.Value;
 
-          
+
+
             var distinctDataTDV = dmDList
                 .GroupBy(x => x.Ten_TDV)
                 .Select(x => x.First())
@@ -210,15 +217,15 @@ namespace web4.Controllers
 
             return View(ds);
         }
-        public ActionResult FilterHD(Account Acc)
+        public ActionResult FilterHD()
         {
             DataSet ds = new DataSet();
             string Ma_TDV = Request.Cookies["selectedValue"].Value;
             connectSQL();
             List<BKHoaDonGiaoHang> dmDList = LoadDmHDWithMaTDV(Ma_TDV);
             string Pname = "[usp_BKHoaDonGiaoHang_SAP]";
-            Response.Cookies["From_date"].Value = Acc.From_date.ToString();
-            Response.Cookies["To_Date"].Value = Acc.To_date.ToString();
+            string fromDate = Request.Cookies["From_date"]?.Value;
+            string toDate = Request.Cookies["To_date"]?.Value;
             string SelectHD = Request.Cookies["selectedHD"].Value;
             var distinctDataTDV = dmDList
               .GroupBy(x => x.Ten_TDV)
@@ -239,28 +246,16 @@ namespace web4.Controllers
 
                 using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
                 {
-                    cmd.Parameters.AddWithValue("@_Tu_Ngay", Acc.From_date);
-                    cmd.Parameters.AddWithValue("@_Den_Ngay", Acc.To_date);
-
+                    cmd.Parameters.AddWithValue("@_Tu_Ngay", fromDate);
+                    cmd.Parameters.AddWithValue("@_Den_Ngay", toDate);
+                    cmd.Parameters.AddWithValue("@_Ma_CbNv", Ma_TDV);
                     sda.Fill(ds);
 
                 }
             }
 
-            // Sử dụng LINQ để lọc các giá trị có cột So_Ct_E bằng với SelectHD
-            var filteredRows = ds.Tables[0].AsEnumerable()
-          .Where(row => row.Field<string>("So_Ct_E") == SelectHD);
-
-            if (filteredRows.Any())
-            {
-                var filteredDataTable = filteredRows.CopyToDataTable();
-                ViewBag.DataSet = filteredDataTable;
-            }
-            else
-            {
-                // Không có dữ liệu thỏa mãn điều kiện, bạn có thể xử lý thông báo hoặc thực hiện hành động khác ở đây
-                ViewBag.DataSet = new DataTable(); // Tạo DataTable trống để tránh lỗi
-            }
+  
+         
 
             return View("BangKeHoaDonGiaoHang_Main");
         }

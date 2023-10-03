@@ -559,7 +559,7 @@
                                 <option value="">Chọn mã TDV</option>
                                 @foreach (var item in ViewBag.DataTDV)
                                 {
-                                    <option value="@item.Ma_TDV">@item.Ma_TDV-@item.Ten_TDV</option>
+                                    <option value="@item.Ma_CbNv">@item.Ma_CbNv-@item.hoten</option>
                                 }
                             </select>
                             <input type="hidden" id="selectedValue" name="selectedValue" />
@@ -752,6 +752,12 @@
             // Hiển thị thẻ span có id là "spanText"
             const spanElement = document.getElementById("spanText");
             spanElement.style.display = "block";
+            var fromDate = document.getElementById("tu_ngay").value;
+            var toDate = document.getElementById("den_ngay").value;
+
+            // Đặt giá trị vào cookie
+            document.cookie = "From_date=" + fromDate + "; path=/";
+            document.cookie = "To_date=" + toDate + "; path=/";
         }
     </script>
     <script>
@@ -883,9 +889,9 @@
                 }
 
                 newTab.innerHTML = `
-                                                                                                                        <a href="${tabHref}">${tabTitle}</a>
-                                                                                                                        <a class="closeTab" href="">✕</a>
-                                                                                                                    `;
+                                                                                                                                <a href="${tabHref}">${tabTitle}</a>
+                                                                                                                                <a class="closeTab" href="">✕</a>
+                                                                                                                            `;
                 tabControlTabs.appendChild(newTab);
 
                 // Sự kiện khi người dùng nhấp vào nút đóng tab
@@ -916,9 +922,9 @@
                 const newTab = document.createElement("li");
                 newTab.classList.add("tab", "selected");
                 newTab.innerHTML = `
-                                                                                                                            <a href="${tabHref}">${tabTitle}</a>
-                                                                                                                            <a class="closeTab" href="">✕</a>
-                                                                                                                        `;
+                                                                                                                                    <a href="${tabHref}">${tabTitle}</a>
+                                                                                                                                    <a class="closeTab" href="">✕</a>
+                                                                                                                                `;
                 tabControlTabs.appendChild(newTab);
 
                 // Sự kiện khi người dùng nhấp vào nút đóng tab
@@ -1118,9 +1124,9 @@
                 const newTab = document.createElement("li");
                 newTab.classList.add("tab", "selected");
                 newTab.innerHTML = `
-                                                                                                                <a href="${subMenuLinkHref}">${tabTitle}</a>
-                                                                                                                <a class="closeTab" href="">✕</a>
-                                                                                                            `;
+                                                                                                                        <a href="${subMenuLinkHref}">${tabTitle}</a>
+                                                                                                                        <a class="closeTab" href="">✕</a>
+                                                                                                                    `;
                 tabControlTabs.appendChild(newTab);
 
                 // Chuyển view tới thẻ li tương ứng
@@ -1166,9 +1172,9 @@
                 const newTab = document.createElement("li");
                 newTab.classList.add("tab", "selected");
                 newTab.innerHTML = `
-                                                                                                            <a href="${subMenuLinkHref}">${tabTitle}</a>
-                                                                                                            <a class="closeTab" href="">✕</a>
-                                                                                                        `;
+                                                                                                                    <a href="${subMenuLinkHref}">${tabTitle}</a>
+                                                                                                                    <a class="closeTab" href="">✕</a>
+                                                                                                                `;
                 tabControlTabs.appendChild(newTab);
 
                 // Chuyển view tới thẻ li tương ứng
@@ -1211,15 +1217,15 @@
         });
     </script>
 
-    @*<script>
-            $(document).ready(function () {
-                // Xử lý sự kiện thay đổi dropdown Ma_TDV
-                $('#dropdownTenTDV').change(function () {
-                    $('#myForm').submit(); // Gửi lại form khi Ma_TDV thay đổi
-                });
-
+    <script>
+        $(document).ready(function () {
+            // Xử lý sự kiện thay đổi dropdown Ma_TDV
+            $('#dropdownTenTDV').change(function () {
+                $('#dateForm').submit(); // Gửi lại form khi Ma_TDV thay đổi
             });
-        </script>*@
+
+        });
+    </script>
 
     <script>
         $(document).ready(function () {
@@ -1257,6 +1263,24 @@
 
 
     </script>
+    <script>
+        $(document).ready(function () {
+            $("#dateForm").on("submit", function (event) {
+                // Ngăn chặn việc submit mặc định của form để bạn có thể xử lý dữ liệu trước
+                event.preventDefault();
+
+                // Lấy giá trị đã chọn từ dropdown
+                var selectedValue = $("#dropdownMaTDV").val();
+
+                // Cập nhật giá trị vào cookie
+                document.cookie = "selectedValue=" + selectedValue;
+
+                // Tiếp tục submit form để chuyển dữ liệu lên server
+                this.submit();
+            });
+        });
+    </script>
+
 
 </body>
 

@@ -21,6 +21,9 @@ namespace web4.Models
         public string To_date { get; set; }
         public string Ma_DvCs { get; set; }
         public string UserName { get; set; }
+        public string Ma_CbNv { get; set; }
+        public string hoten { get; set; }
+        public string Ma_Dvcs { get; set; } // Định nghĩa thuộc tính Ma_Dvcs
     }
 
 }

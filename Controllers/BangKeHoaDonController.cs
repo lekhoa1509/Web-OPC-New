@@ -50,7 +50,7 @@ namespace web4.Controllers
                     cmd.Parameters.AddWithValue("@_Ma_Dt", Acc.Ma_dt);
                     cmd.Parameters.AddWithValue("@_Tinh_Trang", Acc.Tinh_Trang);
                     cmd.Parameters.AddWithValue("@_username", Acc.UserName);
-                    
+
                     sda.Fill(ds);
 
                 }
