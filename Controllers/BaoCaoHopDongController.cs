@@ -73,33 +73,32 @@ namespace web4.Controllers
         public ActionResult BaoCaoChiTietHD(Account Acc)
         {
             // Tương tự, áp dụng caching cho phương thức này nếu cần
-            string cacheKey = $"BaoCaoChiTietHD_{Acc.From_date}_{Acc.To_date}_{Acc.Ma_DvCs_1}";
-            DataSet ds = HttpContext.Cache[cacheKey] as DataSet;
+            //string cacheKey = $"BaoCaoChiTietHD_{Acc.From_date}_{Acc.To_date}_{Acc.Ma_DvCs_1}";
+            DataSet ds = new DataSet();
 
-            if (ds == null)
+            connectSQL();
+            // Acc.Ma_DvCs_1 = Request.Cookies["MA_DVCS"].Value;
+            //Acc.UserName = Request.Cookies["UserName"].Value;
+            //string query = "exec usp_Vth_BC_BHCNTK_CN @_ngay_Ct1 = '" + Acc.From_date + "',@_Ngay_Ct2 ='"+ Acc.To_date+"',@_Ma_Dvcs='"+ Acc.Ma_DvCs_1+"'";
+            string Pname = "[usp_BaoCaoDTGamMAR_SAP]";
+            Acc.UserName = Response.Cookies["UserName"].Value;
+
+            using (SqlCommand cmd = new SqlCommand(Pname, con))
             {
-                ds = new DataSet();
-                connectSQL();
-                string Pname = "[usp_BaoCaoDTGamMAR_SAP]";
-                Acc.UserName = Response.Cookies["UserName"].Value;
+                cmd.CommandTimeout = 950;
 
-                using (SqlCommand cmd = new SqlCommand(Pname, con))
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                Acc.Ma_DvCs_1 = Request.Cookies["MA_DVCS"].Value;
+                using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
                 {
-                    cmd.CommandTimeout = 950;
-                    cmd.Connection = con;
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    Acc.Ma_DvCs_1 = Request.Cookies["MA_DVCS"].Value;
 
-                    using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
-                    {
-                        cmd.Parameters.AddWithValue("@_Tu_Ngay", Acc.From_date);
-                        cmd.Parameters.AddWithValue("@_Den_Ngay", Acc.To_date);
-                        cmd.Parameters.AddWithValue("@_ma_dvcs", Acc.Ma_DvCs_1);
-                        sda.Fill(ds);
-                    }
+                    cmd.Parameters.AddWithValue("@_Tu_Ngay", Acc.From_date);
+                    cmd.Parameters.AddWithValue("@_Den_Ngay", Acc.To_date);
+                    cmd.Parameters.AddWithValue("@_ma_dvcs", Acc.Ma_DvCs_1);
+                    sda.Fill(ds);
+
                 }
-
-                HttpContext.Cache.Insert(cacheKey, ds, null, DateTime.Now.AddMinutes(10), Cache.NoSlidingExpiration);
             }
 
             return View(ds);

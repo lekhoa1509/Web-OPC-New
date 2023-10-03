@@ -486,7 +486,7 @@
 
 
             <div style="margin-top:10px">
-                <table border="1" border-collapse="collapse" style="width:700px">
+                <table border="1" border-collapse="collapse" style="width:700px" id="export">
                     <tr style="font-size:10px;font-weight:bold;color:black">
                         <th style="padding:10px">STT</th>
                         <th>SỐ HÓA ĐƠN</th>
@@ -579,13 +579,25 @@
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 
-    <button id="export-button">Xuất Excel</button>
+    <button id="export-button" onclick="showSuccessAlert()">Xuất Excel</button>
+    <script src="src/jquery.table2excel.js"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#export-button").click(function () {
+                $("#export").table2excel({
+                    filename: "ThongBaoNoQH.xls"
+                });
+            });
+        });
+
+    </script>
     <!-- Tải jQuery từ CDN -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-    <script>
+    @*<script>
     // Bắt sự kiện click vào nút "Xuất Excel"
     document.getElementById("export-button").addEventListener("click", function () {
         // Thực hiện cuộc gọi Ajax đến action trong controller
@@ -601,6 +613,11 @@
             }
         });
     });
+    </script>*@
+    <script>
+        function showSuccessAlert() {
+            alert("Thành Công! Vui lòng kiểm tra trong thư mục Downloads");
+        }
     </script>
 
 
@@ -618,6 +635,7 @@
                 }
             }
         });</script>
+
 
 </body>
 
