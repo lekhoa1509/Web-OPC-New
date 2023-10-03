@@ -64,5 +64,47 @@ namespace web4.Controllers
         {
             return View();
         }
+
+
+        public ActionResult danhsachhoadon_SAP(Account Acc)
+        {
+            DataSet ds = new DataSet();
+            connectSQL();
+            // Acc.Ma_DvCs_1 = Request.Cookies["MA_DVCS"].Value;
+            //Acc.UserName = Request.Cookies["UserName"].Value;
+            //string query = "exec usp_Vth_BC_BHCNTK_CN @_ngay_Ct1 = '" + Acc.From_date + "',@_Ngay_Ct2 ='"+ Acc.To_date+"',@_Ma_Dvcs='"+ Acc.Ma_DvCs_1+"'";
+            string Pname = "[usp_DanhSachHoaDon_SAP]";
+            Acc.UserName = Response.Cookies["UserName"].Value;
+
+            using (SqlCommand cmd = new SqlCommand(Pname, con))
+            {
+                cmd.CommandTimeout = 950;
+
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                Acc.Ma_DvCs_1 = Request.Cookies["MA_DVCS"].Value;
+                using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                {
+
+                    cmd.Parameters.AddWithValue("@_Tu_Ngay", Acc.From_date);
+                    cmd.Parameters.AddWithValue("@_Den_Ngay", Acc.To_date);
+                    cmd.Parameters.AddWithValue("@_ma_dvcs", Acc.Ma_DvCs_1);
+                    cmd.Parameters.AddWithValue("@_Ma_Dt", Acc.Ma_dt);
+                    cmd.Parameters.AddWithValue("@_Tinh_Trang", Acc.Tinh_Trang);
+                    cmd.Parameters.AddWithValue("@_username", Acc.UserName);
+
+                    sda.Fill(ds);
+
+                }
+            }
+
+
+            return View(ds);
+
+        }
+        public ActionResult DanhSachHoaDon_Fill()
+        {
+            return View();
+        }
     }
 }

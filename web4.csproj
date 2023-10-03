@@ -1041,6 +1041,8 @@
     <Content Include="Views\BaoCaoHopDong\BaoCaoChiTietHD.cshtml" />
     <Content Include="Views\MauInChungTu\BangDoiChieuCongNo_Fill.cshtml" />
     <Content Include="Views\MauInChungTu\BangDoiChieuCongNo.cshtml" />
+    <Content Include="Views\BangKeHoaDon\DanhSachHoaDon_Fill.cshtml" />
+    <Content Include="Views\BangKeHoaDon\danhsachhoadon_SAP.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
