@@ -1043,6 +1043,7 @@
     <Content Include="Views\MauInChungTu\BangDoiChieuCongNo.cshtml" />
     <Content Include="Views\BangKeHoaDon\DanhSachHoaDon_Fill.cshtml" />
     <Content Include="Views\BangKeHoaDon\danhsachhoadon_SAP.cshtml" />
+    <Content Include="Views\BKHoaDonGiaoHang\FilterHD.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,4 +1,5 @@
-﻿@{ ViewBag.Title = "Bang Ke Hoa Don Giao Hang";
+﻿
+@{ ViewBag.Title = "Bang Ke Hoa Don Giao Hang";
     string Ma_TDV = Request.Cookies["Ma_TDV"] != null ? HttpUtility.UrlDecode(Request.Cookies["Ma_TDV"].Value) : "";
 }
 @using System.Data;
@@ -660,49 +661,53 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @*@foreach (DataRow row in Model.Tables[0].Rows)
+                            @foreach (DataRow row in Model.Tables[0].Rows)
                             {
-                                <tr>
-                                    <td style="text-align:right">
-                                        <span class="editable" data-field="So_Ct">
-                                            @row["So_Ct"]
-                                        </span>
-                                        <input type="hidden" class="edit-input" value="@row["So_Ct"]">
-                                    </td>
-                                    <td style="text-align:right">
-                                        <span class="editable" data-field="Ma_Dt">
-                                            @row["Ma_Dt"]
-                                        </span>
-                                        <input type="hidden" class="edit-input" value="@row["Ma_Dt"]">
-                                    </td>
-                                    <td style="text-align:center">
-                                        <span class="editable" data-field="Ten_Dt">
-                                            @row["Ten_Dt"]
-                                        </span>
-                                        <input type="hidden" class="edit-input" value="@row["Ten_Dt"]">
-                                    </td>
-                                    <td style="text-align:right">
-                                        <span class="editable" data-field="Ma_Vt">
-                                            @row["Ma_Vt"]
-                                        </span>
-                                        <input type="hidden" class="edit-input" value="@row["Ma_Vt"]">
-                                    </td>
-                                    <td style="text-align:center">
-                                        <span class="editable" data-field="Ten_Vt">
-                                            @row["Ten_Vt"]
-                                        </span>
-                                        <input type="hidden" class="edit-input" value="@row["Ten_Vt"]">
-                                    </td>
-                                    <td style="text-align:right">
-                                        <span class="editable" data-field="Tong_Tien">
-                                            @String.Format("{0:n0}", Convert.ToDecimal(row["Tong_Tien"]))
-                                        </span>
-                                        <input type="hidden" class="edit-input" value="@row["Tong_Tien"]">
-                                    </td>
-                                </tr>
-
-                            }*@
+                                if (HttpContext.Current.Request.Cookies["selectedHD"] != null && row["So_Ct"].ToString() == HttpContext.Current.Request.Cookies["selectedHD"].Value)
+                                
+                                    {
+                                    <tr>    
+                                        <td style="text-align:right">
+                                            <span class="editable" data-field="So_Ct">
+                                                @row["So_Ct"]
+                                            </span>
+                                            <input type="hidden" class="edit-input" value="@row["So_Ct"]">
+                                        </td>
+                                        <td style="text-align:right">
+                                            <span class="editable" data-field="Ma_Dt">
+                                                @row["Ma_Dt"]
+                                            </span>
+                                            <input type="hidden" class="edit-input" value="@row["Ma_Dt"]">
+                                        </td>
+                                        <td style="text-align:center">
+                                            <span class="editable" data-field="Ten_Dt">
+                                                @row["Ten_Dt"]
+                                            </span>
+                                            <input type="hidden" class="edit-input" value="@row["Ten_Dt"]">
+                                        </td>
+                                        <td style="text-align:right">
+                                            <span class="editable" data-field="Ma_Vt">
+                                                @row["Ma_Vt"]
+                                            </span>
+                                            <input type="hidden" class="edit-input" value="@row["Ma_Vt"]">
+                                        </td>
+                                        <td style="text-align:center">
+                                            <span class="editable" data-field="Ten_Vt">
+                                                @row["Ten_Vt"]
+                                            </span>
+                                            <input type="hidden" class="edit-input" value="@row["Ten_Vt"]">
+                                        </td>
+                                        <td style="text-align:right">
+                                            <span class="editable" data-field="Tong_Tien">
+                                                @String.Format("{0:n0}", Convert.ToDecimal(row["Tong_Tien"]))
+                                            </span>
+                                            <input type="hidden" class="edit-input" value="@row["Tong_Tien"]">
+                                        </td>
+                                    </tr>
+                                }
+                            }
                         </tbody>
+
                     </table>
 
 
@@ -725,7 +730,7 @@
     <script>
         function clearCookies() {
             document.cookie = "selectedHD=; path=/;";
-          
+
         }
 
         window.onload = function () {

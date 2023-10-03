@@ -75,8 +75,7 @@ namespace web4.Controllers
 
         public ActionResult BangKeHoaDonGiaoHang()
         {
-            string fromDate = "20230901"; // Thay đổi giá trị ngày theo nhu cầu
-            string toDate = "20230926";   // Thay đổi giá trị đến ngày theo nhu cầu
+           
                                           //string Ma_TDV = Request.Cookies["Ma_TDV"].Value; // Sử dụng giá trị selectedValue
             string ma_dvcs = Request.Cookies["Ma_dvcs"].Value;
 
@@ -129,8 +128,8 @@ namespace web4.Controllers
 
         public List<BKHoaDonGiaoHang> LoadDmHDWithMaTDV(string selectedValue)
         {
-            string fromDate = "20230901"; // Thay đổi giá trị ngày theo nhu cầu
-            string toDate = "20230926";
+            string fromDate = Request.Cookies["From_date"]?.Value;
+            string toDate = Request.Cookies["To_date"]?.Value;
             string Ma_TDV = Request.Cookies["selectedValue"].Value; 
             string ma_dvcs = Request.Cookies["Ma_dvcs"].Value;
             connectSQL();
@@ -167,7 +166,7 @@ namespace web4.Controllers
             
             return dataItems;
         }
-        public ActionResult BangKeHoaDonGiaoHang_Main(string selectedValue)
+        public ActionResult BangKeHoaDonGiaoHang_Main()
         {
             string Ma_TDV = Request.Cookies["selectedValue"].Value; 
             List<BKHoaDonGiaoHang> dmDList = LoadDmHDWithMaTDV(Ma_TDV);
@@ -182,7 +181,7 @@ namespace web4.Controllers
                 .Select(x => x.First())
                 .ToList();
             var distinctDataItems = dmDList
-    .GroupBy(x => x.So_Ct_E)
+    .GroupBy(x => x.So_Ct)
     .Select(x => x.First())
     .ToList();
             ViewBag.DataTDV = distinctDataTDV;  
@@ -257,7 +256,7 @@ namespace web4.Controllers
   
          
 
-            return View("BangKeHoaDonGiaoHang_Main");
+            return View(ds);
         }
 
 
