@@ -67,27 +67,8 @@ namespace web4.Controllers
         }
         public ActionResult About(Account Acc)
         {
-        //{
-        //    connectSQL();
-        //    con.Open();
-        //    string username = "";
-        //    sqlc.Connection = con;
-        //    sqlc.CommandText = "select * from view_user where Tendangnhap ='" + Acc.Name + "'And matkhau='" + Acc.Password + "'and ma_DvCs='" + Acc.Ma_DvCs + "'";
-        //    dt = sqlc.ExecuteReader();
-        //    if (dt.Read())
-        //    {
-        //        Response.Cookies["UserName"].Value = Acc.Name.ToString();
-        //        Response.Cookies["MA_DVCS"].Value = Acc.Ma_DvCs.ToString();
-
-        //        con.Close();
-
-        //        return View("About");
-        //    }
-        //    else
-        //    {
-        //        ViewBag.Message = "Sai Mật Khẩu";
-        //        return View("Login");
-        //    }
+            var username = Request.Cookies["UserName"].Value;
+            ViewBag.Username = username;
             return View();
         }
        
