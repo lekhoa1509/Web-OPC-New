@@ -849,17 +849,7 @@
     <script src="~/assets/js/pdfmake.min.js"></script>
     <script src="~/assets/js/vfs_fonts.js"></script>
     <script src="~/assets/js/custom.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('#example').DataTable({
-                // Cấu hình cho DataTables
-                paging: true,        // Kích hoạt phân trang
-                pageLength: 10,      // Số dòng trên mỗi trang
-                lengthMenu: [10, 25, 50, 100], // Số dòng trên mỗi trang có thể chọn
-                // Bổ sung các cài đặt khác tùy theo yêu cầu của bạn
-            });
-        });
-    </script>
+    
 
     <script>
         function runReport() {
@@ -879,19 +869,7 @@
             spanElement.style.display = "block";
         }
     </script>
-    <script>
-        $(document).ready(function () {
-            $('#example').DataTable({
-                paging: true, // Cho phép phân trang
-                pageLength: 1000, // Số dòng trên mỗi trang
-                lengthMenu: [100, 200, 500,], // Tuỳ chọn số dòng trên mỗi trang
-                searching: true, // Cho phép tìm kiếm
-                ordering: true, // Cho phép sắp xếp
-                order: [[8, 'desc']], // Sắp xếp theo cột Năm/Tháng mặc định
-                // Thêm các tùy chọn và tùy chỉnh khác nếu cần
-            });
-        });
-    </script>
+
 
     @*<script>
             document.addEventListener('DOMContentLoaded', function () {

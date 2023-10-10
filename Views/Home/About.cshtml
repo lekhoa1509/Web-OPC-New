@@ -1,6 +1,5 @@
 ﻿@{ ViewBag.Title = "OPC Bao Cao | OPCPHARMA";
     @model System.Data.DataSet
-   
 }
 @using System.Data;
 <!DOCTYPE html>
@@ -361,7 +360,7 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                             <tbody style="float:left">
                                 <tr style="height:30px">
                                     <td style="text-align: left">
-                                        @if (string.Equals(ViewBag.UserName, "admin", StringComparison.OrdinalIgnoreCase))
+                                        @if (string.Equals(ViewBag.UserName, "admin", StringComparison.OrdinalIgnoreCase)|| string.Equals(ViewBag.UserName, "opcadmin", StringComparison.OrdinalIgnoreCase))
                                         {
                                             <li style=" list-style-type: none;" class="liTitle"><a href="/DoanhThuChiNhanh/DoanhThuChiNhanhKGam_Fill">1.Doanh Thu Chi Nhánh</a></li>
                                         }
@@ -374,7 +373,7 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                                 <tr style="height:30px">
                                     <td style="text-align: left">
                                         @if (string.Equals(ViewBag.UserName, "admin", StringComparison.OrdinalIgnoreCase) ||
-string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase))
+string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase) || string.Equals(ViewBag.UserName, "opcadmin", StringComparison.OrdinalIgnoreCase))
                                         {
                                             <li style=" list-style-type: none;" class="liTitle">
                                                 <a href="/DoanhThuChiNhanh/DoanhThuChiNhanh_Admin_Fill">2.Doanh Thu Chi Nhánh Theo Gam</a>
