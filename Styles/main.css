@@ -582,3 +582,8 @@ li .profile-details:hover {
         -webkit-transform: translateX(-9%) translateY(-25%) rotate(45deg);
         transform: translateX(-9%) translateY(-25%) rotate(45deg);
     }
+@media print {
+    #export-button {
+        display: none;
+    }
+}

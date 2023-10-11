@@ -23,6 +23,8 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>Phiếu Xác Nhận Thanh Toán</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link href="~/Styles/main.css" rel='stylesheet' type='text/css' media="all">
+
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         * {
@@ -770,7 +772,14 @@
                 }
             }
         });</script>
-
+    <script>
+        document.addEventListener('keydown', function (event) {
+            if (event.ctrlKey && event.key === 'p') {
+                // Người dùng nhấn Ctrl+P, ẩn nút xuất Excel
+                document.getElementById('export-button').style.display = 'none';
+            }
+        });
+    </script>
 
 </body>
 
