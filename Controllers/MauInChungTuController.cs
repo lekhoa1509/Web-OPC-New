@@ -348,7 +348,7 @@ namespace web4.Controllers
             }
             return View(ds);
         }
-        [HttpPost]
+       
    
         //public ActionResult ExportToExcel(List<List<string>> tableData)
         //{
@@ -594,15 +594,12 @@ namespace web4.Controllers
                     package.Save();
                     byte[] fileBytes = package.GetAsByteArray();
 
-                    // Tạo đối tượng FileContentResult để trả về tệp Excel dưới dạng phản hồi HTTP
-                    var result = new FileContentResult(fileBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-                    {
-                        FileDownloadName = fileName
-                    };
-                    return result;
+                    // Trả về tệp Excel dưới dạng phản hồi HTTP
+                    return File(fileBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
+
                 }
 
-            
+
             }
             else
             {
