@@ -455,7 +455,12 @@ namespace web4.Controllers
                 List<List<string>> tableData = JsonConvert.DeserializeObject<List<List<string>>>(jsonData);
 
                 var fileName = $"MauThongBaoNoQH{DateTime.Now:yyyyMMddHHmmss}.xlsx";
-                string userDownloadsFolder = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\Downloads";
+                string userDownloadsFolder = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)+ "\\Downloads";
+             
+                if (!Directory.Exists(userDownloadsFolder))
+                {
+                    Directory.CreateDirectory(userDownloadsFolder);
+                }
                 var filePath = Path.Combine(userDownloadsFolder, fileName);
 
                 // Khởi tạo tệp Excel
