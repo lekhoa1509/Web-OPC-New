@@ -614,14 +614,14 @@
                 III. Số tiền khách hàng chưa thanh toán, tính đến cuối ngày :
                 @foreach (DataRow row3 in Model.Tables[3].Rows)
                 {
-                    @row3["Ngay"]
+                    @row3["Den_Ngay"]
 
 
 
                 }/
                 @foreach (DataRow row3 in Model.Tables[3].Rows)
                 {
-                    @row3["Thang"]
+                    @row3["Den_Thang"]
 
 
 
@@ -689,7 +689,12 @@
                     <div style="width:700px;color:black">
                         <h5 style="text-align:left">Xin vui lòng xác nhận và gửi lại cho @Dvcs trước ngày <span style="color:black;font-weight:bold">31/10/2023</span></h5>
                         <br />
-                        <h5 style="text-align:left">Nơi nhận:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@Dvcs </h5>
+                        <h5 style="text-align:left">
+                            Nơi nhận:  @foreach (DataRow row3 in Model.Tables[4].Rows)
+                            {
+                                @row3["Chi_nhanh"]
+                            }
+                        </h5>
                         <br />
                         <h5 style="text-align:left">
                             Địa chỉ:&nbsp;@foreach (DataRow row3 in Model.Tables[4].Rows)
@@ -698,7 +703,7 @@
                             }
                             </h5><br />
                                  <h5 style="text-align:left">
-                                     Khi cần đối chiếu số liệu liên hệ:&nbsp;&nbsp;kế toán công nợ: @foreach (DataRow row3 in Model.Tables[4].Rows)
+                                     Khi cần đối chiếu số liệu liên hệ:&nbsp; @foreach (DataRow row3 in Model.Tables[4].Rows)
                                      {
                                          @row3["LH"]
                                      }
