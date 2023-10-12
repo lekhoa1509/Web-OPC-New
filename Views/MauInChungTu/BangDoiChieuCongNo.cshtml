@@ -80,7 +80,7 @@
             align-items: center;
             margin-left: auto;
             margin-right: auto;
-            height: 50px;
+            height: 30px;
             font-size: 12px
         }
 
@@ -483,7 +483,7 @@
                     }
                 </h6>
             </div>
-            <div style="justify-content:start;display:flex">
+            <div style="justify-content:start;display:flex;margin-left:30px">
                 <div style="text-align:left">
                     <h5 style="color:black;text-align:left">Tên khách hàng:   @ten_dt</h5>
                     <h5 style="color:black;text-align:left">Địa Chỉ khách hàng:   @Dia_Chi</h5>
@@ -536,7 +536,7 @@
         <div style="margin-top:10px">
             <table border="1" border-collapse="collapse" style="width:800px;color:black">
                 <tr style="font-size:13px;font-weight:bold;color:black">
-                    <th style="padding:10px;width:80px;font-size:15px" rowspan="2">STT</th>
+                    <th style="width:80px;font-size:15px" rowspan="2">STT</th>
                     <th colspan="3" style="font-size:15px">KHÁCH HÀNG MUA</th>
                     <th colspan="5" style="font-size:15px">KHÁCH HÀNG THANH TOÁN/TRẢ HÀNG/BÙ TRỪ</th>
 
@@ -551,6 +551,7 @@
                 <th style="width:150px">NGÀY</th>
                 <th style="width:150px">SỐ TIỀN</th>
                 <th style="width:150px">CKTT</th>
+                <th style="width:150px">TỔNG TIỀN</th>
                 <th style=" width: 150px">GHI CHÚ</th>
 
 
@@ -558,19 +559,19 @@
 
                     @foreach (DataRow row3 in Model.Tables[1].Rows)
                     {
-                    <tr class="table2-data hidden-row">
-                        <td style="text-align:center">@row3["Stt1"]</td>
-                        <td style="text-align: center">@row3["So_Ct_hd"]</td>
-                        <td style="text-align: center">@row3["Ngay_Ct_hd"]</td>
-                        <td class="num" style="text-align:right">@row3["Tien_HD"]</td>
-                        <td style="text-align: center">@row3["So_Ct_Tt"]</td>
-                        <td style="text-align: center">@row3["Ngay_Ct_Tt"]</td>
-                        <td class="num" style="text-align:right">@row3["Tien_TT"]</td>
-                        <td class="num" style="text-align:right">@row3["CKTT1"]</td>
-                        <td class="num" style="text-align:right">@row3["Tong_tien"]</td>
-                        <td style="text-align: center">@row3["Ghi_Chu1"]</td>
+                        <tr class="table2-data hidden-row">
+                            <td style="text-align:center">@row3["Stt1"]</td>
+                            <td style="text-align: center">@row3["So_Ct_hd"]</td>
+                            <td style="text-align: center">@row3["Ngay_Ct_hd"]</td>
+                            <td class="num" style="text-align:right">@row3["Tien_HD"]</td>
+                            <td style="text-align: center">@row3["So_Ct_Tt"]</td>
+                            <td style="text-align: center">@row3["Ngay_Ct_Tt"]</td>
+                            <td class="num" style="text-align:right">@row3["Tien_TT"]</td>
+                            <td class="num" style="text-align:right">@row3["CKTT1"]</td>
+                            <td class="num" style="text-align:right">@row3["Tong_tien"]</td>
+                            <td style="text-align: center">@row3["Ghi_Chu1"]</td>
 
-                    </tr>
+                        </tr>
                     }
                 </tbody>
                 <tfoot>
@@ -619,7 +620,7 @@
 
             </table>
             <br />
-            <h5 style="margin-top: 5px; color: black; text-align: left; text-align: left">
+            <h5 style="margin-top: 5px; color: black; text-align: left; text-align: left;margin-left:30px">
                 III. Số tiền khách hàng chưa thanh toán, tính đến cuối ngày :
                 @foreach (DataRow row3 in Model.Tables[3].Rows)
                 {
@@ -648,8 +649,8 @@
 
                 }
             </h5>
-            <h5>
-                Só Tiền Bằng Chữ: @foreach (DataRow row3 in Model.Tables[7].Rows)
+            <h5 style="text-align:left;margin-left: 30px">
+                Số Tiền Bằng Chữ: @foreach (DataRow row3 in Model.Tables[7].Rows)
                 {
                     @row3["Tien_Chu"]
 
@@ -657,12 +658,12 @@
 
                 }
             </h5>
-            <p style="margin-top: 5px; color: black; text-align: left; text-align: left">Chi tiết các hóa đơn chưa thanh toán: </p>
+            <p style="margin-top: 5px; color: black; text-align: left; text-align: left;margin-left:30px">Chi tiết các hóa đơn chưa thanh toán: </p>
              <div style="margin-top:10px">
                  <table border="1" border-collapse="collapse" style="width:800px;color:black">
                      <tr style="font-size:13px;font-weight:bold;color:black">
                          <th style="padding:10px;width:80px;font-size:15px" rowspan="2">STT</th>
-                         <th colspan="4" style="font-size:15px">HÓA ĐƠN</th>
+                         <th colspan="2" style="font-size:15px">HÓA ĐƠN</th>
 
 
 
@@ -704,35 +705,35 @@
                     </div>
 
                     <div style="width:700px;color:black">
-                        <h5 style="text-align:left">Xin vui lòng xác nhận và gửi lại cho @Dvcs trước ngày <span style="color:black;font-weight:bold">
+                        <h5 style="text-align:left;margin-left:30px">Xin vui lòng xác nhận và gửi lại cho @Dvcs trước ngày <span style="color:black;font-weight:bold">
     @foreach (DataRow row3 in Model.Tables[7].Rows)
     {
         @row3["Ngay_TT"]
     }
                     </span></h5>
-                        <br />
-                        <h5 style="text-align:left">
+                    
+                        <h5 style="text-align:left;margin-left:30px">
                             Nơi nhận:  @foreach (DataRow row3 in Model.Tables[4].Rows)
                             {
                                 @row3["Chi_nhanh"]
                             }
                         </h5>
-                        <br />
-                        <h5 style="text-align:left">
+                  
+                        <h5 style="text-align: left; margin-left: 30px">
                             Địa chỉ:&nbsp;@foreach (DataRow row3 in Model.Tables[4].Rows)
                             {
                                 @row3["Dia_Chi"]
                             }
-                            </h5><br />
-                                 <h5 style="text-align:left">
+                            </h5>
+                                 <h5 style="text-align: left; margin-left: 30px">
                                      Khi cần đối chiếu số liệu liên hệ:&nbsp; @foreach (DataRow row3 in Model.Tables[4].Rows)
                                      {
                                          @row3["LH"]
                                      }
                                  </h5>
                     </div>
-                    <br />
-                    <div style="word-wrap: break-word;color:black">
+               
+                    <div style="word-wrap: break-word; color: black; margin-left: 30px">
                         <h5 style="text-align:left">
                             Số tiền còn nợ đề nghị Quý khách hàng thanh toán bằng tiền mặt hoặc chuyển khoản vào tài khoản @Dvcs, số tài khoản: @foreach (DataRow row3 in Model.Tables[4].Rows)
                             {
@@ -762,7 +763,7 @@
 
                     <div style="color:black;font-weight:bold">
 
-                        <h5 style="text-align:left">ĐẠI DIỆN KHÁCH HÀNG</h5>
+                        <h5 style="text-align: left; margin-left: 30px">ĐẠI DIỆN KHÁCH HÀNG</h5>
                         <h5 style="text-align:right;margin-top:-10px">
                             ĐẠI DIỆN CHI NHÁNH
                         </h5>
