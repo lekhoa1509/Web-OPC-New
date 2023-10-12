@@ -478,9 +478,30 @@
             <div style="justify-content:start;display:flex">
                 <div style="text-align:left">
                     <h5 style="color:black;text-align:left">Tên khách hàng:   @ten_dt</h5>
-
+                    <h5 style="color:black;text-align:left">Địa Chỉ khách hàng:   @Dia_Chi</h5>
                     <h5 style="margin-top: 5px; color: black; text-align: left">
-                        <span style="color:black;font-weight:bold">I.Số dư nợ trước ngày:</span> 01/07/2023 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mang sang:
+                        <span style="color:black;font-weight:bold">
+                            I.Số dư nợ trước ngày:
+                            @foreach (DataRow row3 in Model.Tables[3].Rows)
+                            {
+                                @row3["Ngay"]
+
+
+
+                            }/
+                            @foreach (DataRow row3 in Model.Tables[3].Rows)
+                            {
+                                @row3["Thang"]
+
+
+
+                            }/
+                            @foreach (DataRow row3 in Model.Tables[3].Rows)
+                            {
+                                @row3["Nam"]
+                            }
+
+                        </span>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mang sang:
                         @foreach (DataRow row3 in Model.Tables[0].Rows)
                         {
                             @row3["No_DauKy1"]
