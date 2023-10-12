@@ -649,8 +649,8 @@
 
                 }
             </h5>
-            <h5 style="margin-left: 30px">
-                Só Tiền Bằng Chữ: @foreach (DataRow row3 in Model.Tables[7].Rows)
+            <h5 style="text-align:left;margin-left: 30px">
+                Số Tiền Bằng Chữ: @foreach (DataRow row3 in Model.Tables[7].Rows)
                 {
                     @row3["Tien_Chu"]
 
@@ -711,20 +711,20 @@
         @row3["Ngay_TT"]
     }
                     </span></h5>
-                        <br />
+                    
                         <h5 style="text-align:left;margin-left:30px">
                             Nơi nhận:  @foreach (DataRow row3 in Model.Tables[4].Rows)
                             {
                                 @row3["Chi_nhanh"]
                             }
                         </h5>
-                        <br />
+                  
                         <h5 style="text-align: left; margin-left: 30px">
                             Địa chỉ:&nbsp;@foreach (DataRow row3 in Model.Tables[4].Rows)
                             {
                                 @row3["Dia_Chi"]
                             }
-                            </h5><br />
+                            </h5>
                                  <h5 style="text-align: left; margin-left: 30px">
                                      Khi cần đối chiếu số liệu liên hệ:&nbsp; @foreach (DataRow row3 in Model.Tables[4].Rows)
                                      {
@@ -732,7 +732,7 @@
                                      }
                                  </h5>
                     </div>
-                    <br />
+               
                     <div style="word-wrap: break-word; color: black; margin-left: 30px">
                         <h5 style="text-align:left">
                             Số tiền còn nợ đề nghị Quý khách hàng thanh toán bằng tiền mặt hoặc chuyển khoản vào tài khoản @Dvcs, số tài khoản: @foreach (DataRow row3 in Model.Tables[4].Rows)
