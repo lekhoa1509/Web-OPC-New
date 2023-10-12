@@ -25,5 +25,8 @@ namespace web4.Models
         public string Dia_Chi { get; set; }
         public string Dvcs { get; set; }
         public string Dvcs1 { get; set; }
+        public string Ngay_TT { get; set; }
+        public string Ngay_Ky { get; set; }
+        public string So { get; set; }
     }
 }

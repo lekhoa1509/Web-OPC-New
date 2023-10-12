@@ -139,5 +139,14 @@ namespace web4.Properties {
                 return ((string)(this["Ma_TDV"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Ngay_TT {
+            get {
+                return ((string)(this["Ngay_TT"]));
+            }
+        }
     }
 }
