@@ -436,7 +436,7 @@
             </div>
             <br />
             <div>
-                <h3 style="font-size: 25px; color: black; font-weight: bold">BẢNG ĐỐI CHIẾU CÔNG NỢ</h3>
+                <h3 style="font-size: 25px; color: black; font-weight: bold">BẢNG ĐỐI CHIẾU DOANH THU CÔNG NỢ</h3>
                 <h6 style="text-align:center;color:black;font-size:13px;font-weight:bold">
                     Từ ngày
                     @foreach (DataRow row3 in Model.Tables[3].Rows)
@@ -566,6 +566,24 @@
 
                             }
                         </td>
+                        <td style="font-weight:bold;color:black;text-align:center;font-size:15px">
+                            @foreach (DataRow row3 in Model.Tables[6].Rows)
+                            {
+                                @row3["CKTT"]
+
+
+
+                            }
+                        </td>
+                        <td style="font-weight:bold;color:black;text-align:center;font-size:15px">
+                            @foreach (DataRow row3 in Model.Tables[6].Rows)
+                            {
+                                @row3["TC_CKTT_TienTT"]
+
+
+
+                            }
+                        </td>
                     </tr>
                 </tfoot>
 
@@ -625,16 +643,30 @@
 
                          @foreach (DataRow row3 in Model.Tables[2].Rows)
                          {
-                         <tr class="table2-data hidden-row">
-                             <td style="text-align:center">@row3["Stt1"]</td>
-                             <td style="text-align: center">@row3["So_Ct"]</td>
-                             <td style="text-align: center">@row3["Ngay_Ct1"]</td>
-                             <td style="text-align: center">@row3["Ton_No1"]</td>
-                             <td style="text-align: center">@row3["Ghi_Chu"]</td>
+                             <tr class="table2-data hidden-row">
+                                 <td style="text-align:center">@row3["Stt1"]</td>
+                                 <td style="text-align: center">@row3["So_Ct"]</td>
+                                 <td style="text-align: center">@row3["Ngay_Ct1"]</td>
+                                 <td style="text-align: center">@row3["Ton_No1"]</td>
+                                 <td style="text-align: center">@row3["Ghi_Chu"]</td>
 
-                         </tr>
+                             </tr>
                          }
                      </tbody>
+                     <tfoot>
+                         <tr>
+                             <td colspan="3" style="font-weight:bold;color:black;text-align:center;font-size:15px">Tổng cộng</td>
+                             <td style="font-weight:bold;color:black;text-align:right;font-size:15px">
+                                 @foreach (DataRow row3 in Model.Tables[7].Rows)
+                                 {
+                                     @row3["Ton_no"]
+
+
+
+                                 }
+                             </td>
+                         </tr>
+                     </tfoot>
                  </table>
                     </div>
 

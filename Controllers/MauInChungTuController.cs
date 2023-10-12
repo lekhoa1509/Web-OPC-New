@@ -349,12 +349,13 @@ namespace web4.Controllers
             return View(ds);
         }
         [HttpPost]
+   
         //public ActionResult ExportToExcel(List<List<string>> tableData)
         //{
         //    var fileName = $"MauThongBaoNoQH{DateTime.Now:yyyyMMddHHmmss}.xlsx";
         //    var userDownloadsFolder = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\Downloads";
         //    var filePath = Path.Combine(userDownloadsFolder, fileName);
-      
+
         //    ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
         //    using (var package = new ExcelPackage(new FileInfo(filePath)))
@@ -451,7 +452,7 @@ namespace web4.Controllers
                 List<List<string>> tableData = JsonConvert.DeserializeObject<List<List<string>>>(jsonData);
 
                 var fileName = $"MauThongBaoNoQH{DateTime.Now:yyyyMMddHHmmss}.xlsx";
-                var userDownloadsFolder = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\Downloads";
+                string userDownloadsFolder = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\Downloads";
                 var filePath = Path.Combine(userDownloadsFolder, fileName);
 
                 // Khởi tạo tệp Excel
@@ -591,23 +592,23 @@ namespace web4.Controllers
                     worksheet.Cells[nextRow + 9, startColumn].Style.Font.Italic = true;
 
                     package.Save();
+                    byte[] fileBytes = package.GetAsByteArray();
+
+                    // Tạo đối tượng FileContentResult để trả về tệp Excel dưới dạng phản hồi HTTP
+                    var result = new FileContentResult(fileBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+                    {
+                        FileDownloadName = fileName
+                    };
+                    return result;
                 }
 
-                byte[] fileBytes = System.IO.File.ReadAllBytes(filePath);
-
-                // Tạo đối tượng ContentResult để trả về file Excel và mã JavaScript
-                var result = new FileContentResult(fileBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-                {
-                    FileDownloadName = fileName
-                };
-
-                // Trả về FileContentResult
-                return result;
+            
             }
             else
             {
                 return Content("Không có dữ liệu từ cookie.");
             }
+            return View("ThongBaoNoQH_In");
         }
 
     }
