@@ -424,7 +424,15 @@
                     <div>
                         <h3 style="font-size: 13px;">CÔNG TY CỔ PHẦN DƯỢC PHẨM OPC</h3>
                         <h5 style="text-align:left;">@Dvcs</h5>
-                        <h5 style="text-align:left;">Số:</h5>
+                        <h5 style="text-align:left;">
+                            Số:  @foreach (DataRow row3 in Model.Tables[7].Rows)
+                            {
+                                @row3["So"]
+
+
+
+                            }
+                        </h5>
                     </div>
 
                 </div>
@@ -639,7 +647,15 @@
 
                 }
             </h5>
+            <h5>
+                Só Tiền Bằng Chữ: @foreach (DataRow row3 in Model.Tables[7].Rows)
+                {
+                    @row3["Tien_Chu"]
 
+
+
+                }
+            </h5>
             <p style="margin-top: 5px; color: black; text-align: left; text-align: left">Chi tiết các hóa đơn chưa thanh toán: </p>
              <div style="margin-top:10px">
                  <table border="1" border-collapse="collapse" style="width:800px;color:black">
@@ -687,7 +703,12 @@
                     </div>
 
                     <div style="width:700px;color:black">
-                        <h5 style="text-align:left">Xin vui lòng xác nhận và gửi lại cho @Dvcs trước ngày <span style="color:black;font-weight:bold">31/10/2023</span></h5>
+                        <h5 style="text-align:left">Xin vui lòng xác nhận và gửi lại cho @Dvcs trước ngày <span style="color:black;font-weight:bold">
+    @foreach (DataRow row3 in Model.Tables[7].Rows)
+    {
+        @row3["Ngay_TT"]
+    }
+                    </span></h5>
                         <br />
                         <h5 style="text-align:left">
                             Nơi nhận:  @foreach (DataRow row3 in Model.Tables[4].Rows)
@@ -724,7 +745,18 @@
                     </div>
 
                     <div style="text-align:right;color:black">
-                        <h5 style="text-align:right">Ngày &nbsp;&nbsp; tháng &nbsp;&nbsp; năm 2023</h5>
+                        <h5 style="text-align:right">
+                            Ngày @foreach (DataRow row3 in Model.Tables[7].Rows)
+                            {
+                                @row3["Ngay_Ky"]
+                            } tháng @foreach (DataRow row3 in Model.Tables[7].Rows)
+                            {
+                                @row3["Thang_Ky"]
+                            } năm @foreach (DataRow row3 in Model.Tables[7].Rows)
+                            {
+                                @row3["Nam_Ky"]
+                            }
+                        </h5>
                     </div>
 
                     <div style="color:black;font-weight:bold">

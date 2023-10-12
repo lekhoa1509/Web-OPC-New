@@ -340,6 +340,9 @@ namespace web4.Controllers
                     cmd.Parameters.AddWithValue("@_Den_Ngay", MauIn.To_date);
                     cmd.Parameters.AddWithValue("@_Ma_dt", MauIn.Ma_Dt);
                     cmd.Parameters.AddWithValue("@_ma_dvcs", ma_dvcs);
+                    cmd.Parameters.AddWithValue("@_Ngay_TT", MauIn.Ngay_TT);
+                    cmd.Parameters.AddWithValue("@_Ngay_Ky", MauIn.Ngay_Ky);
+                    cmd.Parameters.AddWithValue("@_So", MauIn.So);
 
 
                     sda.Fill(ds);
