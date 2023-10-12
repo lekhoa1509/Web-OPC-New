@@ -317,8 +317,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\BKHoaDonGiaoHang.cs" />
-    <Compile Include="Models\StudentMarkDetails.cs" />
-    <Compile Include="Models\Chart.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\MauInChungTu.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -1011,7 +1009,6 @@
     <Content Include="Views\DanhMuc\DanhMuc.cshtml" />
     <Content Include="Views\DanhMuc\ViewDanhMucKH.cshtml" />
     <Content Include="Views\DanhMuc\ViewDanhMucKH_Fill.cshtml" />
-    <Content Include="Views\Chart\Chart.cshtml" />
     <Content Include="Views\DanhMuc\ViewDanhMucKHCN.cshtml" />
     <Content Include="Views\DanhMuc\ViewDanhMucKH_FillCN.cshtml" />
     <Content Include="Views\MauInChungTu\MauInNLCB.cshtml" />
@@ -1044,6 +1041,7 @@
     <Content Include="Views\BangKeHoaDon\DanhSachHoaDon_Fill.cshtml" />
     <Content Include="Views\BangKeHoaDon\danhsachhoadon_SAP.cshtml" />
     <Content Include="Views\BKHoaDonGiaoHang\FilterHD.cshtml" />
+    <Content Include="Views\BangKeHoaDon\bangkehoadon_Fill_HCM.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
