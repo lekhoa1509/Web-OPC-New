@@ -454,7 +454,7 @@ namespace web4.Controllers
                 // Parse chuỗi JSON thành mảng JavaScript
                 List<List<string>> tableData = JsonConvert.DeserializeObject<List<List<string>>>(jsonData);
 
-                var fileName = $"MauThongBaoNoQH{DateTime.Now:yyyyMMddHHmmss}.xlsx";
+                var fileName = $"MauThongBaoNoQH{DateTime.Now:yyyyMMddHHmmss}.xml";
                 string userDownloadsFolder = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)+ "\\Downloads";
              
                 if (!Directory.Exists(userDownloadsFolder))
