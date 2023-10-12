@@ -424,6 +424,8 @@
                         <input class="den_ngay" id="den_ngay" placeholder=" Đến Ngày" name="To_date" type="DATE" format="YYYY-MM-DD" value="@Request.QueryString["To_date"]" /><br /><br />
                         <script>$("#den_ngay").datetimepicker({ timepicker: false, format: 'Y-m-d' });</script>
 
+
+
                         <a>Ngày Thanh Toán</a><br /><br />
                         <input class="den_ngay" id="Ngay_TT" placeholder=" Đến Ngày" name="Ngay_TT" type="DATE" format="YYYY-MM-DD" value="@Request.QueryString["To_date"]" /><br /><br />
                         <script>$("#den_ngay").datetimepicker({ timepicker: false, format: 'Y-m-d' });</script>
@@ -645,6 +647,16 @@
                 const formattedToDate = formatDate(currentDate);
                 document.getElementById("den_ngay").value = formattedToDate;
             }
+            function setCurrentDateTT() {
+                const currentDate = new Date();
+                const formattedToDate = formatDate(currentDate);
+                document.getElementById("Ngay_TT").value = formattedToDate;
+            }
+            function setCurrentDateKy() {
+                const currentDate = new Date();
+                const formattedToDate = formatDate(currentDate);
+                document.getElementById("Ngay_Ky").value = formattedToDate;
+            }
             // Format the date as "yyyy-mm-dd" for input type="date"
             function formatDate(date) {
                 const year = date.getFullYear();
@@ -655,7 +667,10 @@
 
             // Call the function to set the "Từ Ngày" input on page load
             setFirstDayOfCurrentMonth();
-            setCurrentDate();</script>
+            setCurrentDate();
+            setCurrentDateKy();
+            setCurrentDateTT();
+        </script>
         
 </body >
 
