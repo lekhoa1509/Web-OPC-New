@@ -1,9 +1,11 @@
-﻿@using System.Data;
-
+﻿@{ ViewBag.Title = "Danh Sách Hóa Đơn"; }
+@using System.Data;
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+
+
     <style>
         a:hover {
             background-color: lightskyblue;
@@ -252,25 +254,30 @@
             overflow-y: scroll;
         }
 
-            .options-container label {
-                display: block;
-                cursor: pointer;
-                padding: 5px;
-                margin-top: 5px;
-                user-select: none;
+        .data_table {
+            width: max-content;
+        }
+
+        .options-container label {
+            display: block;
+            cursor: pointer;
+            padding: 5px;
+            margin-top: 5px;
+            user-select: none;
+        }
+
+            .options-container label:hover {
+                background: rgb(255, 255, 255);
             }
 
-                .options-container label:hover {
-                    background: rgb(255, 255, 255);
-                }
+        .options-container::-webkit-scrollbar {
+            width: 8px;
+        }
 
-            .options-container::-webkit-scrollbar {
-                width: 8px;
-            }
+        .options-container::-webkit-scrollbar-thumb {
+            background-color: white;
+        }
 
-            .options-container::-webkit-scrollbar-thumb {
-                background-color: white;
-            }
 
         .sidebar {
             position: relative;
@@ -290,15 +297,6 @@
 
         .container {
             text-align: center;
-        }
-
-        .data_table {
-            width: max-content;
-        }
-
-        h5 {
-            text-align: center;
-            font-size: 15px;
         }
 
         .text-loading {
@@ -370,6 +368,7 @@
         .checkContainer {
             height: 300px;
             overflow: auto;
+            scrollbar-width: none;
         }
 
             .checkContainer::-webkit-scrollbar {
@@ -437,18 +436,20 @@
         }
 
         .tab-control {
-            z-index: 90000;
+            z-index: 100;
             position: fixed;
         }
 
             .tab-control ul {
                 position: absolute;
+                bottom: 0px;
                 /* left:300px;*/
             }
 
                 .tab-control ul li {
                     text-align: center;
                 }
+
         .tab.selected-tab {
             pointer-events: none;
             background-color: #3763a3; /* Màu nền của tab */
@@ -463,12 +464,20 @@
                 pointer-events: auto;
             }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0/js/bootstrap-select.min.js"></script>
+    <script type="text/javascript" src="Scripts/table2excel.js"></script>
+
+
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>OPC</title>
+    <title>OPC </title>
     <meta content="" name="description">
     <meta content="Author" name="MJ Maraz">
-    <link href="~/assets/images/logo.png" rel="icon">
+    <link href="~/assets/images/favicon.png" rel="icon">
     <link href="~/assets/images/favicon.png" rel="apple-touch-icon">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -489,103 +498,33 @@
 <!-- =============== Design & Develop By = MJ MARAZ   ====================== -->
 
 <body>
-    <div class="tab-control" style="position:fixed;bottom:50px">
-        <ul class="tabs" style="background-color: #1d1b31">
-            <li class="tab selected"><a href="/Home/About" style="padding-right:5px">Home</a></li>
-
-        </ul>
-    </div>
     <div class="loader" style="z-index:1"></div>
-    <span id="spanText" class="text-loading">[usp_BKSaleOrder_SAP]</span>
+    <span id="spanText" class="text-loading">[usp_DanhSachHoaDon_SAP]</span>
     <div class="sidebar">
         <div class="logo-details">
 
         </div>
         <ul class="nav-links" style="justify-content: center; display:flex;margin-left:10px">
             <li>
-                <form id="dateForm" action="bangkehoadon" method="post" onsubmit="handleFormSubmit(event)">
+                <form  action="bangkehoadon" method="post">
                     <div id="locBC">
-                        <span id="spanText" class="text-loading">[usp_BaoCaoDoanhThuCN_SAP]</span>
+                        <span id="spanText" class="text-loading">[usp_BangKehoaDon_SAP]</span>
                         <a>Từ Ngày</a><br /><br />
                         <input class="tu_ngay" placeholder="Từ Ngày" id="tu_ngay" name="From_date" type="date" format="YYYY-MM-DD" value="@Request.QueryString["From_date"]" />
                         <script>$("#tu_ngay").datetimepicker({ timepicker: false, format: 'Y-m-d' });</script><br /><br />
                         <a>Đến Ngày</a><br /><br />
                         <input class="den_ngay" id="den_ngay" placeholder=" Đến Ngày" name="To_date" type="DATE" format="YYYY-MM-DD" value="@Request.QueryString["To_date"]" /><br /><br />
                         <script>$("#den_ngay").datetimepicker({ timepicker: false, format: 'Y-m-d' });</script>
+                        <div class="select-btn">
+                            <select name="Ma_DvCs">
+                                <option value="OPC_TP_01">Chi Nhánh HCM</option>
+                                <option value="OPC_TP_03">Cửa hàng phú lâm</option>
+                                <option value="OPC_TP_04">Cửa hàng phùng hưng</option>
+                            </select>
+                        </div>
+                        
                     </div>
-
-                    <div class="checkContainer">
-                        <label class="custom-checkbox">
-                            <input type="checkbox" name="myCheckbox" value="option1" checked>
-                            <span class="checkmark"></span>
-                            Ngày Chứng Từ
-                        </label>
-                        <label class="custom-checkbox">
-                            <input type="checkbox" name="myCheckbox" value="option1" checked>
-                            <span class="checkmark"></span>
-                            Số Chứng Từ
-                        </label>
-                        <label class="custom-checkbox">
-                            <input type="checkbox" name="myCheckbox" value="option1" checked>
-                            <span class="checkmark"></span>
-                            Mã Đối Tượng
-                        </label>
-                        <label class="custom-checkbox">
-                            <input type="checkbox" name="myCheckbox" value="option1" checked>
-                            <span class="checkmark"></span>
-                            Tên Đối Tượng
-                        </label>
-                        <label class="custom-checkbox">
-                            <input type="checkbox" name="myCheckbox" value="option1" checked>
-                            <span class="checkmark"></span>
-                            Mã Vật Tư
-                        </label>
-                        <label class="custom-checkbox">
-                            <input type="checkbox" name="myCheckbox" value="option1" checked>
-                            <span class="checkmark"></span>
-                            Tên Vật Tư
-                        </label>
-                        <label class="custom-checkbox">
-                            <input type="checkbox" name="myCheckbox" value="option1" checked>
-                            <span class="checkmark"></span>
-                            Mã KM
-                        </label>
-                        <label class="custom-checkbox">
-                            <input type="checkbox" name="myCheckbox" value="option1" checked>
-                            <span class="checkmark"></span>
-                            Discount
-                        </label>
-                        <label class="custom-checkbox">
-                            <input type="checkbox" name="myCheckbox" value="option1" checked>
-                            <span class="checkmark"></span>
-                            Loại Vật Tư
-                        </label>
-                        <label class="custom-checkbox">
-                            <input type="checkbox" name="myCheckbox" value="option1" checked>
-                            <span class="checkmark"></span>
-                            Số Lượng
-                        </label>
-                        <label class="custom-checkbox">
-                            <input type="checkbox" name="myCheckbox" value="option1" checked>
-                            <span class="checkmark"></span>
-                            Tiền(-VAT)
-                        </label>
-                        <label class="custom-checkbox">
-                            <input type="checkbox" name="myCheckbox" value="option1" checked>
-                            <span class="checkmark"></span>
-                            Tiền(+VAT)
-                        </label>
-                        <label class="custom-checkbox">
-                            <input type="checkbox" name="myCheckbox" value="option1" checked>
-                            <span class="checkmark"></span>
-                            Tình Trạng
-                        </label>
-                        <label class="custom-checkbox">
-                            <input type="checkbox" name="myCheckbox" value="option1" checked>
-                            <span class="checkmark"></span>
-                            Mã DVCS
-                        </label>
-                    </div>
+                  
 
                     <div>
                         <button class="submit" type="submit" onclick="runReport()"> Chạy Báo Cáo </button>
@@ -595,16 +534,15 @@
             </li>
         </ul>
     </div>
+
     <header class="header_part">
         <a href="/Home/About">
             <img src="~/assets/images/logo.png" alt="" class="img-fluid">
         </a>
-        <h4>Báo Cáo Bảng Kê Chứng Từ</h4>
-        <h5 style="color: white">Từ @Request.QueryString["From_date"] đến @Request.QueryString["To_date"]</h5>
+        <h4>Bảng Kê Hóa Đơn</h4>
     </header>
     <!-- =======  Data-Table  = Start  ========================== -->
     <div class="container">
-
         <div class="row">
             <div class="col-12">
                 <div class="data_table">
@@ -615,13 +553,12 @@
                                 <th>Số Chứng Từ</th>
                                 <th>Mã Đối Tượng</th>
                                 <th>Tên Đối Tượng</th>
-                                <th>Mã Vt</th>
+                                <th>Mã vt</th>
                                 <th>Tên Vật Tư</th>
-                                <th>mã KM</th>
+                                <th>Mã Km</th>
                                 <th>Discount</th>
                                 <th>Loại vật Tư</th>
                                 <th>Số Lượng</th>
-                               
                                 <th>Tiền (-VAT)</th>
                                 <th>Tiền (+VAT)</th>
                                 <th>Tình Trạng</th>
@@ -629,28 +566,6 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (DataRow row2 in Model.Tables[0].Rows)
-                            {
-                            <tr>
-                                <td style="text-align:right">@row2["Ngay_Ct"]</td>
-                                <td style="text-align:right">@row2["so_ct"]</td>
-                                <td style="text-align:right">@row2["ma_dt"]</td>
-                                <td>@row2["ten_dt"]</td>
-                                <td style="text-align:right">@row2["ma_vt"]</td>
-                                <td>@row2["ten_vt"]</td>
-                                <td style="text-align:right">@row2["Ma_Km"]</td>
-                                <td style="text-align:right">@row2["Discount"]</td>
-                                <td>@row2["Loai_Vt"]</td>
-                                <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["so_luong"]))</td>
-                               
-                                <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Tien"]))</td>
-                                <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Tong_tien"]))</td>
-                                <td>@row2["Tinh_trang"]</td>
-                                <td>@row2["Ma_Dvcs1"]</td>
-                            </tr>
-                            }
-
-
                         </tbody>
                     </table>
                 </div>
@@ -659,7 +574,12 @@
     </div>
     <!-- =======  Data-Table  = End  ===================== -->
     <!-- ============ Java Script Files  ================== -->
+    <div class="tab-control">
+        <ul class="tabs" style="background-color: #1d1b31; bottom: 0; left: 0; right: 0;">
+            <li class="tab selected" style="padding-right:10px"><a href="/Home/About">Home</a></li>
 
+        </ul>
+    </div>
 
     <script src="~/assets/js/bootstrap.bundle.min.js"></script>
     <script src="~/assets/js/jquery-3.6.0.min.js"></script>
@@ -667,6 +587,33 @@
     <script src="~/assets/js/pdfmake.min.js"></script>
     <script src="~/assets/js/vfs_fonts.js"></script>
     <script src="~/assets/js/custom.js"></script>
+
+    <script>
+        // Set the "Từ Ngày" input to the first day of the current month
+        function setFirstDayOfCurrentMonth() {
+            const currentDate = new Date();
+            const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+            const formattedDate = formatDate(firstDayOfMonth);
+
+            document.getElementById("tu_ngay").value = formattedDate;
+        }
+        function setCurrentDate() {
+            const currentDate = new Date();
+            const formattedToDate = formatDate(currentDate);
+            document.getElementById("den_ngay").value = formattedToDate;
+        }
+        // Format the date as "yyyy-mm-dd" for input type="date"
+        function formatDate(date) {
+            const year = date.getFullYear();
+            const month = (date.getMonth() + 1).toString().padStart(2, "0");
+            const day = date.getDate().toString().padStart(2, "0");
+            return `${year}-${month}-${day}`;
+        }
+
+        // Call the function to set the "Từ Ngày" input on page load
+        setFirstDayOfCurrentMonth();
+        setCurrentDate();
+    </script>
     <script>
         function runReport() {
             const uncheckedCheckboxIndexes = [];
@@ -684,59 +631,6 @@
             const spanElement = document.getElementById("spanText");
             spanElement.style.display = "block";
         }
-    </script>
-    <script>
-        function handleFormSubmit(event) {
-            event.preventDefault();
-
-            // Lấy các giá trị ngày đã chọn từ trường nhập liệu
-            const fromDate = document.getElementById('tu_ngay').value;
-            const toDate = document.getElementById('den_ngay').value;
-
-            // Tạo URL mới với các tham số truy vấn
-            const form = event.target;
-            const actionUrl = `${form.action}?From_date=${fromDate}&To_date=${toDate}`;
-
-            // Chuyển hướng tới URL mới với các giá trị ngày đã chọn làm các tham số truy vấn
-            window.location.href = actionUrl;
-        }
-        function showLoader() {
-            const loader = document.querySelector(".loader");
-            loader.classList.remove("loader-hidden");
-        }
-
-        // Function to hide the loader
-        function hideLoader() {
-            const loader = document.querySelector(".loader");
-            loader.classList.add("loader-hidden");
-        }
-
-        // Add an event listener to the form submission
-        document.getElementById("dateForm").addEventListener("submit", (event) => {
-            event.preventDefault();
-
-            // Show the loader when the form is submitted
-            showLoader();
-
-            // Lấy các giá trị ngày đã chọn từ trường nhập liệu
-            const fromDate = document.getElementById('tu_ngay').value;
-            const toDate = document.getElementById('den_ngay').value;
-
-            // Tạo URL mới với các tham số truy vấn
-            const form = event.target;
-            const actionUrl = `${form.action}?From_date=${fromDate}&To_date=${toDate}`;
-
-            // Chuyển hướng tới URL mới với các giá trị ngày đã chọn làm các tham số truy vấn
-            window.location.href = actionUrl;
-        });
-
-        // Add event listener for window load event
-        window.addEventListener("load", () => {
-            // Hide the loader after the page is loaded
-            hideLoader();
-            applyCheckboxAndColumnState();
-        });
-
     </script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -757,49 +651,157 @@
         });
     </script>
     <script>
-        function applyCheckboxAndColumnState() {
+        // Hàm lưu trạng thái checkbox vào Local Storage
+        function saveCheckboxState() {
             const checkboxes = document.querySelectorAll('input[name="myCheckbox"]');
-            const table = document.getElementById('example');
+            const checkboxState = {};
 
             checkboxes.forEach((checkbox, index) => {
-                const columnIndex = index;
-                const rows = table.querySelectorAll('tr');
-
-                if (!checkbox.checked) {
-                    rows.forEach(row => {
-                        const cells = row.querySelectorAll('td, th');
-                        cells[columnIndex].style.display = 'none';
-                    });
-                } else {
-                    rows.forEach(row => {
-                        const cells = row.querySelectorAll('td, th');
-                        cells[columnIndex].style.display = '';
-                    });
-                }
+                checkboxState[index] = checkbox.checked;
             });
-        }
-        // Hàm lấy trạng thái checkbox từ Local Storage và ẩn cột
-        function applyUncheckedCheckboxState() {
-            const uncheckedCheckboxIndexes = JSON.parse(localStorage.getItem('uncheckedCheckboxIndexes'));
-            if (uncheckedCheckboxIndexes) {
 
-                const checkboxes = document.querySelectorAll('input[name="myCheckbox"]');
-
-                uncheckedCheckboxIndexes.forEach(index => {
-                    checkboxes[index].checked = false;
-                });
-            }
+            localStorage.setItem('checkboxState', JSON.stringify(checkboxState));
         }
 
-        // Áp dụng trạng thái checkbox đã bỏ chọn từ Local Storage khi trang được tải
+        // Lưu trạng thái khi người dùng bỏ chọn checkbox
+        // Lắng nghe sự kiện thay đổi của các checkbox
         document.addEventListener('DOMContentLoaded', function () {
-            // Áp dụng trạng thái của các checkbox đã bỏ chọn
-            applyUncheckedCheckboxState();
+            const checkboxes = document.querySelectorAll('input[name="myCheckbox"]');
+
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function () {
+                    localStorage.setItem(checkbox.value, checkbox.checked);
+                });
+            });
         });
+
+    </script>
+    <script>
+
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            showLoader();
+            // Show the loader when the form is submitted
+
+
+            // Lấy các giá trị ngày đã chọn từ trường nhập liệu
+            const fromDate = document.getElementById('tu_ngay').value;
+            const toDate = document.getElementById('den_ngay').value;
+
+            // Tạo URL mới với các tham số truy vấn
+            const form = event.target;
+            const actionUrl = `${form.action}?From_date=${fromDate}&To_date=${toDate}`;
+
+            // Chuyển hướng tới URL mới với các giá trị ngày đã chọn làm các tham số truy vấn
+            window.location.href = actionUrl;
+        }
+        function displaySelectedDate() {
+            // Lấy các giá trị ngày đã chọn từ trường nhập liệu
+            const fromDate = document.getElementById('tu_ngay').value;
+            const toDate = document.getElementById('den_ngay').value;
+
+            // Hiển thị các giá trị ngày đã chọn lên thẻ h5
+            const selectedDateDisplay = document.getElementById('selectedDateDisplay');
+            selectedDateDisplay.innerText = `Từ ngày: ${fromDate} - Đến ngày: ${toDate}`;
+            window.location.href = selectedDateDisplay;
+        }
+
+        // Function to show the loader
+        function showLoader() {
+            const loader = document.querySelector(".loader");
+            loader.classList.remove("loader-hidden");
+        }
+
+        // Function to hide the loader
+        function hideLoader() {
+            const loader = document.querySelector(".loader");
+            loader.classList.add("loader-hidden");
+        }
+
+        /*  Add an event listener to the form submission*/
+        document.getElementById("dateForm").addEventListener("submit", (event) => {
+            event.preventDefault();
+            displaySelectedDate();
+            // Show the loader when the form is submitted
+            showLoader();
+
+            // Lấy các giá trị ngày đã chọn từ trường nhập liệu
+            const fromDate = document.getElementById('tu_ngay').value;
+            const toDate = document.getElementById('den_ngay').value;
+
+            // Tạo URL mới với các tham số truy vấn
+            const form = event.target;
+            const actionUrl = `${form.action}?From_date=${fromDate}&To_date=${toDate}`;
+
+            // Chuyển hướng tới URL mới với các giá trị ngày đã chọn làm các tham số truy vấn
+            window.location.href = actionUrl;
+        });
+
+        // Add event listener for window load event
+        window.addEventListener("load", () => {
+            // Hide the loader after the page is loaded
+            hideLoader();
+            const fromDate = urlParams.get('From_date');
+            const toDate = urlParams.get('To_date');
+            if (fromDate && toDate) {
+                displaySelectedDate();
+            }
+        });
+
+
 
 
     </script>
     <script>
+        // Hàm kiểm tra và chuyển hướng về trang Home nếu mảng tabsArray rỗng
+        function checkAndRedirectToHome() {
+            const tabsArray = JSON.parse(localStorage.getItem("tabsArray")) || [];
+
+            // Kiểm tra nếu không còn tab nào, chuyển về trang Home
+            if (tabsArray.length === 0) {
+                window.location.href = "/Home/About"; // Sử dụng đường dẫn tương đối dựa trên ngữ cảnh
+            }
+        }
+
+        // Hàm để tạo lại giao diện tab từ mảng đã lưu trong Local Storage
+        function createTabsFromLocalStorage() {
+            const tabControlTabs = document.querySelector(".tab-control .tabs");
+            const tabsArray = JSON.parse(localStorage.getItem("tabsArray")) || [];
+            const currentHref = window.location.href; // Lấy đường dẫn hiện tại
+
+            // Xóa toàn bộ các tab hiện có trong giao diện
+            tabControlTabs.innerHTML = "";
+
+            // Lặp qua từng tab và thêm vào giao diện
+            tabsArray.forEach(function (tabInfo, index) {
+                const tabTitle = tabInfo.title;
+                const tabHref = tabInfo.href;
+
+                // Tạo tab và thêm vào giao diện
+                const newTab = document.createElement("li");
+                newTab.classList.add("tab", "selected");
+
+                // Kiểm tra nếu tabHref trùng với đường dẫn hiện tại, thêm lớp active
+                if (tabHref === currentHref) {
+                    newTab.classList.add("active");
+                }
+
+                newTab.innerHTML = `
+                                    <a href="${tabHref}">${tabTitle}</a>
+                                    <a class="closeTab" href="">✕</a>
+                                `;
+                tabControlTabs.appendChild(newTab);
+
+                // Sự kiện khi người dùng nhấp vào nút đóng tab
+                newTab.querySelector(".closeTab").addEventListener("click", function (event) {
+                    event.preventDefault();
+                    closeTabAndNavigate(tabTitle, index);
+                });
+            });
+        }
+
+
+
         document.addEventListener("DOMContentLoaded", function () {
             const tabControlTabs = document.querySelector(".tab-control .tabs");
 
@@ -818,9 +820,9 @@
                 const newTab = document.createElement("li");
                 newTab.classList.add("tab", "selected");
                 newTab.innerHTML = `
-                                                                                <a href="${tabHref}">${tabTitle}</a>
-                                                                                <a class="closeTab" href="">✕</a>
-                                                                            `;
+                                        <a href="${tabHref}">${tabTitle}</a>
+                                        <a class="closeTab" href="">✕</a>
+                                    `;
                 tabControlTabs.appendChild(newTab);
 
                 // Sự kiện khi người dùng nhấp vào nút đóng tab
@@ -831,6 +833,7 @@
             });
 
             hideLoader();
+            checkAndRedirectToHome(); // Gọi hàm kiểm tra và chuyển hướng
         });
 
         // Hàm để xóa tab và chuyển đến view gần nhất (nếu có)
@@ -860,98 +863,75 @@
             createTabsFromLocalStorage();
 
             // Kiểm tra nếu không còn tab nào, chuyển về trang Home
-            if (tabsArray.length === 0) {
-                window.location.href = "/Home/About"; // Thay đổi dấu "#" thành đường dẫn tới trang Home nếu có
-            } else {
-                // Nếu còn tab, chuyển về tab cuối cùng trong danh sách
-                const lastTab = tabsArray[tabsArray.length - 1];
-
-                window.location.href = lastTab.href;
-            }
+            checkAndRedirectToHome();
+            window.location.reload();
         }
 
     </script>
     <script>
+        // Trong view 2
         document.addEventListener("DOMContentLoaded", function () {
-            const tabControlTabs = document.querySelector(".tab-control .tabs");
+            // Lấy đường dẫn hiện tại của tab trong view 2
+            const currentTabHref = window.location.href;
 
-            // Lấy đường dẫn hiện tại của view
-            const currentViewHref = window.location.href;
-            console.log("Href là:", window.location.href);
+            // Lấy nút hoặc sự kiện mà bạn sử dụng để chuyển sang tab khác trong view 3
+            const switchToView3Button = document.querySelector("#switchToView3Button");
 
-            // Lấy mảng tabsArray từ Local Storage
-            let tabsArray = JSON.parse(localStorage.getItem("tabsArray")) || [];
+            // Sự kiện khi bạn chuyển sang tab khác trong view 3
+            switchToView3Button.addEventListener("click", function () {
+                // Đường dẫn của tab trong view 3
+                const newTabHref = "ĐƯỜNG_DẪN_CỦA_TAB_VIEW_3"; // Thay thế bằng đường dẫn thật
 
-            // Kiểm tra xem có ít nhất một tab trong mảng tabsArray
-            if (tabsArray.length > 0) {
-                // Lấy tab mới nhất từ mảng tabsArray
-                const newestTab = tabsArray[tabsArray.length - 1];
+                // Cập nhật đường dẫn của tab trong view 2
+                window.location.href = newTabHref;
+            });
 
-                // Cập nhật đường dẫn href của tab mới nhất
-                newestTab.href = currentViewHref;
-
-                // Cập nhật đường dẫn href của tab trong giao diện
-                const tabElement = tabControlTabs.querySelector(`[data-tab-title="${newestTab.title}"]`);
-                if (tabElement) {
-                    tabElement.querySelector("a").setAttribute("href", currentViewHref);
-                }
-
-                // Lưu lại tabsArray đã được cập nhật vào Local Storage
-                localStorage.setItem("tabsArray", JSON.stringify(tabsArray));
-            }
-
-            hideLoader();
+            // Log đường dẫn hiện tại của tab trong view 2
+            console.log(currentTabHref);
         });
 
     </script>
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            // Lấy đường dẫn hiện tại của view
-            const currentViewHref = window.location.href;
-            console.log("Href là:", window.location.href);
+        // Sự kiện khi người dùng nhấp vào tab
+        document.addEventListener("click", function (event) {
+            const clickedTab = event.target.closest(".tab");
+            if (clickedTab) {
+                // Xóa lớp active từ tất cả các tab
+                const tabs = document.querySelectorAll(".tab");
+                tabs.forEach(function (tab) {
+                    tab.classList.remove("active");
+                });
 
-            // Lấy mảng tabsArray từ Local Storage
-            let tabsArray = JSON.parse(localStorage.getItem("tabsArray")) || [];
-
-            // Khai báo index của tab cần cập nhật
-            const tabIndexToUpdate = 1; // Thay đổi số này để chọn vị trí index cụ thể
-
-            // Kiểm tra xem tabIndexToUpdate có hợp lệ trong mảng không
-            if (tabIndexToUpdate >= 0 && tabIndexToUpdate < tabsArray.length) {
-                // Cập nhật đường dẫn href của tab tại vị trí index đã chọn
-                tabsArray[tabIndexToUpdate].href = currentViewHref;
-
-                // Lưu lại tabsArray đã được cập nhật vào Local Storage
-                localStorage.setItem("tabsArray", JSON.stringify(tabsArray));
+                // Thêm lớp active cho tab được nhấp vào
+                clickedTab.classList.add("active");
             }
-
-            hideLoader();
         });
+
     </script>
     <script>
-        // Lấy đường dẫn hiện tại của trang web
-        const currentViewHref = window.location.href;
+        // Bổ sung một lớp chung cho tất cả các tab của View 2 để dễ dàng quản lý chúng
+        const tabsInView2 = document.querySelectorAll(".tab-control.tab-view-2 .tab");
 
-        // Lấy mảng tabsArray từ Local Storage
-        const tabsArray = JSON.parse(localStorage.getItem("tabsArray")) || [];
+        // Xóa lớp active từ tất cả các tab
+        tabsInView2.forEach(function (tab) {
+            tab.classList.remove("active");
+        });
 
-        let tabIndex = -1; // Khởi tạo vị trí index mặc định là -1
+        // Sự kiện khi tab được click
+        document.addEventListener("click", function (event) {
+            const clickedTab = event.target.closest(".tab-view-2");
+            if (clickedTab) {
+                // Xóa lớp active từ tất cả các tab trong View 2
+                tabsInView2.forEach(function (tab) {
+                    tab.classList.remove("active");
+                });
 
-        // Duyệt qua mảng tabsArray để tìm vị trí index của tab có href trùng với đường dẫn hiện tại
-        for (let i = 0; i < tabsArray.length; i++) {
-            if (tabsArray[i].href === currentViewHref) {
-                tabIndex = i;
-                break; // Khi tìm thấy tab thì thoát khỏi vòng lặp
+                // Thêm lớp active cho tab được nhấp vào
+                clickedTab.classList.add("active");
             }
-        }
+        });
 
-        // Kiểm tra vị trí index của tab
-        if (tabIndex !== -1) {
-            console.log("Vị trí index của tab có href trùng với đường dẫn hiện tại là: " + tabIndex);
-        } else {
-            console.log("Không tìm thấy tab có href trùng với đường dẫn hiện tại.");
-        }
-
+        // ...
     </script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -1042,9 +1022,9 @@
                 const newTab = document.createElement("li");
                 newTab.classList.add("tab", "selected");
                 newTab.innerHTML = `
-                                                <a href="${subMenuLinkHref}">${tabTitle}</a>
-                                                <a class="closeTab" href="">✕</a>
-                                            `;
+                            <a href="${subMenuLinkHref}">${tabTitle}</a>
+                            <a class="closeTab" href="">✕</a>
+                        `;
                 tabControlTabs.appendChild(newTab);
 
                 // Chuyển view tới thẻ li tương ứng
@@ -1090,9 +1070,9 @@
                 const newTab = document.createElement("li");
                 newTab.classList.add("tab", "selected");
                 newTab.innerHTML = `
-                                        <a href="${subMenuLinkHref}">${tabTitle}</a>
-                                        <a class="closeTab" href="">✕</a>
-                                    `;
+                        <a href="${subMenuLinkHref}">${tabTitle}</a>
+                        <a class="closeTab" href="">✕</a>
+                    `;
                 tabControlTabs.appendChild(newTab);
 
                 // Chuyển view tới thẻ li tương ứng
@@ -1106,6 +1086,7 @@
         });
 
     </script>
+
 </body>
 
 </html>

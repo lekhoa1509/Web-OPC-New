@@ -242,7 +242,16 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                     <li>
                         <a href="#">2.Báo Cáo Nghiệp Vụ</a>
                         <ul>
-                            <li class="liTitle"><a href="/bangkehoadon/bangkehoadon_Fill">2.1.Bảng Kê Chứng Từ SO</a></li>
+                            @if (string.Equals(ViewBag.UserName, "OPCHCM001", StringComparison.OrdinalIgnoreCase))
+                            {
+
+
+                                <li class="liTitle"><a href="/bangkehoadon/bangkehoadon_Fill_HCM">2.1.Bảng Kê Chứng Từ SO</a></li>
+                            }
+                            else
+                            {
+                                <li class="liTitle"><a href="/DoanhThuChiNhanh/bangkehoadon_Fill">2.1.Bảng Kê Chứng Từ SO</a></li>
+                            }
                             <li class="liTitle"><a href="/bangkehoadon/DanhSachHoaDon_Fill">2.2.Bảng Kê Hóa Đơn</a></li>
                             <li class="liTitle"><a href="/BaoCaobanHangCN/BaoCaoBanHangCN_Fill">2.3.Báo Cáo Bán Hàng CN</a></li>
                             <li class="liTitle"><a href="/BaoCaoBanHangTDV/BaoCaoBanHangTDV_Fill">2.4.Báo Cáo Bán Hàng TDV</a></li>
@@ -414,7 +423,18 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                             <tbody style="float:left">
 
                                 <tr style="height:30px">
-                                    <td style="text-align: left"> <li style=" list-style-type: none;" class="liTitle"><a href="/bangkehoadon/bangkehoadon_Fill">1.Bảng Kê Chứng Từ SO</a></li></td>
+                                    <td style="text-align: left">
+                                        @if (string.Equals(ViewBag.UserName, "OPCHCM001", StringComparison.OrdinalIgnoreCase))
+                                        {
+
+
+                                            <li class="liTitle"><a href="/bangkehoadon/bangkehoadon_Fill_HCM">2.1.Bảng Kê Chứng Từ SO</a></li>
+                                        }
+                                        else
+                                        {
+                                            <li class="liTitle"><a href="/DoanhThuChiNhanh/bangkehoadon_Fill">2.1.Bảng Kê Chứng Từ SO</a></li>
+                                        }
+                                    </td>
                                 </tr>
                                 <tr style="height:30px">
                                     <td style="text-align: left"> <li style=" list-style-type: none;" class="liTitle"><a href="/bangkehoadon/DanhSachHoaDon_Fill">2.Bảng Kê Hóa Đơn</a></li></td>
