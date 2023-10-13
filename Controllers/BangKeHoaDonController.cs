@@ -41,16 +41,13 @@ namespace web4.Controllers
                 cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
                 Acc.Ma_DvCs_1 = Request.Cookies["MA_DVCS"].Value;
+              
                 using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
                 {
 
                     cmd.Parameters.AddWithValue("@_Tu_Ngay", Acc.From_date);
                     cmd.Parameters.AddWithValue("@_Den_Ngay", Acc.To_date);
-                    cmd.Parameters.AddWithValue("@_ma_dvcs", Acc.Ma_DvCs_1);
-                    cmd.Parameters.AddWithValue("@_Ma_Dt", Acc.Ma_dt);
-                    cmd.Parameters.AddWithValue("@_Tinh_Trang", Acc.Tinh_Trang);
-                    cmd.Parameters.AddWithValue("@_username", Acc.UserName);
-
+                    cmd.Parameters.AddWithValue("@_ma_dvcs", Acc.Ma_DvCs);
                     sda.Fill(ds);
 
                 }
@@ -58,6 +55,7 @@ namespace web4.Controllers
 
 
             return View(ds);
+           
 
         }
         public ActionResult bangkehoadon_Fill()
@@ -83,6 +81,7 @@ namespace web4.Controllers
                 cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
                 Acc.Ma_DvCs_1 = Request.Cookies["MA_DVCS"].Value;
+               
                 using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
                 {
 
@@ -103,6 +102,10 @@ namespace web4.Controllers
 
         }
         public ActionResult DanhSachHoaDon_Fill()
+        {
+            return View();
+        }
+        public ActionResult bangkehoadon_Fill_HCM()
         {
             return View();
         }
