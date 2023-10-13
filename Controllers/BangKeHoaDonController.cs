@@ -48,10 +48,6 @@ namespace web4.Controllers
                     cmd.Parameters.AddWithValue("@_Tu_Ngay", Acc.From_date);
                     cmd.Parameters.AddWithValue("@_Den_Ngay", Acc.To_date);
                     cmd.Parameters.AddWithValue("@_ma_dvcs", Acc.Ma_DvCs);
-                    cmd.Parameters.AddWithValue("@_Ma_Dt", Acc.Ma_dt);
-                    cmd.Parameters.AddWithValue("@_Tinh_Trang", Acc.Tinh_Trang);
-                    cmd.Parameters.AddWithValue("@_username", Acc.UserName);
-
                     sda.Fill(ds);
 
                 }
@@ -59,6 +55,7 @@ namespace web4.Controllers
 
 
             return View(ds);
+           
 
         }
         public ActionResult bangkehoadon_Fill()

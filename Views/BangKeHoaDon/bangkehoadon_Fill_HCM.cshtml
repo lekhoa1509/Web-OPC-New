@@ -506,7 +506,7 @@
         </div>
         <ul class="nav-links" style="justify-content: center; display:flex;margin-left:10px">
             <li>
-                <form  action="bangkehoadon" method="post" onsubmit="handleFormSubmit(event)">
+                <form  action="bangkehoadon" method="post">
                     <div id="locBC">
                         <span id="spanText" class="text-loading">[usp_BangKehoaDon_SAP]</span>
                         <a>Từ Ngày</a><br /><br />
@@ -515,11 +515,13 @@
                         <a>Đến Ngày</a><br /><br />
                         <input class="den_ngay" id="den_ngay" placeholder=" Đến Ngày" name="To_date" type="DATE" format="YYYY-MM-DD" value="@Request.QueryString["To_date"]" /><br /><br />
                         <script>$("#den_ngay").datetimepicker({ timepicker: false, format: 'Y-m-d' });</script>
-                        <select name="Ma_DvCs" id="Ma_DvCs_1">
+                        <div class="select-btn">
+                            <select name="Ma_DvCs">
                                 <option value="OPC_TP_01">Chi Nhánh HCM</option>
                                 <option value="OPC_TP_03">Cửa hàng phú lâm</option>
                                 <option value="OPC_TP_04">Cửa hàng phùng hưng</option>
-                          </select>
+                            </select>
+                        </div>
                         
                     </div>
                   

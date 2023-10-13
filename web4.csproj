@@ -318,7 +318,9 @@
     </Compile>
     <Compile Include="Models\BKHoaDonGiaoHang.cs" />
     <Compile Include="Models\Account.cs" />
+    <Compile Include="Models\Chart.cs" />
     <Compile Include="Models\MauInChungTu.cs" />
+    <Compile Include="Models\StudentMarkDetails.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -782,6 +784,7 @@
     <Content Include="Content\ej\mobile\images\ejmmobilefonts.ttf" />
     <Content Include="Content\ej\mobile\images\ejmmobilefonts.eot" />
     <Content Include="assets\js\jquery-1.10.2.min.map" />
+    <Content Include="Chart\Chart.cshtml" />
     <None Include="Properties\PublishProfiles\khoa.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
