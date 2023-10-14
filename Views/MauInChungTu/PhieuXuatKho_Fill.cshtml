@@ -12,6 +12,7 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>Phiếu Xác Nhận Thanh Toán</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link href="~/Styles/main.css" rel='stylesheet' type='text/css' media="all">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         * {
@@ -428,13 +429,13 @@
             <div style="margin-left:-250px;text-align:left">
                 <h5>Đơn vị xuất hàng: Kho thành phẩm Cửa hàng Quận 10</h5>
                 <h5 style="margin-left:-5px">Địa chỉ: 134/1 Tô Hiến Thành, P15, Quận 10, TP.HCM</h5>
-                <h5 style="margin-left: 40px">Đơn vị nhận hàng:@Request.Cookies["Ten_dt"].Value</h5>
+                <h5 style="margin-left: 100px">Đơn vị nhận hàng:@Request.Cookies["Ten_dt"].Value</h5>
                 <h5 style="margin-left: -120px">Diễn giải: Xuất hàng giao cho khách</h5>
             </div>
 
 
             <div style="margin-top:10px">
-                <table border="1" border-collapse="collapse" style="width:600px">
+                <table id="export" border="1" border-collapse="collapse" style="width:600px">
                     <tr style="font-size:10px;font-weight:bold;color:black">
                         <th style="padding:10px">STT</th>
                         <th>TÊN SẢN PHẨM -QUY CÁCH</th>
@@ -448,7 +449,7 @@
                         {
                             <tr class="table2-data hidden-row" data-soct="@row3["So_Ct"]">
 
-                             
+
                                 <td>@row3["so_Line_Id"]</td>
                                 <td>@row3["Ten_vt"]</td>
                                 <td>@row3["Dvt"]</td>
@@ -465,26 +466,113 @@
 
                 </table>
                 <br />
-               
+
                 <div style="text-align:right">
                     <h4>Ngày&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tháng&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;năm&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h4>
                 </div>
                 @*<h4 style="margin-left:auto">P. KHCU &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Thủ kho&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Xưởng sản xuất</h4>*@
-            <div style="display:inline-block">
-                <h4 style="display:inline-block;margin-left:80px">Bên nhận</h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <div style="display:inline-block">
+                    <h4 style="display:inline-block;margin-left:80px">Bên nhận</h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-                <h4 style="display:inline-block;margin-left:100px">Người lập phiếu</h4>
-            </div><br />
-                  <div style="display:flex">
-                      <h5 style="font-style:italic;text-align:left;margin-left:80px">(Ký, họ tên)</h5>
-                      <h5 style="font-style:italic;text-align:left;margin-left:320px">(Ký, họ tên)</h5>
-                  </div>
+                    <h4 style="display:inline-block;margin-left:100px">Người lập phiếu</h4>
+                </div><br />
+                <div style="display:flex">
+                    <h5 style="font-style:italic;text-align:left;margin-left:80px">(Ký, họ tên)</h5>
+                    <h5 style="font-style:italic;text-align:left;margin-left:320px">(Ký, họ tên)</h5>
+                </div>
             </div>
 
         </form>
     </div>
+    <button id="export-button" onclick="exportExcel()">Xuất Excel</button>
+    <input type="file" id="file-input" style="display: none">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#export-button").click(function () {
+                $("#export").table2excel({
+                    filename: "ThongBaoNoQH.xls"
+                });
+            });
+        });
 
+    </script>
+    <script>
+        function showFileInput() {
+            // Sử dụng JavaScript để kích hoạt hộp thoại chọn vị trí lưu tệp
+            var fileInput = document.getElementById("file-input");
+            file.click();
+        }
+
+    </script>
+    <script>
+  function exportExcel() {
+    window.location.href = '@Url.Action("ExportPhieuXuatKho", "MauInChungTu")';
+}
+
+
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var tableData = []; // Mảng lưu dữ liệu
+
+            // Lặp qua từng hàng trong bảng
+            var rows = document.querySelectorAll("#export tbody tr");
+            rows.forEach(function (row) {
+                var rowData = [];
+                var cells = row.querySelectorAll("td");
+
+                // Lặp qua từng ô dữ liệu trong hàng
+                cells.forEach(function (cell) {
+                    rowData.push(cell.textContent);
+                });
+
+                tableData.push(rowData); // Thêm mảng dữ liệu hàng vào mảng tableData
+            });
+
+            // Chuyển mảng tableData thành một chuỗi JSON
+            var jsonData = JSON.stringify(tableData);
+
+            // Lưu chuỗi JSON vào cookie
+            Cookies.set("tableDataCookie", jsonData);
+
+            // Kiểm tra xem dữ liệu đã được lưu vào cookie chưa
+            var retrievedData = Cookies.get("tableDataCookie");
+            console.log("Dữ liệu từ cookie:", retrievedData);
+        });
+    </script>
+    <script>
+        // Đợi cho tài liệu HTML được tải hoàn thành
+        document.addEventListener("DOMContentLoaded", function () {
+            // Lấy thẻ tbody của bảng
+            var tbody = document.querySelector("#export tbody");
+
+            // Khởi tạo mảng để lưu dữ liệu
+            var tableData = [];
+
+            // Lặp qua từng hàng (tr) trong tbody
+            var rows = tbody.querySelectorAll("tr");
+            rows.forEach(function (row) {
+                // Lấy tất cả các ô dữ liệu trong hàng (td)
+                var rowData = [];
+                var cells = row.querySelectorAll("td");
+                cells.forEach(function (cell) {
+                    // Lấy nội dung của ô dữ liệu và thêm vào mảng rowData
+                    rowData.push(cell.textContent);
+                });
+
+                // Thêm mảng rowData vào mảng tableData
+                tableData.push(rowData);
+            });
+
+            // Xuất mảng tableData lên console
+            console.log(tableData);
+        });
+    </script>
     <script>
         document.getElementById("dropdownInput").addEventListener("input", function () {
             var inputValue = this.value;
@@ -500,7 +588,14 @@
 
 
     </script>
-
+    <script>
+        document.addEventListener('keydown', function (event) {
+            if (event.ctrlKey && event.key === 'p') {
+                // Người dùng nhấn Ctrl+P, ẩn nút xuất Excel
+                document.getElementById('export-button').style.display = 'none';
+            }
+        });
+    </script>
 </body>
 
 </html>
