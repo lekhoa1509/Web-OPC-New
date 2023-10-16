@@ -523,16 +523,21 @@ namespace web4.Controllers
 
             var fileName = $"BangDoiChieuCongNo{DateTime.Now:yyyyMMddHHmmss}.xlsx";
             // Lấy dữ liệu từ cookie
-            string jsonData = Request.Cookies["tableDataCookie"] != null ? HttpUtility.UrlDecode(Request.Cookies["tableDataCookie"].Value) : "";
+            //string jsonData = Request.Cookies["tableDataCookie"] != null ? HttpUtility.UrlDecode(Request.Cookies["tableDataCookie"].Value) : "";
             string jsonData2 = Request.Cookies["tableData2Cookie"] != null ? HttpUtility.UrlDecode(Request.Cookies["tableData2Cookie"].Value) : "";
+            string cookie1Value = Request.Cookies["tableDataCookie1"] != null ? HttpUtility.UrlDecode(Request.Cookies["tableDataCookie1"].Value) : "";
+            string cookie2Value = Request.Cookies["tableDataCookie2"] != null ? HttpUtility.UrlDecode(Request.Cookies["tableDataCookie2"].Value) : "";
             // Kiểm tra xem có dữ liệu từ cookie không
-            if (!string.IsNullOrEmpty(jsonData) &&!string.IsNullOrEmpty(jsonData2))
+            List<List<string>> combinedData = new List<List<string>>();
+            if (!string.IsNullOrEmpty(cookie1Value) &&!string.IsNullOrEmpty(jsonData2)&& !string.IsNullOrEmpty(cookie2Value))
             {
                 // Parse chuỗi JSON thành mảng JavaScript
-                List<List<string>> tableData = JsonConvert.DeserializeObject<List<List<string>>>(jsonData);
+                List<List<string>> tableData1 = JsonConvert.DeserializeObject<List<List<string>>>(cookie2Value);
+                List<List<string>> tableData = JsonConvert.DeserializeObject<List<List<string>>>(cookie1Value);
                 List<List<string>> tableData2 = JsonConvert.DeserializeObject<List<List<string>>>(jsonData2);
+                combinedData.AddRange(tableData);
+                combinedData.AddRange(tableData1);
 
-              
                 // Khởi tạo tệp Excel
                 ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
                 using (var package = new ExcelPackage())
@@ -683,12 +688,12 @@ namespace web4.Controllers
                     worksheet.Cells[startRow, startColumn + 9].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
                     worksheet.Cells[startRow, startColumn + 9].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
                     worksheet.Cells[startRow, startColumn + 9].Style.Font.Bold = true;
-                    if (tableData != null && tableData.Any())
+                    if (combinedData != null && combinedData.Any())
                     {
                         // Lặp qua từng hàng dữ liệu trong tableData và ghi vào tệp Excel
-                        for (int row = 0; row < tableData.Count; row++)
+                        for (int row = 0; row < combinedData.Count; row++)
                         {
-                            var rowData = tableData[row];
+                            var rowData = combinedData[row];
                             for (int col = 0; col < rowData.Count; col++)
                             {
                                 if(col == 4 &&col ==7 &&col==9)
@@ -712,25 +717,25 @@ namespace web4.Controllers
                     {
                         worksheet.Cells[startRow, startColumn].Value = "Không có dữ liệu bảng từ cookie.";
                     }
-                    var TC = worksheet.Cells[startRow - 1 + tableData.Count, startColumn, startRow - 1 + tableData.Count, startColumn + 2];
+                    var TC = worksheet.Cells[startRow - 1 + combinedData.Count, startColumn, startRow - 1 + combinedData.Count, startColumn + 2];
                     TC.Merge = true;
                     TC.Value = "Tổng cộng: ";
                     TC.Style.Font.Bold = true;
                     TC.Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
                     TC.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // Đặt canh giữa ngang
                     TC.Style.VerticalAlignment = ExcelVerticalAlignment.Center; // Đặt canh giữa dọc
-                    worksheet.Cells[startRow - 1 + tableData.Count, startColumn + 3].Value = $"{TienHD}"; // Ví dụ: Ghi giá trị tổng vào cột thứ 4
-                    worksheet.Cells[startRow - 1 + tableData.Count, startColumn + 3].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
-                    worksheet.Cells[startRow - 1 + tableData.Count, startColumn + 3].Style.Font.Bold = true;
-                    worksheet.Cells[startRow - 1 + tableData.Count, startColumn + 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                    worksheet.Cells[startRow - 1 + tableData.Count, startColumn + 4].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
-                    worksheet.Cells[startRow - 1 + tableData.Count, startColumn + 5].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
-                    worksheet.Cells[startRow - 1 + tableData.Count, startColumn + 6].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
-                    worksheet.Cells[startRow - 1 + tableData.Count, startColumn + 7].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
-                    worksheet.Cells[startRow - 1 + tableData.Count, startColumn + 8].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
-                    worksheet.Cells[startRow - 1 + tableData.Count, startColumn + 9].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+                    worksheet.Cells[startRow - 1 + combinedData.Count, startColumn + 3].Value = $"{TienHD}"; // Ví dụ: Ghi giá trị tổng vào cột thứ 4
+                    worksheet.Cells[startRow - 1 + combinedData.Count, startColumn + 3].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+                    worksheet.Cells[startRow - 1 + combinedData.Count, startColumn + 3].Style.Font.Bold = true;
+                    worksheet.Cells[startRow - 1 + combinedData.Count, startColumn + 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                    worksheet.Cells[startRow - 1 + combinedData.Count, startColumn + 4].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+                    worksheet.Cells[startRow - 1 + combinedData.Count, startColumn + 5].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+                    worksheet.Cells[startRow - 1 + combinedData.Count, startColumn + 6].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+                    worksheet.Cells[startRow - 1 + combinedData.Count, startColumn + 7].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+                    worksheet.Cells[startRow - 1 + combinedData.Count, startColumn + 8].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+                    worksheet.Cells[startRow - 1 + combinedData.Count, startColumn + 9].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
 
-                    var endII = startRow + tableData.Count;
+                    var endII = startRow + combinedData.Count;
                     var nextII = endII + 1;
                     worksheet.Cells[nextII, startColumn].Value = $"III. Số tiền khách hàng chưa thanh toán, tính đến cuối ngày: {DenNgay}/{DenThang}/{Nam} là: {TonNo} đồng";
                     worksheet.Cells[nextII, startColumn].Style.Font.Bold = true;
