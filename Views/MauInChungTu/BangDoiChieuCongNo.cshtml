@@ -617,7 +617,10 @@
                                 @foreach (DataRow row3 in Model.Tables[6].Rows)
                                 {
                                     @row3["Tien_TT"]
-
+                                    var TienTT = row3["Tien_TT"].ToString();
+                                    HttpCookie TienTTCookie = new HttpCookie("Tien_TT");
+                                    TienTTCookie.Value = TienTT;
+                                    Response.Cookies.Add(TienTTCookie);
 
 
                                 }
@@ -626,7 +629,10 @@
                                 @foreach (DataRow row3 in Model.Tables[6].Rows)
                                 {
                                     @row3["CKTT"]
-
+                                    var CKTT = row3["CKTT"].ToString();
+                                    HttpCookie CKTTCookie = new HttpCookie("CKTT");
+                                    CKTTCookie.Value = CKTT;
+                                    Response.Cookies.Add(CKTTCookie);
 
 
                                 }
@@ -635,7 +641,10 @@
                                 @foreach (DataRow row3 in Model.Tables[6].Rows)
                                 {
                                     @row3["TC_CKTT_TienTT"]
-
+                                    var TCCK = row3["TC_CKTT_TienTT"].ToString();
+                                    HttpCookie TCCKCookie = new HttpCookie("TC_CKTT_TienTT");
+                                    TCCKCookie.Value = TCCK;
+                                    Response.Cookies.Add(TCCKCookie);
 
 
                                 }

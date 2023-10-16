@@ -580,6 +580,10 @@ namespace web4.Controllers
                     string CN = Request.Cookies["CN"] != null ? HttpUtility.UrlDecode(Request.Cookies["CN"].Value) : "";
                     string TK = Request.Cookies["TK"] != null ? HttpUtility.UrlDecode(Request.Cookies["TK"].Value) : "";
                     string LH = Request.Cookies["LH"] != null ? HttpUtility.UrlDecode(Request.Cookies["LH"].Value) : "";
+
+                    string TienTT = Request.Cookies["Tien_TT"] != null ? HttpUtility.UrlDecode(Request.Cookies["Tien_TT"].Value) : "";
+                    string CKTT = Request.Cookies["CKTT"] != null ? HttpUtility.UrlDecode(Request.Cookies["CKTT"].Value) : "";
+                    string TCCK = Request.Cookies["TC_CKTT_TienTT"] != null ? HttpUtility.UrlDecode(Request.Cookies["TC_CKTT_TienTT"].Value) : "";
                     // Đặt font chữ "Arial" cho toàn bộ tệp Excel
                     worksheet.Cells.Style.Font.Name = "Times New Roman";
 
@@ -737,6 +741,15 @@ namespace web4.Controllers
                     worksheet.Cells[startRow - 1 + combinedData.Count, startColumn + 4].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
                     worksheet.Cells[startRow - 1 + combinedData.Count, startColumn + 5].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
                     worksheet.Cells[startRow - 1 + combinedData.Count, startColumn + 6].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+                    worksheet.Cells[startRow - 1 + combinedData.Count, startColumn + 6].Value = $"{TienTT}";
+                    worksheet.Cells[startRow - 1 + combinedData.Count, startColumn + 7].Value = $"{CKTT}";
+                    worksheet.Cells[startRow - 1 + combinedData.Count, startColumn + 8].Value = $"{TCCK}";
+                    worksheet.Cells[startRow - 1 + combinedData.Count, startColumn + 6].Style.Font.Bold = true;
+                    worksheet.Cells[startRow - 1 + combinedData.Count, startColumn + 7].Style.Font.Bold = true;
+                    worksheet.Cells[startRow - 1 + combinedData.Count, startColumn + 8].Style.Font.Bold = true;
+                    worksheet.Cells[startRow - 1 + combinedData.Count, startColumn + 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                    worksheet.Cells[startRow - 1 + combinedData.Count, startColumn + 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                    worksheet.Cells[startRow - 1 + combinedData.Count, startColumn + 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                     worksheet.Cells[startRow - 1 + combinedData.Count, startColumn + 7].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
                     worksheet.Cells[startRow - 1 + combinedData.Count, startColumn + 8].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
                     worksheet.Cells[startRow - 1 + combinedData.Count, startColumn + 9].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
