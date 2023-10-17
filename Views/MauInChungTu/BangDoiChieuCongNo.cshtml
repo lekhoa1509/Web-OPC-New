@@ -617,7 +617,10 @@
                                 @foreach (DataRow row3 in Model.Tables[6].Rows)
                                 {
                                     @row3["Tien_TT"]
-
+                                    var TienTT = row3["Tien_TT"].ToString();
+                                    HttpCookie TienTTCookie = new HttpCookie("Tien_TT");
+                                    TienTTCookie.Value = TienTT;
+                                    Response.Cookies.Add(TienTTCookie);
 
 
                                 }
@@ -626,7 +629,10 @@
                                 @foreach (DataRow row3 in Model.Tables[6].Rows)
                                 {
                                     @row3["CKTT"]
-
+                                    var CKTT = row3["CKTT"].ToString();
+                                    HttpCookie CKTTCookie = new HttpCookie("CKTT");
+                                    CKTTCookie.Value = CKTT;
+                                    Response.Cookies.Add(CKTTCookie);
 
 
                                 }
@@ -635,7 +641,10 @@
                                 @foreach (DataRow row3 in Model.Tables[6].Rows)
                                 {
                                     @row3["TC_CKTT_TienTT"]
-
+                                    var TCCK = row3["TC_CKTT_TienTT"].ToString();
+                                    HttpCookie TCCKCookie = new HttpCookie("TC_CKTT_TienTT");
+                                    TCCKCookie.Value = TCCK;
+                                    Response.Cookies.Add(TCCKCookie);
 
 
                                 }
@@ -869,64 +878,64 @@
 
     </script>
     @*<script>
-        document.addEventListener("DOMContentLoaded", function () {
-            var tableData = []; // Mảng lưu dữ liệu
+            document.addEventListener("DOMContentLoaded", function () {
+                var tableData = []; // Mảng lưu dữ liệu
 
-            // Lặp qua từng hàng trong bảng
-            var rows = document.querySelectorAll("#export tbody tr");
-            rows.forEach(function (row) {
-                var rowData = [];
-                var cells = row.querySelectorAll("td");
+                // Lặp qua từng hàng trong bảng
+                var rows = document.querySelectorAll("#export tbody tr");
+                rows.forEach(function (row) {
+                    var rowData = [];
+                    var cells = row.querySelectorAll("td");
 
-                // Lặp qua từng ô dữ liệu trong hàng
-                cells.forEach(function (cell) {
-                    rowData.push(cell.textContent);
+                    // Lặp qua từng ô dữ liệu trong hàng
+                    cells.forEach(function (cell) {
+                        rowData.push(cell.textContent);
+                    });
+
+                    tableData.push(rowData); // Thêm mảng dữ liệu hàng vào mảng tableData
                 });
 
-                tableData.push(rowData); // Thêm mảng dữ liệu hàng vào mảng tableData
+                // Chuyển mảng tableData thành một chuỗi JSON
+                var jsonData = JSON.stringify(tableData);
+
+                //// Lưu chuỗi JSON vào cookie
+                Cookies.set("tableDataCookie", jsonData);
+                // Lưu mảng tableData vào bộ nhớ cục bộ
+
+
+                // Kiểm tra xem dữ liệu đã được lưu vào cookie chưa
+                var retrievedData = Cookies.get("tableDataCookie");
+                console.log("Dữ liệu từ cookie:", retrievedData);
             });
+        </script>
+        <script>
+            // Đợi cho tài liệu HTML được tải hoàn thành
+            document.addEventListener("DOMContentLoaded", function () {
+                // Lấy thẻ tbody của bảng
+                var tbody = document.querySelector("#export tbody");
 
-            // Chuyển mảng tableData thành một chuỗi JSON
-            var jsonData = JSON.stringify(tableData);
+                // Khởi tạo mảng để lưu dữ liệu
+                var tableData = [];
 
-            //// Lưu chuỗi JSON vào cookie
-            Cookies.set("tableDataCookie", jsonData);
-            // Lưu mảng tableData vào bộ nhớ cục bộ
-      
+                // Lặp qua từng hàng (tr) trong tbody
+                var rows = tbody.querySelectorAll("tr");
+                rows.forEach(function (row) {
+                    // Lấy tất cả các ô dữ liệu trong hàng (td)
+                    var rowData = [];
+                    var cells = row.querySelectorAll("td");
+                    cells.forEach(function (cell) {
+                        // Lấy nội dung của ô dữ liệu và thêm vào mảng rowData
+                        rowData.push(cell.textContent);
+                    });
 
-            // Kiểm tra xem dữ liệu đã được lưu vào cookie chưa
-            var retrievedData = Cookies.get("tableDataCookie");
-            console.log("Dữ liệu từ cookie:", retrievedData);
-        });
-    </script>
-    <script>
-        // Đợi cho tài liệu HTML được tải hoàn thành
-        document.addEventListener("DOMContentLoaded", function () {
-            // Lấy thẻ tbody của bảng
-            var tbody = document.querySelector("#export tbody");
-
-            // Khởi tạo mảng để lưu dữ liệu
-            var tableData = [];
-
-            // Lặp qua từng hàng (tr) trong tbody
-            var rows = tbody.querySelectorAll("tr");
-            rows.forEach(function (row) {
-                // Lấy tất cả các ô dữ liệu trong hàng (td)
-                var rowData = [];
-                var cells = row.querySelectorAll("td");
-                cells.forEach(function (cell) {
-                    // Lấy nội dung của ô dữ liệu và thêm vào mảng rowData
-                    rowData.push(cell.textContent);
+                    // Thêm mảng rowData vào mảng tableData
+                    tableData.push(rowData);
                 });
 
-                // Thêm mảng rowData vào mảng tableData
-                tableData.push(rowData);
+                // Xuất mảng tableData lên console
+                console.log(tableData);
             });
-
-            // Xuất mảng tableData lên console
-            console.log(tableData);
-        });
-    </script>*@
+        </script>*@
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             var tableData2 = []; // Mảng lưu dữ liệu
@@ -1019,11 +1028,42 @@
 
     </script>
     <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var tableData = []; // Mảng lưu dữ liệu
+
+            // Lặp qua từng hàng trong bảng
+            var rows = document.querySelectorAll("#export2 tbody tr");
+            rows.forEach(function (row) {
+                var rowData = [];
+                var cells = row.querySelectorAll("td");
+
+                // Lặp qua từng ô dữ liệu trong hàng
+                cells.forEach(function (cell) {
+                    rowData.push(cell.textContent);
+                });
+
+                tableData.push(rowData); // Thêm mảng dữ liệu hàng vào mảng tableData
+            });
+
+            // Chia mảng thành hai phần
+            var halfLength = Math.ceil(tableData.length / 2);
+            var part1 = tableData.slice(0, halfLength);
+            var part2 = tableData.slice(halfLength);
+
+            // Chuyển mảng thành chuỗi JSON
+            var part1JSON = JSON.stringify(part1);
+            var part2JSON = JSON.stringify(part2);
+
+            // Lưu vào hai cookie riêng rẽ
+            Cookies.set("tableDataCookieHD1", part1JSON);
+            Cookies.set("tableDataCookieHD2", part2JSON);
+        });
+
+    </script>
+    <script>
   function exportExcel() {
     window.location.href = '@Url.Action("ExportBaoCaoCongNo", "MauInChungTu")';
 }
-
-
     </script>
     <script>
         document.getElementById("dropdownInput").addEventListener("input", function () {
