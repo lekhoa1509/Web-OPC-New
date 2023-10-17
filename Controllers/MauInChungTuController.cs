@@ -681,7 +681,7 @@ namespace web4.Controllers
                     worksheet.Cells[startRow, startColumn + 6].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
                     worksheet.Cells[startRow, startColumn + 6].Style.Font.Bold = true;
 
-                    worksheet.Cells[startRow, startColumn + 7].Value = "CKTT";
+                    worksheet.Cells[startRow, startColumn + 7].Value = "CKTT"; 
                     worksheet.Cells[startRow, startColumn + 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                     worksheet.Cells[startRow, startColumn + 7].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
                     worksheet.Cells[startRow, startColumn + 7].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
