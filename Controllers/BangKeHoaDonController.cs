@@ -28,7 +28,7 @@ namespace web4.Controllers
         {
             DataSet ds = new DataSet();
             connectSQL();
-            // Acc.Ma_DvCs_1 = Request.Cookies["MA_DVCS"].Value;
+            Acc.Ma_DvCs_1 = Request.Cookies["MA_DVCS"].Value;
             //Acc.UserName = Request.Cookies["UserName"].Value;
             //string query = "exec usp_Vth_BC_BHCNTK_CN @_ngay_Ct1 = '" + Acc.From_date + "',@_Ngay_Ct2 ='"+ Acc.To_date+"',@_Ma_Dvcs='"+ Acc.Ma_DvCs_1+"'";
             string Pname = "[usp_BKSaleOrder_SAP]";
@@ -47,7 +47,7 @@ namespace web4.Controllers
 
                     cmd.Parameters.AddWithValue("@_Tu_Ngay", Acc.From_date);
                     cmd.Parameters.AddWithValue("@_Den_Ngay", Acc.To_date);
-                    cmd.Parameters.AddWithValue("@_ma_dvcs", Acc.Ma_DvCs);
+                    cmd.Parameters.AddWithValue("@_ma_dvcs", Acc.Ma_DvCs_1);
                     cmd.Parameters.AddWithValue("@_UserName", Acc.UserName);
                     sda.Fill(ds);
 
