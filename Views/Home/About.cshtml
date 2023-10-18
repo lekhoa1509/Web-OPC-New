@@ -195,6 +195,7 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                     <li class="liTitle"><a href="/MauInChungTu/PhieuXuatKho_SO">3.Phiếu Xuất Kho</a></li>
                     <li class="liTitle"><a href="/MauInChungTu/ThongBaoNoQH_Fill">4.Thông Báo Nợ QH</a></li>
                     <li class="liTitle"><a href="/MauInChungTu/BangDoiChieuCongNo_Fill">5.Bảng Đối Chiếu Công Nợ</a></li>
+                    <li class="liTitle"><a href="/MauInChungTu/BangDoiChieuCongNo_Fill">6.Bảng Đối Chiếu Doanh Thu - Công Nợ</a></li>
                     @*<li><a href="#">Login Form</a></li>
         <li><a href="#">Card Design</a></li>*@
                 </ul>
@@ -369,7 +370,7 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                             <tbody style="float:left">
                                 <tr style="height:30px">
                                     <td style="text-align: left">
-                                        @if (string.Equals(ViewBag.UserName, "admin", StringComparison.OrdinalIgnoreCase)|| string.Equals(ViewBag.UserName, "opcadmin", StringComparison.OrdinalIgnoreCase))
+                                        @if (string.Equals(ViewBag.UserName, "admin", StringComparison.OrdinalIgnoreCase) || string.Equals(ViewBag.UserName, "opcadmin", StringComparison.OrdinalIgnoreCase))
                                         {
                                             <li style=" list-style-type: none;" class="liTitle"><a href="/DoanhThuChiNhanh/DoanhThuChiNhanhKGam_Fill">1.Doanh Thu Chi Nhánh</a></li>
                                         }
@@ -428,10 +429,10 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                                         {
 
 
-                                <li class="liTitle"><a href="/bangkehoadon/bangkehoadon_Fill_HCM">2.1.Bảng Kê Chứng Từ SO</a></li> }
-                                            else
-                                            {
-                                <li class="liTitle"><a href="/bangkehoadon/bangkehoadon_Fill">2.1.Bảng Kê Chứng Từ SO</a></li>}
+                                            <li class="liTitle"><a href="/bangkehoadon/bangkehoadon_Fill_HCM">2.1.Bảng Kê Chứng Từ SO</a></li> }
+                                        else
+                                        {
+                                            <li class="liTitle"><a href="/bangkehoadon/bangkehoadon_Fill">2.1.Bảng Kê Chứng Từ SO</a></li>}
                                     </td>
                                 </tr>
                                 <tr style="height:30px">
@@ -538,7 +539,34 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
 
                 </div>
 
+
             </div>
+            <div class="home-content1" style="width:100%">
+                <div class="overview-boxes" style="background-color:red">
+                    <div class="box" style="overflow:auto;width:400px;height:200px">
+                        <table style="width:500px;height:200px; border-collapse: collapse;overflow:scroll">
+
+                            <tr class="title">
+                                <th colspan="4" class="top10" style="font-size:18px;padding:5px;height:10px">BÁO CÁO PHÂN TÍCH KHUYẾN MÃI</th>
+                            </tr>
+
+                            <tbody style="float:left">
+
+                                <tr style="height:30px">
+                                    <td style="text-align: left"> <li style=" list-style-type: none;" class="liTitle"><a href="/BaoCaoHopDong/BaoCaoHopDongMar_Fill">1.BÁO CÁO HỢP ĐỒNG MARKETING</a></li></td>
+                                </tr>
+                                <tr style="height:30px">
+                                    <td style="text-align: left"> <li style=" list-style-type: none;" class="liTitle"><a href="/BaoCaoHopDong/BaoCaoChiTietHD_Fill">2.BÁO CÁO CHI TIẾT HỢP ĐỒNG </a></li></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+
+
+                </div>
+            </div>
+
             @*<div class="home-content1" style="width:100%">
                 <div class="overview-boxes" style="background-color:red">
                     <div class="box" style="overflow:auto;width:400px;height:200px">
@@ -580,7 +608,44 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
 
             </div>*@
         </div>
+        <div style="width:auto;float:right">
+          
+            <div class="home-content1" style="width:100%">
+                <div class="overview-boxes" style="background-color:red">
+                    <div class="box" style="overflow:auto;width:400px;height:200px">
+                        <table style="width:500px;height:200px; border-collapse: collapse;overflow:scroll">
 
+                            <tr class="title" style="height:20px">
+                                <th colspan="4" class="top10" style="font-size:18px;padding:5px;height:10px">MẪU IN</th>  
+                            </tr>
+
+                            <tbody style="float:left">
+
+                                <tr style="height:30px">
+                                    <td style="text-align: left"> <li style=" list-style-type: none;" class="liTitle"><a href="/MauInChungTu/MauInNLCB_Fill">1.Chứng Từ Phiếu Nhập</a></li></td>
+                                </tr>
+                                <tr style="height:30px">
+                                    <td style="text-align: left"> <li style=" list-style-type: none;" class="liTitle"><a href="/MauInChungTu/PhieuNhapXNTT_Fill">2.Phiếu Xác Nhận Thanh Toán</a></li></td>
+                                </tr>
+                                <tr style="height:30px">
+                                    <td style="text-align: left"> <li style=" list-style-type: none;" class="liTitle"><a href="/MauInChungTu/PhieuXuatKho_SO">3.Phiếu Xuất Kho</a></li></td>
+                                </tr>
+                                <tr style="height:30px">
+                                    <td style="text-align: left"> <li style=" list-style-type: none;" class="liTitle"><a href="/MauInChungTu/ThongBaoNoQH_Fill">4.Thông Báo Nợ QH</a></li></td>
+                                </tr>
+                                <tr style="height:30px">
+                                    <td style="text-align: left"> <li style=" list-style-type: none;" class="liTitle"><a href="/MauInChungTu/BangDoiChieuCongNo_Fill">5.Bảng Đối Chiếu Công Nợ</a></li></td>
+                                </tr>
+                                <tr style="height:30px">
+                                    <td style="text-align: left"> <li style=" list-style-type: none;" class="liTitle"><a href="/MauInChungTu/BangDoiChieuDTCN_Fill">6.Bảng Đối Chiếu Doanh Thu - Công Nợ</a></li></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+           
+        </div>
     </section>
 
     <div class="tab-control">

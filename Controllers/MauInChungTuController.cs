@@ -1055,6 +1055,13 @@ namespace web4.Controllers
             }
            
         }
-
+        public ActionResult BangDoiChieuDTCN_Fill()
+        {
+            return View();
+        }
+        public ActionResult BangDoiChieuDTCN()
+        {
+            return View();
+        }
     }
 }

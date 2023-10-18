@@ -419,17 +419,30 @@
                 <h3 style="font-size: 25px; color: black; font-weight: bold">PHIẾU XUẤT KHO CỬA HÀNG QUẬN 10</h3>
                 <br />
             </div>
-            <div style="margin-left: 400px">
-                <h5>Số:@Request.Cookies["SoCt"].Value</h5>
+            <div style="margin-left: 400px;color:black;font-weight:bold">
+                <h5>Số:  @foreach (DataRow row3 in Model.Tables[0].Rows) { 
+                @row3["so_ct"]
+                    break;
+                }</h5>
             </div>
-            <div style="text-align:center">
-                <h5>Ngày&nbsp;&nbsp;@Request.Cookies["ngay"].Value tháng &nbsp;&nbsp;@Request.Cookies["thang"].Value năm&nbsp;&nbsp; @Request.Cookies["nam"].Value </h5>
+            <div style="text-align:center;color:black;font-weight:bold">
+                <h5>
+                    Ngày&nbsp;&nbsp;@foreach (DataRow row3 in Model.Tables[0].Rows)
+                    {@row3["Ngay"]break;
+                } tháng &nbsp;@foreach (DataRow row3 in Model.Tables[0].Rows)
+                    {@row3["thang"]break;
+                } năm&nbsp; @foreach (DataRow row3 in Model.Tables[0].Rows)
+                {@row3["Nam"]break;
+            }
+                </h5>
 
             </div>
-            <div style="margin-left:-250px;text-align:left">
+            <div style="margin-left:-250px;text-align:left;color:black;font-weight:bold">
                 <h5>Đơn vị xuất hàng: Kho thành phẩm Cửa hàng Quận 10</h5>
                 <h5 style="margin-left:-5px">Địa chỉ: 134/1 Tô Hiến Thành, P15, Quận 10, TP.HCM</h5>
-                <h5 style="margin-left: 100px">Đơn vị nhận hàng:@Request.Cookies["Ten_dt"].Value</h5>
+                <h5 style="margin-left:30px">Đơn vị nhận hàng:@foreach (DataRow row3 in Model.Tables[0].Rows)
+                {@row3["Ten_Dt"]break;
+            }</h5>
                 <h5 style="margin-left: -120px">Diễn giải: Xuất hàng giao cho khách</h5>
             </div>
 
@@ -443,7 +456,7 @@
                         <th>SỐ LƯỢNG</th>
 
                     </tr>
-                    <tbody>
+                    <tbody style="color:black;font-weight:bold;text-align:center"> 
 
                         @foreach (DataRow row3 in Model.Tables[1].Rows)
                         {
@@ -467,24 +480,25 @@
                 </table>
                 <br />
 
-                <div style="text-align:right">
+                <div style="text-align:right;color:black;font-weight:bold">
                     <h4>Ngày&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tháng&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;năm&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h4>
                 </div>
                 @*<h4 style="margin-left:auto">P. KHCU &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Thủ kho&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Xưởng sản xuất</h4>*@
                 <div style="display:inline-block">
-                    <h4 style="display:inline-block;margin-left:80px">Bên nhận</h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <h4 style="display:inline-block;margin-left:80px;color:black;font-weight:bold">Bên nhận</h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-                    <h4 style="display:inline-block;margin-left:100px">Người lập phiếu</h4>
+                    <h4 style="display:inline-block;margin-left:100px;font-weight:bold;color:black">Người lập phiếu</h4>
                 </div><br />
                 <div style="display:flex">
-                    <h5 style="font-style:italic;text-align:left;margin-left:80px">(Ký, họ tên)</h5>
-                    <h5 style="font-style:italic;text-align:left;margin-left:320px">(Ký, họ tên)</h5>
+                    <h5 style="font-style: italic; text-align: left; margin-left: 80px;font-weight:bold; color: black">(Ký, họ tên)</h5>
+                    <h5 style="font-style: italic; text-align: left; margin-left: 320px; font-weight: bold; color: black">(Ký, họ tên)</h5>
                 </div>
             </div>
 
         </form>
     </div>
     <button id="export-button" onclick="exportExcel()">Xuất Excel</button>
+  
     <input type="file" id="file-input" style="display: none">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}" />
