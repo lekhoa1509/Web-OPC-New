@@ -764,7 +764,7 @@ namespace web4.Controllers
 
                     var startRowIII = nextII + 3;
 
-                    var sttIIICell = worksheet.Cells[startRowIII + 1, startColumn, startRowIII + 2, startColumn];
+                    var sttIIICell = worksheet.Cells[startRowIII + 1, startColumn, startRowIII + 2, startColumn +1];
                     sttIIICell.Merge = true;
                     worksheet.Column(startColumn).Width = 15; // Đặt chiều rộng của cột chứa ô "STT" thành 15 đơn vị.
 
@@ -774,7 +774,7 @@ namespace web4.Controllers
                     sttIIICell.Style.Font.Bold = true;
                     sttIIICell.Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
 
-                    var HD = worksheet.Cells[startRowIII + 1, startColumn + 1, startRowIII + 1, startColumn + 4];
+                    var HD = worksheet.Cells[startRowIII + 1, startColumn + 2, startRowIII + 1, startColumn + 9];
                     HD.Merge = true;
                     HD.Value = "HÓA ĐƠN";
                     HD.Style.Font.Bold = true;
@@ -782,36 +782,44 @@ namespace web4.Controllers
                     HD.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                     HD.Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
 
-                    worksheet.Cells[startRowIII + 2, startColumn + 1].Value = "SỐ";
+                    var SO = worksheet.Cells[startRowIII + 2, startColumn + 2, startRowIII + 2, startColumn + 3];
+                    SO.Merge = true;
+                    SO.Value = "SỐ";
                     worksheet.Column(startColumn + 1).Width = 15;
-                    worksheet.Cells[startRowIII + 2, startColumn + 1].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
-                    worksheet.Cells[startRowIII + 2, startColumn + 1].Style.Font.Bold = true;
-                    worksheet.Cells[startRowIII + 2, startColumn + 1].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
-                    worksheet.Cells[startRowIII + 2, startColumn + 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    SO.Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+                    SO.Style.Font.Bold = true;
+                    SO.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                    SO.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
 
-                    worksheet.Cells[startRowIII + 2, startColumn + 2].Value = "NGÀY";
+                    var NGAY = worksheet.Cells[startRowIII + 2, startColumn + 4, startRowIII + 2, startColumn + 5];
+                    NGAY.Merge = true;
+                    NGAY.Value = "NGÀY";
                     worksheet.Column(startColumn + 2).Width = 15;
-                    worksheet.Cells[startRowIII + 2, startColumn + 2].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
-                    worksheet.Cells[startRowIII + 2, startColumn + 2].Style.Font.Bold = true;
-                    worksheet.Cells[startRowIII + 2, startColumn + 2].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
-                    worksheet.Cells[startRowIII + 2, startColumn + 2].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    NGAY.Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+                    NGAY.Style.Font.Bold = true;
+                    NGAY.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                    NGAY.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
 
-                    worksheet.Cells[startRowIII + 2, startColumn + 3].Value = "SỐ TIỀN HD";
+                    var TIENHD = worksheet.Cells[startRowIII + 2, startColumn + 6, startRowIII + 2, startColumn + 7];
+                    TIENHD.Merge = true;
+                    TIENHD.Value = "SỐ TIỀN HD";
                     worksheet.Column(startColumn + 3).Width = 15;
-                    worksheet.Cells[startRowIII + 2, startColumn + 3].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
-                    worksheet.Cells[startRowIII + 2, startColumn + 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                    worksheet.Cells[startRowIII + 2, startColumn + 3].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
-                    worksheet.Cells[startRowIII + 2, startColumn + 3].Style.Font.Bold = true;
+                    TIENHD.Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+                    TIENHD.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    TIENHD.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                    TIENHD.Style.Font.Bold = true;
 
-                    worksheet.Cells[startRowIII + 2, startColumn + 4].Value = "GHI CHÚ";
+                    var GHICHU = worksheet.Cells[startRowIII + 2, startColumn + 8, startRowIII + 2, startColumn + 9];
+                    GHICHU.Merge = true;
+                    GHICHU.Value = "GHI CHÚ";
                     worksheet.Column(startColumn + 4).Width = 15;
                     worksheet.Column(startColumn + 5).Width = 15;
                     worksheet.Column(startColumn + 6).Width = 15;
                     worksheet.Column(startColumn + 8).Width = 15;
-                    worksheet.Cells[startRowIII + 2, startColumn + 4].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
-                    worksheet.Cells[startRowIII + 2, startColumn + 4].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                    worksheet.Cells[startRowIII + 2, startColumn + 4].Style.Font.Bold = true;
-                    worksheet.Cells[startRowIII + 2, startColumn + 4].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                    GHICHU.Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+                    GHICHU.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    GHICHU.Style.Font.Bold = true;
+                    GHICHU.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
 
                     if (combinedDataHD != null && combinedDataHD.Any())
                     {
@@ -821,9 +829,18 @@ namespace web4.Controllers
                             var rowData = combinedDataHD[row];
                             for (int col = 0; col < rowData.Count; col++)
                             {
-                                worksheet.Cells[startRowIII + 1 + row, startColumn + col].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                                worksheet.Cells[startRowIII + 1 + row, startColumn + col].Value = rowData[col];
-                                worksheet.Cells[startRowIII + 1 + row, startColumn + col].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+                                //var GOP = worksheet.Cells[startRowIII + 1 + row, startColumn + col, startRowIII + 1 + row, startColumn + col+ 1];
+                                //GOP.Merge = true;
+                                //GOP.Value = rowData[col];
+                                //GOP.Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+                                var cell = worksheet.Cells[startRowIII + 1 + row, startColumn + col * 2];
+                                cell.Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+                                cell.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                                cell.Value = rowData[col];
+
+                                var mergeCell = worksheet.Cells[startRowIII + 1 + row, startColumn + col * 2, startRowIII + 1 + row, startColumn + col * 2 + 1];
+                                mergeCell.Merge = true;
+                                mergeCell.Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
                             }
                         }
                     }
@@ -831,7 +848,7 @@ namespace web4.Controllers
                     {
                         worksheet.Cells[startRowIII, startColumn].Value = "Không có dữ liệu bảng từ cookie.";
                     }
-                    var TC2 = worksheet.Cells[startRowIII + 1 + combinedDataHD.Count, startColumn, startRowIII + 1 + combinedDataHD.Count, startColumn + 2];
+                    var TC2 = worksheet.Cells[startRowIII + 1 + combinedDataHD.Count, startColumn, startRowIII + 1 + combinedDataHD.Count, startColumn + 5];
                     TC2.Merge = true;
                     TC2.Value = "Tổng cộng: ";
                     TC2.Style.Font.Bold = true;
@@ -839,12 +856,18 @@ namespace web4.Controllers
                     TC2.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // Đặt canh giữa ngang
                     TC2.Style.VerticalAlignment = ExcelVerticalAlignment.Center; // Đặt canh giữa dọc
 
-                    worksheet.Cells[startRowIII + 1 + combinedDataHD.Count, startColumn + 3].Value = $"{TonNo2}";
-                    worksheet.Cells[startRowIII + 1 + combinedDataHD.Count, startColumn + 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                    worksheet.Cells[startRowIII + 1 + combinedDataHD.Count, startColumn + 3].Style.Font.Bold = true;
-                    worksheet.Cells[startRowIII + 1 + combinedDataHD.Count, startColumn + 3].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
-                    worksheet.Cells[startRowIII + 1 + combinedDataHD.Count, startColumn + 4].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+                    var TONNO2 = worksheet.Cells[startRowIII + 1 + combinedDataHD.Count, startColumn + 6,startRowIII + 1 + combinedDataHD.Count, startColumn + 7];
+                    TONNO2.Merge = true;
+                    TONNO2.Value = $"{TonNo2}";
+                    //worksheet.Cells[startRowIII + 1 + combinedDataHD.Count, startColumn + 6].Value = $"{TonNo2}";
+                    TONNO2.Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                    TONNO2.Style.Font.Bold = true;
+                    TONNO2.Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+                    worksheet.Cells[startRowIII + 1 + combinedDataHD.Count, startColumn + 5].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
 
+                    var lastCell = worksheet.Cells[startRowIII + 1 + combinedDataHD.Count, startColumn + 8, startRowIII + 1 + combinedDataHD.Count, startColumn + 9];
+                    lastCell.Merge = true;
+                    lastCell.Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
                     var endRowIII = startRowIII + 1 + combinedDataHD.Count + 1;
                     worksheet.Cells[endRowIII, startColumn].Value = $"Xin vui lòng xác nhận và gửi lại cho {Dvcs} trước ngày {NgayTT}";
                     worksheet.Cells[endRowIII, startColumn].Style.Font.Bold = true;
