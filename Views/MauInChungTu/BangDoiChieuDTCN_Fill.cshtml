@@ -10,7 +10,7 @@
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Phiếu Xác Nhận Thanh Toán</title>
+    <title>Bảng Đối Chiếu Công Nợ</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
@@ -409,68 +409,109 @@
     </style>
 </head>
 <body>
-        <div class="forms-container">
-            <form class="data-form" id="data-form">
-                <div style="display:flex;justify-content:space-between;align-items:center">
-                    <div style=" display: flex; justify-content: space-between; align-items: center;text-align:left">
-                        <div style="text-align: left;">
-                            <img src="~/assets/images/logo.png" alt="" class="img-fluid">
-                        </div>
-                        <div style="text-align: left;">
-                            <h3 style="font-size: 13px;">CTY CỔ PHẦN DƯỢC PHẨM OPC</h3>
-                            <h5 style="text-align:left;color:black;font-weight:bold">Chi Nhánh Cần Thơ</h5>
-                            <h5 style="text-align: left; color: black; font-weight: bold">Số:................/KT-OPCCNCT</h5>
-                        </div>
+    <div class="forms-container">
+        <ul class="nav-links" style="display: flex; justify-content: center;">
+            <li>
+                <form class="locBC-form" id="dateForm" action="BangDoiChieuDTCN" method="post" onsubmit="handleFormSubmit(event)">
+                    <div id="locBC">
 
+                        <a>Từ Ngày</a><br /><br />
+                        <input class="tu_ngay" placeholder="Từ Ngày" id="tu_ngay" name="From_date" type="date" format="YYYY-MM-DD" value="@Request.QueryString["From_date"]" />
+                        <script>$("#tu_ngay").datetimepicker({ timepicker: false, format: 'Y-m-d' });</script><br /><br />
+                        <a>Đến Ngày</a><br /><br />
+                        <input class="den_ngay" id="den_ngay" placeholder=" Đến Ngày" name="To_date" type="DATE" format="YYYY-MM-DD" value="@Request.QueryString["To_date"]" /><br /><br />
+                        <script>$("#den_ngay").datetimepicker({ timepicker: false, format: 'Y-m-d' });</script>
+
+
+
+                        <a>Ngày Thanh Toán</a><br /><br />
+                        <input class="den_ngay" id="Ngay_TT" placeholder=" Đến Ngày" name="Ngay_TT" type="DATE" format="YYYY-MM-DD" value="@Request.QueryString["To_date"]" /><br /><br />
+                        <script>$("#den_ngay").datetimepicker({ timepicker: false, format: 'Y-m-d' });</script>
+
+                        <a>Ngày Ký</a><br /><br />
+                        <input class="den_ngay" id="Ngay_Ky" placeholder=" Đến Ngày" name="Ngay_ky" type="DATE" format="YYYY-MM-DD" value="@Request.QueryString["To_date"]" /><br /><br />
+                        <script>$("#den_ngay").datetimepicker({ timepicker: false, format: 'Y-m-d' });</script>
+                        <a>Số</a><br /><br />
+                        <input type="text" name="So" placeholder="Số" /><br /><br />
+                        <a>Đối Tượng</a><br /><br />
+                        <input type="text" id="dropdownInput" list="dropdownList" placeholder="Tìm kiếm danh mục">
+                        <datalist id="dropdownList">
+                            @foreach (var item in ViewBag.DataItems)
+                            {
+                                <option value="@item.Ma_Dt" data-ten="@item.Ten_Dt" data-diachi="@item.Dia_Chi" data-dvcs="@item.Dvcs" data-dvcs1="@item.Dvcs1">@item.Ten_Dt</option>
+                            }
+                        </datalist>
+                        <input type="hidden" name="Ma_Dt" id="selectedOption">
+
+
+                        <div>
+                            <button class="submit" type="submit" id="runReportButton" onclick="runReport()"> Chạy Báo Cáo </button>
+                        </div>
                     </div>
-                    <div style="text-align:center">
-                        <h5 style="color: black; font-weight: bold">Cộng Hòa Xã Hội Chủ Nghĩa Việt Nam</h5>
-                        <h5 style="text-decoration: underline; color: black; font-weight: bold">Độc lập - Tự do - Hạnh Phúc</h5>
-                        <br />
+                </form>
+            </li>
+        </ul>
+        <form class="data-form" id="data-form">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+                <div style=" display: flex; justify-content: space-between; align-items: center;text-align:left">
+                    <div style="text-align: left;">
+                        <img src="~/assets/images/logo.png" alt="" class="img-fluid">
                     </div>
+                    <div style="text-align: left;">
+                        <h3 style="font-size: 13px;">CTY CỔ PHẦN DƯỢC PHẨM OPC</h3>
+                        <h5 style="text-align:left;color:black;font-weight:bold">Chi Nhánh Cần Thơ</h5>
+                        <h5 style="text-align: left; color: black; font-weight: bold">Số:................/KT-OPCCNCT</h5>
+                    </div>
+
                 </div>
-                <br />
                 <div style="text-align:center">
-                    <h3 style="font-size: 25px; color: black; font-weight: bold">BẢNG ĐỐI CHIẾU DOANH THU CÔNG NỢ</h3>
-                    
-                    <h5 style="font-style:italic;color:black">Quý 3 năm 2023</h5><br />
+                    <h5 style="color: black; font-weight: bold">Cộng Hòa Xã Hội Chủ Nghĩa Việt Nam</h5>
+                    <h5 style="text-decoration: underline; color: black; font-weight: bold">Độc lập - Tự do - Hạnh Phúc</h5>
+                    <br />
                 </div>
+            </div>
+            <br />
+            <div style="text-align:center">
+                <h3 style="font-size: 25px; color: black; font-weight: bold">BẢNG ĐỐI CHIẾU CÔNG NỢ</h3>
 
-                <div style="text-align:left">
-                    <div style="color:black;font-weight:bold;text-align:left">
-                        <h5 style="color: black; font-weight: bold; line-height: 1.5; text-align: left">Tên khách hàng: QUẦY THUỐC MINH CHI</h5>
-                        <h5 style="line-height: 1.5;text-align:left">I. Số dư nợ trước ngày 01/07/2023 mang sang: 46.789.000 đồng.</h5>
-                        <h5 style="line-height: 1.5; text-align: left">II. Doanh thu mua hàng và thanh toán trong kì đối chiếu này: </h5>
-                        <h5 style="line-height: 1.5; text-align: left">1.Doanh thu khách hàng mua trong kỳ: 0 đồng.</h5>
-                        <h5 style="line-height: 1.5; text-align: left ">2.Khách hàng đã thanh toán/trả hàng/bù trừ trong kỳ: 0 đồng.</h5>
-                      
-                        <h5 style="line-height: 2.5;text-align:left ">III.Số tiền khách hàng chưa thanh toán, tính đến cuối ngày: 30/09/2023 là: 46.789.000 đồng.</h5>
-                    </div>
+                <h5 style="font-style:italic;color:black">Quý 3 năm 2023</h5><br />
+            </div>
+
+            <div style="text-align:left">
+                <div style="color:black;font-weight:bold;text-align:left">
+                    <h5 style="color: black; font-weight: bold; line-height: 1.5; text-align: left">Tên khách hàng: QUẦY THUỐC MINH CHI</h5>
+                    <h5 style="line-height: 1.5;text-align:left">I. Số dư nợ trước ngày 01/07/2023 mang sang: 46.789.000 đồng.</h5>
+                    <h5 style="line-height: 1.5; text-align: left">II. Doanh thu mua hàng và thanh toán trong kì đối chiếu này: </h5>
+                    <h5 style="line-height: 1.5; text-align: left">1.Doanh thu khách hàng mua trong kỳ: 0 đồng.</h5>
+                    <h5 style="line-height: 1.5; text-align: left ">2.Khách hàng đã thanh toán/trả hàng/bù trừ trong kỳ: 0 đồng.</h5>
+
+                    <h5 style="line-height: 2.5;text-align:left ">III.Số tiền khách hàng chưa thanh toán, tính đến cuối ngày: 30/09/2023 là: 46.789.000 đồng.</h5>
                 </div>
-                
-                <div style="width:700px;justify-content:start">
-                    <div style="word-wrap:break-word;color:black"  >
-                        <h5 style="text-align:left">Số tiền nợ bằng chữ là: Bốn mươi sáu triệu bảy trăm tám mươi chín ngàn đồng.</h5>
-                        <h5 style="color:black;font-weight:bold;text-align:left">Chi tiết các hóa đơn chưa thanh toán: </h5>
-                    </div>
+            </div>
+
+            <div style="width:700px;justify-content:start">
+                <div style="word-wrap:break-word;color:black">
+                    <h5 style="text-align:left">Số tiền nợ bằng chữ là: Bốn mươi sáu triệu bảy trăm tám mươi chín ngàn đồng.</h5>
+                    <h5 style="color:black;font-weight:bold;text-align:left">Chi tiết các hóa đơn chưa thanh toán: </h5>
                 </div>
-         
-             
+            </div>
+
+
             <div style="margin-top:10px">
                 <table id="export" border="1" border-collapse="collapse" style="width:800px;color:black">
                     <tr style="font-size:13px;font-weight:bold;color:black">
                         <th style="width:80px;font-size:14px" rowspan="2">STT</th>
                         <th colspan="2" style="font-size:14px">HÓA ĐƠN</th>
                         <th style="font-size:15px" rowspan="2">TIỀN HÓA ĐƠN <br />(ĐÃ TRỪ CODE KM)</th>
-                        <th style="font-size:15px; width:120px"rowspan="2">CODE KM</th>
-                        <th style="font-size:15px;width:120px"rowspan="2">GHI CHÚ</th>
+                        <th style="font-size:15px; width:120px" rowspan="2">CODE KM</th>
+                        <th style="font-size:15px;width:120px" rowspan="2">GHI CHÚ</th>
 
                     </tr>
 
                     <th style="width:150px;font-size:14px">SỐ</th>
                     <th style="width: 150px; font-size: 14px">NGÀY</th>
 
-                
+
 
 
 
@@ -494,8 +535,8 @@
                             <td style="font-weight:bold;color:black;text-align:right;font-size:15px">
                             </td>
                             <td style="font-weight:bold;color:black;text-align:center;font-size:15px"></td>
-                  
-                         
+
+
                         </tr>
                     </tfoot>
 
@@ -508,7 +549,7 @@
                     <br />
                     <h5 style="text-align:left">Số tiền còn nợ chúng tôi quý khách hàng thanh toán bằng tiền mặt hoặc chuyển khoảng vào tài khoản Công Ty Cổ Phần Dược Phẩm OPC - Chi Nhánh Cần Thơ.</h5>
                     <h5 style="text-align:left">Số tài  khoản:  1890201002962 tại Ngân Hàng Nông Nghiệp và Phát Triển Nông Thôn Việt Nam - Chi nhánh Cần Thơ II.</h5>
-               
+
                 </div>
 
                 <div style="display:flex;justify-content:start;text-align:center;color:black;font-weight:bold">
@@ -537,8 +578,8 @@
                 </div>
             </div>
 
-            </form>
-        </div>
+        </form>
+    </div>
         <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 
         <script>
@@ -602,10 +643,21 @@
                 const day = date.getDate().toString().padStart(2, "0");
                 return `${year}-${month}-${day}`;
             }
-
+            function setCurrentDateTT() {
+                const currentDate = new Date();
+                const formattedToDate = formatDate(currentDate);
+                document.getElementById("Ngay_TT").value = formattedToDate;
+            }
+            function setCurrentDateKy() {
+                const currentDate = new Date();
+                const formattedToDate = formatDate(currentDate);
+                document.getElementById("Ngay_Ky").value = formattedToDate;
+            }
             // Call the function to set the "Từ Ngày" input on page load
             setFirstDayOfCurrentMonth();
             setCurrentDate();
+            setCurrentDateKy();
+            setCurrentDateTT();
         </script>
 
 </body>

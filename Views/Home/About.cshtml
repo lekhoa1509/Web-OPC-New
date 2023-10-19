@@ -409,7 +409,7 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
 
 
 
-                </div>
+                </div>  
 
             </div>
             <div class="home-content1" style="width:100%">
@@ -634,10 +634,10 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                                     <td style="text-align: left"> <li style=" list-style-type: none;" class="liTitle"><a href="/MauInChungTu/ThongBaoNoQH_Fill">4.Thông Báo Nợ QH</a></li></td>
                                 </tr>
                                 <tr style="height:30px">
-                                    <td style="text-align: left"> <li style=" list-style-type: none;" class="liTitle"><a href="/MauInChungTu/BangDoiChieuCongNo_Fill">5.Bảng Đối Chiếu Công Nợ</a></li></td>
+                                    <td style="text-align: left"> <li style=" list-style-type: none;" class="liTitle"><a href="/MauInChungTu/BangDoiChieuCongNo_Fill">5.Bảng Đối Chiếu Doanh Thu - Công Nợ</a></li></td>
                                 </tr>
                                 <tr style="height:30px">
-                                    <td style="text-align: left"> <li style=" list-style-type: none;" class="liTitle"><a href="/MauInChungTu/BangDoiChieuDTCN_Fill">6.Bảng Đối Chiếu Doanh Thu - Công Nợ</a></li></td>
+                                    <td style="text-align: left"> <li style=" list-style-type: none;" class="liTitle"><a href="/MauInChungTu/BangDoiChieuDTCN_Fill">6.Bảng Đối Chiếu Công Nợ</a></li></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -686,6 +686,9 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
         function ChangPassword() {
             // Điều hướng đến trang thay đổi mật khẩu
             window.location.href = "/home/DoiMatKhau";
+        }
+        function openNewTab(url) {
+            window.open(url, '_blank');
         }
     </script>
 

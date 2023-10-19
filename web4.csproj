@@ -1046,6 +1046,7 @@
     <Content Include="Views\BKHoaDonGiaoHang\FilterHD.cshtml" />
     <Content Include="Views\BangKeHoaDon\bangkehoadon_Fill_HCM.cshtml" />
     <Content Include="Views\MauInChungTu\BangDoiChieuDTCN_Fill.cshtml" />
+    <Content Include="Views\MauInChungTu\BangDoiChieuDTCN.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
