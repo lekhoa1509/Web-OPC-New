@@ -93,7 +93,7 @@ namespace web4.Controllers
                     cmd.Parameters.AddWithValue("@_Tu_Ngay", MauIn.From_date);
                     cmd.Parameters.AddWithValue("@_Den_Ngay", MauIn.To_date);
                     cmd.Parameters.AddWithValue("@_So_Ct", MauIn.So_Ct);
-                    cmd.Parameters.AddWithValue("@_username", MauIn.So_Ct);
+                    cmd.Parameters.AddWithValue("@_username", MauIn.UserName);
 
 
                     sda.Fill(ds);
