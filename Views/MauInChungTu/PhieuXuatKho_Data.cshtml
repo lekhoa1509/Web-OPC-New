@@ -438,7 +438,8 @@
                                 <td>@row2["ngay_ct"]</td>
                                 <td>@row2["Ma_dt"]</td>
                                 <td>@row2["Ten_Dt"]</td>
-                                <td onclick="showLoader()"><span class="material-symbols-outlined print-icon">print</span></td>
+                                <td><span class="material-symbols-outlined print-icon" onclick="openNewTab('@Url.Action("PhieuXuatKho_Fill", "MauInChungTu", new { So_Ct = row2["So_Ct"] })')">print</span></td>
+
                                 <td style="display:none"></td>
                                 <td style="display:none"></td>
                                 <td style="display:none"></td>
@@ -489,6 +490,9 @@
             const spanElement = document.getElementById("spanText");
             spanElement.style.display = "block";
         }
+        function openNewTab(url) {
+            window.open(url, '_blank');
+        }
     </script>
     <script>
         function handleFormSubmit(event) {
@@ -536,7 +540,7 @@
             // Chuyển hướng tới URL mới với các giá trị ngày đã chọn làm các tham số truy vấn
             window.location.href = actionUrl;
         });
-
+        
         // Add event listener for window load event
         window.addEventListener("load", () => {
             // Hide the loader after the page is loaded
@@ -591,7 +595,7 @@
                     document.cookie = `Nam=${nam}`;
                     document.cookie = `Ten_dt=${tendt}`;
                     document.cookie = `Dia_chi=${diachi}`;
-                    window.location.href = newUrl;
+                /*    window.location.href = newUrl;*/
                 });
             });
         });
