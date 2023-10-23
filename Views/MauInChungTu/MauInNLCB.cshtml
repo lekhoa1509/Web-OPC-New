@@ -173,14 +173,13 @@
         </form>
     </div>
     <script>
-
-
-
         function showLoader() {
             const loader = document.querySelector(".loader");
             loader.classList.remove("loader-hidden");
         }
-
+        function openNewTab(url) {
+            window.open(url, '_blank');
+        }
         // Function to hide the loader
         function hideLoader() {
             const loader = document.querySelector(".loader");

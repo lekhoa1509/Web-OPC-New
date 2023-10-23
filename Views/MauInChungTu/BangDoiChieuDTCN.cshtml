@@ -465,20 +465,30 @@
                         I. Số dư nợ trước ngày  @foreach (DataRow row3 in Model.Tables[3].Rows)
                         {
                             @row3["Ngay"]
-
+                            var TruocNgay = row3["Ngay"].ToString();
+                            HttpCookie TruocNgayCookie = new HttpCookie("TruocNgay");
+                            TruocNgayCookie.Value = TruocNgay;
+                            Response.Cookies.Add(TruocNgayCookie);
 
 
                         }/
                         @foreach (DataRow row3 in Model.Tables[3].Rows)
                         {
                             @row3["Thang"]
-
+                            var TruocThang = row3["Thang"].ToString();
+                            HttpCookie TruocThangCookie = new HttpCookie("TruocThang");
+                            TruocThangCookie.Value = TruocThang;
+                            Response.Cookies.Add(TruocThangCookie);
 
 
                         }/
                         @foreach (DataRow row3 in Model.Tables[3].Rows)
                         {
                             @row3["Nam"]
+                            var TruocNam = row3["Nam"].ToString();
+                            HttpCookie TruocNamCookie = new HttpCookie("TruocNam");
+                            TruocNamCookie.Value = TruocNam;
+                            Response.Cookies.Add(TruocNamCookie);
                         } mang sang:    @foreach (DataRow row3 in Model.Tables[0].Rows)
                         {
                             @row3["No_DauKy1"]
@@ -506,7 +516,7 @@
                         {
                             @row3["Tien_TT"]
                             var TienTT = row3["Tien_TT"].ToString();
-                            HttpCookie TienTTCookie = new HttpCookie("Tien_TT");
+                            HttpCookie TienTTCookie = new HttpCookie("TienTT");
                             TienTTCookie.Value = TienTT;
                             Response.Cookies.Add(TienTTCookie);
 
@@ -518,21 +528,30 @@
                         III.Số tiền khách hàng chưa thanh toán, tính đến cuối ngày:   @foreach (DataRow row3 in Model.Tables[3].Rows)
                         {
                             @row3["Den_Ngay"]
-
+                            var DenNgay = row3["Den_Ngay"].ToString();
+                            HttpCookie DenNgayCookie = new HttpCookie("DenNgay");
+                            DenNgayCookie.Value = DenNgay;
+                            Response.Cookies.Add(DenNgayCookie);
 
 
                         }/
                         @foreach (DataRow row3 in Model.Tables[3].Rows)
                         {
                             @row3["Den_Thang"]
-
+                            var DenThang = row3["Den_Thang"].ToString();
+                            HttpCookie DenThangCookie = new HttpCookie("DenThang");
+                            DenThangCookie.Value = DenThang;
+                            Response.Cookies.Add(DenThangCookie);
 
 
                         }/
                         @foreach (DataRow row3 in Model.Tables[3].Rows)
                         {
                             @row3["Nam"]
-
+                            var DenNam = row3["Nam"].ToString();
+                            HttpCookie DenNamCookie = new HttpCookie("DenNam");
+                            DenNamCookie.Value = DenNam;
+                            Response.Cookies.Add(DenNamCookie);
 
 
                         }
@@ -888,7 +907,7 @@
         });
 
     </script>
-    <script>
+    @*<script>
         document.addEventListener("DOMContentLoaded", function () {
             var tableData = []; // Mảng lưu dữ liệu
 
@@ -920,7 +939,7 @@
             Cookies.set("tableDataCookieHD2", part2JSON);
         });
 
-    </script>
+    </script>*@
     <script>
   function exportExcel() {
     window.location.href = '@Url.Action("ExportDoiChieuCongNo", "MauInChungTu")';
