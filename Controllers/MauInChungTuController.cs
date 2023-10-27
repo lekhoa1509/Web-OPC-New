@@ -1171,10 +1171,15 @@ namespace web4.Controllers
                     string TienChu = Request.Cookies["TienChu"] != null ? HttpUtility.UrlDecode(Request.Cookies["TienChu"].Value) : "";
                     string TonNo2 = Request.Cookies["TonNo2"] != null ? HttpUtility.UrlDecode(Request.Cookies["TonNo2"].Value) : "";
                     string DiaChi = Request.Cookies["DiaChi2"] != null ? HttpUtility.UrlDecode(Request.Cookies["DiaChi2"].Value) : "";
+                    string NgayTT = Request.Cookies["NgayTT"] != null ? HttpUtility.UrlDecode(Request.Cookies["NgayTT"].Value) : "";
                     string CN = Request.Cookies["CN"] != null ? HttpUtility.UrlDecode(Request.Cookies["CN"].Value) : "";
                     string SDT = Request.Cookies["SDT"] != null ? HttpUtility.UrlDecode(Request.Cookies["SDT"].Value) : "";
                     string TK = Request.Cookies["TK"] != null ? HttpUtility.UrlDecode(Request.Cookies["TK"].Value) : "";
                     string LH = Request.Cookies["LH"] != null ? HttpUtility.UrlDecode(Request.Cookies["LH"].Value) : "";
+                    string NgayKy = Request.Cookies["Ngay_Ky"] != null ? HttpUtility.UrlDecode(Request.Cookies["NgayKy"].Value) : "";
+                    string ThangKy = Request.Cookies["ThangKy"] != null ? HttpUtility.UrlDecode(Request.Cookies["ThangKy"].Value) : "";
+                    string NamKy = Request.Cookies["NamKy"] != null ? HttpUtility.UrlDecode(Request.Cookies["NamKy"].Value) : "";
+                    string So =  Request.Cookies["so"] != null ? HttpUtility.UrlDecode(Request.Cookies["so"].Value) : "";
                     // Đặt font chữ "Arial" cho toàn bộ tệp Excel
                     worksheet.Cells.Style.Font.Name = "Times New Roman";
                     ExcelPicture picture = worksheet.Drawings.AddPicture("MyPicture", new FileInfo(imagePath));
@@ -1189,7 +1194,7 @@ namespace web4.Controllers
                     var cellB1 = worksheet.Cells["B1"];
                     cellB1.Style.Font.Bold = true;
                     worksheet.Cells["B2"].Value = Dvcs;
-                    worksheet.Cells["B3"].Value = $"Số:............................/KT-{Dvcs1}";
+                    worksheet.Cells["B3"].Value = $"Số: {So}/KT-{Dvcs1}";
                     worksheet.Cells["K1"].Value = "Cộng Hòa Xã Hội Chủ Nghĩa Việt Nam";
                     worksheet.Cells["K2"].Value = "Độc Lập - Tự Do - Hạnh Phúc";
                     worksheet.Cells["K2"].Style.Indent = 4;
@@ -1337,7 +1342,7 @@ namespace web4.Controllers
                     Null2.Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
                     worksheet.Cells[startRow + 1 + combinedData.Count, startColumn + 7].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
                     var end = startRow + combinedData.Count + 2;
-                    worksheet.Cells[end +1, startColumn].Value = $"Quý khách vui lòng xác nhận số nợ trên tại thời điểm ngày {DenNgay}/ {DenThang}/ {DenNam} và gửi về Công Ty Cổ Phần Dược Phẩm OPC - {Dvcs} trước ngày {DenNgay}/ {DenThang}/ {DenNam}";
+                    worksheet.Cells[end +1, startColumn].Value = $"Quý khách vui lòng xác nhận số nợ trên tại thời điểm ngày {DenNgay}/ {DenThang}/ {DenNam} và gửi về Công Ty Cổ Phần Dược Phẩm OPC - {Dvcs} trước ngày {NgayTT}";
                     worksheet.Cells[end + 2, startColumn].Value = $"Địa chỉ: {DiaChi}";
                     worksheet.Cells[end + 3, startColumn].Value = $"Điện thoại: {SDT}";
                     worksheet.Cells[end + 4, startColumn].Value = $"Số tiền còn nợ đề nghị Quý khách hàng thanh toán bằng tiền mặt hoặc chuyển khoản vào tài khoản {Dvcs}, số tài khoản: {TK}";
@@ -1345,10 +1350,11 @@ namespace web4.Controllers
                     worksheet.Cells[end + 7, startColumn].Value = "Trân trọng cảm ơn!";
                     worksheet.Cells[end + 7, startColumn].Style.Font.Bold = true;
                     worksheet.Cells[end + 7, startColumn].Style.Font.Italic = true;
+                    worksheet.Cells[end + 8, startColumn+9].Value = $"Ngày {NgayKy} tháng {ThangKy} năm {NamKy}";
+                    worksheet.Cells[end + 8, startColumn + 9].Style.Font.Bold = true;
+                    worksheet.Cells[end + 8, startColumn + 9].Style.Indent = 2;
                     worksheet.Cells[end + 9, startColumn+1].Value = "KHÁCH HÀNG XÁC NHẬN";
                     worksheet.Cells[end + 9, startColumn+1].Style.Font.Bold = true;
-                    worksheet.Cells[end + 9, startColumn + 1].Value = "KẾ TOÁN";
-                    worksheet.Cells[end + 9, startColumn + 1].Style.Font.Bold = true;
                  
                     worksheet.Cells[end + 9, startColumn + 5].Value = "GIÁM ĐỐC";
                     worksheet.Cells[end + 9, startColumn + 5].Style.Font.Bold = true;

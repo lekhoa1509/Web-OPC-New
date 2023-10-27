@@ -428,7 +428,10 @@
                             Số: @foreach (DataRow row3 in Model.Tables[7].Rows)
                             {
                                 @row3["So"]
-
+                                var so = row3["So"].ToString();
+                                HttpCookie soCookie = new HttpCookie("so");
+                                soCookie.Value = so;
+                                Response.Cookies.Add(soCookie);
 
 
                             }/KT-@Dvcs1
@@ -514,8 +517,8 @@
                     <h5 style="line-height: 1.5; text-align: left ">
                         2.Khách hàng đã thanh toán/trả hàng/bù trừ trong kỳ:    @foreach (DataRow row3 in Model.Tables[6].Rows)
                         {
-                            @row3["Tien_TT"]
-                            var TienTT = row3["Tien_TT"].ToString();
+                            @row3["TC_CKTT_TienTT"]
+                            var TienTT = row3["TC_CKTT_TienTT"].ToString();
                             HttpCookie TienTTCookie = new HttpCookie("TienTT");
                             TienTTCookie.Value = TienTT;
                             Response.Cookies.Add(TienTTCookie);
@@ -646,13 +649,32 @@
                 <br />
                 <div style="width:800px;word-wrap:break-word;color:black;font-weight:bold">
                     <h5 style="text-align:left">
-                        Quý khách vui lòng xác nhận số nợ trên tại thời điểm ngày  @foreach (DataRow row3 in Model.Tables[7].Rows)
+                        Quý khách vui lòng xác nhận số nợ trên tại thời điểm ngày  @foreach (DataRow row3 in Model.Tables[3].Rows)
                         {
-                            @row3["Ngay_TT"]
-                            var NgayTT = row3["Ngay_TT"].ToString();
+                            @row3["Den_Ngay"]
+                            var NgayTT = row3["Den_Ngay"].ToString();
                             HttpCookie NgayTTCookie = new HttpCookie("NgayTT");
                             NgayTTCookie.Value = NgayTT;
-                            Response.Cookies.Add(NgayTTCookie);
+                            Response.Cookies.Add(NgayTTCookie); 
+                        }/  @foreach (DataRow row3 in Model.Tables[3].Rows)
+                        {
+                            @row3["Den_Thang"]
+                            var DenThang = row3["Den_Thang"].ToString();
+                            HttpCookie DenThangCookie = new HttpCookie("DenThang");
+                            DenThangCookie.Value = DenThang;
+                            Response.Cookies.Add(DenThangCookie);
+
+
+                        }/
+                        @foreach (DataRow row3 in Model.Tables[3].Rows)
+                        {
+                            @row3["Nam"]
+                            var DenNam = row3["Nam"].ToString();
+                            HttpCookie DenNamCookie = new HttpCookie("DenNam");
+                            DenNamCookie.Value = DenNam;
+                            Response.Cookies.Add(DenNamCookie);
+
+
                         } và gửi về Công Ty Cố Phần Dược Phẩm OPC - @Dvcs trước ngày <span style="color:black;font-weight:bold">
                             @foreach (DataRow row3 in Model.Tables[7].Rows)
                             {
@@ -717,7 +739,31 @@
                     <h5 style="font-style:italic;color:black;font-weight:bold;text-align:left">Trân trọng cám ơn!</h5>
                 </div>
                 <br />
-                @*<h4 style="margin-left:auto">P. KHCU &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Thủ kho&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Xưởng sản xuất</h4>*@
+
+                <div style="text-align:right;margin-right:70px;font-weight:bold;color:black">
+                    Ngày  @foreach (DataRow row3 in Model.Tables[7].Rows)
+                    {
+                        @row3["Ngay_Ky"]
+                        var NgayKy = row3["Ngay_Ky"].ToString();
+                        HttpCookie NgayTTCookie = new HttpCookie("NgayKy");
+                        NgayTTCookie.Value = NgayKy;
+                        Response.Cookies.Add(NgayTTCookie);
+                    } tháng @foreach (DataRow row3 in Model.Tables[7].Rows)
+                    {
+                        @row3["Thang_ky"]
+                        var ThangKy = row3["Thang_ky"].ToString();
+                        HttpCookie ThangKyCookie = new HttpCookie("ThangKy");
+                        ThangKyCookie.Value = ThangKy;
+                        Response.Cookies.Add(ThangKyCookie);
+                    } năm @foreach (DataRow row3 in Model.Tables[7].Rows)
+                    {
+                        @row3["Nam_Ky"]
+                        var NamKy = row3["Nam_Ky"].ToString();
+                        HttpCookie NamKyCookie = new HttpCookie("NamKy");
+                        NamKyCookie.Value = NamKy;
+                        Response.Cookies.Add(NamKyCookie);
+                    }
+                </div>
                 <div style="display:inline-block;color:black;font-weight:bold">
                     <h4 style="display:inline-block;margin-left:50px">Khách Hàng Xác Nhận</h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <h4 style="display:inline-block;margin-left:80px">Giám Đốc</h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

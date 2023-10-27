@@ -428,6 +428,10 @@
                             Số:  @foreach (DataRow row3 in Model.Tables[7].Rows)
                             {
                                 @row3["So"]
+                                var so = row3["So"].ToString();
+                                HttpCookie soCookie = new HttpCookie("so");
+                                soCookie.Value = so;
+                                Response.Cookies.Add(soCookie);
 
 
 
@@ -756,9 +760,9 @@
                                     @foreach (DataRow row3 in Model.Tables[7].Rows)
                                     {
                                         @row3["Ngay_TT"]
-                                        var NgayTT = row3["Ngay_TT"].ToString();
-                                        HttpCookie NgayTTCookie = new HttpCookie("NgayTT");
-                                        NgayTTCookie.Value = NgayTT;
+                                        var ngayTT = row3["Ngay_TT"].ToString();
+                                        HttpCookie NgayTTCookie = new HttpCookie("ngayTT");
+                                        NgayTTCookie.Value = ngayTT;
                                         Response.Cookies.Add(NgayTTCookie);
                                     }
                                 </span>

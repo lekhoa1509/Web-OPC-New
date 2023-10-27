@@ -26,13 +26,9 @@ namespace web4.Controllers
         public ActionResult BaoCaoHopDongMar(Account Acc)
         {
             // Trước tiên, kiểm tra xem dữ liệu đã tồn tại trong Cache chưa
-            string cacheKey = $"BaoCaoHopDong_{Acc.From_date}_{Acc.To_date}_{Acc.Ma_DvCs_1}";
-            DataSet ds = HttpContext.Cache[cacheKey] as DataSet;
+            DataSet ds = new DataSet();
 
-            if (ds == null)
-            {
-                // Dữ liệu không có trong Cache, tiến hành lấy dữ liệu từ cơ sở dữ liệu
-                ds = new DataSet();
+            ds = new DataSet();
                 connectSQL();
                 string Pname = "[usp_BaoCaoHopDongMAR_SAP]";
                 Acc.UserName = Response.Cookies["UserName"].Value;
@@ -52,11 +48,6 @@ namespace web4.Controllers
                         sda.Fill(ds);
                     }
                 }
-
-                // Sau khi lấy dữ liệu từ cơ sở dữ liệu, lưu vào Cache với thời gian sống
-                HttpContext.Cache.Insert(cacheKey, ds, null, DateTime.Now.AddMinutes(10), Cache.NoSlidingExpiration);
-            }
-
             return View(ds);
         }
 
@@ -72,7 +63,7 @@ namespace web4.Controllers
 
         public ActionResult BaoCaoChiTietHD(Account Acc)
         {
-            // Tương tự, áp dụng caching cho phương thức này nếu cần
+            // Tương tự, áp dụng caching cho phương thức này nếu cần                                                                       
             //string cacheKey = $"BaoCaoChiTietHD_{Acc.From_date}_{Acc.To_date}_{Acc.Ma_DvCs_1}";
             DataSet ds = new DataSet();
 
