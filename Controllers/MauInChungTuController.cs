@@ -1176,7 +1176,7 @@ namespace web4.Controllers
                     string SDT = Request.Cookies["SDT"] != null ? HttpUtility.UrlDecode(Request.Cookies["SDT"].Value) : "";
                     string TK = Request.Cookies["TK"] != null ? HttpUtility.UrlDecode(Request.Cookies["TK"].Value) : "";
                     string LH = Request.Cookies["LH"] != null ? HttpUtility.UrlDecode(Request.Cookies["LH"].Value) : "";
-                    string NgayKy = Request.Cookies["Ngay_Ky"] != null ? HttpUtility.UrlDecode(Request.Cookies["NgayKy"].Value) : "";
+                    string NgayKy = Request.Cookies["NgayKy"] != null ? HttpUtility.UrlDecode(Request.Cookies["NgayKy"].Value) : "";
                     string ThangKy = Request.Cookies["ThangKy"] != null ? HttpUtility.UrlDecode(Request.Cookies["ThangKy"].Value) : "";
                     string NamKy = Request.Cookies["NamKy"] != null ? HttpUtility.UrlDecode(Request.Cookies["NamKy"].Value) : "";
                     string So =  Request.Cookies["so"] != null ? HttpUtility.UrlDecode(Request.Cookies["so"].Value) : "";
