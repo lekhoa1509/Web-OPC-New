@@ -113,6 +113,7 @@ namespace web4.Controllers
 
             Ma_dvcs = Request.Cookies["ma_dvcs"].Value;
             List<MauInChungTu> dataItems = new List<MauInChungTu>();
+            string appendedString = Ma_dvcs == "OPC_B1" ? "_010203" : "_01"; // Dòng này cộng chuỗi dựa trên giá trị của Ma_dvcs
             using (SqlConnection connection = new SqlConnection(con.ConnectionString))
             {
                 connection.Open();
@@ -120,7 +121,7 @@ namespace web4.Controllers
                 using (SqlCommand command = new SqlCommand("[usp_DmDtTdv_SAP_MauIn]", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("@_Ma_Dvcs", Ma_dvcs + "_01");
+                    command.Parameters.AddWithValue("@_Ma_Dvcs", Ma_dvcs + appendedString);
                     command.CommandTimeout = 950;
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
@@ -316,6 +317,8 @@ namespace web4.Controllers
             DataSet ds = new DataSet();
             connectSQL();
 
+            string ma_dvcsFirst3Chars = ma_dvcs == "OPC_010203" ? ma_dvcs.Substring(0, 3) : ma_dvcs;
+
             //MauIn.So_Ct = Request.Cookies["SoCt"].Value;
 
             //string query = "exec usp_Vth_BC_BHCNTK_CN @_ngay_Ct1 = '" + Acc.From_date + "',@_Ngay_Ct2 ='"+ Acc.To_date+"',@_Ma_Dvcs='"+ Acc.Ma_DvCs_1+"'";
@@ -339,7 +342,7 @@ namespace web4.Controllers
                     cmd.Parameters.AddWithValue("@_Tu_Ngay", MauIn.From_date);
                     cmd.Parameters.AddWithValue("@_Den_Ngay", MauIn.To_date);
                     cmd.Parameters.AddWithValue("@_Ma_dt", MauIn.Ma_Dt);
-                    cmd.Parameters.AddWithValue("@_ma_dvcs", ma_dvcs);
+                    cmd.Parameters.AddWithValue("@_ma_dvcs", ma_dvcsFirst3Chars);
                     cmd.Parameters.AddWithValue("@_Ngay_TT", MauIn.Ngay_TT);
                     cmd.Parameters.AddWithValue("@_Ngay_Ky", MauIn.Ngay_Ky);
                     cmd.Parameters.AddWithValue("@_So", MauIn.So);
@@ -1088,6 +1091,9 @@ namespace web4.Controllers
         public ActionResult BangDoiChieuDTCN(MauInChungTu MauIn)
         {
             string ma_dvcs = Request.Cookies["Ma_dvcs"].Value;
+
+            string ma_dvcsFirst3Chars = ma_dvcs == "OPC_010203" ? ma_dvcs.Substring(0, 3) : ma_dvcs;
+
             DataSet ds = new DataSet();
             connectSQL();
 
@@ -1114,7 +1120,7 @@ namespace web4.Controllers
                     cmd.Parameters.AddWithValue("@_Tu_Ngay", MauIn.From_date);
                     cmd.Parameters.AddWithValue("@_Den_Ngay", MauIn.To_date);
                     cmd.Parameters.AddWithValue("@_Ma_dt", MauIn.Ma_Dt);
-                    cmd.Parameters.AddWithValue("@_ma_dvcs", ma_dvcs);
+                    cmd.Parameters.AddWithValue("@_ma_dvcs", ma_dvcsFirst3Chars);
                     cmd.Parameters.AddWithValue("@_Ngay_TT", MauIn.Ngay_TT);
                     cmd.Parameters.AddWithValue("@_Ngay_Ky", MauIn.Ngay_Ky);
                     cmd.Parameters.AddWithValue("@_So", MauIn.So);
