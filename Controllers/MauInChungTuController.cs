@@ -317,8 +317,12 @@ namespace web4.Controllers
             DataSet ds = new DataSet();
             connectSQL();
 
-            string ma_dvcsFirst3Chars = ma_dvcs == "OPC_010203" ? ma_dvcs.Substring(0, 3) : ma_dvcs;
-
+            if (ma_dvcs == "OPC_B1")
+            {
+                string ma_dvcsFirst3Chars = ma_dvcs == "OPC_B1" ? ma_dvcs.Substring(0, 3) : ma_dvcs;
+                string first3Chars = ma_dvcsFirst3Chars.Substring(0, 3);
+                ma_dvcs = first3Chars;
+            }
             //MauIn.So_Ct = Request.Cookies["SoCt"].Value;
 
             //string query = "exec usp_Vth_BC_BHCNTK_CN @_ngay_Ct1 = '" + Acc.From_date + "',@_Ngay_Ct2 ='"+ Acc.To_date+"',@_Ma_Dvcs='"+ Acc.Ma_DvCs_1+"'";
@@ -342,7 +346,7 @@ namespace web4.Controllers
                     cmd.Parameters.AddWithValue("@_Tu_Ngay", MauIn.From_date);
                     cmd.Parameters.AddWithValue("@_Den_Ngay", MauIn.To_date);
                     cmd.Parameters.AddWithValue("@_Ma_dt", MauIn.Ma_Dt);
-                    cmd.Parameters.AddWithValue("@_ma_dvcs", ma_dvcsFirst3Chars);
+                    cmd.Parameters.AddWithValue("@_ma_dvcs", ma_dvcs);
                     cmd.Parameters.AddWithValue("@_Ngay_TT", MauIn.Ngay_TT);
                     cmd.Parameters.AddWithValue("@_Ngay_Ky", MauIn.Ngay_Ky);
                     cmd.Parameters.AddWithValue("@_So", MauIn.So);
@@ -1092,7 +1096,13 @@ namespace web4.Controllers
         {
             string ma_dvcs = Request.Cookies["Ma_dvcs"].Value;
 
-            string ma_dvcsFirst3Chars = ma_dvcs == "OPC_010203" ? ma_dvcs.Substring(0, 3) : ma_dvcs;
+            if (ma_dvcs == "OPC_B1")
+            {
+                string ma_dvcsFirst3Chars = ma_dvcs == "OPC_B1" ? ma_dvcs.Substring(0, 3) : ma_dvcs;
+                string first3Chars = ma_dvcsFirst3Chars.Substring(0, 3);
+                ma_dvcs = first3Chars;
+            }
+
 
             DataSet ds = new DataSet();
             connectSQL();
@@ -1120,7 +1130,7 @@ namespace web4.Controllers
                     cmd.Parameters.AddWithValue("@_Tu_Ngay", MauIn.From_date);
                     cmd.Parameters.AddWithValue("@_Den_Ngay", MauIn.To_date);
                     cmd.Parameters.AddWithValue("@_Ma_dt", MauIn.Ma_Dt);
-                    cmd.Parameters.AddWithValue("@_ma_dvcs", ma_dvcsFirst3Chars);
+                    cmd.Parameters.AddWithValue("@_ma_dvcs", ma_dvcs);
                     cmd.Parameters.AddWithValue("@_Ngay_TT", MauIn.Ngay_TT);
                     cmd.Parameters.AddWithValue("@_Ngay_Ky", MauIn.Ngay_Ky);
                     cmd.Parameters.AddWithValue("@_So", MauIn.So);
