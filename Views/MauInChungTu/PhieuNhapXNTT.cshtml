@@ -408,6 +408,9 @@
                 display: none;
             }
         }
+        tr {
+            page-break-inside: avoid;
+        }
     </style>
 </head>
 <body>
@@ -424,6 +427,7 @@
 
             <div>
                 <h3 style="font-size: 25px; color: black; font-weight: bold">XÁC NHẬN THANH TOÁN</h3>
+                <h5>Từ @Request.Cookies["From_date"].Value đến @Request.Cookies["To_date"].Value</h5>
                 <br />
             </div>
             <div style="width:600px">
@@ -450,14 +454,16 @@
             </div><br />
             <div>
                 <table border="1" border-collapse="collapse" style="width:600px">
-                    <tr style="font-size:10px;font-weight:bold;color:black">
-                        <th style="padding:10px">SỐ</th>
-                        <th style="width:100px">NGÀY HĐ</th>
-                        <th style="width:100px">NGÀY ĐẾN HẠN</th>
-                        <th style="width:120px">TIỀN HĐ</th>
-                        <th style="width:120px">CKTT</th>
-                        <th styl="width:100px">TIỀN THANH TOÁN</th>
-                    </tr>
+                    <thead stye="display: table-header-group;">
+                        <tr style="font-size: 10px; font-weight: bold; color: black; page-break-inside:avoid">
+                            <th style="padding:10px">SỐ</th>
+                            <th style="width:100px">NGÀY HĐ</th>
+                            <th style="width:100px">NGÀY ĐẾN HẠN</th>
+                            <th style="width:120px">TIỀN HĐ</th>
+                            <th style="width:120px">CKTT</th>
+                            <th styl="width:100px">TIỀN THANH TOÁN</th>
+                        </tr>
+                    </thead>
                     <tbody>
                         @foreach (DataRow row3 in Model.Tables[0].Rows)
                         {
@@ -525,8 +531,18 @@
                 }
             });
 
+            function displaySelectedDate() {
+                // Lấy các giá trị ngày đã chọn từ trường nhập liệu
+                const fromDate = document.getElementById('tu_ngay').value;
+                const toDate = document.getElementById('den_ngay').value;
 
+                // Hiển thị các giá trị ngày đã chọn lên thẻ h5
+                const selectedDateDisplay = document.getElementById('selectedDateDisplay');
+                selectedDateDisplay.innerText = `Từ ngày: ${fromDate} - Đến ngày: ${toDate}`;
+                window.location.href = selectedDateDisplay;
+            }
         </script>
+    
         <script>
             // Lấy tất cả các phần tử có class "branch"
             var branches = document.querySelectorAll('.branch');

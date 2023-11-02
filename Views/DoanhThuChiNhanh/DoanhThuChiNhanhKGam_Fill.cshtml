@@ -604,7 +604,9 @@
                         </label>
                     </div>
                     <div>
-                        <button class="submit" type="submit" onclick="runReport()"> Chạy Báo Cáo </button>
+                        <button class="submit" type="submit" onclick="runReport('@Url.Action("DoanhThuChiNhanhKGam", "DoanhThuChiNhanh")',
+                                                       '@Request.QueryString["From_date"]',
+                                                       '@Request.QueryString["To_date"]')"> Chạy Báo Cáo </button>
                     </div>
                 </form>
             </li>
@@ -612,9 +614,22 @@
     </div>
 
     <header class="header_part">
-        <a href="#" style="cursor:auto">
-            <img src="~/Images/opc.png" style="height:60px;width:60px;margin-left:10px">
-        </a>
+        @if (Request.Cookies["UserName"].Value == "Admin-cnct" || Request.Cookies["UserName"].Value == "Admin-cntg" || Request.Cookies["UserName"].Value == "Admin-cnmd" || Request.Cookies["UserName"].Value == "Admin-cnh1" || Request.Cookies["UserName"].Value == "Admin-cnvt"
+                      || Request.Cookies["UserName"].Value == "Admin-cnnt" || Request.Cookies["UserName"].Value == "Admin - cndn" || Request.Cookies["UserName"].Value == "Admin - cnna" || Request.Cookies["UserName"].Value == "Admin - cnhn")
+        {
+
+
+
+            <a href="/Home/AboutCN" style="cursor:pointer">
+                <img src="~/Images/opc.png" style="height:60px;width:60px;margin-left:10px">
+            </a>
+        }
+        else
+        {
+            <a href="/Home/About" style="cursor:pointer">
+                <img src="~/Images/opc.png" style="height:60px;width:60px;margin-left:10px">
+            </a>
+        }
         <h4>Báo Cáo Doanh Thu Chi Nhánh @*<a class="closeTab" href="">  <span class="closeIcon">✕</span></a>*@</h4>
 
     </header>
@@ -691,7 +706,11 @@
         setFirstDayOfCurrentMonth();
         setCurrentDate();</script>
     <script>
-        function runReport() {
+        function runReport(actionUrl, from_date, to_date) {
+            const fromDate = document.getElementById('tu_ngay').value;
+            const toDate = document.getElementById('den_ngay').value;
+            var url = actionUrl + '?From_date=' + fromDate + '&To_date=' + toDate;
+            window.open(url, '_blank');
             const uncheckedCheckboxIndexes = [];
             const checkboxes = document.querySelectorAll('input[name="myCheckbox"]');
 
@@ -705,11 +724,7 @@
             localStorage.setItem('uncheckedCheckboxIndexes', JSON.stringify(uncheckedCheckboxIndexes));
             // Hiển thị thẻ span có id là "spanText"
             const spanElement = document.getElementById("spanText");
-            const tabControlElement = document.getElementById("tabControl");
             spanElement.style.display = "block";
-
-            tabControlElement.style.display = "none";
-
         }
     </script>
     <script>

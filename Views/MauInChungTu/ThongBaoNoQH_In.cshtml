@@ -422,6 +422,9 @@
             width: 70px;
             height: 40px;
         }
+        tr {
+            page-break-inside: avoid; /* Tránh chuyển trang giữa các dòng */
+        }
     </style>
 </head>
 <body>
@@ -512,14 +515,16 @@
 
             <div style="margin-top:10px">
                 <table border="1" border-collapse="collapse" style="width:700px" id="export">
-                    <tr style="font-size:10px;font-weight:bold;color:black">
-                        <th style="padding:10px">STT</th>
-                        <th>SỐ HÓA ĐƠN</th>
-                        <th>NGÀY XUẤT</th>
-                        <th>TIỀN NỢ</th>
-                        <th>HẠN THANH TOÁN</th>
-                        <th>NGÀY QUÁ HẠN</th>
-                    </tr>
+                    <thead stye="display: table-header-group;">
+                        <tr style="font-size:10px;font-weight:bold;color:black">
+                            <th style="padding:10px">STT</th>
+                            <th>SỐ HÓA ĐƠN</th>
+                            <th>NGÀY XUẤT</th>
+                            <th>TIỀN NỢ</th>
+                            <th>HẠN THANH TOÁN</th>
+                            <th>NGÀY QUÁ HẠN</th>
+                        </tr>
+                    </thead>
                     <tbody>
 
                         @foreach (DataRow row3 in Model.Tables[1].Rows)
@@ -534,8 +539,6 @@
                                 <td class="num" style="text-align:center">@row3["So_Ngay_Qua_Han"]</td>
                             </tr>
                         }
-                    </tbody>
-                    <tfoot>
                         <tr>
                             <td colspan="3" style="font-weight:bold;color:black;text-align:center">Tổng cộng</td>
                             <td class="num" style="text-align:right;font-weight:bold;">
@@ -547,7 +550,8 @@
                             <td></td>
                             <td></td>
                         </tr>
-                    </tfoot>
+                    </tbody>
+
 
                 </table>
                 <br />

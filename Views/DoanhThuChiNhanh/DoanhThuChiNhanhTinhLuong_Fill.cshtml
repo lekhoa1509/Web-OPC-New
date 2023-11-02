@@ -608,7 +608,9 @@
                     </div>
 
                     <div>
-                        <button class="submit" type="submit" onclick="runReport()"> Chạy Báo Cáo </button>
+                        <button class="submit" type="submit" onclick="runReport('@Url.Action("DoanhThuChiNhanhTinhLuong", "DoanhThuChiNhanh")',
+                                                       '@Request.QueryString["From_date"]',
+                                                       '@Request.QueryString["To_date"]')"> Chạy Báo Cáo </button>
                     </div>
 
                 </form>
@@ -617,9 +619,22 @@
     </div>
 
     <header class="header_part">
-        <a href="/Home/About">
-            <img src="~/assets/images/logo.png" alt="" class="img-fluid">
-        </a>
+        @if (Request.Cookies["UserName"].Value == "Admin-cnct" || Request.Cookies["UserName"].Value == "Admin-cntg" || Request.Cookies["UserName"].Value == "Admin-cnmd" || Request.Cookies["UserName"].Value == "Admin-cnh1" || Request.Cookies["UserName"].Value == "Admin-cnvt"
+                      || Request.Cookies["UserName"].Value == "Admin-cnnt" || Request.Cookies["UserName"].Value == "Admin - cndn" || Request.Cookies["UserName"].Value == "Admin - cnna" || Request.Cookies["UserName"].Value == "Admin - cnhn")
+        {
+
+                
+
+            <a href="/Home/AboutCN" style="cursor:pointer">
+                <img src="~/Images/opc.png" style="height:60px;width:60px;margin-left:10px">
+            </a>
+        }
+        else
+        {
+            <a href="/Home/About" style="cursor:pointer">
+                <img src="~/Images/opc.png" style="height:60px;width:60px;margin-left:10px">
+            </a>
+        }
         <h4>Báo Cáo Doanh Thu Chi Nhánh</h4>
     </header>
     <!-- =======  Data-Table  = Start  ========================== -->
@@ -659,12 +674,12 @@
     </div>
     <!-- =======  Data-Table  = End  ===================== -->
     <!-- ============ Java Script Files  ================== -->
-    <div class="tab-control">
+    @*<div class="tab-control">
         <ul class="tabs" style="background-color: #1d1b31; bottom: 0; left: 0; right: 0;">
             <li class="tab selected" style="padding-right:10px"><a href="/Home/About">Home</a></li>
 
         </ul>
-    </div>
+    </div>*@
 
     <script src="~/assets/js/bootstrap.bundle.min.js"></script>
     <script src="~/assets/js/jquery-3.6.0.min.js"></script>
@@ -700,7 +715,11 @@
         setCurrentDate();
     </script>
     <script>
-        function runReport() {
+        function runReport(actionUrl, from_date, to_date) {
+            const fromDate = document.getElementById('tu_ngay').value;
+            const toDate = document.getElementById('den_ngay').value;
+            var url = actionUrl + '?From_date=' + fromDate + '&To_date=' + toDate;
+            window.open(url, '_blank');
             const uncheckedCheckboxIndexes = [];
             const checkboxes = document.querySelectorAll('input[name="myCheckbox"]');
 
@@ -837,7 +856,7 @@
 
 
     </script>
-    <script>
+    @*<script>
         // Hàm kiểm tra và chuyển hướng về trang Home nếu mảng tabsArray rỗng
         function checkAndRedirectToHome() {
             const tabsArray = JSON.parse(localStorage.getItem("tabsArray")) || [];
@@ -1145,7 +1164,7 @@
             });
         });
 
-    </script>
+    </script>*@
 
 </body>
 

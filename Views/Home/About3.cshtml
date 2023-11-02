@@ -1,4 +1,5 @@
-﻿@{ ViewBag.Title = "OPC Bao Cao | OPCPHARMA";
+﻿
+@{ ViewBag.Title = "OPC Bao Cao | OPCPHARMA";
     @model System.Data.DataSet
 }
 @using System.Data;
@@ -212,7 +213,7 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                     <li>
                         <a href="#">1.Báo Cáo Quản Trị</a>
                         <ul>
-                            @if (string.Equals(ViewBag.Username, "admin", StringComparison.OrdinalIgnoreCase))
+                            @if (string.Equals(ViewBag.UserName, "admin", StringComparison.OrdinalIgnoreCase))
                             {
 
 
@@ -366,7 +367,7 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                             </tr>
 
                             <tbody style="float:left">
-                                <tr style="height:30px">
+                                @*<tr style="height:30px">
                                     <td style="text-align: left">
                                         @if (string.Equals(ViewBag.UserName, "admin", StringComparison.OrdinalIgnoreCase) || string.Equals(ViewBag.UserName, "opcadmin", StringComparison.OrdinalIgnoreCase))
                                         {
@@ -374,7 +375,7 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                                         }
                                         else
                                         {
-                                            <li style=" list-style-type: none;" class="liTitle"><a href="/DoanhThuChiNhanh/DoanhThuChiNhanhKGam_CN_Fill">1.Doanh Thu Chi Nhánh</a></li>
+                                            <li style=" list-style-type: none;" class="liTitle"><a href="/DoanhThuChiNhanh/DoanhThuChiNhanhKGam_Fill">1.Doanh Thu Chi Nhánh</a></li>
                                         }
                                     </td>
                                 </tr>
@@ -394,9 +395,9 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                                             </li>
                                         }
                                     </td>
-                                </tr>
+                                </tr>*@
                                 <tr style="height:30px">
-                                    <td style="text-align: left"> <li style=" list-style-type: none;" class="liTitle"><a href="/DoanhThuChiNhanh/DoanhThuChiNhanhTinhLuong_Fill">3.Doanh Thu Chi Nhánh Tính Lương</a></li></td>
+                                    <td style="text-align: left"> <li style=" list-style-type: none;" class="liTitle"><a href="/DoanhThuChiNhanh/DoanhThuChiNhanhTinhLuong_Fill">1.Doanh Thu Chi Nhánh Tính Lương</a></li></td>
                                 </tr>
 
                             </tbody>
@@ -652,7 +653,7 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
         </ul>
     </div>
     <script>
-        // ham xu ly dang nhap va xoa mang tabArray
+    // ham xu ly dang nhap va xoa mang tabArray
         function logout() {
             // Làm rỗng mảng tabArray
             const tabArray = JSON.parse(localStorage.getItem("tabsArray")) || [];
@@ -805,9 +806,9 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                     const newTab = document.createElement("li");
                     newTab.classList.add("tab", "selected");
                     newTab.innerHTML = `
-                                                    <a href="${subMenuLinkHref}">${tabTitle}</a>
-                                                    <a class="closeTab" href="">✕</a>
-                                                `;
+                                                <a href="${subMenuLinkHref}">${tabTitle}</a>
+                                                <a class="closeTab" href="">✕</a>
+                                            `;
                     tabControlTabs.appendChild(newTab);
 
                     // Chuyển view tới thẻ li tương ứng
@@ -826,8 +827,8 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                 currentTab.classList.add("tab", "selected");
                 const tabInfo = JSON.parse(localStorage.getItem(currentTabTitleView1));
                 currentTab.innerHTML = `
-                                                <a href="${tabInfo.href}">${currentTabTitleView1}</a>
-                                                <a class="closeTab" href="">✕</a>
+                                            <a href="${tabInfo.href}">${currentTabTitleView1}</a>
+                                            <a class="closeTab" href="">✕</a>
 `;
                 tabControlTabs.appendChild(currentTab);
             }
@@ -895,9 +896,9 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                 const newTab = document.createElement("li");
                 newTab.classList.add("tab", "selected");
                 newTab.innerHTML = `
-                                            <a href="${tabHref}">${tabTitle}</a>
-                                            <a class="closeTab" href="">✕</a>
-                                            `;
+                                        <a href="${tabHref}">${tabTitle}</a>
+                                        <a class="closeTab" href="">✕</a>
+                                        `;
                 tabControlTabs.appendChild(newTab);
 
                 // Sự kiện khi người dùng nhấp vào nút đóng tab
@@ -1108,9 +1109,9 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                 const newTab = document.createElement("li");
                 newTab.classList.add("tab", "selected");
                 newTab.innerHTML = `
-                                <a href="${subMenuLinkHref}">${tabTitle}</a>
-                                <a class="closeTab" href="">✕</a>
-                            `;
+                            <a href="${subMenuLinkHref}">${tabTitle}</a>
+                            <a class="closeTab" href="">✕</a>
+                        `;
                 tabControlTabs.appendChild(newTab);
 
                 // Chuyển view tới thẻ li tương ứng

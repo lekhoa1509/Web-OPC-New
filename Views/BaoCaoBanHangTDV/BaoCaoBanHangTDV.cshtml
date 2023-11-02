@@ -419,7 +419,7 @@
 
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>OPC </title>
+    <title>Báo Cáo Bán Hàng TDV </title>
     <meta content="" name="description">
     <meta content="Author" name="MJ Maraz">
     <link href="~/assets/images/favicon.png" rel="icon">
@@ -442,12 +442,12 @@
 <!-- =============== Design & Develop By = MJ MARAZ   ====================== -->
 
 <body>
-    <div class="tab-control" style="position:fixed;bottom:50px">
+    @*<div class="tab-control" style="position:fixed;bottom:50px">
         <ul class="tabs" style="background-color: #1d1b31">
             <li class="tab selected"><a href="/Home/About" style="padding-right:5px">Home</a></li>
 
         </ul>
-    </div>
+    </div>*@
     <div class="loader" style="z-index:1"></div>
     <div class="sidebar">
         <div class="logo-details">
@@ -475,9 +475,22 @@
     </div>
 
     <header class="header_part">
-        <a href="/Home/About">
-            <img src="~/assets/images/logo.png" alt="" class="img-fluid">
-        </a>
+        @if (Request.Cookies["UserName"].Value == "Admin-cnct" || Request.Cookies["UserName"].Value == "Admin-cntg" || Request.Cookies["UserName"].Value == "Admin-cnmd" || Request.Cookies["UserName"].Value == "Admin-cnh1" || Request.Cookies["UserName"].Value == "Admin-cnvt"
+                      || Request.Cookies["UserName"].Value == "Admin-cnnt" || Request.Cookies["UserName"].Value == "Admin - cndn" || Request.Cookies["UserName"].Value == "Admin - cnna" || Request.Cookies["UserName"].Value == "Admin - cnhn")
+        {
+
+
+
+            <a href="/Home/AboutCN" style="cursor:pointer">
+                <img src="~/Images/opc.png" style="height:60px;width:60px;margin-left:10px">
+            </a>
+        }
+        else
+        {
+            <a href="/Home/About" style="cursor:pointer">
+                <img src="~/Images/opc.png" style="height:60px;width:60px;margin-left:10px">
+            </a>
+        }
         <h4>Báo Cáo Bán Hàng TDV</h4>
         <h5 style="color:white">Từ @Request.QueryString["From_date"] đến @Request.QueryString["To_date"]</h5>
     </header>
@@ -651,7 +664,7 @@
             const toDate = document.getElementById('den_ngay').value;
 
             // Tạo URL mới với các tham số truy vấn
-            const form = event.target;
+            const form = event.target;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
             const actionUrl = `${form.action}?From_date=${fromDate}&To_date=${toDate}`;
 
             // Chuyển hướng tới URL mới với các giá trị ngày đã chọn làm các tham số truy vấn

@@ -946,11 +946,14 @@
     <Content Include="Scripts\jsrender.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\table2excel.js" />
+    <Content Include="Styles\core.css" />
+    <Content Include="Styles\dashboard.css" />
     <Content Include="Styles\default.css" />
     <Content Include="Styles\DT_TDV.css" />
     <Content Include="Styles\DT_TDV1.css" />
     <Content Include="Styles\font-awesome.min.css" />
     <Content Include="Styles\hinh4.css" />
+    <Content Include="Styles\icon-font-min.css" />
     <Content Include="Styles\jquery-ui.css" />
     <Content Include="Styles\loader.css" />
     <Content Include="Styles\login.css" />
@@ -1047,6 +1050,10 @@
     <Content Include="Views\BangKeHoaDon\bangkehoadon_Fill_HCM.cshtml" />
     <Content Include="Views\MauInChungTu\BangDoiChieuDTCN_Fill.cshtml" />
     <Content Include="Views\MauInChungTu\BangDoiChieuDTCN.cshtml" />
+    <Content Include="Views\Home\About1.cshtml" />
+    <Content Include="Views\Home\About2.cshtml" />
+    <Content Include="Views\Home\About3.cshtml" />
+    <Content Include="Views\Home\AboutCN.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

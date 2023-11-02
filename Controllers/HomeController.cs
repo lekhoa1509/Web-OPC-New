@@ -47,6 +47,7 @@ namespace web4.Controllers
             connectSQL();
             con.Open();
             string username = "";
+            string view = "";
             sqlc.Connection = con;
             sqlc.CommandText = "select * from view_user where Tendangnhap ='" + Acc.Name + "'And matkhau='" + Acc.Password + "'and ma_DvCs='" + Acc.Ma_DvCs + "'";
             dt = sqlc.ExecuteReader();
@@ -57,7 +58,15 @@ namespace web4.Controllers
 
                 con.Close();
                 ViewBag.UserName = Acc.Name.ToString();
-                return View("About"); 
+                if(ViewBag.UserName == "Admin-cnct"||ViewBag.UserName =="Admin-cntg"||ViewBag.UserName == "Admin-cnmd" || ViewBag.UserName =="Admin-cnh1"||ViewBag.UserName =="Admin-cnvt"||ViewBag.UserName =="Admin-cnnt"||ViewBag.UserName=="Admin-cnna"||ViewBag.UserName=="Admin-cndn"||ViewBag.UserName =="Admin-cnhn")
+                {
+                    view = "AboutCN";
+                }
+                else
+                {
+                    view = "About";
+                }
+                return View(view); 
             }
             else
             {
@@ -71,10 +80,22 @@ namespace web4.Controllers
             ViewBag.Username = username;
             return View();
         }
-       
-    
-
-
+       public ActionResult About1()
+        {
+            return View();
+        }
+        public ActionResult About2()
+        {
+            return View();
+        }
+        public ActionResult About3()
+        {
+            return View();
+        }
+        public ActionResult AboutCN()
+        {
+            return View();
+        }
         //Báo cáo công nợ quản trị lấy  ra 5 bảng;
         public ActionResult BCCN_main()
         {

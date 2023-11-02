@@ -509,6 +509,7 @@
                     <div id="locBC">
 
                         <a>Từ Ngày</a><br /><br />
+
                         <input class="tu_ngay" placeholder="Từ Ngày" id="tu_ngay" name="From_date" type="date" format="YYYY-MM-DD" value="@Request.QueryString["From_date"]" />
                         <script>$("#tu_ngay").datetimepicker({ timepicker: false, format: 'Y-m-d' });</script><br /><br />
                         <a>Đến Ngày</a><br /><br />
@@ -621,7 +622,15 @@
     </div>
 
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script>
+        // Lấy giá trị từ các trường input
+        var fromDate = document.getElementById("tu_ngay").value;
+        var toDate = document.getElementById("den_ngay").value;
 
+        // Đặt Cookies với giá trị từ người dùng
+        document.cookie = "From_date=" + fromDate;
+        document.cookie = "To_date=" + toDate;
+    </script>
     <script>
         document.getElementById("dropdownInput").addEventListener("input", function () {
             var inputValue = this.value;
@@ -661,6 +670,34 @@
 
     </script>
     <script>
+        function handleFormSubmit(event) {
+            event.preventDefault(); // Ngăn mặc định nộp biểu mẫu
+
+            // Lấy giá trị từ các trường input
+            var fromDate = document.getElementById("tu_ngay").value;
+            var toDate = document.getElementById("den_ngay").value;
+
+            // Định dạng và lưu giá trị vào Cookie
+            setFormattedCookie("From_date", fromDate);
+            setFormattedCookie("To_date", toDate);
+
+            // Gửi biểu mẫu sau khi đã lưu Cookie
+            event.target.submit();
+        }
+
+        function setFormattedCookie(cookieName, dateString) {
+            var date = new Date(dateString);
+            var day = date.getDate();
+            var month = date.getMonth() + 1;
+            var year = date.getFullYear();
+            var formattedDate = day + "/" + month + "/" + year;
+            document.cookie = cookieName + "=" + formattedDate;
+        }
+    </script>
+
+
+
+    <script>
         // Hàm kiểm tra và chuyển hướng về trang Home nếu mảng tabsArray rỗng
         function checkAndRedirectToHome() {
             const tabsArray = JSON.parse(localStorage.getItem("tabsArray")) || [];
@@ -695,9 +732,9 @@
                 }
 
                 newTab.innerHTML = `
-                                    <a href="${tabHref}">${tabTitle}</a>
-                                    <a class="closeTab" href="">✕</a>
-                                `;
+                                                    <a href="${tabHref}">${tabTitle}</a>
+                                                    <a class="closeTab" href="">✕</a>
+                                                `;
                 tabControlTabs.appendChild(newTab);
 
                 // Sự kiện khi người dùng nhấp vào nút đóng tab
@@ -728,9 +765,9 @@
                 const newTab = document.createElement("li");
                 newTab.classList.add("tab", "selected");
                 newTab.innerHTML = `
-                                        <a href="${tabHref}">${tabTitle}</a>
-                                        <a class="closeTab" href="">✕</a>
-                                    `;
+                                                        <a href="${tabHref}">${tabTitle}</a>
+                                                        <a class="closeTab" href="">✕</a>
+                                                    `;
                 tabControlTabs.appendChild(newTab);
 
                 // Sự kiện khi người dùng nhấp vào nút đóng tab

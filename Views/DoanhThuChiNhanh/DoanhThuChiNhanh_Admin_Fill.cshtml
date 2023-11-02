@@ -541,7 +541,7 @@
 
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>OPC </title>
+    <title>Doanh Thu Chi Nhánh Theo Gam</title>
     <meta content="" name="description">
     <meta content="Author" name="MJ Maraz">
     <link href="~/assets/images/favicon.png" rel="icon">
@@ -687,7 +687,9 @@
                         </label>
                     </div>
                     <div>
-                        <button class="submit" type="submit" onclick="runReport()"> Chạy Báo Cáo </button>
+                        <button class="submit" type="submit" onclick="runReport('@Url.Action("DoanhThuChiNhanh_Admin", "DoanhThuChiNhanh")',
+                                                       '@Request.QueryString["From_date"]',
+                                                       '@Request.QueryString["To_date"]')"> Chạy Báo Cáo </button>
                     </div>
                 </form>
             </li>
@@ -744,11 +746,11 @@
     </div>
     <!-- =======  Data-Table  = End  ===================== -->
     <!-- ============ Java Script Files  ================== -->
-    <div class="tab-control">
+    @*<div class="tab-control">
         <ul class="tabs" style="background-color: #1d1b31; bottom: 0; left: 0; right: 0;">
             <li class="tab selected"><a href="/Home/About" style="padding-right:5px">Home</a></li>
         </ul>
-    </div>
+    </div>*@
 
     <script src="~/assets/js/bootstrap.bundle.min.js"></script>
     <script src="~/assets/js/jquery-3.6.0.min.js"></script>
@@ -784,7 +786,11 @@
         setCurrentDate();
     </script>
     <script>
-        function runReport() {
+        function runReport(actionUrl, from_date, to_date) {
+            const fromDate = document.getElementById('tu_ngay').value;
+            const toDate = document.getElementById('den_ngay').value;
+            var url = actionUrl + '?From_date=' + fromDate + '&To_date=' + toDate;
+            window.open(url, '_blank');
             const uncheckedCheckboxIndexes = [];
             const checkboxes = document.querySelectorAll('input[name="myCheckbox"]');
 
@@ -933,7 +939,7 @@
 
 
     </script>
-    <script>
+    @*<script>
         // Hàm kiểm tra và chuyển hướng về trang Home nếu mảng tabsArray rỗng
         function checkAndRedirectToHome() {
             const tabsArray = JSON.parse(localStorage.getItem("tabsArray")) || [];
@@ -1195,7 +1201,7 @@
             });
         });
 
-    </script>
+    </script>*@
 
 </body>
 
