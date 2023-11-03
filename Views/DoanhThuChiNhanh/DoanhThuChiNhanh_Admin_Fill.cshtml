@@ -687,9 +687,7 @@
                         </label>
                     </div>
                     <div>
-                        <button class="submit" type="submit" onclick="runReport('@Url.Action("DoanhThuChiNhanh_Admin", "DoanhThuChiNhanh")',
-                                                       '@Request.QueryString["From_date"]',
-                                                       '@Request.QueryString["To_date"]')"> Chạy Báo Cáo </button>
+                        <button class="submit" type="submit" onclick="runReport()"> Chạy Báo Cáo </button>
                     </div>
                 </form>
             </li>
@@ -786,11 +784,8 @@
         setCurrentDate();
     </script>
     <script>
-        function runReport(actionUrl, from_date, to_date) {
-            const fromDate = document.getElementById('tu_ngay').value;
-            const toDate = document.getElementById('den_ngay').value;
-            var url = actionUrl + '?From_date=' + fromDate + '&To_date=' + toDate;
-            window.open(url, '_blank');
+        function runReport() {
+           
             const uncheckedCheckboxIndexes = [];
             const checkboxes = document.querySelectorAll('input[name="myCheckbox"]');
 
