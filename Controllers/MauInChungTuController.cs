@@ -311,6 +311,8 @@ namespace web4.Controllers
             return View();
             
         }
+  
+
         public ActionResult BangDoiChieuCongNo( MauInChungTu MauIn)
         {
             string ma_dvcs = Request.Cookies["Ma_dvcs"].Value;
@@ -353,9 +355,12 @@ namespace web4.Controllers
 
 
                     sda.Fill(ds);
-
+                  
                 }
             }
+         
+         
+
             return View(ds);
         }
 
@@ -456,7 +461,7 @@ namespace web4.Controllers
                     if (tableData != null && tableData.Any())
                     {
                         // Lặp qua từng hàng dữ liệu trong tableData và ghi vào tệp Excel
-                        for (int row = 0; row < tableData.Count; row++)
+                        for (int row = 0; row < tableData.Count-1; row++)
                         {
                             var rowData = tableData[row];
                             for (int col = 0; col < rowData.Count; col++)
@@ -528,10 +533,13 @@ namespace web4.Controllers
         public ActionResult ExportBaoCaoCongNo()
         {
 
+         
+
             var fileName = $"BangDoiChieuCongNo{DateTime.Now:yyyyMMddHHmmss}.xlsx";
             // Lấy dữ liệu từ cookie
             //string jsonData = Request.Cookies["tableDataCookie"] != null ? HttpUtility.UrlDecode(Request.Cookies["tableDataCookie"].Value) : "";
             //string jsonData2 = Request.Cookies["tableData2Cookie"] != null ? HttpUtility.UrlDecode(Request.Cookies["tableData2Cookie"].Value) : "";
+
             string cookie1Value = Request.Cookies["tableDataCookie1"] != null ? HttpUtility.UrlDecode(Request.Cookies["tableDataCookie1"].Value) : "";
             string cookie2Value = Request.Cookies["tableDataCookie2"] != null ? HttpUtility.UrlDecode(Request.Cookies["tableDataCookie2"].Value) : "";
             string cookie3Value = Request.Cookies["tableDataCookie3"] != null ? HttpUtility.UrlDecode(Request.Cookies["tableDataCookie3"].Value) : "";
@@ -542,7 +550,11 @@ namespace web4.Controllers
             string cookieHD2Value = Request.Cookies["tableDataCookieHD2"] != null ? HttpUtility.UrlDecode(Request.Cookies["tableDataCookieHD2"].Value) : "";
             string cookieHD3Value = Request.Cookies["tableDataCookieHD3"] != null ? HttpUtility.UrlDecode(Request.Cookies["tableDataCookieHD3"].Value) : "";
             string cookieHD4Value = Request.Cookies["tableDataCookieHD4"] != null ? HttpUtility.UrlDecode(Request.Cookies["tableDataCookieHD4"].Value) : "";
-            //string cookieHD5Value = Request.Cookies["tableDataCookieHD5"] != null ? HttpUtility.UrlDecode(Request.Cookies["tableDataCookieHD5"].Value) : "";
+            string cookieHD5Value = Request.Cookies["tableDataCookieHD5"] != null ? HttpUtility.UrlDecode(Request.Cookies["tableDataCookieHD5"].Value) : "";
+            string cookieHD6Value = Request.Cookies["tableDataCookieHD6"] != null ? HttpUtility.UrlDecode(Request.Cookies["tableDataCookieHD6"].Value) : "";
+            string cookieHD7Value = Request.Cookies["tableDataCookieHD7"] != null ? HttpUtility.UrlDecode(Request.Cookies["tableDataCookieHD7"].Value) : "";
+            string cookieHD8Value = Request.Cookies["tableDataCookieHD8"] != null ? HttpUtility.UrlDecode(Request.Cookies["tableDataCookieHD8"].Value) : "";
+            string cookieHD9Value = Request.Cookies["tableDataCookieHD9"] != null ? HttpUtility.UrlDecode(Request.Cookies["tableDataCookieHD9"].Value) : "";
             // Kiểm tra xem có dữ liệu từ cookie không
             List<List<string>> combinedData = new List<List<string>>();
             List<List<string>> combinedDataHD = new List<List<string>>();
@@ -559,8 +571,11 @@ namespace web4.Controllers
                 List<List<string>> tableDataHD1 = JsonConvert.DeserializeObject<List<List<string>>>(cookieHD2Value);
                 List<List<string>> tableDataHD2 = JsonConvert.DeserializeObject<List<List<string>>>(cookieHD3Value);
                 List<List<string>> tableDataHD3 = JsonConvert.DeserializeObject<List<List<string>>>(cookieHD4Value);
-                //List<List<string>> tableDataHD4 = JsonConvert.DeserializeObject<List<List<string>>>(cookieHD5Value);
-                //List<List<string>> tableData2 = JsonConvert.DeserializeObject<List<List<string>>>(jsonData2);
+                List<List<string>> tableDataHD4 = JsonConvert.DeserializeObject<List<List<string>>>(cookieHD5Value);
+                List<List<string>> tableDataHD5 = JsonConvert.DeserializeObject<List<List<string>>>(cookieHD6Value);
+                List<List<string>> tableDataHD6 = JsonConvert.DeserializeObject<List<List<string>>>(cookieHD7Value);
+                List<List<string>> tableDataHD7 = JsonConvert.DeserializeObject<List<List<string>>>(cookieHD8Value);
+                List<List<string>> tableDataHD8 = JsonConvert.DeserializeObject<List<List<string>>>(cookieHD9Value);
                 combinedData.AddRange(tableData);
                 combinedData.AddRange(tableData1);
                 combinedData.AddRange(tableData2);
@@ -569,9 +584,13 @@ namespace web4.Controllers
 
                 combinedDataHD.AddRange(tableDataHD);
                 combinedDataHD.AddRange(tableDataHD1);
-                combinedDataHD.AddRange(tableDataHD2);
-                combinedDataHD.AddRange(tableDataHD3);
+                //combinedDataHD.AddRange(tableDataHD2);
+                //combinedDataHD.AddRange(tableDataHD3);
                 //combinedDataHD.AddRange(tableDataHD4);
+                //combinedDataHD.AddRange(tableDataHD5);
+                //combinedDataHD.AddRange(tableDataHD6);
+                //combinedDataHD.AddRange(tableDataHD7);
+                //combinedDataHD.AddRange(tableDataHD8);
                 // Khởi tạo tệp Excel
                 ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
                 using (var package = new ExcelPackage())
@@ -939,173 +958,595 @@ namespace web4.Controllers
         
 
         }
-        public ActionResult ExportPhieuXuatKho()
-        {
-            var fileName = $"PhieuXuatKho{DateTime.Now:yyyyMMddHHmmss}.xlsx";
-            // Lấy dữ liệu từ cookie
-            string jsonData = Request.Cookies["tableDataCookie"] != null ? HttpUtility.UrlDecode(Request.Cookies["tableDataCookie"].Value) : "";
 
-            // Kiểm tra xem có dữ liệu từ cookie không
-            if (!string.IsNullOrEmpty(jsonData))
-            {
-                // Parse chuỗi JSON thành mảng JavaScript
-                List<List<string>> tableData = JsonConvert.DeserializeObject<List<List<string>>>(jsonData);
 
-                ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-                using (var package = new ExcelPackage())
-                {
-                    var worksheet = package.Workbook.Worksheets.Add("MySheet");
-                    worksheet.View.ShowGridLines = false;
 
-                    // ... (Các bước tạo nội dung tệp Excel như bạn đã làm)
-                    // Đường dẫn đến hình ảnh trong thư mục 'image'
-                  /*  var imagePath = Server.MapPath("~/assets/images/logo.png");*/ // Thay thế bằng đường dẫn thật
-                                                                                // Lấy giá trị từ biến Dvcs
-                    string Ngay = Request.Cookies["ngay"] != null ? HttpUtility.UrlDecode(Request.Cookies["ngay"].Value) : "";
-                    string SoCT = Request.Cookies["SoCt"] != null ? HttpUtility.UrlDecode(Request.Cookies["SoCt"].Value) : "";
-                    string Thang = Request.Cookies["thang"] != null ? HttpUtility.UrlDecode(Request.Cookies["thang"].Value) : "";
-                    string Nam = Request.Cookies["nam"] != null ? HttpUtility.UrlDecode(Request.Cookies["nam"].Value) : "";
-                    string DVNH = Request.Cookies["Ten_dt"] != null ? HttpUtility.UrlDecode(Request.Cookies["Ten_dt"].Value) : "";
-                    string QuaHan = Request.Cookies["QuaHan"] != null ? HttpUtility.UrlDecode(Request.Cookies["QuaHan"].Value) : "";
-                    string HanNgay = Request.Cookies["HanNgay"] != null ? HttpUtility.UrlDecode(Request.Cookies["HanNgay"].Value) : "";
-                    string CN = Request.Cookies["CN"] != null ? HttpUtility.UrlDecode(Request.Cookies["CN"].Value) : "";
-                    string TK = Request.Cookies["TK"] != null ? HttpUtility.UrlDecode(Request.Cookies["TK"].Value) : "";
-                    string LH = Request.Cookies["LH"] != null ? HttpUtility.UrlDecode(Request.Cookies["LH"].Value) : "";
-                    // Đặt font chữ "Arial" cho toàn bộ tệp Excel
-                    worksheet.Cells.Style.Font.Name = "Times New Roman";
 
-                    // Đặt văn bản vào ô A2
-                    worksheet.Cells["A1"].Value = "CTY CỔ PHẦN DƯỢC PHẨM OPC";
-                    worksheet.Cells["A1"].Style.Font.Bold = true;
-                    var cellB1 = worksheet.Cells["B1"];
-                    cellB1.Style.Font.Bold = true;
-                    worksheet.Cells["C3"].Value = "PHIẾU XUẤT KHO CỬA HÀNG QUẬN 10";
-                    worksheet.Cells["C3"].Style.Font.Bold = true;
-                    worksheet.Cells["C3"].Style.Font.Size = 16;
+        //Ham chay duoc 
+
+
+        //public ActionResult ExportBaoCaoCongNo()
+        //{
+
+        //    var fileName = $"BangDoiChieuCongNo{DateTime.Now:yyyyMMddHHmmss}.xlsx";
+        //    // Lấy dữ liệu từ cookie
+        //    //string jsonData = Request.Cookies["tableDataCookie"] != null ? HttpUtility.UrlDecode(Request.Cookies["tableDataCookie"].Value) : "";
+        //    //string jsonData2 = Request.Cookies["tableData2Cookie"] != null ? HttpUtility.UrlDecode(Request.Cookies["tableData2Cookie"].Value) : "";
+
+        //    string cookie1Value = Request.Cookies["tableDataCookie1"] != null ? HttpUtility.UrlDecode(Request.Cookies["tableDataCookie1"].Value) : "";
+        //    string cookie2Value = Request.Cookies["tableDataCookie2"] != null ? HttpUtility.UrlDecode(Request.Cookies["tableDataCookie2"].Value) : "";
+        //    string cookie3Value = Request.Cookies["tableDataCookie3"] != null ? HttpUtility.UrlDecode(Request.Cookies["tableDataCookie3"].Value) : "";
+        //    //string cookie4Value = Request.Cookies["tableDataCookie4"] != null ? HttpUtility.UrlDecode(Request.Cookies["tableDataCookie4"].Value) : "";
+        //    //string cookie5Value = Request.Cookies["tableDataCookie5"] != null ? HttpUtility.UrlDecode(Request.Cookies["tableDataCookie5"].Value) : "";
+
+        //    string cookieHD1Value = Request.Cookies["tableDataCookieHD1"] != null ? HttpUtility.UrlDecode(Request.Cookies["tableDataCookieHD1"].Value) : "";
+        //    string cookieHD2Value = Request.Cookies["tableDataCookieHD2"] != null ? HttpUtility.UrlDecode(Request.Cookies["tableDataCookieHD2"].Value) : "";
+        //    //string cookieHD3Value = Request.Cookies["tableDataCookieHD3"] != null ? HttpUtility.UrlDecode(Request.Cookies["tableDataCookieHD3"].Value) : "";
+        //    //string cookieHD4Value = Request.Cookies["tableDataCookieHD4"] != null ? HttpUtility.UrlDecode(Request.Cookies["tableDataCookieHD4"].Value) : "";
+        //    //string cookieHD5Value = Request.Cookies["tableDataCookieHD5"] != null ? HttpUtility.UrlDecode(Request.Cookies["tableDataCookieHD5"].Value) : "";
+        //    // Kiểm tra xem có dữ liệu từ cookie không
+        //    List<List<string>> combinedData = new List<List<string>>();
+        //    List<List<string>> combinedDataHD = new List<List<string>>();
+        //    if (!string.IsNullOrEmpty(cookie1Value) && !string.IsNullOrEmpty(cookieHD1Value) && !string.IsNullOrEmpty(cookie2Value) && !string.IsNullOrEmpty(cookieHD2Value))
+        //    {
+        //        // Parse chuỗi JSON thành mảng JavaScript
+        //        List<List<string>> tableData = JsonConvert.DeserializeObject<List<List<string>>>(cookie1Value);
+        //        List<List<string>> tableData1 = JsonConvert.DeserializeObject<List<List<string>>>(cookie2Value);
+        //        List<List<string>> tableData2 = JsonConvert.DeserializeObject<List<List<string>>>(cookie3Value);
+        //        //List<List<string>> tableData3 = JsonConvert.DeserializeObject<List<List<string>>>(cookie4Value);
+        //        //List<List<string>> tableData4 = JsonConvert.DeserializeObject<List<List<string>>>(cookie5Value);
+
+        //        List<List<string>> tableDataHD = JsonConvert.DeserializeObject<List<List<string>>>(cookieHD1Value);
+        //        List<List<string>> tableDataHD1 = JsonConvert.DeserializeObject<List<List<string>>>(cookieHD2Value);
+        //        //List<List<string>> tableDataHD2 = JsonConvert.DeserializeObject<List<List<string>>>(cookieHD3Value);
+        //        //List<List<string>> tableDataHD3 = JsonConvert.DeserializeObject<List<List<string>>>(cookieHD4Value);
+        //        //List<List<string>> tableDataHD4 = JsonConvert.DeserializeObject<List<List<string>>>(cookieHD5Value);
+        //        //List<List<string>> tableData2 = JsonConvert.DeserializeObject<List<List<string>>>(jsonData2);
+        //        combinedData.AddRange(tableData);
+        //        combinedData.AddRange(tableData1);
+        //        combinedData.AddRange(tableData2);
+        //        //combinedData.AddRange(tableData3);
+        //        //combinedData.AddRange(tableData4);
+
+        //        combinedDataHD.AddRange(tableDataHD);
+        //        combinedDataHD.AddRange(tableDataHD1);
+        //        //combinedDataHD.AddRange(tableDataHD2);
+        //        //combinedDataHD.AddRange(tableDataHD3);
+        //        //combinedDataHD.AddRange(tableDataHD4);
+        //        // Khởi tạo tệp Excel
+        //        ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+        //        using (var package = new ExcelPackage())
+        //        {
+        //            var worksheet = package.Workbook.Worksheets.Add("MySheet");
+        //            worksheet.View.ShowGridLines = false;
+        //            var startRow = 13;
+        //            var startColumn = 1;
+        //            // ... (Các bước tạo nội dung tệp Excel như bạn đã làm)
+        //            // Đường dẫn đến hình ảnh trong thư mục 'image'
+        //            var imagePath = Server.MapPath("~/assets/images/logo.png"); // Thay thế bằng đường dẫn thật
+        //                                                                        // Lấy giá trị từ biến Dvcs
+        //            string Dvcs = Request.Cookies["Dvcs"] != null ? HttpUtility.UrlDecode(Request.Cookies["Dvcs"].Value) : "";
+        //            string TuNgay = Request.Cookies["tungay"] != null ? HttpUtility.UrlDecode(Request.Cookies["tungay"].Value) : "";
+        //            string TuThang = Request.Cookies["tuthang"] != null ? HttpUtility.UrlDecode(Request.Cookies["tuthang"].Value) : "";
+        //            string DenNgay = Request.Cookies["denngay"] != null ? HttpUtility.UrlDecode(Request.Cookies["denngay"].Value) : "";
+        //            string DenThang = Request.Cookies["denthang"] != null ? HttpUtility.UrlDecode(Request.Cookies["denthang"].Value) : "";
+        //            string Nam = Request.Cookies["nam"] != null ? HttpUtility.UrlDecode(Request.Cookies["nam"].Value) : "";
+        //            string DiaChi = Request.Cookies["Dia_Chi"] != null ? HttpUtility.UrlDecode(Request.Cookies["Dia_Chi"].Value) : "";
+        //            string NoDauKy = Request.Cookies["NoDauKy"] != null ? HttpUtility.UrlDecode(Request.Cookies["NoDauKy"].Value) : "";
+        //            string TienHD = Request.Cookies["TienHD"] != null ? HttpUtility.UrlDecode(Request.Cookies["TienHD"].Value) : "";
+        //            string TonNo = Request.Cookies["TonNo"] != null ? HttpUtility.UrlDecode(Request.Cookies["TonNo"].Value) : "";
+        //            string TienChu = Request.Cookies["TienChu"] != null ? HttpUtility.UrlDecode(Request.Cookies["TienChu"].Value) : "";
+        //            string TonNo2 = Request.Cookies["TonNo2"] != null ? HttpUtility.UrlDecode(Request.Cookies["TonNo2"].Value) : "";
+        //            string NgayTT = Request.Cookies["NgayTT"] != null ? HttpUtility.UrlDecode(Request.Cookies["NgayTT"].Value) : "";
+        //            string ChiNhanh = Request.Cookies["ChiNhanh"] != null ? HttpUtility.UrlDecode(Request.Cookies["ChiNhanh"].Value) : "";
+        //            string DiaChi2 = Request.Cookies["DiaChi2"] != null ? HttpUtility.UrlDecode(Request.Cookies["DiaChi2"].Value) : "";
+        //            //string Dvcs1 = Request.Cookies["Dvcs1"] != null ? HttpUtility.UrlDecode(Request.Cookies["Dvcs1"].Value) : "";
+        //            string ten_kh = Request.Cookies["Ten_Dt"] != null ? HttpUtility.UrlDecode(Request.Cookies["Ten_Dt"].Value) : "";
+        //            string NgayKy = Request.Cookies["NgayKy"] != null ? HttpUtility.UrlDecode(Request.Cookies["NgayKy"].Value) : "";
+        //            string ThangKy = Request.Cookies["ThangKy"] != null ? HttpUtility.UrlDecode(Request.Cookies["ThangKy"].Value) : "";
+        //            string NamKy = Request.Cookies["NamKy"] != null ? HttpUtility.UrlDecode(Request.Cookies["NamKy"].Value) : "";
+        //            //string HanNgay = Request.Cookies["HanNgay"] != null ? HttpUtility.UrlDecode(Request.Cookies["HanNgay"].Value) : "";
+        //            string CN = Request.Cookies["CN"] != null ? HttpUtility.UrlDecode(Request.Cookies["CN"].Value) : "";
+        //            string TK = Request.Cookies["TK"] != null ? HttpUtility.UrlDecode(Request.Cookies["TK"].Value) : "";
+        //            string LH = Request.Cookies["LH"] != null ? HttpUtility.UrlDecode(Request.Cookies["LH"].Value) : "";
+
+        //            string TienTT = Request.Cookies["Tien_TT"] != null ? HttpUtility.UrlDecode(Request.Cookies["Tien_TT"].Value) : "";
+        //            string CKTT = Request.Cookies["CKTT"] != null ? HttpUtility.UrlDecode(Request.Cookies["CKTT"].Value) : "";
+        //            string TCCK = Request.Cookies["TC_CKTT_TienTT"] != null ? HttpUtility.UrlDecode(Request.Cookies["TC_CKTT_TienTT"].Value) : "";
+        //            // Đặt font chữ "Arial" cho toàn bộ tệp Excel
+        //            worksheet.Cells.Style.Font.Name = "Times New Roman";
+
+        //            // Chèn hình ảnh từ tệp hình vào ô A1
+        //            ExcelPicture picture = worksheet.Drawings.AddPicture("MyPicture", new FileInfo(imagePath));
+        //            picture.SetSize(70, 50); // Đặt kích thước cho hình ảnh
+        //            picture.From.Row = 1;
+        //            picture.From.Column = 0;
+
+        //            worksheet.Column(1).Width = 8;
+
+        //            // Đặt văn bản vào ô A2
+        //            worksheet.Cells["B1"].Value = "CTY CỔ PHẦN DƯỢC PHẨM OPC";
+        //            var cellB1 = worksheet.Cells["B1"];
+        //            cellB1.Style.Font.Bold = true;
+        //            //worksheet.Cells["B1"].Style.Indent = 3;
+        //            //worksheet.Cells["B2"].Style.Indent = 3;
+        //            //worksheet.Cells["B3"].Style.Indent = 3;
+        //            worksheet.Cells["B2"].Value = Dvcs;
+        //            worksheet.Cells["B3"].Value = $"Số:";
+        //            worksheet.Cells["H1"].Value = "Cộng Hòa Xã Hội Chủ Nghĩa Việt Nam";
+        //            worksheet.Cells["H2"].Value = "Độc Lập - Tự Do - Hạnh Phúc";
+        //            worksheet.Cells["H2"].Style.Indent = 4;
+
+        //            worksheet.Cells["E4"].Value = "BẢNG ĐỐI CHIẾU DOANH THU CÔNG NỢ";
+        //            worksheet.Cells["E4"].Style.Font.Bold = true;
+        //            worksheet.Cells["E4"].Style.Font.Size = 16;
+        //            worksheet.Cells["E5"].Value = $"Từ ngày {TuNgay} tháng {TuThang} đến ngày {DenNgay} tháng {DenThang} năm {Nam}";
+        //            worksheet.Cells["E5"].Style.Indent = 4;
+        //            worksheet.Cells["A7"].Value = $"Tên khách hàng: {ten_kh}";
+        //            worksheet.Cells["A7"].Style.Font.Bold = true;
+        //            worksheet.Cells["A8"].Value = $"Địa chỉ khách hàng: {DiaChi}";
+        //            worksheet.Cells["A8"].Style.Font.Bold = true;
+        //            worksheet.Cells["A9"].Value = $"I.Số dư nợ trước ngày: {TuNgay}/{TuThang}/{Nam}";
+        //            worksheet.Cells["A9"].Style.Font.Bold = true;
+        //            worksheet.Cells["E9"].Value = $"mang sang {NoDauKy} đồng";
+        //            worksheet.Cells["E9"].Style.Font.Bold = true;
+        //            worksheet.Cells["A10"].Value = "II.Doanh thu và công nợ phát sinh trong kỳ đối chiếu này: ";
+        //            worksheet.Cells["A10"].Style.Font.Bold = true;
+        //            //worksheet.Cells["A8"].Value = $"{Dvcs} - Công ty Cổ Phần Dược Phẩm OPC trân trọng thông báo đến quý khách hàng có số dư nợ mà Quý Khách";
+        //            //worksheet.Cells["A9"].Value = $"hàng chưa thanh toán cho chúng tôi tính đến ngày {denngay} là: {tongno}";
+        //            //worksheet.Cells["B11"].Value = $"Trong đó nợ quá hạn là: {QuaHan} bao gồm các hóa đơn sau:";
+
+        //            var sttCell = worksheet.Cells[startRow - 1, startColumn, startRow, startColumn];
+        //            sttCell.Merge = true;
+        //            sttCell.Value = "STT";
+        //            sttCell.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+        //            sttCell.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // Đặt canh giữa ngang
+        //            sttCell.Style.VerticalAlignment = ExcelVerticalAlignment.Center; // Đặt canh giữa dọc
+        //            sttCell.Style.Font.Bold = true;
+        //            sttCell.Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+        //            var KHMua = worksheet.Cells[startRow - 1, startColumn + 1, startRow - 1, startColumn + 3];
+        //            KHMua.Merge = true;
+        //            KHMua.Value = "KHÁCH HÀNG MUA";
+        //            KHMua.Style.Font.Bold = true;
+        //            KHMua.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+        //            KHMua.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+        //            KHMua.Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+        //            worksheet.Cells[startRow, startColumn + 1].Value = "SỐ";
+        //            worksheet.Cells[startRow, startColumn + 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+        //            worksheet.Cells[startRow, startColumn + 1].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+        //            worksheet.Cells[startRow, startColumn + 1].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+        //            worksheet.Cells[startRow, startColumn + 1].Style.Font.Bold = true;
+        //            worksheet.Cells[startRow, startColumn + 2].Value = "NGÀY";
+        //            worksheet.Cells[startRow, startColumn + 2].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+        //            worksheet.Cells[startRow, startColumn + 2].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+        //            worksheet.Cells[startRow, startColumn + 2].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+        //            worksheet.Cells[startRow, startColumn + 2].Style.Font.Bold = true;
+        //            worksheet.Cells[startRow, startColumn + 3].Value = "SỐ TIỀN";
+        //            worksheet.Cells[startRow, startColumn + 3].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+        //            worksheet.Cells[startRow, startColumn + 3].Style.Font.Bold = true;
+        //            var KHTT = worksheet.Cells[startRow - 1, startColumn + 4, startRow - 1, startColumn + 8];
+        //            KHTT.Merge = true;
+        //            KHTT.Value = "KHÁCH HÀNG THANH TOÁN/TRẢ HÀNG BÙ TRỪ";
+        //            KHTT.Style.Font.Bold = true;
+        //            KHTT.Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+        //            //worksheet.Column(startColumn + 4).Width = 20;
+        //            worksheet.Cells[startRow - 1, startColumn + 9].Value = "";
+        //            worksheet.Cells[startRow - 1, startColumn + 9].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+        //            worksheet.Cells[startRow, startColumn + 4].Value = "SỐ";
+        //            worksheet.Cells[startRow, startColumn + 4].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+        //            worksheet.Cells[startRow, startColumn + 4].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+        //            worksheet.Cells[startRow, startColumn + 4].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+        //            worksheet.Cells[startRow, startColumn + 4].Style.Font.Bold = true;
+
+        //            worksheet.Cells[startRow, startColumn + 5].Value = "NGÀY";
+        //            worksheet.Cells[startRow, startColumn + 5].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+        //            worksheet.Cells[startRow, startColumn + 5].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+        //            worksheet.Cells[startRow, startColumn + 5].Style.Font.Bold = true;
+        //            worksheet.Cells[startRow, startColumn + 5].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+
+        //            worksheet.Cells[startRow, startColumn + 6].Value = "SỐ TIỀN";
+        //            worksheet.Cells[startRow, startColumn + 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+        //            worksheet.Cells[startRow, startColumn + 6].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+        //            worksheet.Cells[startRow, startColumn + 6].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+        //            worksheet.Cells[startRow, startColumn + 6].Style.Font.Bold = true;
+
+        //            worksheet.Cells[startRow, startColumn + 7].Value = "CKTT";
+        //            worksheet.Cells[startRow, startColumn + 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+        //            worksheet.Cells[startRow, startColumn + 7].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+        //            worksheet.Cells[startRow, startColumn + 7].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+        //            worksheet.Cells[startRow, startColumn + 7].Style.Font.Bold = true;
+
+        //            worksheet.Cells[startRow, startColumn + 8].Value = "TỔNG TIỀN";
+        //            worksheet.Cells[startRow, startColumn + 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+        //            worksheet.Cells[startRow, startColumn + 8].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+        //            worksheet.Cells[startRow, startColumn + 8].Style.Font.Bold = true;
+        //            worksheet.Cells[startRow, startColumn + 8].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+
+        //            worksheet.Cells[startRow, startColumn + 9].Value = "GHI CHÚ";
+        //            worksheet.Cells[startRow, startColumn + 9].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+        //            worksheet.Cells[startRow, startColumn + 9].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+        //            worksheet.Cells[startRow, startColumn + 9].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+        //            worksheet.Cells[startRow, startColumn + 9].Style.Font.Bold = true;
+        //            if (combinedData != null && combinedData.Any())
+        //            {
+        //                // Lặp qua từng hàng dữ liệu trong tableData và ghi vào tệp Excel
+        //                for (int row = 0; row < combinedData.Count - 1; row++)
+        //                {
+        //                    var rowData = combinedData[row];
+        //                    for (int col = 0; col < rowData.Count; col++)
+        //                    {
+        //                        if (col == 4 && col == 7 && col == 9)
+        //                        {
+        //                            worksheet.Cells[startRow - 1 + row, startColumn + col].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+        //                            worksheet.Cells[startRow - 1 + row, startColumn + col].Value = rowData[col];
+        //                            worksheet.Cells[startRow - 1 + row, startColumn + col].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+        //                        }
+        //                        else
+        //                        {
+        //                            worksheet.Cells[startRow - 1 + row, startColumn + col].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+        //                            worksheet.Cells[startRow - 1 + row, startColumn + col].Value = rowData[col];
+        //                            worksheet.Cells[startRow - 1 + row, startColumn + col].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+        //                        }
+
+
+        //                    }
+        //                }
+        //            }
+        //            else
+        //            {
+        //                worksheet.Cells[startRow, startColumn].Value = "Không có dữ liệu bảng từ cookie.";
+        //            }
+        //            var TC = worksheet.Cells[startRow - 2 + combinedData.Count, startColumn, startRow - 2 + combinedData.Count, startColumn + 2];
+        //            TC.Merge = true;
+        //            TC.Value = "Tổng cộng: ";
+        //            TC.Style.Font.Bold = true;
+        //            TC.Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+        //            TC.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // Đặt canh giữa ngang
+        //            TC.Style.VerticalAlignment = ExcelVerticalAlignment.Center; // Đặt canh giữa dọc
+        //            worksheet.Cells[startRow - 2 + combinedData.Count, startColumn + 3].Value = $"{TienHD}"; // Ví dụ: Ghi giá trị tổng vào cột thứ 4
+        //            worksheet.Cells[startRow - 2 + combinedData.Count, startColumn + 3].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+        //            worksheet.Cells[startRow - 2 + combinedData.Count, startColumn + 3].Style.Font.Bold = true;
+        //            worksheet.Cells[startRow - 2 + combinedData.Count, startColumn + 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+        //            worksheet.Cells[startRow - 2 + combinedData.Count, startColumn + 4].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+        //            worksheet.Cells[startRow - 2 + combinedData.Count, startColumn + 5].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+        //            worksheet.Cells[startRow - 2 + combinedData.Count, startColumn + 6].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+        //            worksheet.Cells[startRow - 2 + combinedData.Count, startColumn + 6].Value = $"{TienTT}";
+        //            worksheet.Cells[startRow - 2 + combinedData.Count, startColumn + 7].Value = $"{CKTT}";
+        //            worksheet.Cells[startRow - 2 + combinedData.Count, startColumn + 8].Value = $"{TCCK}";
+        //            worksheet.Cells[startRow - 2 + combinedData.Count, startColumn + 6].Style.Font.Bold = true;
+        //            worksheet.Cells[startRow - 2 + combinedData.Count, startColumn + 7].Style.Font.Bold = true;
+        //            worksheet.Cells[startRow - 2 + combinedData.Count, startColumn + 8].Style.Font.Bold = true;
+        //            worksheet.Cells[startRow - 2 + combinedData.Count, startColumn + 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+        //            worksheet.Cells[startRow - 2 + combinedData.Count, startColumn + 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+        //            worksheet.Cells[startRow - 2 + combinedData.Count, startColumn + 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+        //            worksheet.Cells[startRow - 2 + combinedData.Count, startColumn + 7].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+        //            worksheet.Cells[startRow - 2 + combinedData.Count, startColumn + 8].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+        //            worksheet.Cells[startRow - 2 + combinedData.Count, startColumn + 9].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+
+        //            var endII = startRow + combinedData.Count;
+        //            var nextII = endII + 1;
+        //            worksheet.Cells[nextII, startColumn].Value = $"III. Số tiền khách hàng chưa thanh toán, tính đến cuối ngày: {DenNgay}/{DenThang}/{Nam} là: {TonNo} đồng";
+        //            worksheet.Cells[nextII, startColumn].Style.Font.Bold = true;
+        //            worksheet.Cells[nextII + 1, startColumn].Value = $"Số tiền bằng chữ: {TienChu}";
+        //            worksheet.Cells[nextII + 1, startColumn].Style.Font.Bold = true;
+        //            worksheet.Cells[nextII + 2, startColumn].Value = "Chi tiết các hóa đơn chưa thanh toán: ";
+
+        //            var startRowIII = nextII + 3;
+
+        //            var sttIIICell = worksheet.Cells[startRowIII + 1, startColumn, startRowIII + 2, startColumn + 1];
+        //            sttIIICell.Merge = true;
+        //            worksheet.Column(startColumn).Width = 15; // Đặt chiều rộng của cột chứa ô "STT" thành 15 đơn vị.
+
+        //            sttIIICell.Value = "STT";
+        //            sttIIICell.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // Đặt canh giữa ngang
+        //            sttIIICell.Style.VerticalAlignment = ExcelVerticalAlignment.Center; // Đặt canh giữa dọc
+        //            sttIIICell.Style.Font.Bold = true;
+        //            sttIIICell.Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+
+        //            var HD = worksheet.Cells[startRowIII + 1, startColumn + 2, startRowIII + 1, startColumn + 9];
+        //            HD.Merge = true;
+        //            HD.Value = "HÓA ĐƠN";
+        //            HD.Style.Font.Bold = true;
+        //            HD.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+        //            HD.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+        //            HD.Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+
+        //            var SO = worksheet.Cells[startRowIII + 2, startColumn + 2, startRowIII + 2, startColumn + 3];
+        //            SO.Merge = true;
+        //            SO.Value = "SỐ";
+        //            worksheet.Column(startColumn + 1).Width = 15;
+        //            SO.Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+        //            SO.Style.Font.Bold = true;
+        //            SO.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+        //            SO.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+        //            var NGAY = worksheet.Cells[startRowIII + 2, startColumn + 4, startRowIII + 2, startColumn + 5];
+        //            NGAY.Merge = true;
+        //            NGAY.Value = "NGÀY";
+        //            worksheet.Column(startColumn + 2).Width = 15;
+        //            NGAY.Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+        //            NGAY.Style.Font.Bold = true;
+        //            NGAY.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+        //            NGAY.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+        //            var TIENHD = worksheet.Cells[startRowIII + 2, startColumn + 6, startRowIII + 2, startColumn + 7];
+        //            TIENHD.Merge = true;
+        //            TIENHD.Value = "SỐ TIỀN HD";
+        //            worksheet.Column(startColumn + 3).Width = 15;
+        //            TIENHD.Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+        //            TIENHD.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+        //            TIENHD.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+        //            TIENHD.Style.Font.Bold = true;
+
+        //            var GHICHU = worksheet.Cells[startRowIII + 2, startColumn + 8, startRowIII + 2, startColumn + 9];
+        //            GHICHU.Merge = true;
+        //            GHICHU.Value = "GHI CHÚ";
+        //            worksheet.Column(startColumn + 4).Width = 15;
+        //            worksheet.Column(startColumn + 5).Width = 15;
+        //            worksheet.Column(startColumn + 6).Width = 15;
+        //            worksheet.Column(startColumn + 8).Width = 15;
+        //            GHICHU.Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+        //            GHICHU.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+        //            GHICHU.Style.Font.Bold = true;
+        //            GHICHU.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+
+        //            if (combinedDataHD != null && combinedDataHD.Any())
+        //            {
+        //                // Lặp qua từng hàng dữ liệu trong tableData và ghi vào tệp Excel
+        //                for (int row = 0; row < combinedDataHD.Count - 1; row++)
+        //                {
+        //                    var rowData = combinedDataHD[row];
+        //                    for (int col = 0; col < rowData.Count; col++)
+        //                    {
+        //                        //var GOP = worksheet.Cells[startRowIII + 1 + row, startColumn + col, startRowIII + 1 + row, startColumn + col+ 1];
+        //                        //GOP.Merge = true;
+        //                        //GOP.Value = rowData[col];
+        //                        //GOP.Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+        //                        var cell = worksheet.Cells[startRowIII + 1 + row, startColumn + col * 2];
+        //                        cell.Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+        //                        cell.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+        //                        cell.Value = rowData[col];
+
+        //                        var mergeCell = worksheet.Cells[startRowIII + 1 + row, startColumn + col * 2, startRowIII + 1 + row, startColumn + col * 2 + 1];
+        //                        mergeCell.Merge = true;
+        //                        mergeCell.Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+        //                    }
+        //                }
+        //            }
+        //            else
+        //            {
+        //                worksheet.Cells[startRowIII, startColumn].Value = "Không có dữ liệu bảng từ cookie.";
+        //            }
+        //            var TC2 = worksheet.Cells[startRowIII + combinedDataHD.Count, startColumn, startRowIII + combinedDataHD.Count, startColumn + 5];
+        //            TC2.Merge = true;
+        //            TC2.Value = "Tổng cộng: ";
+        //            TC2.Style.Font.Bold = true;
+        //            TC2.Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+        //            TC2.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // Đặt canh giữa ngang
+        //            TC2.Style.VerticalAlignment = ExcelVerticalAlignment.Center; // Đặt canh giữa dọc
+
+        //            var TONNO2 = worksheet.Cells[startRowIII + combinedDataHD.Count, startColumn + 6, startRowIII + combinedDataHD.Count, startColumn + 7];
+        //            TONNO2.Merge = true;
+        //            TONNO2.Value = $"{TonNo2}";
+        //            //worksheet.Cells[startRowIII + 1 + combinedDataHD.Count, startColumn + 6].Value = $"{TonNo2}";
+        //            TONNO2.Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+        //            TONNO2.Style.Font.Bold = true;
+        //            TONNO2.Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+        //            worksheet.Cells[startRowIII + combinedDataHD.Count, startColumn + 5].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+
+        //            var lastCell = worksheet.Cells[startRowIII + combinedDataHD.Count, startColumn + 8, startRowIII + combinedDataHD.Count, startColumn + 9];
+        //            lastCell.Merge = true;
+        //            lastCell.Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+        //            var endRowIII = startRowIII + 1 + combinedDataHD.Count + 1;
+        //            worksheet.Cells[endRowIII, startColumn].Value = $"Xin vui lòng xác nhận và gửi lại cho {Dvcs} trước ngày {NgayTT}";
+        //            worksheet.Cells[endRowIII, startColumn].Style.Font.Bold = true;
+        //            worksheet.Cells[endRowIII + 1, startColumn].Value = $"Nơi nhận: {ChiNhanh}";
+        //            worksheet.Cells[endRowIII + 1, startColumn].Style.Font.Bold = true;
+        //            worksheet.Cells[endRowIII + 2, startColumn].Value = $"Địa chỉ: {DiaChi2}";
+        //            worksheet.Cells[endRowIII + 2, startColumn].Style.Font.Bold = true;
+        //            worksheet.Cells[endRowIII + 3, startColumn].Value = $"Khi cần đối chiếu số liệu liên hệ: {LH}";
+        //            worksheet.Cells[endRowIII + 3, startColumn].Style.Font.Bold = true;
+        //            worksheet.Cells[endRowIII + 4, startColumn].Value = $"Số tiền còn nợ đề nghị Quý khách hàng thanh toán bằng tiền mặt hoặc chuyển khoản vào tài khoản {CN}, số";
+        //            worksheet.Cells[endRowIII + 4, startColumn].Style.Font.Bold = true;
+        //            worksheet.Cells[endRowIII + 5, startColumn].Value = $"tài khoản: {TK}";
+        //            worksheet.Cells[endRowIII + 5, startColumn].Style.Font.Bold = true;
+        //            worksheet.Cells[endRowIII + 7, startColumn].Value = "Trân trọng cảm ơn!";
+        //            worksheet.Cells[endRowIII + 7, startColumn].Style.Font.Bold = true;
+        //            worksheet.Cells[endRowIII + 7, startColumn].Style.Font.Italic = true;
+        //            worksheet.Cells[endRowIII + 8, startColumn + 7].Value = $"Ngày {NgayKy} tháng {ThangKy} năm {NamKy}";
+        //            worksheet.Cells[endRowIII + 8, startColumn + 7].Style.Font.Bold = true;
+        //            worksheet.Cells[endRowIII + 9, startColumn].Value = "ĐẠI DIỆN KHÁCH HÀNG";
+        //            worksheet.Cells[endRowIII + 9, startColumn].Style.Font.Bold = true;
+        //            worksheet.Cells[endRowIII + 9, startColumn + 7].Value = "ĐẠI DIỆN CHI NHÁNH";
+        //            worksheet.Cells[endRowIII + 9, startColumn + 7].Style.Font.Bold = true;
+        //            worksheet.Cells[endRowIII + 9, startColumn + 7].Style.Indent = 2;
+
+
+
+        //            package.Save();
+        //            byte[] fileBytes = package.GetAsByteArray();
+
+        //            // Trả về tệp Excel dưới dạng dữ liệu binary
+        //            return File(fileBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
+
+        //        }
+
+
+        //    }
+        //    else
+        //    {
+        //        return Content("Không có dữ liệu từ cookie.");
+        //    }
+
+
+        //}
+        //public ActionResult ExportPhieuXuatKho()
+        //{
+        //    var fileName = $"PhieuXuatKho{DateTime.Now:yyyyMMddHHmmss}.xlsx";
+        //    // Lấy dữ liệu từ cookie
+        //    string jsonData = Request.Cookies["tableDataCookie"] != null ? HttpUtility.UrlDecode(Request.Cookies["tableDataCookie"].Value) : "";
+
+        //    // Kiểm tra xem có dữ liệu từ cookie không
+        //    if (!string.IsNullOrEmpty(jsonData))
+        //    {
+        //        // Parse chuỗi JSON thành mảng JavaScript
+        //        List<List<string>> tableData = JsonConvert.DeserializeObject<List<List<string>>>(jsonData);
+
+        //        ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+        //        using (var package = new ExcelPackage())
+        //        {
+        //            var worksheet = package.Workbook.Worksheets.Add("MySheet");
+        //            worksheet.View.ShowGridLines = false;
+
+        //            // ... (Các bước tạo nội dung tệp Excel như bạn đã làm)
+        //            // Đường dẫn đến hình ảnh trong thư mục 'image'
+        //          /*  var imagePath = Server.MapPath("~/assets/images/logo.png");*/ // Thay thế bằng đường dẫn thật
+        //                                                                        // Lấy giá trị từ biến Dvcs
+        //            string Ngay = Request.Cookies["ngay"] != null ? HttpUtility.UrlDecode(Request.Cookies["ngay"].Value) : "";
+        //            string SoCT = Request.Cookies["SoCt"] != null ? HttpUtility.UrlDecode(Request.Cookies["SoCt"].Value) : "";
+        //            string Thang = Request.Cookies["thang"] != null ? HttpUtility.UrlDecode(Request.Cookies["thang"].Value) : "";
+        //            string Nam = Request.Cookies["nam"] != null ? HttpUtility.UrlDecode(Request.Cookies["nam"].Value) : "";
+        //            string DVNH = Request.Cookies["Ten_dt"] != null ? HttpUtility.UrlDecode(Request.Cookies["Ten_dt"].Value) : "";
+        //            string QuaHan = Request.Cookies["QuaHan"] != null ? HttpUtility.UrlDecode(Request.Cookies["QuaHan"].Value) : "";
+        //            string HanNgay = Request.Cookies["HanNgay"] != null ? HttpUtility.UrlDecode(Request.Cookies["HanNgay"].Value) : "";
+        //            string CN = Request.Cookies["CN"] != null ? HttpUtility.UrlDecode(Request.Cookies["CN"].Value) : "";
+        //            string TK = Request.Cookies["TK"] != null ? HttpUtility.UrlDecode(Request.Cookies["TK"].Value) : "";
+        //            string LH = Request.Cookies["LH"] != null ? HttpUtility.UrlDecode(Request.Cookies["LH"].Value) : "";
+        //            // Đặt font chữ "Arial" cho toàn bộ tệp Excel
+        //            worksheet.Cells.Style.Font.Name = "Times New Roman";
+
+        //            // Đặt văn bản vào ô A2
+        //            worksheet.Cells["A1"].Value = "CTY CỔ PHẦN DƯỢC PHẨM OPC";
+        //            worksheet.Cells["A1"].Style.Font.Bold = true;
+        //            var cellB1 = worksheet.Cells["B1"];
+        //            cellB1.Style.Font.Bold = true;
+        //            worksheet.Cells["C3"].Value = "PHIẾU XUẤT KHO CỬA HÀNG QUẬN 10";
+        //            worksheet.Cells["C3"].Style.Font.Bold = true;
+        //            worksheet.Cells["C3"].Style.Font.Size = 16;
                  
-                    worksheet.Cells["G4"].Value = $"Số: {SoCT}";
-                    worksheet.Cells["G4"].Style.Font.Bold = true;
+        //            worksheet.Cells["G4"].Value = $"Số: {SoCT}";
+        //            worksheet.Cells["G4"].Style.Font.Bold = true;
 
-                    //worksheet.Cells["F4"].Value = $"hàng chưa thanh toán cho chúng tôi tính đến ngày {denngay} là: {tongno}";
-                    worksheet.Cells["D5"].Value = $"Ngày {Ngay} tháng {Thang} năm {Nam}";
-                    worksheet.Cells["A6"].Value = $"Đơn vị xuất hàng: Kho thành phẩm Cửa hàng Quận 10";
-                    worksheet.Cells["A7"].Value = "Địa chỉ: 134/1 Tô Hiến Thành, P15, Quận 10, TP.HCM";
-                    worksheet.Cells["A8"].Value = $"Đơn vị nhận hàng: {DVNH}";
-                    worksheet.Cells["A9"].Value = $"Diễn giải: Xuất hàng giao cho khách";
-                    var startRow = 13;
-                    var startColumn =   1;
-                    worksheet.Cells[startRow - 1, startColumn].Value = "STT";
-                    worksheet.Cells[startRow - 1, startColumn + 1].Value = "TÊN SẢN PHẨM - QUY CÁCH";
-                    worksheet.Cells[startRow - 1, startColumn + 2].Value = "DVT";
-                    worksheet.Cells[startRow - 1, startColumn + 3].Value = "SỐ LƯỢNG";
+        //            //worksheet.Cells["F4"].Value = $"hàng chưa thanh toán cho chúng tôi tính đến ngày {denngay} là: {tongno}";
+        //            worksheet.Cells["D5"].Value = $"Ngày {Ngay} tháng {Thang} năm {Nam}";
+        //            worksheet.Cells["A6"].Value = $"Đơn vị xuất hàng: Kho thành phẩm Cửa hàng Quận 10";
+        //            worksheet.Cells["A7"].Value = "Địa chỉ: 134/1 Tô Hiến Thành, P15, Quận 10, TP.HCM";
+        //            worksheet.Cells["A8"].Value = $"Đơn vị nhận hàng: {DVNH}";
+        //            worksheet.Cells["A9"].Value = $"Diễn giải: Xuất hàng giao cho khách";
+        //            var startRow = 13;
+        //            var startColumn =   1;
+        //            worksheet.Cells[startRow - 1, startColumn].Value = "STT";
+        //            worksheet.Cells[startRow - 1, startColumn + 1].Value = "TÊN SẢN PHẨM - QUY CÁCH";
+        //            worksheet.Cells[startRow - 1, startColumn + 2].Value = "DVT";
+        //            worksheet.Cells[startRow - 1, startColumn + 3].Value = "SỐ LƯỢNG";
              
-                    for (int col = 0; col < 4; col++)
-                    {
-                        var columnHeaderCell = worksheet.Cells[startRow - 1, startColumn + col];
-                        columnHeaderCell.Style.Font.Bold = true;
-                        columnHeaderCell.Style.Font.Size = 10;
-                        columnHeaderCell.Style.Font.Color.SetColor(Color.Black);
-                        columnHeaderCell.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                        columnHeaderCell.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
-                        columnHeaderCell.Style.Fill.PatternType = ExcelFillStyle.Solid;
-                        columnHeaderCell.Style.Fill.BackgroundColor.SetColor(Color.White);
-                    }
-                    var columnHeaderStyle = worksheet.Cells[startRow - 1, startColumn, startRow - 1, startColumn + 3].Style;
-                    columnHeaderStyle.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black); // Đóng khung solid đen
-                    worksheet.Column(startColumn).Width = 10; // Độ rộng cột cho "STT"
-                    worksheet.Column(startColumn + 1).Width = 25; // Độ rộng cột cho "SỐ HÓA ĐƠN"
-                    worksheet.Column(startColumn + 2).Width = 15; // Độ rộng cột cho "NGÀY XUẤT"
-                    worksheet.Column(startColumn + 3).Width = 15; // Độ rộng cột cho "TIỀN NỢ"
+        //            for (int col = 0; col < 4; col++)
+        //            {
+        //                var columnHeaderCell = worksheet.Cells[startRow - 1, startColumn + col];
+        //                columnHeaderCell.Style.Font.Bold = true;
+        //                columnHeaderCell.Style.Font.Size = 10;
+        //                columnHeaderCell.Style.Font.Color.SetColor(Color.Black);
+        //                columnHeaderCell.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+        //                columnHeaderCell.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+        //                columnHeaderCell.Style.Fill.PatternType = ExcelFillStyle.Solid;
+        //                columnHeaderCell.Style.Fill.BackgroundColor.SetColor(Color.White);
+        //            }
+        //            var columnHeaderStyle = worksheet.Cells[startRow - 1, startColumn, startRow - 1, startColumn + 3].Style;
+        //            columnHeaderStyle.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black); // Đóng khung solid đen
+        //            worksheet.Column(startColumn).Width = 10; // Độ rộng cột cho "STT"
+        //            worksheet.Column(startColumn + 1).Width = 25; // Độ rộng cột cho "SỐ HÓA ĐƠN"
+        //            worksheet.Column(startColumn + 2).Width = 15; // Độ rộng cột cho "NGÀY XUẤT"
+        //            worksheet.Column(startColumn + 3).Width = 15; // Độ rộng cột cho "TIỀN NỢ"
                   
 
-                    // Đảm bảo rằng có dữ liệu trong biến tableData
-                    if (tableData != null && tableData.Any())
-                    {
-                        // Lặp qua từng hàng dữ liệu trong tableData và ghi vào tệp Excel
-                        for (int row = 0; row < tableData.Count; row++)
-                        {
-                            var rowData = tableData[row];
-                            for (int col = 0; col < rowData.Count; col++)
-                            {
-                                worksheet.Cells[startRow + row, startColumn + col].Value = rowData[col];
-                                worksheet.Cells[startRow + row, startColumn + col].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
-                                worksheet.Cells[startRow + row, startColumn + col].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                                worksheet.Cells[startRow + row, startColumn + col].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        worksheet.Cells[startRow, startColumn].Value = "Không có dữ liệu bảng từ cookie.";
-                    }
-                    worksheet.Cells[startRow + tableData.Count, startColumn + 1].Value = "Tổng cộng";
-                    worksheet.Cells[startRow + tableData.Count, startColumn + 1].Style.Font.Bold = true;
-                    worksheet.Cells[startRow + tableData.Count, startColumn ].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
-                    worksheet.Cells[startRow + tableData.Count, startColumn + 1].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
-                    worksheet.Cells[startRow + tableData.Count, startColumn + 2].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
-                    worksheet.Cells[startRow + tableData.Count, startColumn +3].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
-                    int defaultHeaderRowIndex = 13;
-                    // Xóa hàng tiêu đề mặc định
-                    worksheet.DeleteRow(defaultHeaderRowIndex);
-                    //var dataRowStyle = worksheet.Cells[startRow, startColumn, startRow, startColumn + 5].Style;
-                    //dataRowStyle.Font.Bold = false;
-                    //dataRowStyle.Font.Color.SetColor(Color.Black);
-                    //dataRowStyle.Fill.PatternType = ExcelFillStyle.None;
-                    // Tạo bảng trong tệp Excel
-                    var endRow = startRow + tableData.Count;
-                    var endColumn = 6;
-                    worksheet.DeleteRow(endRow, 1);
+        //            // Đảm bảo rằng có dữ liệu trong biến tableData
+        //            if (tableData != null && tableData.Any())
+        //            {
+        //                // Lặp qua từng hàng dữ liệu trong tableData và ghi vào tệp Excel
+        //                for (int row = 0; row < tableData.Count; row++)
+        //                {
+        //                    var rowData = tableData[row];
+        //                    for (int col = 0; col < rowData.Count; col++)
+        //                    {
+        //                        worksheet.Cells[startRow + row, startColumn + col].Value = rowData[col];
+        //                        worksheet.Cells[startRow + row, startColumn + col].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+        //                        worksheet.Cells[startRow + row, startColumn + col].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+        //                        worksheet.Cells[startRow + row, startColumn + col].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+        //                    }
+        //                }
+        //            }
+        //            else
+        //            {
+        //                worksheet.Cells[startRow, startColumn].Value = "Không có dữ liệu bảng từ cookie.";
+        //            }
+        //            worksheet.Cells[startRow + tableData.Count, startColumn + 1].Value = "Tổng cộng";
+        //            worksheet.Cells[startRow + tableData.Count, startColumn + 1].Style.Font.Bold = true;
+        //            worksheet.Cells[startRow + tableData.Count, startColumn ].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+        //            worksheet.Cells[startRow + tableData.Count, startColumn + 1].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+        //            worksheet.Cells[startRow + tableData.Count, startColumn + 2].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+        //            worksheet.Cells[startRow + tableData.Count, startColumn +3].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+        //            int defaultHeaderRowIndex = 13;
+        //            // Xóa hàng tiêu đề mặc định
+        //            worksheet.DeleteRow(defaultHeaderRowIndex);
+        //            //var dataRowStyle = worksheet.Cells[startRow, startColumn, startRow, startColumn + 5].Style;
+        //            //dataRowStyle.Font.Bold = false;
+        //            //dataRowStyle.Font.Color.SetColor(Color.Black);
+        //            //dataRowStyle.Fill.PatternType = ExcelFillStyle.None;
+        //            // Tạo bảng trong tệp Excel
+        //            var endRow = startRow + tableData.Count;
+        //            var endColumn = 6;
+        //            worksheet.DeleteRow(endRow, 1);
                    
                   
                
-                    int nextRow = endRow + 1;
-                    //worksheet.Cells[nextRow, startColumn].Value = $"Kính đề nghị Quý khách vui lòng đối chiếu và xác nhận số tiền gửi về {Dvcs} - Công Ty Cổ Phần Dược Phẩm OPC";
-                    worksheet.Cells[nextRow + 1, startColumn + 5].Value = $"Ngày     tháng     năm";
-                    worksheet.Cells[nextRow + 1, startColumn + 5].Style.Font.Bold = true;
-                    worksheet.Cells[nextRow + 2, startColumn + 1].Value = $"Bên nhận";
-                    worksheet.Cells[nextRow + 2, startColumn + 1].Style.Font.Bold = true;
-                    worksheet.Cells[nextRow + 2, startColumn + 4].Value = $"Người lập phiếu";
-                    worksheet.Cells[nextRow + 2, startColumn +4].Style.Indent = 7;
-                    worksheet.Cells[nextRow + 2, startColumn + 4].Style.Font.Bold = true;
-                    worksheet.Cells[nextRow + 3, startColumn + 1].Value = "(Ký, họ tên)";
-                    worksheet.Cells[nextRow + 3, startColumn + 1].Style.Font.Bold = true;
-                    worksheet.Cells[nextRow + 3, startColumn + 1].Style.Font.Italic = true;
+        //            int nextRow = endRow + 1;
+        //            //worksheet.Cells[nextRow, startColumn].Value = $"Kính đề nghị Quý khách vui lòng đối chiếu và xác nhận số tiền gửi về {Dvcs} - Công Ty Cổ Phần Dược Phẩm OPC";
+        //            worksheet.Cells[nextRow + 1, startColumn + 5].Value = $"Ngày     tháng     năm";
+        //            worksheet.Cells[nextRow + 1, startColumn + 5].Style.Font.Bold = true;
+        //            worksheet.Cells[nextRow + 2, startColumn + 1].Value = $"Bên nhận";
+        //            worksheet.Cells[nextRow + 2, startColumn + 1].Style.Font.Bold = true;
+        //            worksheet.Cells[nextRow + 2, startColumn + 4].Value = $"Người lập phiếu";
+        //            worksheet.Cells[nextRow + 2, startColumn +4].Style.Indent = 7;
+        //            worksheet.Cells[nextRow + 2, startColumn + 4].Style.Font.Bold = true;
+        //            worksheet.Cells[nextRow + 3, startColumn + 1].Value = "(Ký, họ tên)";
+        //            worksheet.Cells[nextRow + 3, startColumn + 1].Style.Font.Bold = true;
+        //            worksheet.Cells[nextRow + 3, startColumn + 1].Style.Font.Italic = true;
 
-                    worksheet.Cells[nextRow + 3, startColumn + 4].Value = "(Ký, họ tên)";
-                    worksheet.Cells[nextRow + 3, startColumn + 4].Style.Font.Bold = true;
-                    worksheet.Cells[nextRow + 3, startColumn + 4].Style.Font.Italic = true;
-                    worksheet.Cells[nextRow + 3, startColumn + 4].Style.Indent = 7;
-                    //worksheet.Cells[nextRow + 4, startColumn].Value = $"Khi cần đối chiếu xin liên hệ {LH}";
-                    //worksheet.Cells[nextRow + 4, startColumn].Style.Indent = 2;
-                    //worksheet.Cells[nextRow + 6, startColumn].Value = "Trân trọng!";
-                    //worksheet.Cells[nextRow + 6, startColumn].Style.Indent = 2;
-                    //worksheet.Cells[nextRow + 6, startColumn].Style.Font.Italic = true;
-                    //worksheet.Cells[nextRow + 8, startColumn + 1].Value = "Khách Hàng Xác Nhận";
-                    //worksheet.Cells[nextRow + 8, startColumn + 1].Style.Font.Bold = true;
-                    //worksheet.Cells[nextRow + 8, startColumn + 4].Value = "Giám Đốc";
-                    //worksheet.Cells[nextRow + 8, startColumn + 4].Style.Font.Bold = true;
-                    //worksheet.Cells[nextRow + 8, startColumn + 7].Value = "Kế Toán";
-                    //worksheet.Cells[nextRow + 8, startColumn + 7].Style.Font.Bold = true;
-                    //worksheet.Cells[nextRow + 9, startColumn].Value = "(Ký, đóng dấu, ghi rõ họ tên)";
-                    //worksheet.Cells[nextRow + 9, startColumn].Style.Indent = 4;
-                    //worksheet.Cells[nextRow + 9, startColumn].Style.Font.Italic = true;
+        //            worksheet.Cells[nextRow + 3, startColumn + 4].Value = "(Ký, họ tên)";
+        //            worksheet.Cells[nextRow + 3, startColumn + 4].Style.Font.Bold = true;
+        //            worksheet.Cells[nextRow + 3, startColumn + 4].Style.Font.Italic = true;
+        //            worksheet.Cells[nextRow + 3, startColumn + 4].Style.Indent = 7;
+        //            //worksheet.Cells[nextRow + 4, startColumn].Value = $"Khi cần đối chiếu xin liên hệ {LH}";
+        //            //worksheet.Cells[nextRow + 4, startColumn].Style.Indent = 2;
+        //            //worksheet.Cells[nextRow + 6, startColumn].Value = "Trân trọng!";
+        //            //worksheet.Cells[nextRow + 6, startColumn].Style.Indent = 2;
+        //            //worksheet.Cells[nextRow + 6, startColumn].Style.Font.Italic = true;
+        //            //worksheet.Cells[nextRow + 8, startColumn + 1].Value = "Khách Hàng Xác Nhận";
+        //            //worksheet.Cells[nextRow + 8, startColumn + 1].Style.Font.Bold = true;
+        //            //worksheet.Cells[nextRow + 8, startColumn + 4].Value = "Giám Đốc";
+        //            //worksheet.Cells[nextRow + 8, startColumn + 4].Style.Font.Bold = true;
+        //            //worksheet.Cells[nextRow + 8, startColumn + 7].Value = "Kế Toán";
+        //            //worksheet.Cells[nextRow + 8, startColumn + 7].Style.Font.Bold = true;
+        //            //worksheet.Cells[nextRow + 9, startColumn].Value = "(Ký, đóng dấu, ghi rõ họ tên)";
+        //            //worksheet.Cells[nextRow + 9, startColumn].Style.Indent = 4;
+        //            //worksheet.Cells[nextRow + 9, startColumn].Style.Font.Italic = true;
 
-                    package.Save();
-                    byte[] fileBytes = package.GetAsByteArray();
+        //            package.Save();
+        //            byte[] fileBytes = package.GetAsByteArray();
 
-                    // Trả về tệp Excel dưới dạng dữ liệu binary
-                    return File(fileBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
+        //            // Trả về tệp Excel dưới dạng dữ liệu binary
+        //            return File(fileBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
 
-                }
+        //        }
 
 
-            }
-            else
-            {
-                return Content("Không có dữ liệu từ cookie.");
-            }
+        //    }
+        //    else
+        //    {
+        //        return Content("Không có dữ liệu từ cookie.");
+        //    }
            
-        }
+        //}
         public ActionResult BangDoiChieuDTCN_Fill()
         {
             List<MauInChungTu> dmDlist = LoadDmDt("");
@@ -1331,7 +1772,7 @@ namespace web4.Controllers
                     if (combinedData != null && combinedData.Any())
                     {
                         // Lặp qua từng hàng dữ liệu trong tableData và ghi vào tệp Excel
-                        for (int row = 0; row < combinedData.Count; row++)
+                        for (int row = 0; row < combinedData.Count-1; row++)
                         {
                             var rowData = combinedData[row];
                             for (int col = 0; col < rowData.Count; col++)
@@ -1354,7 +1795,7 @@ namespace web4.Controllers
                         worksheet.Cells[startRow, startColumn].Value = "Không có dữ liệu bảng từ cookie.";
                     }
                  
-                    var TC2 = worksheet.Cells[startRow + 1 + combinedData.Count, startColumn, startRow + 1 + combinedData.Count, startColumn + 5];
+                    var TC2 = worksheet.Cells[startRow  + combinedData.Count, startColumn, startRow  + combinedData.Count, startColumn + 5];
                     TC2.Merge = true;
                     TC2.Value = "Tổng cộng: ";
                     TC2.Style.Font.Bold = true;
@@ -1362,22 +1803,22 @@ namespace web4.Controllers
                     TC2.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // Đặt canh giữa ngang
                     TC2.Style.VerticalAlignment = ExcelVerticalAlignment.Center; // Đặt canh giữa dọc
 
-                    var TONNO2 = worksheet.Cells[startRow + 1 + combinedData.Count, startColumn + 6, startRow + 1 + combinedData.Count, startColumn + 7];
+                    var TONNO2 = worksheet.Cells[startRow  + combinedData.Count, startColumn + 6, startRow  + combinedData.Count, startColumn + 7];
                     TONNO2.Merge = true;
                     TONNO2.Value = $"{TonNo2}"; 
                     //worksheet.Cells[startRowIII + 1 + combinedDataHD.Count, startColumn + 6].Value = $"{TonNo2}";
                     TONNO2.Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                     TONNO2.Style.Font.Bold = true;
                     TONNO2.Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
-                    worksheet.Cells[startRow + 1 + combinedData.Count, startColumn + 5].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+                    worksheet.Cells[startRow  + combinedData.Count, startColumn + 5].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
 
-                    var Null1 = worksheet.Cells[startRow + 1 + combinedData.Count, startColumn +8, startRow + 1 + combinedData.Count, startColumn + 9];
+                    var Null1 = worksheet.Cells[startRow  + combinedData.Count, startColumn +8, startRow  + combinedData.Count, startColumn + 9];
                     Null1.Merge = true;
                     Null1.Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
-                    var Null2 = worksheet.Cells[startRow + 1 + combinedData.Count, startColumn + 10, startRow + 1 + combinedData.Count, startColumn + 11];
+                    var Null2 = worksheet.Cells[startRow  + combinedData.Count, startColumn + 10, startRow  + combinedData.Count, startColumn + 11];
                     Null2.Merge = true;
                     Null2.Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
-                    worksheet.Cells[startRow + 1 + combinedData.Count, startColumn + 7].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+                    worksheet.Cells[startRow  + combinedData.Count, startColumn + 7].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
                     var end = startRow + combinedData.Count + 2;
                     worksheet.Cells[end +1, startColumn].Value = $"Quý khách vui lòng xác nhận số nợ trên tại thời điểm ngày {DenNgay}/ {DenThang}/ {DenNam} và gửi về Công Ty Cổ Phần Dược Phẩm OPC - {Dvcs} trước ngày {NgayTT}";
                     worksheet.Cells[end + 2, startColumn].Value = $"Địa chỉ: {DiaChi}";
@@ -1418,5 +1859,209 @@ namespace web4.Controllers
                 return Content("Không có dữ liệu từ cookie.");
             }
         }
+
+        public ActionResult PhieuNhapKho_Fill()
+        {
+            return View();
+        }
+        public ActionResult PhieuNhapKho_Index(string Ma_Dvcs)
+        {
+            DataSet ds = new DataSet();
+            connectSQL();
+
+            //string query = "exec usp_Vth_BC_BHCNTK_CN @_ngay_Ct1 = '" + Acc.From_date + "',@_Ngay_Ct2 ='"+ Acc.To_date+"',@_Ma_Dvcs='"+ Acc.Ma_DvCs_1+"'";
+            string Pname = "[usp_MauInChungTuNKXK_SAP]";
+            var fromDate = Request.Cookies["From_date"].Value;
+            var toDate = Request.Cookies["To_Date"].Value;
+            var Dvcs = Request.Cookies["Dvcs3"].Value;
+            var LoaiCt = Request.Cookies["LoaiCt"].Value;
+
+            using (SqlCommand cmd = new SqlCommand(Pname, con))
+            {
+                cmd.CommandTimeout = 950;
+
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                {
+                    cmd.Parameters.AddWithValue("@_Tu_Ngay", fromDate);
+                    cmd.Parameters.AddWithValue("@_Den_Ngay",toDate);
+                    cmd.Parameters.AddWithValue("@_Loai_Ct", LoaiCt);
+                    cmd.Parameters.AddWithValue("@_ma_dvcs", Dvcs);
+                    sda.Fill(ds);
+
+                }
+            }
+            return View(ds);
+         
+        }
+        public ActionResult PhieuNhapKho(string SoCt)
+        {
+            DataSet ds = new DataSet();
+            connectSQL();
+            var So_Ct = Request.Cookies["So_Ct"].Value;
+            //var So_Ct = SoCt;
+            var LoaiCt = Request.Cookies["LoaiCt"].Value;
+            //string query = "exec usp_Vth_BC_BHCNTK_CN @_ngay_Ct1 = '" + Acc.From_date + "',@_Ngay_Ct2 ='"+ Acc.To_date+"',@_Ma_Dvcs='"+ Acc.Ma_DvCs_1+"'";
+            string Pname = "[usp_MauInChungTuNKXK_SAP]";
+     
+
+
+            using (SqlCommand cmd = new SqlCommand(Pname, con))
+            {
+                cmd.CommandTimeout = 950;
+
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                var fromDate = Request.Cookies["From_date"].Value;
+                var toDate = Request.Cookies["To_Date"].Value;
+                var Dvcs = Request.Cookies["Dvcs3"].Value;
+               
+                con.Open();
+
+                using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                {
+                    cmd.Parameters.AddWithValue("@_Tu_Ngay", fromDate);
+                    cmd.Parameters.AddWithValue("@_Den_Ngay", toDate);
+                    cmd.Parameters.AddWithValue("@_Loai_Ct", LoaiCt);
+                    cmd.Parameters.AddWithValue("@_So_Ct", So_Ct);
+              
+
+
+                    sda.Fill(ds);
+
+                }
+            }
+            return View(ds);
+        }
+        public ActionResult TonNo_Fill()
+        {
+            DataSet ds = new DataSet();
+            connectSQL();
+          
+            //var So_Ct = SoCt;
+            var ma_Cbnv = Request.Cookies["Ma_CbNv"].Value;
+            //string query = "exec usp_Vth_BC_BHCNTK_CN @_ngay_Ct1 = '" + Acc.From_date + "',@_Ngay_Ct2 ='"+ Acc.To_date+"',@_Ma_Dvcs='"+ Acc.Ma_DvCs_1+"'";
+            string Pname = "[usp_RpCongNoChiTietTDV_SAP]";
+
+
+
+            using (SqlCommand cmd = new SqlCommand(Pname, con))
+            {
+                cmd.CommandTimeout = 950;
+
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                var fromDate = Request.Cookies["From_date"].Value;
+                var toDate = Request.Cookies["To_Date"].Value;
+          
+
+                con.Open();
+
+                using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                {
+                    cmd.Parameters.AddWithValue("@_Tu_Ngay", fromDate);
+                    cmd.Parameters.AddWithValue("@_Den_Ngay", toDate);
+                    cmd.Parameters.AddWithValue("@_Ma_CbNv", ma_Cbnv);
+
+
+
+                    sda.Fill(ds);
+
+                }
+            }
+            return View(ds);
+        }
+        public ActionResult TonNo_Index()
+        {
+            string ma_dvcs = Request.Cookies["Ma_dvcs"].Value;
+
+
+            // Gọi LoadDmHD với Ma_TDV để lấy dữ liệu đã lọc theo Ma_TDV
+            List<BKHoaDonGiaoHang> dmDList = LoadDmTDV();
+
+            var distinctDataTDV = dmDList
+                .GroupBy(x => x.Ten_TDV)
+                .Select(x => x.First())
+                .ToList();
+
+            var distinctDataItems = dmDList
+           .GroupBy(x => x.So_Ct_E)
+           .Select(x => x.First())
+           .ToList();
+
+
+            ViewBag.DataTDV = dmDList;
+            ViewBag.DataItems = distinctDataItems;
+
+            DataSet ds = new DataSet();
+            connectSQL();
+            string Pname = "[usp_DanhSachTDV]";
+
+            using (SqlCommand cmd = new SqlCommand(Pname, con))
+            {
+                cmd.CommandTimeout = 950;
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                con.Open();
+
+                using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                {
+
+                    cmd.Parameters.AddWithValue("@_ma_dvcs", ma_dvcs);
+                    sda.Fill(ds);
+                }
+            }
+            return View();
+        }
+        public List<BKHoaDonGiaoHang> LoadDmTDV()
+        {
+            string ma_dvcs = Request.Cookies["Ma_dvcs"].Value;
+            connectSQL();
+
+            List<BKHoaDonGiaoHang> dataItems = new List<BKHoaDonGiaoHang>();
+
+            using (SqlConnection connection = new SqlConnection(con.ConnectionString))
+            {
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand("[usp_DanhSachTDV]", connection))
+                {
+                    command.CommandTimeout = 950;
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.AddWithValue("@_ma_dvcs", ma_dvcs);
+
+                    using (SqlDataAdapter sda = new SqlDataAdapter(command))
+                    {
+                        DataSet ds = new DataSet();
+                        sda.Fill(ds);
+
+                        // Kiểm tra xem DataSet có bảng dữ liệu hay không
+                        if (ds.Tables.Count > 0)
+                        {
+                            DataTable dt = ds.Tables[0];
+
+                            foreach (DataRow row in dt.Rows)
+                            {
+                                BKHoaDonGiaoHang dataItem = new BKHoaDonGiaoHang
+                                {
+                                    Ma_CbNv = row["Ma_CbNv"].ToString(),
+                                    hoten = row["hoten"].ToString(),
+                                    Ma_Dvcs = row["Ma_Dvcs"].ToString()
+                                };
+
+                                dataItems.Add(dataItem);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return dataItems;
+        }
+
     }
 }

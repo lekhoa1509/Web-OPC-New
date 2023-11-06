@@ -122,6 +122,15 @@
             background-color: #f8f9fa; /* Màu sắc mặc định của tab */
             color: #000; /* Màu văn bản mặc định của tab */
         }
+        div.fixed {
+            color:black;
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            width: 400px;
+            background-color: white;
+            border: 3px solid #11101d;
+        }
     </style>
 </head>
 <body>
@@ -194,8 +203,10 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                     <li class="liTitle"><a href="/MauInChungTu/ThongBaoNoQH_Fill">4.Thông Báo Nợ QH</a></li>
                     <li class="liTitle"><a href="/MauInChungTu/BangDoiChieuCongNo_Fill">5.Bảng Đối Chiếu Công Nợ</a></li>
                     <li class="liTitle"><a href="/MauInChungTu/BangDoiChieuCongNo_Fill">6.Bảng Đối Chiếu Doanh Thu - Công Nợ</a></li>
+                    <li class="liTitle"><a href="/MauInChungTu/PhieuNhapKho_Fill">7.Phiếu Nhập Xuất Kho Khác</a></li>
+                    <li class="liTitle"><a href="/MauInChungTu/TonNo_Fill">8.Sổ Chi Tiết Tồn Nợ Phải Thu</a></li>
                     @*<li><a href="#">Login Form</a></li>
-                        <li><a href="#">Card Design</a></li>*@
+        <li><a href="#">Card Design</a></li>*@
                 </ul>
             </li>
 
@@ -370,13 +381,17 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                                     <td style="text-align: left">
                                         @if (string.Equals(ViewBag.UserName, "admin", StringComparison.OrdinalIgnoreCase) || string.Equals(ViewBag.UserName, "opcadmin", StringComparison.OrdinalIgnoreCase))
                                         {
-                                            <li style=" list-style-type: none;" class="liTitle"><a href="" onclick="runReport('@Url.Action("DoanhThuChiNhanhKGam_Fill", "DoanhThuChiNhanh")'
-                                                      )">1.Doanh Thu Chi Nhánh</a></li>
+                                            <li style=" list-style-type: none;" class="liTitle">
+                                                <a href="" onclick="runReport('@Url.Action("DoanhThuChiNhanhKGam_Fill", "DoanhThuChiNhanh")'
+                                                      )">1.Doanh Thu Chi Nhánh</a>
+                                            </li>
                                         }
                                         else
                                         {
-                                            <li style=" list-style-type: none;" class="liTitle"><a href="" onclick="runReport('@Url.Action("DoanhThuChiNhanhKGam_CN_Fill", "DoanhThuChiNhanh")'
-                                                      )">1.Doanh Thu Chi Nhánh</a></li>
+                                            <li style=" list-style-type: none;" class="liTitle">
+                                                <a href="" onclick="runReport('@Url.Action("DoanhThuChiNhanhKGam_CN_Fill", "DoanhThuChiNhanh")'
+                                                      )">1.Doanh Thu Chi Nhánh</a>
+                                            </li>
                                         }
                                     </td>
                                 </tr>
@@ -400,8 +415,12 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                                     </td>
                                 </tr>
                                 <tr style="height:30px">
-                                    <td style="text-align: left"> <li style=" list-style-type: none;" class="liTitle"><a href="" onclick="runReport('@Url.Action("DoanhThuChiNhanhTinhLuong_Fill", "DoanhThuChiNhanh")'
-                                                      )">3.Doanh Thu Chi Nhánh Tính Lương</a></li></td>
+                                    <td style="text-align: left">
+                                        <li style=" list-style-type: none;" class="liTitle">
+                                            <a href="" onclick="runReport('@Url.Action("DoanhThuChiNhanhTinhLuong_Fill", "DoanhThuChiNhanh")'
+                                                      )">3.Doanh Thu Chi Nhánh Tính Lương</a>
+                                        </li>
+                                    </td>
                                 </tr>
 
                             </tbody>
@@ -432,41 +451,72 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                                         {
 
 
-                                            <li class="liTitle" style="list-style-type:none"><a href="" onclick="runReport('@Url.Action("bangkehoadon_Fill_HCM", "bangkehoadon")'
-                                                      )">1.Bảng Kê Chứng Từ SO</a></li> }
+                                            <li class="liTitle" style="list-style-type:none">
+                                                <a href="" onclick="runReport('@Url.Action("bangkehoadon_Fill_HCM", "bangkehoadon")'
+                                                      )">1.Bảng Kê Chứng Từ SO</a>
+                                            </li> }
                                         else
                                         {
-                                            <li class="liTitle" style="list-style-type:none"><a href="" onclick="runReport('@Url.Action("bangkehoadon_Fill", "bangkehoadon")'
-                                                      )">1.Bảng Kê Chứng Từ SO</a></li>}
+                                            <li class="liTitle" style="list-style-type:none">
+                                                <a href="" onclick="runReport('@Url.Action("bangkehoadon_Fill", "bangkehoadon")'
+                                                      )">1.Bảng Kê Chứng Từ SO</a>
+                                            </li>}
                                     </td>
                                 </tr>
                                 <tr style="height:30px">
-                                    <td style="text-align: left"> <li style=" list-style-type: none;" class="liTitle"><a href="" onclick="runReport('@Url.Action("DanhSachHoaDon_Fill", "bangkehoadon")'
-                                                      )">2.Bảng Kê Hóa Đơn</a></li></td>
+                                    <td style="text-align: left">
+                                        <li style=" list-style-type: none;" class="liTitle">
+                                            <a href="" onclick="runReport('@Url.Action("DanhSachHoaDon_Fill", "bangkehoadon")'
+                                                      )">2.Bảng Kê Hóa Đơn</a>
+                                        </li>
+                                    </td>
                                 </tr>
                                 <tr style="height:30px">
-                                    <td style="text-align: left"> <li style=" list-style-type: none;" class="liTitle"><a href="" onclick="runReport('@Url.Action("BaoCaoBanHangCN_Fill", "BaoCaobanHangCN")'
-                                                      )">3.Báo Cáo Bán Hàng CN</a></li></td>
+                                    <td style="text-align: left">
+                                        <li style=" list-style-type: none;" class="liTitle">
+                                            <a href="" onclick="runReport('@Url.Action("BaoCaoBanHangCN_Fill", "BaoCaobanHangCN")'
+                                                      )">3.Báo Cáo Bán Hàng CN</a>
+                                        </li>
+                                    </td>
                                 </tr>
                                 <tr style="height:30px">
-                                    <td style="text-align: left"> <li style=" list-style-type: none;" class="liTitle"><a href="" onclick="runReport('@Url.Action("BaoCaoBanHangTDV_Fill", "BaoCaoBanHangTDV")'
-                                                      )">4.Báo Cáo Bán Hàng TDV</a></td>
+                                    <td style="text-align: left">
+                                        <li style=" list-style-type: none;" class="liTitle">
+                                            <a href="" onclick="runReport('@Url.Action("BaoCaoBanHangTDV_Fill", "BaoCaoBanHangTDV")'
+                                                      )">4.Báo Cáo Bán Hàng TDV</a>
+                                    </td>
                                 </tr>
                                 <tr style="height:30px">
-                                    <td style="text-align: left"> <li style=" list-style-type: none;" class="liTitle"><a href="" onclick="runReport('@Url.Action("BaoCaoTienVeCN_Fill", "BaoCaoTienVeCN")'
-                                                      )">5.Báo Cáo Tiền Về CN</a></li></td>
+                                    <td style="text-align: left">
+                                        <li style=" list-style-type: none;" class="liTitle">
+                                            <a href="" onclick="runReport('@Url.Action("BaoCaoTienVeCN_Fill", "BaoCaoTienVeCN")'
+                                                      )">5.Báo Cáo Tiền Về CN</a>
+                                        </li>
+                                    </td>
                                 </tr>
                                 <tr style="height:30px">
-                                    <td style="text-align: left"> <li style=" list-style-type: none;" class="liTitle"><a href="" onclick="runReport('@Url.Action("BaoCaoTienVeTDV_Fill", "BaoCaoTienVeCN")'
-                                                      )">6.Báo Cáo Tiền Về TDV</a></li></td>
+                                    <td style="text-align: left">
+                                        <li style=" list-style-type: none;" class="liTitle">
+                                            <a href="" onclick="runReport('@Url.Action("BaoCaoTienVeTDV_Fill", "BaoCaoTienVeCN")'
+                                                      )">6.Báo Cáo Tiền Về TDV</a>
+                                        </li>
+                                    </td>
                                 </tr>
                                 <tr style="height:30px">
-                                    <td style="text-align: left"> <li style=" list-style-type: none;" class="liTitle"><a href="" onclick="runReport('@Url.Action("BaoCaoDoanhThuGamHangTheoDoiTuong_Fill", "BaoCaoDoanhThuGamHangTheoDoiTuong")'
-                                                      )">7.Báo Cáo Doanh Thu Gam Theo Đối Tượng</a></li></td>
+                                    <td style="text-align: left">
+                                        <li style=" list-style-type: none;" class="liTitle">
+                                            <a href="" onclick="runReport('@Url.Action("BaoCaoDoanhThuGamHangTheoDoiTuong_Fill", "BaoCaoDoanhThuGamHangTheoDoiTuong")'
+                                                      )">7.Báo Cáo Doanh Thu Gam Theo Đối Tượng</a>
+                                        </li>
+                                    </td>
                                 </tr>
                                 <tr style="height:30px">
-                                    <td style="text-align: left"> <li style=" list-style-type: none;" class="liTitle"><a href="" onclick="runReport('@Url.Action("BangKeHoaDonGiaoHang", "BKHoaDonGiaoHang")'
-                                                      )">8.Bảng Kê Hóa Đơn Giao Hàng</a></li></td>
+                                    <td style="text-align: left">
+                                        <li style=" list-style-type: none;" class="liTitle">
+                                            <a href="" onclick="runReport('@Url.Action("BangKeHoaDonGiaoHang", "BKHoaDonGiaoHang")'
+                                                      )">8.Bảng Kê Hóa Đơn Giao Hàng</a>
+                                        </li>
+                                    </td>
                                 </tr>
                             </tbody>
 
@@ -538,12 +588,20 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                             <tbody style="float:left">
 
                                 <tr style="height:30px">
-                                    <td style="text-align: left"> <li style=" list-style-type: none;" class="liTitle"><a href="" onclick="runReport('@Url.Action("BaoCaoHopDongMar_Fill", "BaoCaoHopDong")'
-                                                      )">1.BÁO CÁO HỢP ĐỒNG MARKETING</a></li></td>
+                                    <td style="text-align: left">
+                                        <li style=" list-style-type: none;" class="liTitle">
+                                            <a href="" onclick="runReport('@Url.Action("BaoCaoHopDongMar_Fill", "BaoCaoHopDong")'
+                                                      )">1.BÁO CÁO HỢP ĐỒNG MARKETING</a>
+                                        </li>
+                                    </td>
                                 </tr>
                                 <tr style="height:30px">
-                                    <td style="text-align: left"> <li style=" list-style-type: none;" class="liTitle"><a href="" onclick="runReport('@Url.Action("BaoCaoChiTietHD_Fill", "BaoCaoHopDong")'
-                                                      )">2.BÁO CÁO CHI TIẾT HỢP ĐỒNG </a></li></td>
+                                    <td style="text-align: left">
+                                        <li style=" list-style-type: none;" class="liTitle">
+                                            <a href="" onclick="runReport('@Url.Action("BaoCaoChiTietHD_Fill", "BaoCaoHopDong")'
+                                                      )">2.BÁO CÁO CHI TIẾT HỢP ĐỒNG </a>
+                                        </li>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -636,28 +694,68 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                             <tbody style="float:left">
 
                                 <tr style="height:30px">
-                                    <td style="text-align: left"> <li style=" list-style-type: none;" class="liTitle"><a href="" onclick="runReport('@Url.Action("MauInNLCB_Fill", "MauInChungTu")'
-                                                      )">1.Chứng Từ Phiếu Nhập</a></li></td>
+                                    <td style="text-align: left">
+                                        <li style=" list-style-type: none;" class="liTitle">
+                                            <a href="" onclick="runReport('@Url.Action("MauInNLCB_Fill", "MauInChungTu")'
+                                                      )">1.Chứng Từ Phiếu Nhập</a>
+                                        </li>
+                                    </td>
                                 </tr>
                                 <tr style="height:30px">
-                                    <td style="text-align: left"> <li style=" list-style-type: none;" class="liTitle"><a href=""onclick="runReport('@Url.Action("PhieuNhapXNTT_Fill", "MauInChungTu")'
-                                                      )">2.Phiếu Xác Nhận Thanh Toán</a></li></td>
+                                    <td style="text-align: left">
+                                        <li style=" list-style-type: none;" class="liTitle">
+                                            <a href="" onclick="runReport('@Url.Action("PhieuNhapXNTT_Fill", "MauInChungTu")'
+                                                      )">2.Phiếu Xác Nhận Thanh Toán</a>
+                                        </li>
+                                    </td>
                                 </tr>
                                 <tr style="height:30px">
-                                    <td style="text-align: left"> <li style=" list-style-type: none;" class="liTitle"><a href=""onclick="runReport('@Url.Action("PhieuXuatKho_SO", "MauInChungTu")'
-                                                      )">3.Phiếu Xuất Kho</a></li></td>
+                                    <td style="text-align: left">
+                                        <li style=" list-style-type: none;" class="liTitle">
+                                            <a href="" onclick="runReport('@Url.Action("PhieuXuatKho_SO", "MauInChungTu")'
+                                                      )">3.Phiếu Xuất Kho</a>
+                                        </li>
+                                    </td>
                                 </tr>
                                 <tr style="height:30px">
-                                    <td style="text-align: left"> <li style=" list-style-type: none;" class="liTitle"><a href=""onclick="runReport('@Url.Action("ThongBaoNoQH_Fill", "MauInChungTu")'
-                                                      )">4.Thông Báo Nợ QH</a></li></td>
+                                    <td style="text-align: left">
+                                        <li style=" list-style-type: none;" class="liTitle">
+                                            <a href="" onclick="runReport('@Url.Action("ThongBaoNoQH_Fill", "MauInChungTu")'
+                                                      )">4.Thông Báo Nợ QH</a>
+                                        </li>
+                                    </td>
                                 </tr>
                                 <tr style="height:30px">
-                                    <td style="text-align: left"> <li style=" list-style-type: none;" class="liTitle"><a href=""onclick="runReport('@Url.Action("BangDoiChieuCongNo_Fill", "MauInChungTu")'
-                                                      )">5.Bảng Đối Chiếu Doanh Thu - Công Nợ</a></li></td>
+                                    <td style="text-align: left">
+                                        <li style=" list-style-type: none;" class="liTitle">
+                                            <a href="" onclick="runReport('@Url.Action("BangDoiChieuCongNo_Fill", "MauInChungTu")'
+                                                      )">5.Bảng Đối Chiếu Doanh Thu - Công Nợ</a>
+                                        </li>
+                                    </td>
                                 </tr>
                                 <tr style="height:30px">
-                                    <td style="text-align: left"> <li style=" list-style-type: none;" class="liTitle"><a href=""onclick="runReport('@Url.Action("BangDoiChieuDTCN_Fill", "MauInChungTu")'
-                                                      )">6.Bảng Đối Chiếu Công Nợ</a></li></td>
+                                    <td style="text-align: left">
+                                        <li style=" list-style-type: none;" class="liTitle">
+                                            <a href="" onclick="runReport('@Url.Action("BangDoiChieuDTCN_Fill", "MauInChungTu")'
+                                                      )">6.Bảng Đối Chiếu Công Nợ</a>
+                                        </li>
+                                    </td>
+                                </tr>
+                                <tr style="height:30px">
+                                    <td style="text-align: left">
+                                        <li style=" list-style-type: none;" class="liTitle">
+                                            <a href="" onclick="runReport('@Url.Action("PhieuNhapKho_Fill", "MauInChungTu")'
+                                                      )">7.Phiếu Nhập Xuất Kho Khác</a>
+                                        </li>
+                                    </td>
+                                </tr>
+                                <tr style="height:30px">
+                                    <td style="text-align: left">
+                                        <li style=" list-style-type: none;" class="liTitle">
+                                            <a href="" onclick="runReport('@Url.Action("TonNo_Index", "MauInChungTu")'
+                                                      )">8.Sổ Chi Tiết Tồn Nợ Phải Thu</a>
+                                        </li>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -667,12 +765,14 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
 
         </div>
     </section>
-
+    <div class="fixed">
+        118.69.109.109 | SAP_OPC | @ViewBag.UserName
+    </div>
     @*<div class="tab-control">
-        <ul class="tabs" style="background-color: #1d1b31; bottom: 0; left: 0; right: 0;">
-            <li class="tab selected" style="padding-right:10px"><a href="#">Home</a></li>
-        </ul>
-    </div>*@
+            <ul class="tabs" style="background-color: #1d1b31; bottom: 0; left: 0; right: 0;">
+                <li class="tab selected" style="padding-right:10px"><a href="#">Home</a></li>
+            </ul>
+        </div>*@
     <script>
         // ham xu ly dang nhap va xoa mang tabArray
         function logout() {
@@ -832,9 +932,9 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                     const newTab = document.createElement("li");
                     newTab.classList.add("tab", "selected");
                     newTab.innerHTML = `
-                                                    <a href="${subMenuLinkHref}">${tabTitle}</a>
-                                                    <a class="closeTab" href="">✕</a>
-                                                `;
+                                                        <a href="${subMenuLinkHref}">${tabTitle}</a>
+                                                        <a class="closeTab" href="">✕</a>
+                                                    `;
                     tabControlTabs.appendChild(newTab);
 
                     // Chuyển view tới thẻ li tương ứng
@@ -853,8 +953,8 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                 currentTab.classList.add("tab", "selected");
                 const tabInfo = JSON.parse(localStorage.getItem(currentTabTitleView1));
                 currentTab.innerHTML = `
-                                                <a href="${tabInfo.href}">${currentTabTitleView1}</a>
-                                                <a class="closeTab" href="">✕</a>
+                                                    <a href="${tabInfo.href}">${currentTabTitleView1}</a>
+                                                    <a class="closeTab" href="">✕</a>
 `;
                 tabControlTabs.appendChild(currentTab);
             }
@@ -922,9 +1022,9 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                 const newTab = document.createElement("li");
                 newTab.classList.add("tab", "selected");
                 newTab.innerHTML = `
-                                            <a href="${tabHref}">${tabTitle}</a>
-                                            <a class="closeTab" href="">✕</a>
-                                            `;
+                                                <a href="${tabHref}">${tabTitle}</a>
+                                                <a class="closeTab" href="">✕</a>
+                                                `;
                 tabControlTabs.appendChild(newTab);
 
                 // Sự kiện khi người dùng nhấp vào nút đóng tab
@@ -1135,9 +1235,9 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                 const newTab = document.createElement("li");
                 newTab.classList.add("tab", "selected");
                 newTab.innerHTML = `
-                                <a href="${subMenuLinkHref}">${tabTitle}</a>
-                                <a class="closeTab" href="">✕</a>
-                            `;
+                                    <a href="${subMenuLinkHref}">${tabTitle}</a>
+                                    <a class="closeTab" href="">✕</a>
+                                `;
                 tabControlTabs.appendChild(newTab);
 
                 // Chuyển view tới thẻ li tương ứng

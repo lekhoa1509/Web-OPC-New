@@ -1054,6 +1054,11 @@
     <Content Include="Views\Home\About2.cshtml" />
     <Content Include="Views\Home\About3.cshtml" />
     <Content Include="Views\Home\AboutCN.cshtml" />
+    <Content Include="Views\MauInChungTu\PhieuNhapKho_Fill.cshtml" />
+    <Content Include="Views\MauInChungTu\PhieuNhapKho.cshtml" />
+    <Content Include="Views\MauInChungTu\PhieuNhapKho_Index.cshtml" />
+    <Content Include="Views\MauInChungTu\TonNo_Fill.cshtml" />
+    <Content Include="Views\MauInChungTu\TonNo_Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

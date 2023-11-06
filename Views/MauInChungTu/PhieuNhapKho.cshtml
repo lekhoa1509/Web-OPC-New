@@ -1,0 +1,338 @@
+﻿﻿﻿@{
+    ViewBag.Title = "Phiếu Nhập Kho | OPC";
+    var soCtFromUrl = Request.QueryString["So_Ct"]; // Lấy giá trị "So_Ct" từ đường dẫn URL
+    var loaiCt = Request.Cookies["LoaiCt"].Value;
+    string firstValue = null;
+    string ngay = null;
+    string thang = null;
+    string nam = null;
+    @*foreach(DataRow row3 in Model.Tables[0].Rows)
+    {
+        @row3["Ngay_Ct"];
+    }*@
+}
+
+
+@using System.Data;
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Phiếu Nhập Nguyên Liệu Chế biến</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body, h1, h3, h4, td {
+            font-family: Arial, sans-serif;
+        }
+
+        h4 {
+        }
+
+        table {
+            font-size: 12px;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: center;
+            border-bottom: 1px solid black;
+            font-size: 12px; /* Set font size to 12px */
+        }
+
+            th:last-child, td:last-child {
+                border-right: 1px solid black;
+            }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        page {
+            zoom: 125%;
+            size: A4;
+            margin: 0;
+        }
+
+        body {
+            display: flex;
+            transform: scale(1.05);
+            justify-content: center;
+            /*  align-items: center;*/
+            min-height: 0vh;
+            margin: 0;
+        }
+
+        form {
+            text-align: center;
+            padding: 20px;
+            border: 0px solid #ccc;
+            border: none;
+        }
+
+        .left-aligned {
+            text-align: left;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: center; /* Align content to the left */
+            border-bottom: 1px solid black; /* Add bottom border to cells */
+        }
+
+            th:last-child, td:last-child {
+                border-right: 1px solid black; /* Add right border to last cell in each row */
+            }
+
+        tr:last-child td {
+            border-bottom: none; /* Remove bottom border from last row */
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .center {
+            display: flex;
+            justify-content: center;
+            flex-grow: 1;
+        }
+
+        .text-loading {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            font-size: 13px;
+            color: black;
+            z-index: 1;
+            background-color: rgba(255, 255, 255, 0.9); /* Background color for the span */
+            padding: 5px 10px;
+            display: none; /* Hide the span element initially */
+        }
+    </style>
+
+    <link rel="stylesheet" href="~/Styles/loader.css">
+</head>
+<body>
+    <div class="loader" style="z-index:1"></div>
+    <span id="spanText" class="text-loading">[usp_MauInChungTuNKXK_SAP]</span>
+    <div>
+        <form>
+
+            @*<div style="width: max-content;align-items:center;justify-content:space-between">
+                <div style="width: 200px;background-color:green;text-align:left">
+                    <h3 style="margin-left:-50%; font-size:13px;"><span style="color:black;font-weight:bold">Bộ Phận: </span>CÔNG TY CỔ PHẦN DƯỢC PHẨM OPC</h3>
+                    <h3 style="margin-left: -50%;font-size:13px"><span style="color:black;font-weight:bold">Địa chỉ: </span>1017 Hồng Bàng - Phường 12, Quận 6 - Tp.Hồ Chí Minh,TP Hồ Chí Minh</h3>
+                </div>
+
+                <div style="width: 200px;background-color:blue;text-align:right">
+                    <h3 style=" font-size:13px;"><span style="color:black;font-weight:bold">Bộ Phận: </span>CÔNG TY CỔ PHẦN DƯỢC PHẨM OPC</h3>
+                    <h3 style="font-size:13px"><span style="color:black;font-weight:bold">Địa chỉ: </span>1017 Hồng Bàng - Phường 12, Quận 6 - Tp.Hồ Chí Minh,TP Hồ Chí Minh</h3>
+                </div>
+
+                </div>*@
+            <div style="width:800px;display:flex;justify-content:space-between;align-items:center">
+                <div style="width:300px ;display: flex; justify-content: space-between; align-items: center;text-align:left">
+
+                    <div style="text-align: right">
+                        <h3 style=" font-size:13px;"><span style="color:black;font-weight:bold">Bộ Phận: </span>CÔNG TY CỔ PHẦN DƯỢC PHẨM OPC</h3>
+                        <h3 style=" font-size:13px"><span style="color:black;font-weight:bold">Địa chỉ: </span>1017 Hồng Bàng - Phường 12, Quận 6 - Tp.Hồ Chí Minh,TP Hồ Chí Minh</h3>
+
+                    </div>
+
+                </div>
+                <div style="text-align: center; width: 300px;">
+                    <h5 style="color:black;font-weight:bold">Mẫu số 01 - VT</h5>
+                    <h5 style="">(Ban hành theo Thông tư số :200/2014/TT-BTC</h5>
+                    <h5>Ngày 22/12/2014 của Bộ Tài Chính)</h5>
+
+                </div>
+            </div>
+            <br />
+            <br />
+            <div>
+                @if (loaiCt == "1")
+                {
+
+
+                    <h3 style="font-size:25px">PHIẾU XUẤT KHO</h3>
+                }
+                else
+                {
+                    <h3 style="font-size:25px">PHIẾU NHẬP KHO</h3>
+                }
+
+
+            <h1 style="font-size:12px">
+                Ngày   @foreach (DataRow row3 in Model.Tables[0].Rows)
+                {
+                    var Ngay = row3["Ngay"].ToString();
+                    var currentSoCt = row3["So_Ct"].ToString();
+                    if (string.IsNullOrEmpty(ngay) && currentSoCt == soCtFromUrl)
+                    {
+                        ngay = Ngay; // Lưu giá trị đầu tiên
+                    }
+                }@ngay tháng
+                @foreach (DataRow row3 in Model.Tables[0].Rows)
+                {
+                    var Thang = row3["Thang"].ToString();
+                    var currentSoCt = row3["So_Ct"].ToString();
+                    if (string.IsNullOrEmpty(thang) && currentSoCt == soCtFromUrl)
+                    {
+                        thang = Thang; // Lưu giá trị đầu tiên
+                    }
+                }@thang
+                năm  @foreach (DataRow row3 in Model.Tables[0].Rows)
+                {
+                    var Nam = row3["Nam"].ToString();
+                    var currentSoCt = row3["So_Ct"].ToString();
+                    if (string.IsNullOrEmpty(nam) && currentSoCt == soCtFromUrl)
+                    {
+                        nam = Nam; // Lưu giá trị đầu tiên
+                    }
+                }@nam
+            </h1>
+                <h1 style=" font-size:12px;margin-top:5px"> Số: @soCtFromUrl </h1>
+            </div>
+
+            <div style="text-align:left;line-height: 20px">
+                <h4 style="  font-size: 12px;">- Tên đơn vị: <span style="color:black;font-weight:bold">
+    @foreach (DataRow row3 in Model.Tables[0].Rows)
+    {
+        var khoNhapXuat = row3["Kho_Nhap_Xuat"].ToString();
+        var currentSoCt = row3["So_Ct"].ToString();
+        if (string.IsNullOrEmpty(firstValue) && currentSoCt == soCtFromUrl)
+        {
+            firstValue = khoNhapXuat; // Lưu giá trị đầu tiên
+        }
+
+        // Rest of your code for displaying the values
+        // ...
+    }@firstValue
+</span></h4>
+                <h4 style=" font-size: 12px;">- Họ tên người giao hàng: <span style="color:black;font-weight:bold"></span></h4>
+                <h4 style=" font-size: 12px;">- Theo.................. số.............. &nbsp;&nbsp;&nbsp;&nbsp;ngày.......tháng.......năm.........của:<span style="color:black;font-weight:bold"></span></h4>
+                <h4 style=" font-size: 12px;">- Nhập tại kho: <span style="color:black;font-weight:bold"></span></h4>
+                <h4 style=" font-size: 12px;">- Địa chỉ:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color:black;font-weight:bold"></span></h4>
+                <h4 style=" font-size: 12px;">- Nội dung: <span style="color:black;font-weight:bold"></span></h4>
+            </div>
+            <div>
+                <table border="1">
+                    <tr>
+                        <th rowspan="2">STT</th>
+                        <th rowspan="2" width="120px">Tên,nhãn hiệu, quy cách phẩm chất vật tư dụng cụ sản phẩm, hàng hóa</th>
+                        <th rowspan="2">Mã số</th>
+                        <th rowspan="2">Đơn vị tính</th>
+                        <th colspan="2">Số Lượng</th>
+                        <th rowspan="2">Đơn giá</th>
+                        <th rowspan="2">Thành tiền</th>
+                        <th rowspan="2">Số lô- Hạn dùng</th>
+                    </tr>
+                    <tr>
+                        <th>Theo chứng từ</th>
+                        @if (loaiCt == "1")
+                        {
+
+
+                            <th>Thực Xuất</th>
+                        }
+                        else
+                        {
+                            <th>Thực Nhập</th>
+                        }
+
+                    </tr>
+                    <tbody>
+                        @{
+
+                            int stt = 1; // Đặt biến stt bên ngoài vòng lặp để giữ giá trị tăng dần
+                            foreach (DataRow row3 in Model.Tables[0].Rows)
+                            {
+                                var currentSoCt = row3["So_Ct"].ToString();
+                                if (currentSoCt == soCtFromUrl)
+                                {
+                                                <tr>
+                                                    <td>@stt</td>
+                                                    <td>@row3["Ten_Vt"]</td>
+                                                    <td>@row3["Ma_Vt"]</td>
+                                                    <td>@row3["Dvt"]</td>
+                                                    <td></td>
+                                                    @if (loaiCt == "1")
+                                                    {
+                                                        <td style="text-align:right">@string.Format("{0:#,###}", row3["So_Luong_Xuat"])</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td style="text-align:right">@string.Format("{0:#,###}", row3["So_Luong_Nhap"])</td>
+                                                    }
+
+
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td>@row3["So_Lo1"]</td>
+                                                </tr>
+                                    stt++; // Tăng giá trị của stt sau mỗi lần lặp
+                                }
+                            }
+                        }
+                    </tbody>
+
+                </table>
+                <div style="text-align:left">
+                    <h5>- Tổng số tiền (Viết bằng chữ): Không đồng.</h5>
+                    <br />
+                    <h5>- Số chứng từ gốc kèm theo: .............</h5>
+                </div>
+                <br />
+                <div style="text-align:right">
+                    <h4>Ngày @ngay tháng @thang năm @nam</h4>
+                </div>
+                <div class="header">
+                    <h4>Người lập phiếu&nbsp;&nbsp;&nbsp;&nbsp;</h4>
+                    <h4 style="margin-right:10px">Người giao hàng</h4>
+                    <h4>Thủ Kho</h4>
+                    <h4 style="margin-right:35px">GĐ.Đơn vị</h4>
+                </div>
+                <div class="header" style="text-align:center;align-content:space-between;display:flex">
+                    <h4 style="text-align:left;margin-left:25px">(Ký, họ tên)</h4>
+                    <h4 style="margin-right:-10px">(Ký, họ tên)</h4>
+                    <h4 style="text-align:center;margin-right:-40px">(Ký, họ tên)</h4>
+                    <h4 style="text-align:right;margin-right:20px">(Ký, họ tên)</h4>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script>
+        function showLoader() {
+            const loader = document.querySelector(".loader");
+            loader.classList.remove("loader-hidden");
+        }
+        function openNewTab(url) {
+            window.open(url, '_blank');
+        }
+        // Function to hide the loader
+        function hideLoader() {
+            const loader = document.querySelector(".loader");
+            loader.classList.add("loader-hidden");
+        }
+
+        // Add event listener for window load event
+        window.addEventListener("load", () => {
+            // Hide the loader after the page is loaded
+            hideLoader();
+        });
+
+    </script>
+</body>
+
+</html>
+
