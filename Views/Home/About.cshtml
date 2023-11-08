@@ -205,6 +205,7 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                     <li class="liTitle"><a href="/MauInChungTu/BangDoiChieuCongNo_Fill">6.Bảng Đối Chiếu Doanh Thu - Công Nợ</a></li>
                     <li class="liTitle"><a href="/MauInChungTu/PhieuNhapKho_Fill">7.Phiếu Nhập Xuất Kho Khác</a></li>
                     <li class="liTitle"><a href="/MauInChungTu/TonNo_Fill">8.Sổ Chi Tiết Tồn Nợ Phải Thu</a></li>
+                    <li class="liTitle"><a href="/MauInChungTu/BienBanBanGiaoNTHH">9.Biên Bản Bàn Giao & Nghiệm Thu Hàng Hóa</a></li>
                     @*<li><a href="#">Login Form</a></li>
         <li><a href="#">Card Design</a></li>*@
                 </ul>
@@ -518,6 +519,7 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                                         </li>
                                     </td>
                                 </tr>
+                              
                             </tbody>
 
 
@@ -582,7 +584,7 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                         <table style="width:500px;height:200px; border-collapse: collapse;overflow:scroll">
 
                             <tr class="title">
-                                <th colspan="4" class="top10" style="font-size:18px;padding:5px;height:10px">BÁO CÁO PHÂN TÍCH KHUYẾN MÃI</th>
+                                <th colspan="4" class="top10" style="font-size:18px;padding:5px;height:10px">BÁO CÁO HỢP ĐỒNG</th>
                             </tr>
 
                             <tbody style="float:left">
@@ -600,6 +602,14 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                                         <li style=" list-style-type: none;" class="liTitle">
                                             <a href="" onclick="runReport('@Url.Action("BaoCaoChiTietHD_Fill", "BaoCaoHopDong")'
                                                       )">2.BÁO CÁO CHI TIẾT HỢP ĐỒNG </a>
+                                        </li>
+                                    </td>
+                                </tr>
+                                <tr style="height:30px">
+                                    <td style="text-align: left">
+                                        <li style=" list-style-type: none;" class="liTitle">
+                                            <a href="" onclick="runReport('@Url.Action("TheoDoiHopDongThau_Fill", "TheoDoiHDThau")'
+                                                      )">3.Theo Dõi Hợp Đồng Thầu</a>
                                         </li>
                                     </td>
                                 </tr>
@@ -754,6 +764,14 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                                         <li style=" list-style-type: none;" class="liTitle">
                                             <a href="" onclick="runReport('@Url.Action("TonNo_Index", "MauInChungTu")'
                                                       )">8.Sổ Chi Tiết Tồn Nợ Phải Thu</a>
+                                        </li>
+                                    </td>
+                                </tr>
+                                <tr style="height:30px">
+                                    <td style="text-align: left">
+                                        <li style=" list-style-type: none;" class="liTitle">
+                                            <a href="" onclick="runReport('@Url.Action("BienBanBanGiaoNTHH", "MauInChungTu")'
+                                                      )">9.Biên Bản Bàn Giao Và Nghiệm Thu Hàng Hóa</a>
                                         </li>
                                     </td>
                                 </tr>

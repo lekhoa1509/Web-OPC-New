@@ -237,20 +237,24 @@
                         <th rowspan="2">Thành tiền</th>
                         <th rowspan="2">Số lô- Hạn dùng</th>
                     </tr>
-                    <tr>
-                        <th>Theo chứng từ</th>
-                        @if (loaiCt == "1")
-                        {
 
+                    @if (Request.Cookies["LoaiCt"].Value == "1")
+                    {
 
+                        <tr>
+                            <th>Theo chứng từ</th>
                             <th>Thực Xuất</th>
-                        }
-                        else
-                        {
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr>
+                            <th>Theo chứng từ</th>
                             <th>Thực Nhập</th>
-                        }
+                        </tr>
+                    }
 
-                    </tr>
+
                     <tbody>
                         @{
 
@@ -260,26 +264,26 @@
                                 var currentSoCt = row3["So_Ct"].ToString();
                                 if (currentSoCt == soCtFromUrl)
                                 {
-                                                <tr>
-                                                    <td>@stt</td>
-                                                    <td>@row3["Ten_Vt"]</td>
-                                                    <td>@row3["Ma_Vt"]</td>
-                                                    <td>@row3["Dvt"]</td>
-                                                    <td></td>
-                                                    @if (loaiCt == "1")
-                                                    {
-                                                        <td style="text-align:right">@string.Format("{0:#,###}", row3["So_Luong_Xuat"])</td>
-                                                    }
-                                                    else
-                                                    {
-                                                        <td style="text-align:right">@string.Format("{0:#,###}", row3["So_Luong_Nhap"])</td>
-                                                    }
+                                    <tr>
+                                        <td>@stt</td>
+                                        <td>@row3["Ten_Vt"]</td>
+                                        <td>@row3["Ma_Vt"]</td>
+                                        <td>@row3["Dvt"]</td>
+                                        <td></td>
+                                        @if (loaiCt == "1")
+                                        {
+                                            <td style="text-align:right">@string.Format("{0:#,###}", row3["So_Luong_Xuat"])</td>
+                                        }
+                                        else
+                                        {
+                                            <td style="text-align:right">@string.Format("{0:#,###}", row3["So_Luong_Nhap"])</td>
+                                        }
 
 
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td>@row3["So_Lo1"]</td>
-                                                </tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td>@row3["So_Lo1"]</td>
+                                    </tr>
                                     stt++; // Tăng giá trị của stt sau mỗi lần lặp
                                 }
                             }

@@ -1,5 +1,5 @@
 ﻿
-@{ ViewBag.Title = "Phiếu Xuất Kho";
+@{ ViewBag.Title = "Thông Báo Nợ QH ";
     string ten_dt = Request.Cookies["ten_dt"] != null ? HttpUtility.UrlDecode(Request.Cookies["ten_dt"].Value) : "";
     string Dia_Chi = Request.Cookies["Dia_Chi"] != null ? HttpUtility.UrlDecode(Request.Cookies["Dia_Chi"].Value) : "";
     string Dvcs = Request.Cookies["Dvcs"] != null ? HttpUtility.UrlDecode(Request.Cookies["Dvcs"].Value) : "";
@@ -23,7 +23,7 @@
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Phiếu Xác Nhận Thanh Toán</title>
+    <title>Thông Báo Nợ QH</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link href="~/Styles/main.css" rel='stylesheet' type='text/css' media="all">
 

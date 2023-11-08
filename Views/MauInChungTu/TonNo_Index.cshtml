@@ -497,7 +497,7 @@
                             <option value="">Chọn mã TDV</option>
                             @foreach (var item in ViewBag.DataTDV)
                             {
-                                <option value="@item.Ma_CbNv">@item.Ma_CbNv-@item.hoten</option>
+                                <option value="@item.Ma_CbNv"data-hoten="@item.hoten">@item.Ma_CbNv-@item.hoten</option>
                             }
                         </select>
                         
@@ -585,7 +585,10 @@
             var selectedValue = this.value; // Lấy giá trị đã chọn
             if (selectedValue) {
                 // Kiểm tra nếu đã chọn giá trị (không rỗng)
+                var selectedOption = this.options[this.selectedIndex];
+                var hoTen = selectedOption.getAttribute("data-hoten");
                 document.cookie = "Ma_CbNv=" + selectedValue; // Lưu vào cookie
+                document.cookie = "Ten_TDV=" + hoTen;
             }
         });
         function runReport(url) {
