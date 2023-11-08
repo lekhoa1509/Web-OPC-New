@@ -568,9 +568,9 @@
         </div>
         <ul class="nav-links" style="justify-content: center; display:flex;margin-left:10px">
             <li>
-                <form id="dateForm" action="DoanhThuChiNhanh" method="post" onsubmit="handleFormSubmit(event)">
+                <form id="dateForm" action="TheoDoiHopDongThau" method="post" onsubmit="handleFormSubmit(event)">
                     <div id="locBC">
-                        <span id="spanText" class="text-loading">[usp_BaoCaoDoanhThuCN_SAP]</span>
+                        <span id="spanText" class="text-loading">[usp_TheoDoiHopDongThau_SAP]</span>
                         <a>Từ Ngày</a><br /><br />
                         <input class="tu_ngay" placeholder="Từ Ngày" id="tu_ngay" name="From_date" type="date" format="YYYY-MM-DD" value="@Request.QueryString["From_date"]" />
                         <script>$("#tu_ngay").datetimepicker({ timepicker: false, format: 'Y-m-d' });</script><br /><br />
@@ -579,30 +579,30 @@
                         <script>$("#den_ngay").datetimepicker({ timepicker: false, format: 'Y-m-d' });</script>
                     </div>
 
-                    <div class="select-btn" style="width:100px">
-                        <select id="dropdownDt" class="select2" style="width: 200px" name="selectedValue">
-                            <option value="">Chọn Đối Tượng</option>
+                    <div class="select-btnDt" style="width:100px">
+                        <select id="dropdownDt" class="select2" style="width: 200px" name="Ma_DT" onchange="saveSelectedDTValueToCookie()">
+                            <option value="">Chọn Khách Hàng</option>
                             @foreach (var item in ViewBag.DataDt)
                             {
-                                <option value="@item.Ma_CbNv" data-hoten="@item.hoten">@item.Ma_CbNv-@item.hoten</option>
+                                <option value="@item.Ma_CbNv" data-hoten="@item.Ma_CbNv">@item.Ma_CbNv @item.hoten</option>
                             }
                         </select>
 
                     </div>
                     <input type="hidden" name="Ma_CbNv" id="selectedOption">
                     <div class="select-btn" style="width:100px;margin-top:10px">
-                        <select id="dropdownMaTDV" class="select2" style="width: 200px" name="selectedValue">
+                        <select id="dropdownMaTDV" class="select2" style="width: 200px" name="Ma_TDV" onchange="saveSelectedTDVValueToCookie()">
                             <option value="">Chọn mã TDV</option>
                             @foreach (var item in ViewBag.DataTDV)
                             {
-                                <option value="@item.Ma_CbNv" data-hoten="@item.hoten">@item.Ma_CbNv-@item.hoten</option>
+                                <option value="@item.Ma_CbNv" data-hoten="@item.Ma_CbNv">@item.Ma_CbNv @item.hoten</option>
                             }
                         </select>
 
                     </div>
                     <div class="select-btn" style="width:100px;margin-top:10px">
                         <select name="Ma_Dvcs" id="maDvCsSelect" onchange="saveSelectedValueToCookie()">
-                            <option value="" style="background-color: #020024;color:white">Vui lòng chọn đối tượng</option>
+                            <option value="" style="background-color: #020024;color:white">Đơn Vị Khách Hàng</option>
                             <option value="OPC_B1">Công Ty Cổ Phần Dược Phẩm OPC</option>
                             <option value="OPC_B2">Nhà Máy Bình Dương</option>
                             <option value="OPC_TP">CN Hồ Chí Minh</option>
@@ -702,17 +702,41 @@
     <script src="~/assets/js/pdfmake.min.js"></script>
     <script src="~/assets/js/vfs_fonts.js"></script>
     <script src="~/assets/js/custom.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
     <script>
-        document.getElementById("dropdownMaTDV").addEventListener("change", function () {
-            var selectedValue = this.value; // Lấy giá trị đã chọn
-            if (selectedValue) {
-                // Kiểm tra nếu đã chọn giá trị (không rỗng)
-                var selectedOption = this.options[this.selectedIndex];
-                var hoTen = selectedOption.getAttribute("data-hoten");
-                document.cookie = "Ma_CbNv=" + selectedValue; // Lưu vào cookie
-                document.cookie = "Ten_TDV=" + hoTen;
-            }
+        $(document).ready(function () {
+            $("#dropdownDt").select2();
         });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $("#dropdownMaTDV").select2();
+        });
+    </script>
+
+    <script>
+        function saveSelectedDTValueToCookie() {
+            var dropdown = document.getElementById("dropdownDt");
+            var selectedOption = dropdown.options[dropdown.selectedIndex];
+            var selectedHoten = selectedOption.getAttribute("data-hoten");
+
+            if (selectedHoten) {
+                document.cookie = "Ma_DT=" + selectedHoten;
+            }
+        }
+    </script>
+    <script>
+        function saveSelectedTDVValueToCookie() {
+            var dropdown = document.getElementById("dropdownMaTDV");
+            var selectedOption = dropdown.options[dropdown.selectedIndex];
+            var selectedHoten = selectedOption.getAttribute("data-hoten");
+
+            if (selectedHoten) {
+                document.cookie = "Ma_CbNv=" + selectedHoten;
+            }
+        }
     </script>
     <script>
         function saveSelectedValueToCookie() {

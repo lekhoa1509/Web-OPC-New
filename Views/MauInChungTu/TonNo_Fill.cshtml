@@ -1,10 +1,10 @@
-﻿﻿
+﻿﻿﻿
 @{ ViewBag.Title = "Sổ Tồn Nợ Phải Thu";
     var ma_TDV = Request.Cookies["Ma_CbNv"].Value;
     var Ten_TDV = Request.Cookies["Ten_TDV"].Value;
     var DenNgay = Request.Cookies["To_date"].Value;
     DateTime ngay = DateTime.ParseExact(DenNgay, "yyyy-MM-dd", CultureInfo.InvariantCulture);
-   
+
     // Chuyển đổi thành chuỗi theo định dạng "DD/MM/YYYY"
     string ngayDaChinhSua = ngay.ToString("dd/MM/yyyy");
 
@@ -507,7 +507,6 @@
         tr {
             page-break-inside: avoid; /* Tránh chuyển trang giữa các dòng */
         }
-     
     </style>
 </head>
 <body>
@@ -590,7 +589,7 @@
                             string currentDT = null;
                             int totalCongNo = 0;
                             bool firstTenDt = true;
-                          
+
                             foreach (DataRow row3 in Model.Tables[0].Rows)
                             {
                                 if (currentDT == null || currentDT != row3["Ten_Dt"].ToString())
@@ -600,7 +599,8 @@
                                     {
                                         <tr>
                                             <td colspan="7" style="text-align:center;color:black;font-weight:bold">Tổng cộng:</td>
-                                            <td style="text-align:right;color:red;font-weight:bold">@string.Format("{0:#,###}", totalCongNo)</td>
+                                            <td style="text-align:right;color:red;font-weight:bold">@string.Format("{0:n0}", totalCongNo.ToString("N0").Replace(",", "."))</td>
+
                                         </tr>
                                         totalCongNo = 0;
                                     }
@@ -651,23 +651,23 @@
                             //Thêm hàng cuối cùng
                             if (currentDT != null)
                             {
-                    <tr>
-                        <td colspan="7" style="text-align:center;color:black;font-weight:bold">Tổng cộng:</td>
-                        <td style="text-align:right;font-weight:bold;color:red">@string.Format("{0:n0}", totalCongNo.ToString("N0"))</td>
+                                <tr>
+                                    <td colspan="7" style="text-align:center;color:black;font-weight:bold">Tổng cộng:</td>
+                                    <td style="text-align:right;font-weight:bold;color:red">@string.Format("{0:n0}", totalCongNo.ToString("N0").Replace(",", "."))</td>
 
-                    </tr>
+                                </tr>
                             }
 
                             // Hiển thị tổng cộng công nợ ở cuối
-                    <tr>
-                        <td colspan="7" style="color:black;font-weight:bold">TỔNG CÔNG NỢ:</td>
-                        @foreach (DataRow row2 in Model.Tables[1].Rows)
-                        {
-                            <td style="text-align:right;font-weight:bold;color:red">@row2["Tong_CN"]</td>
+                            <tr>
+                                <td colspan="7" style="color:black;font-weight:bold">TỔNG CÔNG NỢ:</td>
+                                @foreach (DataRow row2 in Model.Tables[1].Rows)
+                                {
+                                    <td style="text-align:right;font-weight:bold;color:red">@row2["Tong_CN"]</td>
 
-                        }
+                                }
 
-                    </tr>
+                            </tr>
                         }
                     </tbody>
                 </table>

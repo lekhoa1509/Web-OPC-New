@@ -113,6 +113,44 @@ namespace web4.Controllers
             }
             return View();
         }
+
+        public ActionResult TheoDoiHopDongThau()
+        {
+            DataSet ds = new DataSet();
+            connectSQL();
+
+            //string query = "exec usp_Vth_BC_BHCNTK_CN @_ngay_Ct1 = '" + Acc.From_date + "',@_Ngay_Ct2 ='"+ Acc.To_date+"',@_Ma_Dvcs='"+ Acc.Ma_DvCs_1+"'";
+            string Pname = "[usp_TheoDoiHopDongThau_SAP]";
+            var fromDate = Request.Cookies["From_date"].Value;
+            var toDate = Request.Cookies["To_Date"].Value;
+
+            var Dvcs = Request.Cookies["Dvcs3"].Value;
+            var MaTDV = Request.Cookies["Ma_CbNv"] != null ? Request.Cookies["Ma_CbNv"].Value : string.Empty;
+
+            var MaDt = Request.Cookies["Ma_DT"].Value;
+            using (SqlCommand cmd = new SqlCommand(Pname, con))
+            {
+                cmd.CommandTimeout = 950;
+
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                {
+                    cmd.Parameters.AddWithValue("@_Tu_Ngay", fromDate);
+                    cmd.Parameters.AddWithValue("@_Den_Ngay", toDate);
+                    cmd.Parameters.AddWithValue("@_Ma_Dt", MaDt);
+                    cmd.Parameters.AddWithValue("@_Ma_CbNv", MaTDV);
+                    cmd.Parameters.AddWithValue("@_Ma_DvCs", Dvcs);
+                    sda.Fill(ds);
+
+                }
+            }
+            return View(ds);
+
+        }
+
+
         public List<BKHoaDonGiaoHang> LoadDmTDV()
         {
             string ma_dvcs = Request.Cookies["Ma_dvcs"].Value;
@@ -145,7 +183,7 @@ namespace web4.Controllers
                             {
                                 BKHoaDonGiaoHang dataItem = new BKHoaDonGiaoHang
                                 {
-                                    Ma_CbNv = row["Ma_CbNv"].ToString(),
+                                    Ma_CbNv = row["Ma_Business"].ToString(),
                                     hoten = row["hoten"].ToString(),
                                     Ma_Dvcs = row["Ma_Dvcs"].ToString()
                                 };
