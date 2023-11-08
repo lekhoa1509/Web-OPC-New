@@ -617,7 +617,7 @@
                         </select>
                     </div>
                     <div>
-                        <button class="submit" type="submit" onclick="runReport()">
+                        <button class="submit" type="submit" onclick="runReport(); checkAndUpdateCookies();saveNgay()">
                             Chạy Báo Cáo
                         </button>
 
@@ -704,7 +704,20 @@
     <script src="~/assets/js/custom.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <script>
+        window.onload = function () {
+            function deleteCookie(name) {
+                document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            }
 
+            // Gọi hàm để xóa các cookie cụ thể khi trang được tải
+            deleteCookie("Ma_DT");
+            deleteCookie("To_date");
+            deleteCookie("From_date");
+            deleteCookie("So_Ct");
+        }
+
+    </script>
     <script>
         $(document).ready(function () {
             $("#dropdownDt").select2();
@@ -722,10 +735,30 @@
             var selectedOption = dropdown.options[dropdown.selectedIndex];
             var selectedHoten = selectedOption.getAttribute("data-hoten");
 
-            if (selectedHoten) {
-                document.cookie = "Ma_DT=" + selectedHoten;
+            // Nếu người dùng không chọn giá trị, gán giá trị là "null"
+            if (!selectedHoten) {
+                selectedHoten = "";
+            }
+
+            document.cookie = "Ma_DT=" + selectedHoten;
+        }
+    </script>
+    <script>
+        function checkAndUpdateCookies() {
+            const dropdownDt = document.getElementById("dropdownDt");
+            const dropdownMaTDV = document.getElementById("dropdownMaTDV");
+            const selectedDtValue = dropdownDt.value;
+            const selectedMaTDVValue = dropdownMaTDV.value;
+
+            if (selectedDtValue === "" && selectedMaTDVValue === "") {
+                // Cả hai dropdown đều rỗng, cập nhật giá trị vào cookie là rỗng
+                document.cookie = "Ma_DT=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                document.cookie = "Ma_CbNv=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            } else {
+                // Nếu ít nhất một dropdown có giá trị, thực hiện xử lý khác hoặc lưu giá trị vào cookie theo yêu cầu của bạn
             }
         }
+
     </script>
     <script>
         function saveSelectedTDVValueToCookie() {
@@ -733,21 +766,30 @@
             var selectedOption = dropdown.options[dropdown.selectedIndex];
             var selectedHoten = selectedOption.getAttribute("data-hoten");
 
-            if (selectedHoten) {
-                document.cookie = "Ma_CbNv=" + selectedHoten;
+            // Nếu người dùng không chọn giá trị, gán giá trị là "null"
+            if (!selectedHoten) {
+                selectedHoten = "";
             }
+
+            document.cookie = "Ma_CbNv=" + selectedHoten;
+        }
+    </script>
+    <script>
+        function saveNgay() {
+            var from_date = document.getElementById("tu_ngay").value;
+            var to_date = document.getElementById("den_ngay").value;
+            document.cookie = "From_date=" + from_date;
+            document.cookie = "To_date=" + to_date;
         }
     </script>
     <script>
         function saveSelectedValueToCookie() {
             var select = document.getElementById("maDvCsSelect");
             var selectedValue = select.options[select.selectedIndex].value;
-            var from_date = document.getElementById("tu_ngay").value;
-            var to_date = document.getElementById("den_ngay").value;
+
             // Lưu giá trị vào cookie với tên là "Dvcs3" và thời gian sống là 1 ngày (86400 giây)
             document.cookie = "Dvcs3=" + selectedValue + "; expires=" + new Date(Date.now() + 86400 * 1000).toUTCString();
-            document.cookie = "From_date=" + from_date;
-            document.cookie = "To_date=" + to_date;
+         
         }
     </script>
     <script>

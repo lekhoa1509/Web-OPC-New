@@ -520,10 +520,7 @@
 
 
     <script>
-        function saveSelectedValueToCookie(row) {
-            var soCt = row.getAttribute("data-soct"); // Lấy giá trị Số Ct từ thuộc tính data-soct của hàng
-            document.cookie = "So_Ct=" + soCt;
-        }
+    
 
         document.addEventListener("DOMContentLoaded", function () {
             var tableRows = document.querySelectorAll("#example tbody tr");

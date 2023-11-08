@@ -124,10 +124,11 @@ namespace web4.Controllers
             var fromDate = Request.Cookies["From_date"].Value;
             var toDate = Request.Cookies["To_Date"].Value;
 
-            var Dvcs = Request.Cookies["Dvcs3"].Value;
+            var Dvcs = Request.Cookies["MA_DVCS"].Value;
             var MaTDV = Request.Cookies["Ma_CbNv"] != null ? Request.Cookies["Ma_CbNv"].Value : string.Empty;
+            var MaDt = Request.Cookies["Ma_DT"] != null ? Request.Cookies["Ma_DT"].Value : string.Empty;
 
-            var MaDt = Request.Cookies["Ma_DT"].Value;
+
             using (SqlCommand cmd = new SqlCommand(Pname, con))
             {
                 cmd.CommandTimeout = 950;
