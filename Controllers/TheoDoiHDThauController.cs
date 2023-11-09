@@ -25,7 +25,7 @@ namespace web4.Controllers
         }
         public List<BKHoaDonGiaoHang> LoadDmDt()
         {
-            string ma_dvcs = Request.Cookies["Ma_dvcs"].Value;
+            string ma_dvcs = Request.Cookies["Ma_dvcs"] != null ? Request.Cookies["Ma_dvcs"].Value : string.Empty;
             connectSQL();
 
             List<BKHoaDonGiaoHang> dataItems = new List<BKHoaDonGiaoHang>();
@@ -71,26 +71,29 @@ namespace web4.Controllers
         }
         public ActionResult TheoDoiHopDongThau_Fill()
         {
-            string ma_dvcs = Request.Cookies["Ma_dvcs"].Value;
-            
+            string ma_dvcs = Request.Cookies["Ma_dvcs"] != null ? Request.Cookies["Ma_dvcs"].Value : string.Empty;
+            if (string.IsNullOrEmpty(ma_dvcs))
+            {
+                return View(); // Trả về null nếu ma_dvcs rỗng
+            }
 
             // Gọi LoadDmHD với Ma_TDV để lấy dữ liệu đã lọc theo Ma_TDV
             List<BKHoaDonGiaoHang> dmDList = LoadDmTDV();
             List<BKHoaDonGiaoHang> dmDListDt = LoadDmDt();
-            var distinctDataTDV = dmDList
-                .GroupBy(x => x.Ten_TDV)
-                .Select(x => x.First())
-                .ToList();
+            //var distinctDataTDV = dmDList
+            //    .GroupBy(x => x.Ten_TDV)
+            //    .Select(x => x.First())
+            //    .ToList();
 
-            var distinctDataItems = dmDList
-           .GroupBy(x => x.So_Ct_E)
-           .Select(x => x.First())
-           .ToList();
+           //// var distinctDataItems = dmDList
+           ////.GroupBy(x => x.So_Ct_E)
+           ////.Select(x => x.First())
+           //.ToList();
 
 
             ViewBag.DataTDV = dmDList;
             ViewBag.DataDt = dmDListDt;
-            ViewBag.DataItems = distinctDataItems;
+          
 
             DataSet ds = new DataSet();
             connectSQL();
@@ -118,16 +121,56 @@ namespace web4.Controllers
         {
             DataSet ds = new DataSet();
             connectSQL();
-
+            List<BKHoaDonGiaoHang> dmDList = LoadDmTDV();
+            List<BKHoaDonGiaoHang> dmDListDt = LoadDmDt();
             //string query = "exec usp_Vth_BC_BHCNTK_CN @_ngay_Ct1 = '" + Acc.From_date + "',@_Ngay_Ct2 ='"+ Acc.To_date+"',@_Ma_Dvcs='"+ Acc.Ma_DvCs_1+"'";
             string Pname = "[usp_TheoDoiHopDongThau_SAP]";
             var fromDate = Request.Cookies["From_date"].Value;
             var toDate = Request.Cookies["To_Date"].Value;
 
-            var Dvcs = Request.Cookies["MA_DVCS"].Value;
+            var Dvcs = Request.Cookies["MA_DVCS"].Value==""? Request.Cookies["Dvcs3"].Value : Request.Cookies["MA_DVCS"].Value;
             var MaTDV = Request.Cookies["Ma_CbNv"] != null ? Request.Cookies["Ma_CbNv"].Value : string.Empty;
             var MaDt = Request.Cookies["Ma_DT"] != null ? Request.Cookies["Ma_DT"].Value : string.Empty;
+            ViewBag.DataTDV = dmDList;
+            ViewBag.DataDt = dmDListDt;
 
+            using (SqlCommand cmd = new SqlCommand(Pname, con))
+            {
+                cmd.CommandTimeout = 950;
+
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                {
+                    cmd.Parameters.AddWithValue("@_Tu_Ngay", fromDate);
+                    cmd.Parameters.AddWithValue("@_Den_Ngay", toDate);
+                    cmd.Parameters.AddWithValue("@_Ma_Dt", MaDt);
+                    cmd.Parameters.AddWithValue("@_Ma_CbNv", MaTDV);
+                    cmd.Parameters.AddWithValue("@_Ma_DvCs", Dvcs);
+                    sda.Fill(ds);
+
+                }
+            }
+            return View(ds);
+
+        }
+        public ActionResult TheoDoiHopDongThau_All()
+        {
+            DataSet ds = new DataSet();
+            connectSQL();
+            List<BKHoaDonGiaoHang> dmDList = LoadDmTDV();
+            List<BKHoaDonGiaoHang> dmDListDt = LoadDmDt();
+            //string query = "exec usp_Vth_BC_BHCNTK_CN @_ngay_Ct1 = '" + Acc.From_date + "',@_Ngay_Ct2 ='"+ Acc.To_date+"',@_Ma_Dvcs='"+ Acc.Ma_DvCs_1+"'";
+            string Pname = "[usp_TheoDoiHopDongThau_SAP]";
+            var fromDate = Request.Cookies["From_date"].Value;
+            var toDate = Request.Cookies["To_Date"].Value;
+
+            var Dvcs = Request.Cookies["MA_DVCS"].Value == "" ? Request.Cookies["Dvcs3"].Value : Request.Cookies["MA_DVCS"].Value;
+            var MaTDV = Request.Cookies["Ma_CbNv"] != null ? Request.Cookies["Ma_CbNv"].Value : string.Empty;
+            var MaDt = Request.Cookies["Ma_DT"] != null ? Request.Cookies["Ma_DT"].Value : string.Empty;
+            ViewBag.DataTDV = dmDList;
+            ViewBag.DataDt = dmDListDt;
 
             using (SqlCommand cmd = new SqlCommand(Pname, con))
             {
@@ -151,12 +194,14 @@ namespace web4.Controllers
 
         }
 
-
         public List<BKHoaDonGiaoHang> LoadDmTDV()
         {
-            string ma_dvcs = Request.Cookies["Ma_dvcs"].Value;
+            string ma_dvcs = Request.Cookies["Ma_dvcs"] != null ? Request.Cookies["Ma_dvcs"].Value : "";
             connectSQL();
-
+            if (string.IsNullOrEmpty(ma_dvcs))
+            {
+                return null; // Trả về null nếu ma_dvcs rỗng
+            }
             List<BKHoaDonGiaoHang> dataItems = new List<BKHoaDonGiaoHang>();
 
             using (SqlConnection connection = new SqlConnection(con.ConnectionString))

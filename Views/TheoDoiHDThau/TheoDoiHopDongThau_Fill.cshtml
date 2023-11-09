@@ -582,9 +582,12 @@
                     <div class="select-btnDt" style="width:100px">
                         <select id="dropdownDt" class="select2" style="width: 200px" name="Ma_DT" onchange="saveSelectedDTValueToCookie()">
                             <option value="">Chọn Khách Hàng</option>
-                            @foreach (var item in ViewBag.DataDt)
+                            @if (ViewBag.DataDt != null)
                             {
-                                <option value="@item.Ma_CbNv" data-hoten="@item.Ma_CbNv">@item.Ma_CbNv @item.hoten</option>
+                                foreach (var item in ViewBag.DataDt)
+                                {
+                                    <option value="@item.Ma_CbNv" data-hoten="@item.Ma_CbNv">@item.Ma_CbNv @item.hoten</option>
+                                }
                             }
                         </select>
 
@@ -593,16 +596,19 @@
                     <div class="select-btn" style="width:100px;margin-top:10px">
                         <select id="dropdownMaTDV" class="select2" style="width: 200px" name="Ma_TDV" onchange="saveSelectedTDVValueToCookie()">
                             <option value="">Chọn mã TDV</option>
-                            @foreach (var item in ViewBag.DataTDV)
+                            @if (ViewBag.DataTDV != null)
                             {
-                                <option value="@item.Ma_CbNv" data-hoten="@item.Ma_CbNv">@item.Ma_CbNv @item.hoten</option>
+                                foreach (var item in ViewBag.DataTDV)
+                                {
+                                    <option value="@item.Ma_CbNv" data-hoten="@item.Ma_CbNv">@item.Ma_CbNv @item.hoten</option>
+                                }
                             }
                         </select>
 
                     </div>
                     <div class="select-btn" style="width:100px;margin-top:10px">
                         <select name="Ma_Dvcs" id="maDvCsSelect" onchange="saveSelectedValueToCookie()">
-                            <option value="" style="background-color: #020024;color:white">Đơn Vị Khách Hàng</option>
+                            <option value="" style="background-color: #020024;color:white">Đơn Vị Cơ Sở</option>
                             <option value="OPC_B1">Công Ty Cổ Phần Dược Phẩm OPC</option>
                             <option value="OPC_B2">Nhà Máy Bình Dương</option>
                             <option value="OPC_TP">CN Hồ Chí Minh</option>
@@ -610,20 +616,24 @@
                             <option value="OPC_TG">CN Tiền Giang</option>
                             <option value="OPC_MD">CN Miền Đông</option>
                             <option value="OPC_VT">CN Vũng Tàu</option>
-                            <option value="OPC_NT_">CN Nha Trang</option>
+                            <option value="OPC_NT">CN Nha Trang</option>
                             <option value="OPC_DN">CN Đà Nẵng</option>
                             <option value="OPC_NA">CN Nghệ An</option>
                             <option value="OPC_HN">CN Hà Nội</option>
                         </select>
                     </div>
                     <div>
-                        <button class="submit" type="submit" onclick="runReport(); checkAndUpdateCookies();saveNgay()">
-                            Chạy Báo Cáo
+                        <button class="submit" type="button" id="xemTungHD" onclick="handleXemTungHD();">
+                            Xem Từng HD
                         </button>
-
                     </div>
-
+                    <div>
+                        <button class="submit" type="button" id="xemTatCa" onclick="handleXemTatCa();">
+                            Xem Tất Cả
+                        </button>
+                    </div>
                 </form>
+
             </li>
         </ul>
     </div>
@@ -689,12 +699,7 @@
     </div>
     <!-- =======  Data-Table  = End  ===================== -->
     <!-- ============ Java Script Files  ================== -->
-    <div class="tab-control" style="position:fixed;bottom:0">
-        <ul class="tabs" style="background-color: #1d1b31; bottom: 0; left: 0; right: 0;">
-            <li class="tab selected"><a href="/Home/About" style="padding-right:5px">Home</a></li>
-
-        </ul>
-    </div>
+   
 
     <script src="~/assets/js/bootstrap.bundle.min.js"></script>
     <script src="~/assets/js/jquery-3.6.0.min.js"></script>
@@ -715,6 +720,17 @@
             deleteCookie("To_date");
             deleteCookie("From_date");
             deleteCookie("So_Ct");
+              var maDvCsSelect = document.getElementById("maDvCsSelect");
+    var maDvcsCookieValue = "@Request.Cookies["MA_DVCS"].Value"; // Thay thế bằng cách lấy giá trị từ Razor (ASP.NET)
+
+            if (maDvcsCookieValue === "OPC_VT" || maDvcsCookieValue === "OPC_CT" || maDvcsCookieValue === "OPC_TP" || maDvcsCookieValue === "OPC_TG" || maDvcsCookieValue === "OPC_MD" || maDvcsCookieValue === "OPC_NT" || maDvcsCookieValue === "OPC_DN" || maDvcsCookieValue === "OPC_NA" || maDvcsCookieValue==="OPC_HN") {
+        // Nếu MA_DVCS là rỗng, bạn có thể ẩn dropdown
+        maDvCsSelect.style.display = "none";
+    } else {
+        // Nếu MA_DVCS không rỗng, bạn có thể hiển thị dropdown và chọn giá trị tương ứng
+        maDvCsSelect.style.display = "block";
+      /*  maDvCsSelect.value = maDvcsCookieValue;*/
+    }
         }
 
     </script>
@@ -728,8 +744,61 @@
             $("#dropdownMaTDV").select2();
         });
     </script>
-
     <script>
+        function handleXemTungHD() {
+            var select = document.getElementById("maDvCsSelect");
+            var selectedValue = select.options[select.selectedIndex].value;
+            var maDvcsCookieValue = "@Request.Cookies["MA_DVCS"].Value";
+            if (selectedValue === "" && maDvcsCookieValue ==="") {
+                // Hiển thị hộp thoại cảnh báo nếu không có giá trị được chọn
+                window.alert("Vui lòng chọn Đơn Vị Cơ Sở!");
+                return null;
+            } else {
+                showLoader();
+                // Thực hiện các tác vụ cần thiết cho Xem Từng HD
+                runReport();
+                saveSelectedDTValueToCookie();
+                saveSelectedTDVValueToCookie();
+                checkAndUpdateCookies();
+                saveNgay();
+
+                // Chuyển hướng đến action TheoDoiHopDongThau
+                document.getElementById("dateForm").action = "TheoDoiHopDongThau";
+                document.getElementById("dateForm").submit();
+            }
+
+    }
+
+        function handleXemTatCa() {
+            var select = document.getElementById("maDvCsSelect");
+            var selectedValue = select.options[select.selectedIndex].value;
+              var maDvcsCookieValue = "@Request.Cookies["MA_DVCS"].Value";
+            if (selectedValue === "" && maDvcsCookieValue === "") {
+                // Hiển thị hộp thoại cảnh báo nếu không có giá trị được chọn
+                window.alert("Vui lòng chọn Đơn Vị Cơ Sở!");
+                return null;
+            } else {
+                showLoader();
+                // Thực hiện các tác vụ cần thiết cho Xem Tất Cả
+                runReport();
+                saveSelectedDTValueToCookie();
+                saveSelectedTDVValueToCookie();
+                checkAndUpdateCookies();
+                saveNgay();
+                document.getElementById("dateForm").action = "TheoDoiHopDongThau_All";
+                document.getElementById("dateForm").submit();
+        // Chuyển hướng đến action TheoDoiHopDongThau_All
+            }
+
+
+    }
+    </script>
+    <script>
+        function openNewTab(url) {
+            var url = actionUrl;
+            var newWindow = window.open('', '_blank');
+            newWindow.location.href = url;
+        }
         function saveSelectedDTValueToCookie() {
             var dropdown = document.getElementById("dropdownDt");
             var selectedOption = dropdown.options[dropdown.selectedIndex];
@@ -747,16 +816,20 @@
         function checkAndUpdateCookies() {
             const dropdownDt = document.getElementById("dropdownDt");
             const dropdownMaTDV = document.getElementById("dropdownMaTDV");
+            const dropdownMaDvcs = document.getElementById("maDvCsSelect");
             const selectedDtValue = dropdownDt.value;
             const selectedMaTDVValue = dropdownMaTDV.value;
-
-            if (selectedDtValue === "" && selectedMaTDVValue === "") {
+            const selectedMaDvcsValue = dropdownMaDvcs.value;
+            if (selectedDtValue === "") {
                 // Cả hai dropdown đều rỗng, cập nhật giá trị vào cookie là rỗng
                 document.cookie = "Ma_DT=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
+            } else if (selectedMaTDVValue === "") {
                 document.cookie = "Ma_CbNv=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-            } else {
-                // Nếu ít nhất một dropdown có giá trị, thực hiện xử lý khác hoặc lưu giá trị vào cookie theo yêu cầu của bạn
+            } else if (selectedMaDvcsValue === "") {
+                document.cookie = "MA_DVCS=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
             }
+                
         }
 
     </script>
@@ -786,10 +859,16 @@
         function saveSelectedValueToCookie() {
             var select = document.getElementById("maDvCsSelect");
             var selectedValue = select.options[select.selectedIndex].value;
-
+            if (selectedValue === "") {
+                // Hiển thị hộp thoại cảnh báo nếu không có giá trị được chọn
+                window.alert("Vui lòng chọn một giá trị trong dropdown.");
+            } else {
+                // Cập nhật cookie với giá trị đã chọn
+                document.cookie = "Dvcs3=" + selectedValue + "; expires=" + new Date(Date.now() + 86400 * 1000).toUTCString();
+            }
             // Lưu giá trị vào cookie với tên là "Dvcs3" và thời gian sống là 1 ngày (86400 giây)
-            document.cookie = "Dvcs3=" + selectedValue + "; expires=" + new Date(Date.now() + 86400 * 1000).toUTCString();
-         
+           
+      /*      document.cookie = "MA_DVCS=" + selectedValue + "; expires=" + new Date(Date.now() + 86400 * 1000).toUTCString();*/
         }
     </script>
     <script>
@@ -856,6 +935,7 @@
                 if (!checkbox.checked) {
                     uncheckedCheckboxIndexes.push(index);
                 }
+                showLoader();
             });
 
             // Lưu trạng thái vào Local Storage

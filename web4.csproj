@@ -1073,6 +1073,7 @@
     <Content Include="Views\MauInChungTu\BienBanBanGiaoNTHH.cshtml" />
     <Content Include="Views\TheoDoiHDThau\TheoDoiHopDongThau_Fill.cshtml" />
     <Content Include="Views\TheoDoiHDThau\TheoDoiHopDongThau.cshtml" />
+    <Content Include="Views\TheoDoiHDThau\TheoDoiHopDongThau_All.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

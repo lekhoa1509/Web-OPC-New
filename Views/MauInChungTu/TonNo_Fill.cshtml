@@ -599,7 +599,7 @@
                                     {
                                         <tr>
                                             <td colspan="7" style="text-align:center;color:black;font-weight:bold">Tổng cộng:</td>
-                                            <td style="text-align:right;color:red;font-weight:bold">@string.Format("{0:n0}", totalCongNo.ToString("N0").Replace(",", "."))</td>
+                                            <td style="text-align:right;color:black;font-weight:bold">@string.Format("{0:n0}", totalCongNo.ToString("N0").Replace(",", "."))</td>
 
                                         </tr>
                                         totalCongNo = 0;
@@ -653,7 +653,7 @@
                             {
                                 <tr>
                                     <td colspan="7" style="text-align:center;color:black;font-weight:bold">Tổng cộng:</td>
-                                    <td style="text-align:right;font-weight:bold;color:red">@string.Format("{0:n0}", totalCongNo.ToString("N0").Replace(",", "."))</td>
+                                    <td style="text-align:right;font-weight:bold;color:black">@string.Format("{0:n0}", totalCongNo.ToString("N0").Replace(",", "."))</td>
 
                                 </tr>
                             }
@@ -663,7 +663,7 @@
                                 <td colspan="7" style="color:black;font-weight:bold">TỔNG CÔNG NỢ:</td>
                                 @foreach (DataRow row2 in Model.Tables[1].Rows)
                                 {
-                                    <td style="text-align:right;font-weight:bold;color:red">@row2["Tong_CN"]</td>
+                                    <td style="text-align:right;font-weight:bold;color:black">@row2["Tong_CN"]</td>
 
                                 }
 
@@ -681,24 +681,24 @@
                 <br />
                 <h5 style="font-size: 15px; text-align: left">BÁO CÁO CỦA NGƯỜI PHỤ TRÁCH THU: </h5>
                 <div style="display:flex;justify-content:space-between;align-items:center">
-                    <div style="text-align:left;line-height:20px">
+                    <div style="text-align:left;line-height:20px;color:black">
 
-                        <h5 style="font-size: 12px; text-align: left">-TỔNG GIÁ TRỊ NỢ: </h5>
-                        <h5 style="font-size: 12px; text-align: left">-TỔNG GIÁ TRỊ KẾ HOẠCH GIAO NHẬN THU: </h5>
-                        <h5 style="font-size: 12px; text-align: left">-TỔNG GIÁ TRỊ NỢ GIAO NHẬN THU ĐƯỢC: </h5>
-                        <h5 style="font-size: 12px; text-align: left">-TỔNG GIÁ TRỊ KẾ HOẠCH KHÁCH HÀNG CK: </h5>
-                        <h5 style="font-size: 12px; text-align: left">-TỔNG GIÁ TRỊ NỢ KHÁCH HÀNG CK: </h5>
-                        <h5 style="font-size: 12px; text-align: left">-TỔNG GIÁ TRỊ KẾ HOẠCH TRÌNH DƯỢC VIÊN THU: </h5>
-                        <h5 style="font-size: 12px; text-align: left">-TỔNG GIÁ TRỊ NỢ TRÌNH DƯỢC VIÊN THU ĐƯỢC: </h5>
+                        <h5 style="font-size: 12px; text-align: left">-Tổng giá trị nợ: </h5>
+                        <h5 style="font-size: 12px; text-align: left">-Tổng giá trị kế hoạch giao nhận thu: </h5>
+                        <h5 style="font-size: 12px; text-align: left">-Tổng giá trị nợ giao nhận thu được: </h5>
+                        <h5 style="font-size: 12px; text-align: left">-Tổng giá trị kế hoạch khách hàng CK: </h5>
+                        <h5 style="font-size: 12px; text-align: left">-TỔNG giá trị nợ khách hàng CK: </h5>
+                        <h5 style="font-size: 12px; text-align: left">-Tổng giá trị kế hoạch trình dược viên thu: </h5>
+                        <h5 style="font-size: 12px; text-align: left">-TỔNG giá trị nợ trình dược viên thu được: </h5>
                     </div>
-                    <div style="text-align:right;line-height:20px">
+                    <div style="text-align:right;line-height:20px;color:black">
 
-                        <h5 style="font-size: 12px; text-align: left">-TỶ LỆ % KẾ HOẠCH GN THU SO VỚI NỢ: </h5>
-                        <h5 style="font-size: 12px; text-align: left">-TỶ LỆ % GN THU ĐƯỢC SO VỚI KẾ HOẠCH: </h5>
-                        <h5 style="font-size: 12px; text-align: left">-TỶ LỆ % KH CK SO VỚI NỢ: </h5>
-                        <h5 style="font-size: 12px; text-align: left">-TỶ LỆ % KH CK SO VỚI KẾ HOẠCH: </h5>
-                        <h5 style="font-size: 12px; text-align: left">-TỶ LỆ % KẾ HOẠCH TDV THU SO VỚI NỢ: </h5>
-                        <h5 style="font-size: 12px; text-align: left">-TỶ LỆ % TDV THU ĐƯỢC SO VỚI KẾ HOẠCH: </h5>
+                        <h5 style="font-size: 12px; text-align: left">-Tỷ lệ % kế hoạch GN so với nợ: </h5>
+                        <h5 style="font-size: 12px; text-align: left">-Tỷ lệ % GN thu được so với kế hoạch: </h5>
+                        <h5 style="font-size: 12px; text-align: left">-Tỷ lệ % KH chiết khấu so với nợ: </h5>
+                        <h5 style="font-size: 12px; text-align: left">-Tỷ lệ % KH chiết khấu so với kế hoạch: </h5>
+                        <h5 style="font-size: 12px; text-align: left">-Tỷ lệ % kế hoạch TDV thu so với nợ: </h5>
+                        <h5 style="font-size: 12px; text-align: left">-Tỷ lệ % TDV thu được so với kế hoạch: </h5>
                     </div>
                 </div>
                 <br />
