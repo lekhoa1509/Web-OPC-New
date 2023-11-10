@@ -528,6 +528,7 @@
                                 <th>Địa Chỉ</th>
                                 <th>Tỉnh TP</th>
                                 <th>Mã TDV</th>
+                                <th>Tên TDV</th>
                                 <td>Mã Loại KH SAP</td>
                                 <th>Mã Loại KH OPC</th>
                                 <th>Mã LKH Ct OPC</th>
@@ -552,47 +553,58 @@
                                 <th>Giới Tính CSKH</th>
                                 <th>Sinh Nhật CSKH</th>
                                 <th>SĐT CSKH</th>
+                                <th>CMND CSKH</th>
+                                <th>Ngày Cấp CMND</th>
+
                                 <th>Hộ Kinh Doanh</th>
+                                <th>Tình Trạng</th>
+                                <th>Ngày Tạo Mã</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach (DataRow row2 in Model.Tables[0].Rows)
                             {
-                                <tr>
-                                    <td>@row2["Cong_Ty"]</td>
-                                    <td>@row2["Ten_Dvcs"]</td>
-                                    <td>@row2["Ma_Dt"]</td>
-                                    <td>@row2["Ten_Dt"]</td>
-                                    <td>@row2["Email"]</td>
-                                    <td>@row2["Dia_Chi"]</td>
-                                    <td>@row2["Tinh_TP"]</td>
-                                    <td>@row2["Ma_TDV"]</td>
-                                    <td>@row2["Ma_LKH_SAP"]</td>
-                                    <td>@row2["Ma_LKH_OPC"]</td>
-                                    <td>@row2["Ma_LKH_Ct_OPC"]</td>
-                                    <td>@row2["Ten_LKH_OPC"]</td>
-                                    <td>@row2["MST"]</td>
-                                    <td>@row2["Chiet_Khau"]</td>
-                                    <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["CK_OPC"]))</td>
-                                    <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["CK_25"]))</td>
-                                    <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["CK_Con"]))</td>
-                                    <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["CK_Sui"]))</td>
-                                    <td class="" style="text-align:right">@row2["Ma_Htt"]</td>
-                                    <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Han_Tt_CkTt"]))</td>
-                                    <td class="" style="text-align:right">@row2["Ty_le"]%</td>
-                                    <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Han_Tt_CkTt1"]))</td>
-                                    <td class="" style="text-align:right">@row2["Ty_Le1"]%</td>
-                                    <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Han_Tt"]))</td>
-                                    <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Han_Muc_No"]))</td>
-                                    <td>@row2["Ma_Dai_Dien"]</td>
-                                    <td>@row2["Nguoi_Dai_Dien"]</td>
-                                    <td>@row2["Ma_CSKH"]</td>
-                                    <td>@row2["Ten_CSKH"]</td>
-                                    <td>@row2["GT_CSKH"]</td>
-                                    <td>@row2["SN_CSKH"]</td>
-                                    <td>@row2["SDT_CSKH"]</td>
-                                    <td>@row2["Ho_Kinh_Doanh"]</td>
-                                </tr>
+                            <tr>
+                                <td>@row2["Cong_Ty"]</td>
+                                <td>@row2["Ten_Dvcs"]</td>
+                                <td>@row2["Ma_Dt"]</td>
+                                <td>@row2["Ten_Dt"]</td>
+                                <td>@row2["Email"]</td>
+                                <td>@row2["Dia_Chi"]</td>
+                                <td>@row2["Tinh_TP"]</td>
+                                <td>@row2["Ma_TDV"]</td>
+                                <td>@row2["Ten_TDV"]</td>
+                                <td>@row2["Ma_LKH_SAP"]</td>
+                                <td>@row2["Ma_LKH_OPC"]</td>
+                                <td>@row2["Ma_LKH_Ct_OPC"]</td>
+                                <td>@row2["Ten_LKH_OPC"]</td>
+                                <td>@row2["MST"]</td>
+                                <td>@row2["Chiet_Khau"]</td>
+                                <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["CK_OPC"]))</td>
+                                <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["CK_25"]))</td>
+                                <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["CK_Con"]))</td>
+                                <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["CK_Sui"]))</td>
+                                <td class="" style="text-align:right">@row2["Ma_Htt"]</td>
+                                <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Han_Tt_CkTt"]))</td>
+                                <td class="" style="text-align:right">@row2["Ty_le"]%</td>
+                                <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Han_Tt_CkTt1"]))</td>
+                                <td class="" style="text-align:right">@row2["Ty_Le1"]%</td>
+                                <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Han_Tt"]))</td>
+                                <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Han_Muc_No"]))</td>
+                                <td>@row2["Ma_Dai_Dien"]</td>
+                                <td>@row2["Nguoi_Dai_Dien"]</td>
+                                <td>@row2["Ma_CSKH"]</td>
+                                <td>@row2["Ten_CSKH"]</td>
+                                <td>@row2["GT_CSKH"]</td>
+                                <td>@row2["SN_CSKH"]</td>
+
+                                <td>@row2["SDT_CSKH"]</td>
+                                <td>@row2["CMND_CSKH"]</td>
+                                <td>@row2["NgayCap_CSKH"]</td>
+                                <td>@row2["Ho_Kinh_Doanh"]</td>
+                                <td>@row2["Tinh_Trang"]</td>
+                                <td>@row2["Ngay_Tao_Ma"]</td>
+                            </tr>
                             }
                         </tbody>
                     </table>
@@ -602,13 +614,7 @@
     </div>
     <!-- =======  Data-Table  = End  ===================== -->
     <!-- ============ Java Script Files  ================== -->
-    <div class="tab-control" style="position:fixed;bottom:50px">
-        <ul class="tabs" style="background-color: #1d1b31">
-            <li class="tab selected"><a href="/Home/About" style="padding-right:5px">Home</a></li>
-
-        </ul>
-    </div>
-
+  
     <script src="~/assets/js/bootstrap.bundle.min.js"></script>
     <script src="~/assets/js/jquery-3.6.0.min.js"></script>
     <script src="~/assets/js/datatables.min.js"></script>
