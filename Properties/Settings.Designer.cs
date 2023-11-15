@@ -148,5 +148,14 @@ namespace web4.Properties {
                 return ((string)(this["Ngay_TT"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Ma_DvCs_2 {
+            get {
+                return ((string)(this["Ma_DvCs_2"]));
+            }
+        }
     }
 }
