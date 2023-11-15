@@ -205,7 +205,7 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                     <li class="liTitle"><a href="/MauInChungTu/BangDoiChieuCongNo_Fill">6.Bảng Đối Chiếu Doanh Thu - Công Nợ</a></li>
                     <li class="liTitle"><a href="/MauInChungTu/PhieuNhapKho_Fill">7.Phiếu Nhập Xuất Kho Khác</a></li>
                     <li class="liTitle"><a href="/MauInChungTu/TonNo_Fill">8.Sổ Chi Tiết Tồn Nợ Phải Thu</a></li>
-                    <li class="liTitle"><a href="/MauInChungTu/BienBanBanGiaoNTHH">9.Biên Bản Bàn Giao & Nghiệm Thu Hàng Hóa</a></li>
+                    <li class="liTitle"><a href="/MauInChungTu/BienBanBanGiaoNTHH_Fill">9.Biên Bản Bàn Giao & Nghiệm Thu Hàng Hóa</a></li>
                     @*<li><a href="#">Login Form</a></li>
         <li><a href="#">Card Design</a></li>*@
                 </ul>
@@ -263,7 +263,17 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                             {
                                 <li class="liTitle"><a href="/DoanhThuChiNhanh/bangkehoadon_Fill">2.1.Bảng Kê Chứng Từ SO</a></li>
                             }
-                            <li class="liTitle"><a href="/bangkehoadon/DanhSachHoaDon_Fill">2.2.Bảng Kê Hóa Đơn</a></li>
+                            @if (string.Equals(ViewBag.UserName, "OPCHCM001", StringComparison.OrdinalIgnoreCase))
+                            {
+
+
+                                <li class="liTitle"><a href="/bangkehoadon/DanhSachHoaDon_Fill_HCM">2.1.Bảng Kê Chứng Từ SO</a></li>
+                            }
+                            else
+                            {
+                                <li class="liTitle"><a href="/DoanhThuChiNhanh/DanhSachHoaDon_Fill">2.1.Bảng Kê Chứng Từ SO</a></li>
+                            }
+                           
                             <li class="liTitle"><a href="/BaoCaobanHangCN/BaoCaoBanHangCN_Fill">2.3.Báo Cáo Bán Hàng CN</a></li>
                             <li class="liTitle"><a href="/BaoCaoBanHangTDV/BaoCaoBanHangTDV_Fill">2.4.Báo Cáo Bán Hàng TDV</a></li>
                             <li class="liTitle"><a href="/BaoCaoTienVeCN/BaoCaoTienVeCN_Fill">2.5.Báo Cáo Tiền Về CN</a></li>
@@ -466,10 +476,20 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                                 </tr>
                                 <tr style="height:30px">
                                     <td style="text-align: left">
-                                        <li style=" list-style-type: none;" class="liTitle">
-                                            <a href="" onclick="runReport('@Url.Action("DanhSachHoaDon_Fill", "bangkehoadon")'
+                                        @if (string.Equals(ViewBag.UserName, "OPCHCM001", StringComparison.OrdinalIgnoreCase))
+                                        {
+
+
+                                            <li class="liTitle" style="list-style-type:none">
+                                                <a href="" onclick="runReport('@Url.Action("DanhSachHoaDon_Fill_HCM", "bangkehoadon")'
                                                       )">2.Bảng Kê Hóa Đơn</a>
-                                        </li>
+                                            </li> }
+                                        else
+                                        {
+                                            <li class="liTitle" style="list-style-type:none">
+                                                <a href="" onclick="runReport('@Url.Action("danhsachhoadon_SAP", "bangkehoadon")'
+                                                      )">2.Bảng Kê Hóa đơn</a>
+                                            </li>}
                                     </td>
                                 </tr>
                                 <tr style="height:30px">
@@ -519,7 +539,7 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                                         </li>
                                     </td>
                                 </tr>
-                              
+
                             </tbody>
 
 
@@ -770,7 +790,7 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                                 <tr style="height:30px">
                                     <td style="text-align: left">
                                         <li style=" list-style-type: none;" class="liTitle">
-                                            <a href="" onclick="runReport('@Url.Action("BienBanBanGiaoNTHH", "MauInChungTu")'
+                                            <a href="" onclick="runReport('@Url.Action("BienBanBanGiaoNTHH_Fill", "MauInChungTu")'
                                                       )">9.Biên Bản Bàn Giao Và Nghiệm Thu Hàng Hóa</a>
                                         </li>
                                     </td>
@@ -784,7 +804,7 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
         </div>
     </section>
     <div class="fixed">
-        118.69.109.109 | SAP_OPC | @ViewBag.UserName
+         SAP_OPC | @ViewBag.UserName
     </div>
     @*<div class="tab-control">
             <ul class="tabs" style="background-color: #1d1b31; bottom: 0; left: 0; right: 0;">

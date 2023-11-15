@@ -1074,6 +1074,12 @@
     <Content Include="Views\TheoDoiHDThau\TheoDoiHopDongThau_Fill.cshtml" />
     <Content Include="Views\TheoDoiHDThau\TheoDoiHopDongThau.cshtml" />
     <Content Include="Views\TheoDoiHDThau\TheoDoiHopDongThau_All.cshtml" />
+    <Content Include="Views\MauInChungTu\BienBanBanGiaoNTHH_Fill.cshtml" />
+    <Content Include="Views\MauInChungTu\BienBanBanGiaoNTHH_Index.cshtml" />
+    <Content Include="Views\MauInChungTu\PhieuNhapXNTT_Index.cshtml" />
+    <Content Include="Views\MauInChungTu\PhieuNhapXNTT_All.cshtml" />
+    <Content Include="Views\BangKeHoaDon\DanhSachHoaDon_Fill_HCM.cshtml" />
+    <Content Include="Views\BangKeHoaDon\danhsachhoadon_SAP_CN.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

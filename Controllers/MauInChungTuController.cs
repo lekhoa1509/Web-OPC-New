@@ -15,6 +15,8 @@ using OfficeOpenXml.Style;
 using System.IO;
 using OfficeOpenXml.Table;
 using Newtonsoft.Json;
+using System.Globalization;
+
 namespace web4.Controllers
 {
     public class MauInChungTuController : Controller
@@ -151,13 +153,15 @@ namespace web4.Controllers
             ViewBag.DataItems = dmDlist;
             return View();
         }
-
-        public ActionResult PhieuNhapXNTT(MauInChungTu MauIn)
+        public ActionResult PhieuNhapXNTT_All()
         {
             string ma_dvcs = Request.Cookies["Ma_dvcs"].Value;
+            var fromDate = Request.Cookies["From_date"].Value;
+            var toDate = Request.Cookies["To_Date"].Value;
+            var MaDt = Request.Cookies["Ma_DT"] != null ? Request.Cookies["Ma_DT"].Value : string.Empty;
             DataSet ds = new DataSet();
             connectSQL();
-
+            var SoCT = Request.Cookies["So_Ct"] != null ? Request.Cookies["So_Ct"].Value : "";
             //MauIn.So_Ct = Request.Cookies["SoCt"].Value;
 
             //string query = "exec usp_Vth_BC_BHCNTK_CN @_ngay_Ct1 = '" + Acc.From_date + "',@_Ngay_Ct2 ='"+ Acc.To_date+"',@_Ma_Dvcs='"+ Acc.Ma_DvCs_1+"'";
@@ -178,11 +182,83 @@ namespace web4.Controllers
                 {
 
 
+                    cmd.Parameters.AddWithValue("@_Tu_Ngay", fromDate);
+                    cmd.Parameters.AddWithValue("@_Den_Ngay", toDate);
+                    cmd.Parameters.AddWithValue("@_Ma_dt", MaDt);
+                    cmd.Parameters.AddWithValue("@_so_Ct", SoCT);
+                    cmd.Parameters.AddWithValue("@_ma_dvcs", ma_dvcs);
+                    sda.Fill(ds);
+
+                }
+            }
+            return View(ds);
+        }
+        public ActionResult PhieuNhapXNTT_Index(MauInChungTu MauIn)
+        {
+            DataSet ds = new DataSet();
+            connectSQL();
+            List<MauInChungTu> dmDlist = LoadDmDt("");
+
+            ViewBag.DataItems = dmDlist;
+            string Pname = "[usp_XacNhanCKTT_SAP]";
+            var fromDate = Request.Cookies["From_date"].Value;
+            var toDate = Request.Cookies["To_Date"].Value;
+
+            var MaDt = Request.Cookies["Ma_DT"] != null ? Request.Cookies["Ma_DT"].Value : string.Empty;
+
+            using (SqlCommand cmd = new SqlCommand(Pname, con))
+            {
+                cmd.CommandTimeout = 950;
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+
+               
+                cmd.Parameters.AddWithValue("@_Tu_Ngay", MauIn.From_date);
+                cmd.Parameters.AddWithValue("@_Den_Ngay", MauIn.To_date);
+                cmd.Parameters.AddWithValue("@_Ma_Dt", MaDt);
+
+                using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                {
+                    sda.Fill(ds);
+                }
+            }
+
+            return View(ds);
+        }
+
+        public ActionResult PhieuNhapXNTT(MauInChungTu MauIn)
+        {
+            string ma_dvcs = Request.Cookies["Ma_dvcs"].Value;
+            var fromDate = Request.Cookies["From_date"].Value;
+            var toDate = Request.Cookies["To_Date"].Value;
+            var MaDt = Request.Cookies["Ma_DT"] != null ? Request.Cookies["Ma_DT"].Value : string.Empty;
+            DataSet ds = new DataSet();
+            connectSQL();
+            var SoCT = Request.Cookies["So_Ct"] != null ? Request.Cookies["So_Ct"].Value : "";
+            //MauIn.So_Ct = Request.Cookies["SoCt"].Value;
+
+            //string query = "exec usp_Vth_BC_BHCNTK_CN @_ngay_Ct1 = '" + Acc.From_date + "',@_Ngay_Ct2 ='"+ Acc.To_date+"',@_Ma_Dvcs='"+ Acc.Ma_DvCs_1+"'";
+            string Pname = "[usp_XacNhanCKTT_SAP]";
+
+            using (SqlCommand cmd = new SqlCommand(Pname, con))
+            {
+                cmd.CommandTimeout = 950;
+
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                //MauIn.From_date = Request.Cookies["From_date"].Value;
+                //MauIn.To_date = Request.Cookies["To_Date"].Value;
+                con.Open();
+
+                using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                {
+                   
                     cmd.Parameters.AddWithValue("@_Tu_Ngay", MauIn.From_date);
                     cmd.Parameters.AddWithValue("@_Den_Ngay", MauIn.To_date);
-                    cmd.Parameters.AddWithValue("@_Ma_dt", MauIn.Ma_Dt);
-
-
+                    cmd.Parameters.AddWithValue("@_Ma_dt", MaDt);
+                    cmd.Parameters.AddWithValue("@_so_Ct", SoCT);
+                    cmd.Parameters.AddWithValue("@_ma_dvcs",ma_dvcs );
                     sda.Fill(ds);
 
                 }
@@ -197,9 +273,9 @@ namespace web4.Controllers
             //string query = "exec usp_Vth_BC_BHCNTK_CN @_ngay_Ct1 = '" + Acc.From_date + "',@_Ngay_Ct2 ='"+ Acc.To_date+"',@_Ma_Dvcs='"+ Acc.Ma_DvCs_1+"'";
             string Pname = "[usp_MauInChungTuSO_Detail_SAP]";
 
-            MauIn.From_date = Request.Cookies["From_date"].Value;
-            MauIn.To_date = Request.Cookies["To_Date"].Value;
-            MauIn.UserName = Request.Cookies["UserName"].Value;
+            //MauIn.From_date = Request.Cookies["From_date"].Value;
+            //MauIn.To_date = Request.Cookies["To_Date"].Value;
+            //MauIn.UserName = Request.Cookies["UserName"].Value;
 
 
             using (SqlCommand cmd = new SqlCommand(Pname, con))
@@ -1977,7 +2053,10 @@ namespace web4.Controllers
         {
             string ma_dvcs = Request.Cookies["Ma_dvcs"].Value;
 
-
+            if(ma_dvcs == "")
+            {
+                return View();
+            }
             // Gọi LoadDmHD với Ma_TDV để lấy dữ liệu đã lọc theo Ma_TDV
             List<BKHoaDonGiaoHang> dmDList = LoadDmTDV();
 
@@ -2066,14 +2145,20 @@ namespace web4.Controllers
         {
             var fileName = $"SoTonNo{DateTime.Now:yyyyMMddHHmmss}.xlsx";
             // Lấy dữ liệu từ cookie
-            string jsonData = Request.Cookies["tableDataCookie"] != null ? HttpUtility.UrlDecode(Request.Cookies["tableDataCookie"].Value) : "";
-
+            string jsonData = Request.Cookies["tableDataCookie1"] != null ? HttpUtility.UrlDecode(Request.Cookies["tableDataCookie1"].Value) : "";
+            string jsonData1 = Request.Cookies["tableDataCookie2"] != null ? HttpUtility.UrlDecode(Request.Cookies["tableDataCookie2"].Value) : "";
+            string jsonData2 = Request.Cookies["tableDataCookie3"] != null ? HttpUtility.UrlDecode(Request.Cookies["tableDataCookie3"].Value) : "";
+            List<List<string>> combinedData = new List<List<string>>();
             // Kiểm tra xem có dữ liệu từ cookie không
             if (!string.IsNullOrEmpty(jsonData))
             {
                
                 List<List<string>> tableData = JsonConvert.DeserializeObject<List<List<string>>>(jsonData);
-
+                List<List<string>> tableData1 = JsonConvert.DeserializeObject<List<List<string>>>(jsonData1);
+                List<List<string>> tableData2 = JsonConvert.DeserializeObject<List<List<string>>>(jsonData2);
+                combinedData.AddRange(tableData);
+                combinedData.AddRange(tableData1);
+                combinedData.AddRange(tableData2);
                 ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
                 using (var package = new ExcelPackage())
                 {
@@ -2082,10 +2167,10 @@ namespace web4.Controllers
 
                     string maTDV = Request.Cookies["Ma_CbNv"] != null ? HttpUtility.UrlDecode(Request.Cookies["Ma_CbNv"].Value) : "";
                     string tenTDV = Request.Cookies["Ten_TDV"] != null ? HttpUtility.UrlDecode(Request.Cookies["Ten_TDV"].Value) : "";
-            
+                    string ngay = Request.Cookies["NgayDaChinhSua"] != null ? HttpUtility.UrlDecode(Request.Cookies["NgayDaChinhSua"].Value) : "";
                     worksheet.Cells.Style.Font.Name = "Times New Roman";
 
-                    worksheet.Cells["C3"].Value = "SỔ CHI TIẾT TỒN NỢ PHẢI THU";
+                    worksheet.Cells["C3"].Value = $"SỔ CHI TIẾT TỒN NỢ PHẢI THU ĐẾN NGÀY {ngay}";
                     worksheet.Cells["C3"].Style.Font.Bold = true;
                     worksheet.Cells["C3"].Style.Font.Size = 16;
 
@@ -2125,46 +2210,74 @@ namespace web4.Controllers
                     worksheet.Column(startColumn + 5).Width = 15;
                     worksheet.Column(startColumn + 6).Width = 25;
                     worksheet.Column(startColumn + 7).Width = 15;
-                   
-                    // Đảm bảo rằng có dữ liệu trong biến tableData
-                    if (tableData != null && tableData.Any())
+
+                    if (combinedData != null && combinedData.Any())
                     {
                         // Lặp qua từng hàng dữ liệu trong tableData và ghi vào tệp Excel
-                        for (int row = 0; row < tableData.Count-1; row++)
+                        for (int row = 0; row < combinedData.Count; row++)
                         {
-                            var rowData = tableData[row] ;
+                            var rowData = combinedData[row];
                             for (int col = 0; col < rowData.Count; col++)
                             {
-                                worksheet.Cells[startRow + row -1, startColumn + col].Value = rowData[col];
-                                worksheet.Cells[startRow + row-1, startColumn + col].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
-                                worksheet.Cells[startRow + row-1, startColumn + col].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                                worksheet.Cells[startRow + row-1, startColumn + col].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                                if (rowData.Count == 2 && col == 0)
+                                {
+                                    // Gộp 6 cột kế tiếp, chỉ gộp cho cột đầu tiên
+                                    worksheet.Cells[startRow + row, startColumn + col, startRow + row, startColumn + col + 6].Merge = true;
+                                    worksheet.Cells[startRow + row, startColumn + col, startRow + row, startColumn + col + 6].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+                                    // Ghi giá trị của cột đầu tiên
+                                    worksheet.Cells[startRow + row, startColumn + col].Value = rowData[col];
+                                    worksheet.Cells[startRow + row, startColumn + col].Style.Font.Bold = true;
+                                    worksheet.Cells[startRow + row, startColumn + col].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+                                    worksheet.Cells[startRow + row, startColumn + col].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                                    worksheet.Cells[startRow + row, startColumn + col].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+
+                                    // Đặt giá trị thứ hai vào cột thứ 8
+                                    worksheet.Cells[startRow + row, startColumn + col + 7].Value = rowData[col + 1];
+                                    worksheet.Cells[startRow + row, startColumn + col + 7].Style.Font.Bold = true;
+                                    worksheet.Cells[startRow + row, startColumn + col + 7].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+                                    worksheet.Cells[startRow + row, startColumn + col + 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                                    worksheet.Cells[startRow + row, startColumn + col + 7].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+
+                                    // Bỏ qua 6 cột kế tiếp
+                                    col += 6;
+                                }
+                                else
+                                {
+                                    worksheet.Cells[startRow + row, startColumn + col].Value = rowData[col];
+                                    worksheet.Cells[startRow + row, startColumn + col].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+                                    worksheet.Cells[startRow + row, startColumn + col].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                            
+                                    worksheet.Cells[startRow + row, startColumn + col].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                                }
                             }
                         }
                     }
+
+
                     else
                     {
                         worksheet.Cells[startRow, startColumn].Value = "Không có dữ liệu bảng từ cookie.";
                     }
-                    worksheet.Cells[startRow + tableData.Count -2, startColumn + 1].Value = "Tổng cộng";
-                    worksheet.Cells[startRow + tableData.Count-2, startColumn + 1].Style.Font.Bold = true;
-                    worksheet.Cells[startRow + tableData.Count-2, startColumn].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
-                    worksheet.Cells[startRow + tableData.Count-2, startColumn + 1].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
-                    worksheet.Cells[startRow + tableData.Count-2, startColumn + 2].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
-                    worksheet.Cells[startRow + tableData.Count-2, startColumn + 3].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
-                    worksheet.Cells[startRow + tableData.Count - 2, startColumn + 4].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
-                    worksheet.Cells[startRow + tableData.Count - 2, startColumn + 5].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
-                    worksheet.Cells[startRow + tableData.Count - 2, startColumn + 6].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
-                    worksheet.Cells[startRow + tableData.Count - 2, startColumn + 7].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
-                    var endRow = startRow + tableData.Count;
+                    //worksheet.Cells[startRow + combinedData.Count -2, startColumn + 1].Value = "Tổng cộng";
+                    //worksheet.Cells[startRow + combinedData.Count-2, startColumn + 1].Style.Font.Bold = true;
+                    //worksheet.Cells[startRow + combinedData.Count-2, startColumn].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+                    //worksheet.Cells[startRow + combinedData.Count-2, startColumn + 1].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+                    //worksheet.Cells[startRow + combinedData.Count-2, startColumn + 2].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+                    //worksheet.Cells[startRow + combinedData.Count-2, startColumn + 3].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+                    //worksheet.Cells[startRow + combinedData.Count - 2, startColumn + 4].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+                    //worksheet.Cells[startRow + combinedData.Count - 2, startColumn + 5].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+                    //worksheet.Cells[startRow + combinedData.Count - 2, startColumn + 6].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+                    //worksheet.Cells[startRow + combinedData.Count - 2, startColumn + 7].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+                    var endRow = startRow + combinedData.Count;
                
                     worksheet.Cells[endRow, startColumn +1].Value = "BÁO CÁO CỦA NGƯỜI PHỤ TRÁCH THU: ";
                     worksheet.Cells[endRow+1, startColumn+1].Value = "-TỔNG GIÁ TRỊ NỢ: ";
                     worksheet.Cells[endRow+2, startColumn+1].Value = "-TỔNG GIÁ TRỊ KẾ HOẠCH GIAO NHẬN THU: ";
                     worksheet.Cells[endRow + 3, startColumn + 1].Value = "-TỔNG GIÁ TRỊ NỢ GIAO NHẬN THU ĐƯỢC: ";
-                    worksheet.Cells[endRow + 4, startColumn + 1].Value = "-TỔNG GIÁ TRỊ NỢ KHÁCH HÀNG CK: ";
-                    worksheet.Cells[endRow + 5, startColumn + 1].Value = "-TỔNG GIÁ TRỊ KẾ HOẠCH TRÌNH DƯỢC VIÊN THU: ";
-                    worksheet.Cells[endRow + 6, startColumn + 1].Value = "-TỔNG GIÁ TRỊ NỢ TRÌNH DƯỢC VIÊN THU ĐƯỢC: ";
+                    worksheet.Cells[endRow + 4, startColumn + 1].Value = "-TỔNG GIÁ TRỊ KẾ HOẠCH KHÁCH HÀNG CK: ";
+                    worksheet.Cells[endRow + 5, startColumn + 1].Value = "-TỔNG GIÁ TRỊ NỢ KHÁCH HÀNG CK: ";
+                    worksheet.Cells[endRow + 6, startColumn + 1].Value = "-TỔNG GIÁ TRỊ KẾ HOẠCH TRÌNH DƯỢC VIÊN THU: ";
+                    worksheet.Cells[endRow + 7, startColumn + 1].Value = "-TỔNG GIÁ TRỊ NỢ TRÌNH DƯỢC VIÊN THU ĐƯỢC: ";
                 
 
 
@@ -2224,5 +2337,137 @@ namespace web4.Controllers
             return View();
         }
 
+        public List<BKHoaDonGiaoHang> LoadDmDt1()
+        {
+            string ma_dvcs = Request.Cookies["Ma_dvcs"] != null ? Request.Cookies["Ma_dvcs"].Value : string.Empty;
+            connectSQL();
+
+            List<BKHoaDonGiaoHang> dataItems = new List<BKHoaDonGiaoHang>();
+            string appendedString = ma_dvcs == "OPC_B1" ? "_010203" : "_01"; // Dòng này cộng chuỗi dựa trên giá trị của Ma_dvcs
+            using (SqlConnection connection = new SqlConnection(con.ConnectionString))
+            {
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand("[usp_DmDtTdv_SAP_MauIn]", connection))
+                {
+                    command.CommandTimeout = 950;
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.AddWithValue("@_Ma_Dvcs", ma_dvcs + appendedString);
+
+                    using (SqlDataAdapter sda = new SqlDataAdapter(command))
+                    {
+                        DataSet ds = new DataSet();
+                        sda.Fill(ds);
+
+                        // Kiểm tra xem DataSet có bảng dữ liệu hay không
+                        if (ds.Tables.Count > 0)
+                        {
+                            DataTable dt = ds.Tables[0];
+
+                            foreach (DataRow row in dt.Rows)
+                            {
+                                BKHoaDonGiaoHang dataItem = new BKHoaDonGiaoHang
+                                {
+                                    Ma_CbNv = row["Ma_Dt"].ToString(),
+                                    hoten = row["Ten_Dt"].ToString(),
+                                    Ma_Dvcs = row["Dvcs"].ToString()
+                                };
+
+                                dataItems.Add(dataItem);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return dataItems;
+        }
+        public ActionResult BienBanBanGiaoNTHH_Index()
+        {
+            DataSet ds = new DataSet();
+            connectSQL();
+            //List<BKHoaDonGiaoHang> dmDList = LoadDmTDV();
+            //List<BKHoaDonGiaoHang> dmDListDt = LoadDmDt();
+            //string query = "exec usp_Vth_BC_BHCNTK_CN @_ngay_Ct1 = '" + Acc.From_date + "',@_Ngay_Ct2 ='"+ Acc.To_date+"',@_Ma_Dvcs='"+ Acc.Ma_DvCs_1+"'";
+            string Pname = "[usp_DanhSachHoaDon_SAP]";
+            var fromDate = Request.Cookies["From_date"].Value;
+            var toDate = Request.Cookies["To_Date"].Value;
+
+            //var Dvcs = Request.Cookies["MA_DVCS"].Value == "" ? Request.Cookies["Dvcs3"].Value : Request.Cookies["MA_DVCS"].Value;
+            //var MaTDV = Request.Cookies["Ma_CbNv"] != null ? Request.Cookies["Ma_CbNv"].Value : string.Empty;
+            var MaDt = Request.Cookies["Ma_DT"] != null ? Request.Cookies["Ma_DT"].Value : string.Empty;
+            //ViewBag.DataTDV = dmDList;
+            //ViewBag.DataDt = dmDListDt;
+
+            using (SqlCommand cmd = new SqlCommand(Pname, con))
+            {
+                cmd.CommandTimeout = 950;
+
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                {
+                    cmd.Parameters.AddWithValue("@_Tu_Ngay", fromDate);
+                    cmd.Parameters.AddWithValue("@_Den_Ngay", toDate);
+                    cmd.Parameters.AddWithValue("@_Ma_Dt", MaDt);
+                    //cmd.Parameters.AddWithValue("@_Ma_CbNv", MaTDV);
+                    //cmd.Parameters.AddWithValue("@_Ma_DvCs", Dvcs);
+                    sda.Fill(ds);
+
+                }
+            }
+            return View(ds);
+        }
+        public ActionResult BienBanBanGiaoNTHH_Fill()
+        {
+            string ma_dvcs = Request.Cookies["Ma_dvcs"] != null ? Request.Cookies["Ma_dvcs"].Value : string.Empty;
+            if (string.IsNullOrEmpty(ma_dvcs))
+            {
+                return View(); // Trả về null nếu ma_dvcs rỗng
+            }
+
+            // Gọi LoadDmHD với Ma_TDV để lấy dữ liệu đã lọc theo Ma_TDV
+            List<BKHoaDonGiaoHang> dmDList = LoadDmTDV();
+            List<BKHoaDonGiaoHang> dmDListDt = LoadDmDt1();
+            //var distinctDataTDV = dmDList
+            //    .GroupBy(x => x.Ten_TDV)
+            //    .Select(x => x.First())
+            //    .ToList();
+
+            //// var distinctDataItems = dmDList
+            ////.GroupBy(x => x.So_Ct_E)
+            ////.Select(x => x.First())
+            //.ToList();
+
+
+            ViewBag.DataTDV = dmDList;
+            ViewBag.DataDt = dmDListDt;
+
+
+            DataSet ds = new DataSet();
+            connectSQL();
+            string Pname = "[usp_DanhSachTDV]";
+
+            using (SqlCommand cmd = new SqlCommand(Pname, con))
+            {
+                cmd.CommandTimeout = 950;
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                con.Open();
+
+                using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                {
+
+                    cmd.Parameters.AddWithValue("@_ma_dvcs", ma_dvcs);
+                    sda.Fill(ds);
+                }
+            }
+            return View();
+        }
+
     }
+
 }

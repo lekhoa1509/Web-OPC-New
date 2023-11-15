@@ -1,7 +1,6 @@
 ﻿
-
 @{
-    ViewBag.Title = "SỔ CHI TIẾT TỒN NỢ PHẢI THU";
+    ViewBag.Title = "BIÊN BẢN BÀN GIAO VÀ NGHIỆM THU HÀNG HÓA";
 }
 @using System.Data;
 <!DOCTYPE html>
@@ -450,7 +449,7 @@
 
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>SỔ CHI TIẾT TỒN NỢ PHẢI THU</title>
+    <title>BIÊN BẢN BÀN GIAO VÀ NGHIỆM THU HÀNG HÓA </title>
     <meta content="" name="description">
     <meta content="Author" name="MJ Maraz">
     <link href="~/assets/images/favicon.png" rel="icon">
@@ -476,14 +475,14 @@
 
 <body>
     <div class="loader" style="z-index:1"></div>
-    <span id="spanText" class="text-loading">[usp_RpCongNoChiTietTDV]</span>
+    <span id="spanText" class="text-loading">[usp_DanhSachHoaDon_SAP]</span>
     <div class="sidebar">
         <div class="logo-details">
 
         </div>
         <ul class="nav-links" style="display: flex; justify-content: center;">
             <li style="margin-left:10px">
-                <form id="dateForm" action="" method="post">
+                <form id="dateForm" action="BienBanBanGiaoNTHH_Index" method="post">
                     <div id="locBC">
                         <a>Từ Ngày</a><br /><br />
                         <input class="tu_ngay" placeholder="Từ Ngày" id="tu_ngay" name="From_date" type="date" format="YYYY-MM-DD" value="@Request.QueryString["From_date"]" />
@@ -492,22 +491,45 @@
                         <input class="den_ngay" id="den_ngay" placeholder="Đến Ngày" name="To_date" type="date" format="YYYY-MM-DD" value="@Request.QueryString["To_date"]" /><br /><br />
                         <script>$("#den_ngay").datetimepicker({ timepicker: false, format: 'Y-m-d' });</script>
                     </div>
-                    <div class="select-btn" style="width:100px">
-                        <select id="dropdownMaTDV" class="select2" style="width: 200px" name="selectedValue">
-                            <option value="">Chọn mã TDV</option>
-                            @if (ViewBag.DataTDV != null)
+                    <div class="select-btnDt" style="width:100px">
+                        <select id="dropdownDt" class="select2" style="width: 200px" name="Ma_DT" onchange="saveSelectedDTValueToCookie()">
+                            <option value="">Chọn Khách Hàng</option>
+                            @if (ViewBag.DataDt != null)
                             {
-                            foreach (var item in ViewBag.DataTDV)
-                            {
-                                <option value="@item.Ma_CbNv"data-hoten="@item.hoten">@item.Ma_CbNv-@item.hoten</option>
-                            }
+                                foreach (var item in ViewBag.DataDt) 
+                                {
+                                    <option value="@item.Ma_CbNv" data-hoten="@item.Ma_CbNv">@item.Ma_CbNv @item.hoten</option>
+                                }
                             }
                         </select>
-                        
-                    </div>
 
+                    </div>
+                    @*<div class="select-btn" style="width:100px">
+                            <select name="Ma_Dvcs" id="maDvCsSelect" onchange="saveSelectedValueToCookie()">
+                                <option value="" style="background-color: #020024;color:white">Vui lòng chọn đối tượng</option>
+                                <option value="OPC_B1">Công Ty Cổ Phần Dược Phẩm OPC</option>
+                                <option value="OPC_B2">Nhà Máy Bình Dương</option>
+                                <option value="OPC_TP">CN Hồ Chí Minh</option>
+                                <option value="OPC_CT">CN Cần Thơ</option>
+                                <option value="OPC_TG">CN Tiền Giang</option>
+                                <option value="OPC_MD">CN Miền Đông</option>
+                                <option value="OPC_VT">CN Vũng Tàu</option>
+                                <option value="OPC_NT">CN Nha Trang</option>
+                                <option value="OPC_DN">CN Đà Nẵng</option>
+                                <option value="OPC_NA">CN Nghệ An</option>
+                                <option value="OPC_HN">CN Hà Nội</option>
+                            </select>
+                        </div>*@
+                    @*<div class="select-btn" style="width:100px;margin-top:20px"> 
+                            <select name="Loai_Ct" id="loaiCt" onchange="saveSelectedValueToLoaiCt()">
+                                <option style="background-color: #020024;color:white">Vui lòng chọn loại phiếu</option>
+                                <option value="1">Phiếu Xuất</option>
+                                <option value="0">Phiếu Nhập</option>
+
+                            </select>
+                        </div>*@
                     <div>
-                        <button class="submit" type="submit" onclick="saveSelectedValueToCookie(); runReport('@Url.Action("TonNo_Fill", "MauInChungTu")')"> Chạy Báo Cáo </button>
+                        <button class="submit" type="submit" onclick="runReport();saveSelectedValueToCookie()"> Chạy Báo Cáo </button>
                     </div>
                 </form>
             </li>
@@ -531,33 +553,32 @@
                 <img src="~/Images/opc.png" style="height:60px;width:60px;margin-left:10px">
             </a>
         }
-        <h4>SỔ CHI TIẾT TỒN NỢ PHẢI THU</h4>
+        <h4>BIÊN BẢN BÀN GIAO VÀ NGHIỆM THU HÀNG HÓA</h4>
 
     </header>
     <!-- =======  Data-Table  = Start  ========================== -->
-
-    <div class="container">
-
+    <div class="container" style="margin-left:180px">
 
         <div class="row">
             <div class="col-12">
                 <div class="data_table">
-                    <table id="example" class="table table-striped table-bordered">
+                    <table id="example" class="table table-striped table-bordered" style="width:100%">
                         <thead class="table-dark">
                             <tr>
-                                <th>Số</th>
-                                <th>Khách hàng</th>
-                                <th>Ngày hóa đơn</th>
-                                <th>Số hóa đơn</th>
-                                <th>Ngày thanh toán</th>
-                                <th>GN Thu</th>
-                                <th>TDV Thu</th>
-                                <th>Tổng tiền</th>
-                                
+                                <th></th>
+                                <th>Số Ct</th>
+                                <th>Ngày Nhập</th>
+                                <th>Kho Nhập/Xuất</th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
                         </tbody>
+
+
                     </table>
                 </div>
             </div>
@@ -583,30 +604,41 @@
     <script src="~/assets/js/pdfmake.min.js"></script>
     <script src="~/assets/js/vfs_fonts.js"></script>
     <script src="~/assets/js/custom.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <script>
-        document.getElementById("dropdownMaTDV").addEventListener("change", function () {
-            var selectedValue = this.value; // Lấy giá trị đã chọn
-            if (selectedValue) {
-                // Kiểm tra nếu đã chọn giá trị (không rỗng)
-                var selectedOption = this.options[this.selectedIndex];
-                var hoTen = selectedOption.getAttribute("data-hoten");
-                document.cookie = "Ma_CbNv=" + selectedValue; // Lưu vào cookie
-                document.cookie = "Ten_TDV=" + hoTen;
-            }
+        $(document).ready(function () {
+            $("#dropdownDt").select2();
         });
-        function runReport(url) {
-            var selectedValue = document.cookie.replace(/(?:(?:^|.*;\s*)Dvcs3\s*=\s*([^;]*).*$)|^.*$/, "$1");
+    </script>
+    <script>
+        function saveSelectedValueToCookie() {
+           
+       
+            var from_date = document.getElementById("tu_ngay").value;
+            var to_date = document.getElementById("den_ngay").value;
+            document.cookie = "From_date=" + from_date;
+            document.cookie = "To_date=" + to_date;
+        }
 
+        function saveSelectedValueToLoaiCt() {
+            var select = document.getElementById("loaiCt");
+            var selectedValue = select.options[select.selectedIndex].value;
+            document.cookie = "LoaiCt=" + selectedValue + "; expires=" + new Date(Date.now() + 86400 * 1000).toUTCString();
+        }
+        function runReport() {
+            var selectedValue = document.cookie.replace(/(?:(?:^|.*;\s*)Dvcs3\s*=\s*([^;]*).*$)|^.*$/, "$1");
+            const spanElement = document.getElementById("spanText");
+            spanElement.style.display = "block";
             // Sử dụng AJAX để gửi giá trị lên controller
             $.ajax({
                 type: "POST",
-                url: "TonNo_Fill", // Điều chỉnh URL tương ứng với controller của bạn
+                url: "BienBanBanGiaoNTHH_Index", // Điều chỉnh URL tương ứng với controller của bạn
                 data: { Ma_Dvcs: selectedValue },
                 success: function (data) {
                     // Xử lý phản hồi từ controller (nếu cần)
                 }
             });
-            window.open(url, '_blank');
         }
     </script>
 
@@ -638,23 +670,16 @@
         setCurrentDate();
     </script>
     <script>
-        function saveSelectedValueToCookie() {
-        
-       
-           var from_date = document.getElementById("tu_ngay").value;
-            var to_date = document.getElementById("den_ngay").value;
-            // Lưu giá trị vào cookie với tên là "Dvcs3" và thời gian sống là 1 ngày (86400 giây)
-          
-            document.cookie = "From_date=" + from_date;
-            document.cookie = "To_date=" + to_date;
-        }
         function handleFormSubmit(event) {
             event.preventDefault();
 
             // Lấy các giá trị ngày đã chọn từ trường nhập liệu
             const fromDate = document.getElementById('tu_ngay').value;
             const toDate = document.getElementById('den_ngay').value;
-
+         
+                document.cookie = "From_date=" + from_date;
+                document.cookie = "To_date=" + to_date;
+            
             // Tạo URL mới với các tham số truy vấn
             const form = event.target;
             const actionUrl = `${form.action}?From_date=${fromDate}&To_date=${toDate}`;
@@ -789,9 +814,9 @@
                 }
 
                 newTab.innerHTML = `
-                                                <a href="${tabHref}">${tabTitle}</a>
-                                                <a class="closeTab" href="">✕</a>
-                                            `;
+                                                    <a href="${tabHref}">${tabTitle}</a>
+                                                    <a class="closeTab" href="">✕</a>
+                                                `;
                 tabControlTabs.appendChild(newTab);
 
                 // Sự kiện khi người dùng nhấp vào nút đóng tab
@@ -822,9 +847,9 @@
                 const newTab = document.createElement("li");
                 newTab.classList.add("tab", "selected");
                 newTab.innerHTML = `
-                                                    <a href="${tabHref}">${tabTitle}</a>
-                                                    <a class="closeTab" href="">✕</a>
-                                                `;
+                                                        <a href="${tabHref}">${tabTitle}</a>
+                                                        <a class="closeTab" href="">✕</a>
+                                                    `;
                 tabControlTabs.appendChild(newTab);
 
                 // Sự kiện khi người dùng nhấp vào nút đóng tab
@@ -870,7 +895,29 @@
         }
 
     </script>
+    @*<script>
+            // Trong view 2
+            document.addEventListener("DOMContentLoaded", function () {
+                // Lấy đường dẫn hiện tại của tab trong view 2
+                const currentTabHref = window.location.href;
 
+                // Lấy nút hoặc sự kiện mà bạn sử dụng để chuyển sang tab khác trong view 3
+                const switchToView3Button = document.querySelector("#switchToView3Button");
+
+                // Sự kiện khi bạn chuyển sang tab khác trong view 3
+                switchToView3Button.addEventListener("click", function () {
+                    // Đường dẫn của tab trong view 3
+                    const newTabHref = "ĐƯỜNG_DẪN_CỦA_TAB_VIEW_3"; // Thay thế bằng đường dẫn thật
+
+                    // Cập nhật đường dẫn của tab trong view 2
+                    window.location.href = newTabHref;
+                });
+
+                // Log đường dẫn hiện tại của tab trong view 2
+                console.log(currentTabHref);
+            });
+
+        </script>*@
     <script>
         // Sự kiện khi người dùng nhấp vào tab
         document.addEventListener("click", function (event) {
@@ -958,9 +1005,114 @@
         });
 
     </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Lấy giá trị selected từ Local Storage
+            const selected = localStorage.getItem("selected");
 
- 
+            // Lấy tất cả các tab
+            const tabs = document.querySelectorAll(".tab");
 
+            // Lặp qua tất cả các tab và kiểm tra nếu có tab có title bằng với giá trị selected
+            tabs.forEach(function (tab) {
+                const tabTitle = tab.querySelector("a").textContent;
+                if (tabTitle === selected) {
+                    // Đổi màu cho tab này
+                    tab.classList.add("selected-tab");
+                }
+            });
+        });
+
+    </script>
+    <script>
+        subMenuLinks.forEach(function (subMenuLink) {
+            subMenuLink.addEventListener("click", function (event) {
+                event.preventDefault();
+
+                const tabTitle = subMenuLink.textContent;
+                const subMenuLinkHref = subMenuLink.getAttribute("href");
+
+                // Cập nhật biến selected với giá trị của tabTitle
+                localStorage.setItem("selected", tabTitle);
+                console.log("selected:", tabTitle); // Thêm log để kiểm tra giá trị của selected
+
+                // Kiểm tra xem tab đã tồn tại trong mảng hay chưa
+                const tabExists = tabsArray.some(tab => tab.title === tabTitle);
+
+                // Nếu tab chưa tồn tại, thêm nó vào mảng
+                if (!tabExists) {
+                    tabsArray.push({ title: tabTitle, href: subMenuLinkHref });
+                    localStorage.setItem("tabsArray", JSON.stringify(tabsArray));
+                }
+
+                // Thêm tab vào giao diện
+                const newTab = document.createElement("li");
+                newTab.classList.add("tab", "selected");
+                newTab.innerHTML = `
+                                                        <a href="${subMenuLinkHref}">${tabTitle}</a>
+                                                        <a class="closeTab" href="">✕</a>
+                                                    `;
+                tabControlTabs.appendChild(newTab);
+
+                // Chuyển view tới thẻ li tương ứng
+                if (subMenuLinkHref) {
+                    // Lưu trạng thái hiện tại vào Local Storage trước khi chuyển trang
+                    localStorage.setItem("currentTabView1", tabTitle);
+                    localStorage.setItem("currentTabHrefView1", subMenuLinkHref);
+                    window.location.href = subMenuLinkHref;
+                }
+            });
+        });
+
+    </script>
+    <script>
+        subMenuLinks.forEach(function (subMenuLink) {
+            subMenuLink.addEventListener("click", function (event) {
+                event.preventDefault();
+
+                const tabTitle = subMenuLink.textContent;
+                const subMenuLinkHref = subMenuLink.getAttribute("href");
+
+                // Kiểm tra xem tabTitle có trùng với selected không
+                const selected = localStorage.getItem("selected");
+                if (selected === tabTitle) {
+                    // Nếu trùng, không làm gì cả và thoát khỏi sự kiện click
+                    return;
+                }
+
+                // Cập nhật biến selected với giá trị của tabTitle
+                localStorage.setItem("selected", tabTitle);
+                console.log("selected:", tabTitle);
+
+                // Kiểm tra xem tab đã tồn tại trong mảng hay chưa
+                const tabExists = tabsArray.some(tab => tab.title === tabTitle);
+
+                // Nếu tab chưa tồn tại, thêm nó vào mảng
+                if (!tabExists) {
+                    tabsArray.push({ title: tabTitle, href: subMenuLinkHref });
+                    localStorage.setItem("tabsArray", JSON.stringify(tabsArray));
+                }
+
+                // Thêm tab vào giao diện
+                const newTab = document.createElement("li");
+                newTab.classList.add("tab", "selected");
+                newTab.innerHTML = `
+                                                <a href="${subMenuLinkHref}">${tabTitle}</a>
+                                                <a class="closeTab" href="">✕</a>
+                                            `;
+                tabControlTabs.appendChild(newTab);
+
+                // Chuyển view tới thẻ li tương ứng
+                if (subMenuLinkHref) {
+                    // Lưu trạng thái hiện tại vào Local Storage trước khi chuyển trang
+                    localStorage.setItem("currentTabView1", tabTitle);
+                    localStorage.setItem("currentTabHrefView1", subMenuLinkHref);
+                    window.location.href = subMenuLinkHref;
+                }
+            });
+        });
+
+    </script>
 
 
 

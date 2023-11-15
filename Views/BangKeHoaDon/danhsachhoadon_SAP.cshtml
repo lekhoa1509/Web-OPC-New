@@ -634,12 +634,18 @@
 
                                 <th>Discount</th>
                                 <th>Loại vật Tư</th>
-                                <th>Số Lượng</th>
+                             
                                 <th>DVT</th>
-                                <th>Số Lượng Theo HĐ</th>
+                                <th>Số Lượng Xuất Theo HĐ</th>
                                 <th>ĐVT HĐ</th>
                                 <th>Tiền (-VAT)</th>
                                 <th>Tiền (+VAT)</th>
+                                <th>Số HDĐT</th>
+                                <th>Ngày HDĐT</th>
+                                <th>Kho Xuất</th>
+                                <th>số lô</th>
+                                <th>hạn dùng</th>
+                                <th>Kênh</th>
                                 <th>Tình Trạng</th>
 
                             </tr>
@@ -657,12 +663,17 @@
 
                                 <td style="text-align:right">@row2["Discount"]%</td>
                                 <td>@row2["Loai_Vt"]</td>
-                                <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["so_luong"]))</td>
                                 <td style="text-align:right">@row2["DVT"]</td>
-                                <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["so_luong_HD"]))</td>
+                                <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["so_luong"]))</td>
                                 <td style="text-align:right">@row2["DVT_HD"]</td>
                                 <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Tien"]))</td>
                                 <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Tong_tien"]))</td>
+                                <td style="text-align:right">@row2["so_HDDT"]</td>
+                                <td style="text-align:right">@row2["Ngay_HDDT"]</td>
+                                <td style="text-align:right">@row2["kho_xuat"]</td>
+                                <td style="text-align:right">@row2["so_lo"]</td>
+                                <td style="text-align:right">@row2["Han_Dung"]</td>
+                                <td style="text-align:right">@row2["kenh"]</td>
                                 <td>@row2["Trang_Thai"]</td>
 
                             </tr>

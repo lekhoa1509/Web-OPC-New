@@ -1,7 +1,6 @@
 ﻿﻿﻿﻿﻿﻿
 @{ ViewBag.Title = "Phiếu Xác Nhận Thanh Toán";
-    string ten_dt = Request.Cookies["ten_dt"] != null ? HttpUtility.UrlDecode(Request.Cookies["ten_dt"].Value) : "";
-    string Dia_Chi = Request.Cookies["Dia_Chi"] != null ? HttpUtility.UrlDecode(Request.Cookies["Dia_Chi"].Value) : "";
+   
     string Dvcs = Request.Cookies["Dvcs"] != null ? HttpUtility.UrlDecode(Request.Cookies["Dvcs"].Value) : "";
     string extractedText = "";
 
@@ -436,12 +435,12 @@
             </div>
             <br />
             <div class="flex-container" style="width:600px">
-                <h5 style="display: inline-block;color:black;font-weight:bold;text-align:left">Khách hàng: <span style="font-size: 15px;">@ten_dt</span></h5>
+                <h5 style="display: inline-block;color:black;font-weight:bold;text-align:left">Khách hàng: <span style="font-size: 15px;">@Request.Cookies["Ten_Dt"].Value</span></h5>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <h5 style="display: inline-block; color: black; font-weight: bold"></h5>
             </div>
             <div style="color:black;font-weight:bold; font-size:15px;width:600px">
-                <h5 style="text-align:left">Địa chỉ: @Dia_Chi</h5>
+                <h5 style="text-align:left">Địa chỉ: @Request.Cookies["Dia_Chi"].Value</h5>
             </div>
 
             <br />

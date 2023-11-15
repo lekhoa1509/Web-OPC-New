@@ -1,8 +1,14 @@
-﻿
-
-@{ ViewBag.Title = "BIÊN BẢN BÀN GIAO VÀ NGHIỆM THU HÀNG HÓA";
+﻿﻿﻿﻿﻿﻿
+@{ ViewBag.Title = "Phiếu Xác Nhận Thanh Toán";
     string ten_dt = Request.Cookies["ten_dt"] != null ? HttpUtility.UrlDecode(Request.Cookies["ten_dt"].Value) : "";
+    string Dia_Chi = Request.Cookies["Dia_Chi"] != null ? HttpUtility.UrlDecode(Request.Cookies["Dia_Chi"].Value) : "";
+    string Dvcs = Request.Cookies["Dvcs"] != null ? HttpUtility.UrlDecode(Request.Cookies["Dvcs"].Value) : "";
+    string extractedText = "";
 
+    if (Dvcs.Length > 10) // Đảm bảo chuỗi có ít nhất 10 ký tự trước khi cắt
+    {
+        extractedText = Dvcs.Substring(10); // Cắt 10 ký tự đầu tiên
+    }
 
 }
 @using System.Data;
@@ -11,12 +17,13 @@
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>BIÊN BẢN BÀN GIAO VÀ NGHIỆM THU HÀNG HÓA</title>
+    <title>Phiếu Xác Nhận Thanh Toán</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         * {
             font-family: 'Times New Roman';
+            color: black;
         }
 
         page {
@@ -32,7 +39,7 @@
         }
 
         form {
-            /*                text-align: center;*/
+            text-align: center;
             padding: 20px;
             border: 0px solid #ccc;
             border: none;
@@ -67,8 +74,7 @@
 
         h3 {
             text-align: center;
-            font-weight: bold;
-            color: black;
+            color: blue;
         }
 
         table, td, th {
@@ -330,7 +336,7 @@
         }
 
         h5 {
-            /*text-align: center;*/
+            text-align: center;
             font-size: 15px;
         }
 
@@ -403,24 +409,8 @@
             }
         }
 
-        img {
-            width: 70px;
-            height: 40px;
-        }
-        .checkbox-label {
-            display: flex;
-            align-items: center;
-        }
-
-        .checkbox-input {
-            margin-right: 5px;
-        }
-        .checkbox-box {
-            width: 15px;
-            height: 15px;
-            border: 1px solid black;
-            margin-left: 5px;
-            
+        tr {
+            page-break-inside: avoid;
         }
     </style>
 </head>
@@ -428,141 +418,155 @@
 
 
     <div class="forms-container">
-       
+        <form class="data-form" id="data-form">
+            <div>
+                <h3 style="margin-left:-450px; font-size:13px;">CÔNG TY CỔ PHẦN DƯỢC PHẨM OPC</h3>
+                <h3 style="font-weight:bold;color:black; font-size:13px;margin-left:-450px">@Dvcs</h3>
+            </div>
 
+            <br />
 
-        <div class="forms-container">
-            <form class="data-form" id="data-form">
-                <div style="display:flex;justify-content:space-between;align-items:center">
-                    <div style=" display: flex; justify-content: space-between; align-items: center;text-align:left">
-
-                        <div style="text-align: center;">
-                            <h3 style="font-size: 13px;">SỞ Y TẾ TỈNH AN GIANG</h3>
-                            <h3 style="font-size: 13px;">BVĐK TRUNG TÂM AN GIANG</h3>
-                            <br />
-                        </div>
-
-
-                    </div>
-                    <div style="text-align:right;color:black">
-                        <h5>Cộng Hòa Xã Hội Chủ Nghĩa Việt Nam</h5>
-                        <h5 style="text-align:center">Độc lập - Tự do - Hạnh Phúc</h5>
-                        <h5 style="text-align:center">-------------------------------------</h5>
-                    </div>
-                </div>
+            <div>
+                <h3 style="font-size: 25px; color: black; font-weight: bold">XÁC NHẬN THANH TOÁN</h3>
+                <h5>Từ @Request.Cookies["From_date"].Value đến @Request.Cookies["To_date"].Value</h5>
                 <br />
-                <div>
-                    <h3 style="font-size: 25px; color: black; font-weight: bold">BIÊN BẢN BÀN GIAO VÀ NGHIỆM THU HÀNG HÓA</h3>
-                    <h5 style="text-align:center;color:black;font-weight:bold">(V/v Cung cấp thuốc, hóa chất, vật tư y tế)</h5>
-                    <br />
-                </div>
+            </div>
+            <div style="width:600px">
+                <h5 style="text-align:left">-Căn cứ Luật thương mại số 36/2005/QH11 ngày 14/06/2005;</h5>
+                <h5 style="text-align:left">-Căn cứ vào hợp đồng số: ................../thỏa thuận của đôi bên.</h5>
+            </div>
+            <br />
+            <div class="flex-container" style="width:600px">
+                <h5 style="display: inline-block;color:black;font-weight:bold;text-align:left">Khách hàng: <span style="font-size: 15px;">@ten_dt</span></h5>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <h5 style="display: inline-block; color: black; font-weight: bold"></h5>
+            </div>
+            <div style="color:black;font-weight:bold; font-size:15px;width:600px">
+                <h5 style="text-align:left">Địa chỉ: @Dia_Chi</h5>
+            </div>
 
-                <div style="justify-content:start;display:flex">
-                    <div style="text-align: left;width:700px;display:flex">
-                        <h5 style="color: black; font-weight: bold; color: #9d0000; word-wrap: break-word;text-align:left ">Căn cứ theo hợp đồng số 591/2023/HĐ-BVAG ngày 03/10/2023 về việc Mua bán giữa các cơ sở y tế và nhà thầu trúng thầu.</h5>
-                    </div>
+            <br />
+            <div style="text-align:left;color:black;font-weight:bold;margin-left:-510px">
+                <h5>Điều kiện thanh toán: </h5>
+            </div>
 
-                </div>
-                <h5 style="color:black;text-align:left;margin-left:30px">Hôm nay lúc: 10 giờ 05 phút, ngày 03 tháng 10 năm 2023, chúng tôi gồm có: </h5>
-                
-                <div style="width:700px;justify-content:start;margin-top:10px;color:black;">
-                    <div style="word-wrap:break-word">
-                        <h5 style="text-align:left;color:black;font-weight:bold;font-size:17px">BÊN A: Bệnh viện Đa khoa Trung tâm An Giang</h5>
-                        <h5 style="text-align: left">Địa chỉ: Số 60 Ung Văn Khiêm, P.Mỹ Phước, TP.Long Xuyên, An Giang</h5>
-                        <div style="display:flex;text-align:left;"><h5>Điện thoại: (0296) 3853747</h5> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h5>Fax:</h5></div>
-                    <h5 style="text-align:left">Tài khoản số:</h5>
-                        <h5 style="text-align:left">Tại:</h5>
-                        <h5 style="text-align:left">Mã số thuế: 1600258404</h5>
-                        <div style="display:flex;text-align:left"><h5 style="text-align:left;color:#9d0000">Đại diện: Lâm Võ Hùng</h5><h5 style="color:#9d0000;margin-left:150px">Chức vụ: Phó Giám Đốc</h5></div>
-                    </div>
-                </div>
-                <br />
-               <h5 style="text-align:left;color:black;font-weight:bold;font-size:17px">BÊN B: CÔNG TY CỔ PHẦN DƯỢC PHẨM OPC - Chi nhánh Cần Thơ</h5>
-                <h5 style="text-align:left;color:black">Địa chỉ: 1017 Hồng Bàng phường 12, quận 6, TP.HCM</h5>
-                <div style="display:flex;text-align:left"> <h5 style="text-align:left;color:#9d0000">Đại diện: DS.Phạm Thị Xuân Hương</h5><h5 style="color:#9d0000;margin-left:120px">Chức vụ: Tổng Giám Đốc</h5></div>
-                <h5 style="color:black;text-align:left">Ủy quyền ký kết và thực hiện hợp đồng cho: </h5>
-                <h5 style="color:black;font-weight:bold;text-align:left">Công Ty Cổ Phần Dược Phẩm OPC - Chi nhánh Cần Thơ</h5>
-                <h5 style="color:black;text-align:left">Địa chỉ: Số 172, Khu đô thị hai bên đường Nguyễn Văn Cừ, Khu vực 8, Phường An Bình, Quận Ninh Kiều, Thành Phố Cần Thơ.</h5>
-                <div style="text-align:left;display:flex"><h5 style="color:black;text-align:left">Điện thoại: 0292.3837999</h5><h5 style="color:black;margin-left:150px">Fax:</h5></div>
-                <h5 style="color:black;text-align:left">Tài khoản số: 1890201002962 tại Ngân hàng Nông nghiệp và phát triển Nông thôn Việt Nam - CN Cần Thơ II.</h5>
-                <h5 style="color:black;text-align:left">Mã số thuế: 0302560110-006</h5>
-                <div style="text-align:left;display:flex;color:#9d0000"> <h5 style="color: black; text-align: left; font-weight: bold; font-size: 15px; color: #9d0000">Đại diện: DSCKI.Lê Hữu Vũ Linh</h5><h5 style="color: black; margin-left: 120px; color: #9d0000">Chức vụ: Giám Đốc Chi Nhánh</h5></div>
-                <h5 style="color:#9d0000;text-align:left">Giấy Ủy quyền số: 353/HCNS-OPC ngày 11 tháng 08 năm 2023</h5>
-                <br />
-                <h5 style="text-align:left;color:black;width:700px;display:flex">Công Ty Cổ Phần Dược Phẩm OPC - Chi Nhánh Cần Thơ cùng với BVĐK Trung Tâm An Giang tiến hành giao nhận hàng hóa với những nội dung sau: </h5>
-               
-
-
-                <div style="margin-top:10px">
-                    <table border="1" border-collapse="collapse" style="width:700px">
-                        <tr style="font-size:10px;font-weight:bold;color:black">
-                            <th >STT</th>
-                            <th>TÊN HÀNG HÓA, DỊCH VỤ</th>
-                            <th style="padding:10px">ĐVT</th>
-                            <th>SỐ LƯỢNG</th>
-                            <th>ĐƠN GIÁ</th>
-                            <th>THÀNH TIỀN</th>
-                            <th>Hãng SX, Nước SX</th>
-                            <th>Số Lô - Hạn Dùng</th>
+            <div style="width:600px">
+                <h5 style="font-size: 14px;text-align:left">Khi thanh toán ngay, Quý khách hàng được chiết khấu 2% trên giá trị thanh toán của những hóa đơn cụ thể như sau: </h5>
+            </div><br />
+            <div>
+                <table border="1" border-collapse="collapse" style="width:600px">
+                    <thead stye="display: table-header-group;">
+                        <tr style="font-size: 10px; font-weight: bold; color: black; page-break-inside:avoid">
+                            <th style="padding:10px">SỐ</th>
+                            <th style="width:100px">NGÀY HĐ</th>
+                            <th style="width:100px">NGÀY ĐẾN HẠN</th>
+                            <th style="width:120px">TIỀN HĐ</th>
+                            <th style="width:120px">CKTT</th>
+                            <th styl="width:100px">TIỀN THANH TOÁN</th>
                         </tr>
-                        <tbody>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                    </thead>
+                    <tbody>
+                        @foreach (DataRow row3 in Model.Tables[0].Rows)
+                        {
+                            <tr data-soct="@row3["So_Ct"]">
+                                <td style="padding:10px">@row3["So_Ct"]</td>
+                                <td style="padding:10px">
+                                    @row3["Ngay_Ct1"]
+                                </td>
+                                <td style="padding:10px">
+                                    @row3["Han_Thanh_Toan"]
+                                </td>
+                                <td style="padding:10px;text-align:right">@row3["Tong_Tien"]</td>
+                                <td style="padding:10px;text-align:right">@row3["CKTT"]</td>
+                                <td style="padding:10px;text-align:right">@row3["Tien_TT"]</td>
+
+
                             </tr>
 
+                        }
+                        @foreach (DataRow row3 in Model.Tables[1].Rows)
+                        {
+
+
+                        <td style="padding:10px;color:black;font-weight:bold" colspan="3">Tổng Cộng</td>
+                        <td style="padding:10px;text-align:right;color:black;font-weight:bold">@row3["Tong_Tien"]</td>
+                        <td style="padding:10px;text-align:right;color:black;font-weight:bold">@row3["CKTT"]</td>
+                        <td style="padding:10px;text-align:right;color:black;font-weight:bold">@row3["Tong_TienTT"]</td>
+                    }
                         </tbody>
 
-
                     </table>
-                    <h5 style="color:black;font-weight:bold;margin-left:220px">Cộng:</h5>
-                    <h5 style="color:black;font-weight:bold;margin-left:170px">Thuế VAT(5%):</h5>
-                    <h5 style="color:black;font-weight:bold;margin-left:160px">Trị giá thanh toán:</h5>
                     <br />
-                    <h5 style="color:black;text-align:left">Bằng chữ:</h5>
-                    <div style="width:700px;word-wrap:break-word;text-align:left">
-                        <h5 style="color:black;text-align:left">- Biên bản giao hàng kèm theo hóa đơn tài chính xuất hàng số: 00026695 ngày 03/10/2023.</h5>
-                        <h5 style="color: black; text-align: left">- Hàng giao đủ số lượng, đúng chủng loại, qui cách, hàm lượng, hạn dùng theo hợp đồng đã ký kết.</h5>
-                        <h5 style="color: black; text-align: left">- Cảm quan: màu sắc, hình dạng nguyên vẹn.</h5>
-                        <div style="display:flex;color:black;text-align:center">
-                            <div style="display:flex;margin-left:50px">
-                                <h5>ĐẠT: </h5>
-                                <div class="checkbox-box"></div>
-                            </div>
-                            <div style="display:flex;margin-left:200px">
-                                <h5> KHÔNG ĐẠT: </h5>
-                                <div class="checkbox-box"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <h5 style="text-align:left;color:black">Biên bản kết thúc lúc: 10 giờ 30 phút cùng ngày.</h5>
-                    <h5 style="text-align:left;color:black">Biên bản lập thành 03 bản, bên Mua giữ 01 bản, bên Bán giữ 01 bản, đều có giá trị như nhau.</h5>
-                  
-                    <br />
-                    @*<h4 style="margin-left:auto">P. KHCU &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Thủ kho&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Xưởng sản xuất</h4>*@
-                    <div style="display:flex">
-                        <h4 style="font-size:14px;color:black">ĐẠI DIỆN BÊN A BÊN MUA</h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <h4 style="margin-left:50px;font-size:14px;color:black">KHOA DƯỢC</h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <h4 style="margin-left:80px;font-size:14px;color:black">ĐẠI DIỆN BÊN B BÊN BÁN</h4>
+                    <div style="text-align:left">
+                        <h5 style="word-wrap: break-word;font-size:15px">Khách hàng đã thanh toán số tiền:...................., nhận chiết khấu thanh toán số tiền:...................</h5>
                     </div><br />
-                   
-                        <h5 style="font-weight:bold;text-align:right;color:#d90000">DSCKI.LÊ HỮU VŨ LINH</h5>
+                    <div style="text-align:right">
+                        <h4 class="branch">@extractedText, ngày&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tháng&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;năm&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h4>
 
+                    </div>
+                    @*<h4 style="margin-left:auto">P. KHCU &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Thủ kho&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Xưởng sản xuất</h4>*@
+                    <div style="display:inline-block">
+                        <h4 style="display:inline-block">Khách Hàng</h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <h4 style="display:inline-block">Nhân viên thu tiền </h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <h4 style="display:inline-block">Người lập bảng</h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </div><br />
+                    <div>
+                        <h5 style="font-style:italic;text-align:left;margin-left:10px">(Ký, ghi họ tên)</h5>
+                    </div>
                 </div>
-
+                <button class="print-button" onclick="printDataForm()" id="print">In Data</button>
             </form>
         </div>
         <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 
-       
+        <script>
+            document.getElementById("dropdownInput").addEventListener("input", function () {
+                var inputValue = this.value;
+                var options = document.querySelectorAll("#dropdownList option");
 
-</body>
+                for (var i = 0; i < options.length; i++) {
+                    if (options[i].getAttribute("value") === inputValue) {
+                        document.getElementById("selectedOption").value = inputValue;
+                        break;
+                    }
+                }
+            });
+
+            function displaySelectedDate() {
+                // Lấy các giá trị ngày đã chọn từ trường nhập liệu
+                const fromDate = document.getElementById('tu_ngay').value;
+                const toDate = document.getElementById('den_ngay').value;
+
+                // Hiển thị các giá trị ngày đã chọn lên thẻ h5
+                const selectedDateDisplay = document.getElementById('selectedDateDisplay');
+                selectedDateDisplay.innerText = `Từ ngày: ${fromDate} - Đến ngày: ${toDate}`;
+                window.location.href = selectedDateDisplay;
+            }
+        </script>
+
+        <script>
+            // Lấy tất cả các phần tử có class "branch"
+            var branches = document.querySelectorAll('.branch');
+
+            // Duyệt qua từng phần tử và xử lý chuỗi dữ liệu
+            branches.forEach(function (branch) {
+                var text = branch.textContent;
+
+                // Tìm và loại bỏ phần "Chi nhánh"
+                var branchName = text.replace('Chi nhánh', '').trim();
+
+                // Tạo một thẻ <a> mới và gán nội dung
+                var newLink = document.createElement('a');
+                newLink.textContent = branchName;
+
+                // Thêm thẻ <a> vào trước phần tử hiện tại
+                branch.parentNode.insertBefore(newLink, branch);
+
+                // Loại bỏ phần tử hiện tại
+                branch.remove();
+            });
+        </script>
+    </body>
 
 </html>
 
