@@ -312,6 +312,7 @@
     <Compile Include="Controllers\BangKeHoaDonController.cs" />
     <Compile Include="Controllers\BaoCaoBanHangCNController.cs" />
     <Compile Include="Controllers\BaoCaoBanHangTDVController.cs" />
+    <Compile Include="Controllers\PhieuKeToanController.cs" />
     <Compile Include="Controllers\TheoDoiHDThauController.cs" />
     <Compile Include="Controllers\BaoCaoDoanhThuGamHangTheoDoiTuongController.cs" />
     <Compile Include="Controllers\BaoCaoHopDongController.cs" />
@@ -1074,6 +1075,7 @@
     <Content Include="Views\TheoDoiHDThau\TheoDoiHopDongThau_Fill.cshtml" />
     <Content Include="Views\TheoDoiHDThau\TheoDoiHopDongThau.cshtml" />
     <Content Include="Views\TheoDoiHDThau\TheoDoiHopDongThau_All.cshtml" />
+    <Content Include="Views\PhieuKeToan\PhieuKeToan.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
