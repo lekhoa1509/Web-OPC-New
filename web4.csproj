@@ -1075,6 +1075,8 @@
     <Content Include="Views\TheoDoiHDThau\TheoDoiHopDongThau_Fill.cshtml" />
     <Content Include="Views\TheoDoiHDThau\TheoDoiHopDongThau.cshtml" />
     <Content Include="Views\TheoDoiHDThau\TheoDoiHopDongThau_All.cshtml" />
+    <Content Include="Views\BangKeHoaDon\danhsachhoadon_SAP_CN.cshtml" />
+    <Content Include="Views\BangKeHoaDon\DanhSachHoaDon_Fill_HCM.cshtml" />
     <Content Include="Views\PhieuKeToan\PhieuKeToan.cshtml" />
   </ItemGroup>
   <ItemGroup>
