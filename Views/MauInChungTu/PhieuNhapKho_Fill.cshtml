@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "Mẫu In Phiếu Nhập Kho";
+    ViewBag.Title = "Mẫu In Phiếu Nhập Xuất Kho";
 }
 @using System.Data;
 <!DOCTYPE html>
@@ -449,7 +449,7 @@
 
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Chứng Từ Phiếu Nhập </title>
+    <title>Chứng Từ Phiếu Nhập Xuất Kho </title>
     <meta content="" name="description">
     <meta content="Author" name="MJ Maraz">
     <link href="~/assets/images/favicon.png" rel="icon">
@@ -540,7 +540,7 @@
                 <img src="~/Images/opc.png" style="height:60px;width:60px;margin-left:10px">
             </a>
         }
-        <h4>Mẫu In Phiếu Nhập Kho</h4>
+        <h4>Mẫu In Phiếu Nhập Xuất Kho</h4>
 
     </header>
     <!-- =======  Data-Table  = Start  ========================== -->
@@ -602,6 +602,7 @@
             document.cookie = "From_date=" + from_date;
             document.cookie = "To_date=" + to_date;
         }
+     
         function saveSelectedValueToLoaiCt() {
             var select = document.getElementById("loaiCt");
             var selectedValue = select.options[select.selectedIndex].value;
@@ -609,7 +610,8 @@
         }
         function runReport() {
             var selectedValue = document.cookie.replace(/(?:(?:^|.*;\s*)Dvcs3\s*=\s*([^;]*).*$)|^.*$/, "$1");
-
+            const spanElement = document.getElementById("spanText");
+            spanElement.style.display = "block";
             // Sử dụng AJAX để gửi giá trị lên controller
             $.ajax({
                 type: "POST",

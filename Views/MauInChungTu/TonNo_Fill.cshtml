@@ -7,7 +7,11 @@
 
     // Chuyển đổi thành chuỗi theo định dạng "DD/MM/YYYY"
     string ngayDaChinhSua = ngay.ToString("dd/MM/yyyy");
+    HttpCookie ngayDaChinhSuaCookie = new HttpCookie("NgayDaChinhSua", ngayDaChinhSua);
+    ngayDaChinhSuaCookie.Expires = DateTime.Now.AddDays(1); // Ví dụ: sống trong 1 ngày
 
+    // Thêm cookie vào Response để nó được gửi về trình duyệt
+    Response.Cookies.Add(ngayDaChinhSuaCookie);
 }
 @using System.Data;
 @using System.Globalization
@@ -722,7 +726,7 @@
 
         </form>
     </div>
-    @* <button id="export-button" onclick="exportExcel()">Xuất Excel</button>*@
+    <button id="export-button" onclick="exportExcel()">Xuất Excel</button>
     <input type="file" id="file-input" style="display: none">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}" />
@@ -851,16 +855,24 @@
                 tableData.push(rowData); // Thêm mảng dữ liệu hàng vào mảng tableData
             });
 
-            // Chuyển mảng tableData thành một chuỗi JSON
-            var jsonData = JSON.stringify(tableData);
+            // Chia mảng thành 5 phần (hoặc số phần bạn muốn)
+            var partSize = 30;
+            var parts = [];
+            for (var i = 0; i < 3; i++) {
+                var start = i * partSize;
+                var end = (i === 2) ? tableData.length : start + partSize;
+                var part = tableData.slice(start, end);
+                parts.push(part);
+            }
 
-            // Lưu chuỗi JSON vào cookie
-            Cookies.set("tableDataCookie", jsonData);
-
-            // Kiểm tra xem dữ liệu đã được lưu vào cookie chưa
-            var retrievedData = Cookies.get("tableDataCookie");
-            console.log("Dữ liệu từ cookie:", retrievedData);
+            // Chuyển mỗi phần thành chuỗi JSON và lưu vào các cookie riêng rẽ
+            for (var i = 0; i < parts.length; i++) {
+                var partJSON = JSON.stringify(parts[i]);
+                var cookieName = "tableDataCookie" + (i + 1);
+                Cookies.set(cookieName, partJSON);
+            }
         });
+
     </script>
     <script>
         // Đợi cho tài liệu HTML được tải hoàn thành

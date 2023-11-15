@@ -9,35 +9,12 @@
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
-        * {
-            font-family: 'Times New Roman';
-        }
-
-        page {
-            margin: 0;
-        }
-
-        body {
-            display: flex;
-            justify-content: center;
-            /*  align-items: center;*/
-            min-height: 100vh;
-            margin: 0;
-        }
-
-        form {
-            text-align: center;
-            padding: 20px;
-            border: 0px solid #ccc;
-            border: none;
-        }
-
-        .flex-container {
-            text-align: left;
-        }
-
         a:hover {
             background-color: lightskyblue;
+        }
+
+        * {
+            font-family: "Times New Roman";
         }
 
         a {
@@ -132,14 +109,13 @@
         div#chart {
             text-align: center;
             display: flex;
-            justify-content:;
+            /*         justify-content:;*/
             width: 50%;
             height: 300px;
         }
 
         .submit {
-            /*height: 50px;
-        width: 100px;*/
+            height: 50px;
             background-color: silver;
             border: none;
             color: cadetblue;
@@ -304,8 +280,10 @@
             }
 
         .sidebar {
-            position: fixed;
-            height: 100%;
+            position: relative;
+            top: 0;
+            left: 0;
+            height: 50px;
             width: 200px;
             transition: all 0.5s ease;
         }
@@ -321,9 +299,50 @@
             text-align: center;
         }
 
-        h5 {
+        .data_table {
+            width: max-content;
+        }
+
+        .bieu_do {
+            padding: 10px;
+            margin: 10%;
             text-align: center;
-            font-size: 15px;
+            width: 200px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #fff;
+            cursor: pointer;
+            margin: 20px;
+            height: 55px;
+            text-align: center;
+            border: none;
+            background-size: 300% 100%;
+            border-radius: 10px;
+            moz-transition: all .4s ease-in-out;
+            -o-transition: all .4s ease-in-out;
+            -webkit-transition: all .4s ease-in-out;
+            transition: all .4s ease-in-out;
+        }
+
+            .bieu_do:hover {
+                background-position: 100% 0;
+                moz-transition: all .4s ease-in-out;
+                -o-transition: all .4s ease-in-out;
+                -webkit-transition: all .4s ease-in-out;
+                transition: all .4s ease-in-out;
+            }
+
+            .bieu_do:focus {
+                outline: none;
+            }
+
+        .bieu_do {
+            background-image: linear-gradient(to right, #0ba360, #3cba92, #30dd8a, #2bb673);
+            box-shadow: 0 4px 15px 0 rgba(23, 168, 108, 0.75);
+        }
+
+        .chart {
+            margin: 20px 0px 0px 0px;
         }
 
         .text-loading {
@@ -339,62 +358,69 @@
             display: none;
         }
 
-        .expandable-icon {
-            cursor: pointer;
-        }
-
-            .expandable-icon.collapsed {
-                transform: rotate(0deg);
-            }
-
-            .expandable-icon.expanded {
-                transform: rotate(180deg);
-            }
-
-        .material-symbols-outlined {
-            cursor: pointer;
-        }
-        /* Style for the container of the forms */
-        .forms-container {
-            display: flex;
-        }
-
-        /* Style for the locBC form */
-        .locBC-form {
-            width: 300px; /* Adjust width as needed */
-            margin-right: 20px; /* Add space between forms */
-        }
-
-        /* Style for the data form */
-        .data-form {
-            flex: 1; /* Take up remaining space */
-        }
-
-        .print-button {
+        .custom-checkbox {
             margin-top: 10px;
+            display: inline-block;
+            position: relative;
+            padding-left: 30px;
+            margin-right: 15px;
+            cursor: pointer;
         }
 
-        @@media print {
-            #locBC {
-                display: none;
+            .custom-checkbox input {
+                position: absolute;
+                opacity: 0;
+                cursor: pointer;
             }
 
-            #data-form {
-                justify-content: center;
-                /*  align-items: center;*/
-                min-height: 100vh;
-                margin: 0; /* Canh giữa nội dung trong data-form */
-            }
-
-            h5 {
-                text-align: center;
-                font-size: 15px;
-            }
-
-            #data-form .print-button {
-                display: none;
-            }
+        .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 25px;
+            width: 25px;
+            border: 2px solid black;
+            background-color: #ffffff;
         }
+
+        .custom-checkbox:hover input ~ .checkmark {
+            background-color: #ccc;
+        }
+
+        .custom-checkbox input:checked ~ .checkmark {
+            background-color: #2196F3;
+        }
+
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+
+        .custom-checkbox input:checked ~ .checkmark:after {
+            display: block;
+        }
+
+        .custom-checkbox .checkmark:after {
+            left: 9px;
+            top: 5px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 3px 3px 0;
+            transform: rotate(45deg);
+        }
+
+        .checkContainer {
+            height: 300px;
+            overflow: auto;
+            scrollbar-width: none;
+        }
+
+            .checkContainer::-webkit-scrollbar {
+                width: 0.2em;
+                background-color: transparent;
+            }
 
         .tabs {
             display: inline-block;
@@ -492,7 +518,44 @@
             background-color: cornflowerblue; /* Màu nền tab khi active */
             color: #fff; /* Màu chữ khi active */
         }
+
+        .tab.selected-tab {
+            pointer-events: none;
+            background-color: #3763a3; /* Màu nền của tab */
+        }
+
+            .tab.selected-tab a {
+                color: white /* Màu nền của tab */
+            }
+
+            .tab.selected-tab .closeTab {
+                pointer-events: auto;
+            }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0/js/bootstrap-select.min.js"></script>
+    <script type="text/javascript" src="Scripts/table2excel.js"></script>
+
+
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>OPC </title>
+    <meta content="" name="description">
+    <meta content="Author" name="MJ Maraz">
+    <link href="~/assets/images/favicon.png" rel="icon">
+    <link href="~/assets/images/favicon.png" rel="apple-touch-icon">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- ========================================================= -->
+
+
+    <link rel="stylesheet" href="~/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/assets/css/datatables.min.css">
+    <link rel="stylesheet" href="~/assets/css/style.css">
+    <link rel="stylesheet" href="~/Styles/loader.css">
 </head>
 <body>
     @*<div class="tab-control" style="position:fixed;bottom:0">
@@ -501,126 +564,105 @@
 
             </ul>
         </div>*@
+    <div class="sidebar">
+        
+            <ul class="nav-links" style="display: flex; justify-content: center;">
+                <li>
+                    <form class="locBC-form" id="dateForm" action="PhieuNhapXNTT_Index" method="post" onsubmit="handleFormSubmit(event)">
+                        <div id="locBC">
 
-    <div class="forms-container">
-        <ul class="nav-links" style="display: flex; justify-content: center;">
-            <li>
-                <form class="locBC-form" id="dateForm" action="PhieuNhapXNTT" method="post" onsubmit="handleFormSubmit(event)">
-                    <div id="locBC">
+                            <a>Từ Ngày</a><br /><br />
 
-                        <a>Từ Ngày</a><br /><br />
-
-                        <input class="tu_ngay" placeholder="Từ Ngày" id="tu_ngay" name="From_date" type="date" format="YYYY-MM-DD" value="@Request.QueryString["From_date"]" />
-                        <script>$("#tu_ngay").datetimepicker({ timepicker: false, format: 'Y-m-d' });</script><br /><br />
-                        <a>Đến Ngày</a><br /><br />
-                        <input class="den_ngay" id="den_ngay" placeholder=" Đến Ngày" name="To_date" type="DATE" format="YYYY-MM-DD" value="@Request.QueryString["To_date"]" /><br /><br />
-                        <script>$("#den_ngay").datetimepicker({ timepicker: false, format: 'Y-m-d' });</script>
-                        <input type="text" id="dropdownInput" list="dropdownList" placeholder="Tìm kiếm danh mục">
-                        <datalist id="dropdownList">
-                            @foreach (var item in ViewBag.DataItems)
-                            {
-                                <option value="@item.Ma_Dt" data-ten="@item.Ten_Dt" data-diachi="@item.Dia_Chi" data-dvcs="@item.Dvcs">@item.Ten_Dt</option>
-                            }
-                        </datalist>
-                        <input type="hidden" name="Ma_Dt" id="selectedOption">
+                            <input class="tu_ngay" placeholder="Từ Ngày" id="tu_ngay" name="From_date" type="date" format="YYYY-MM-DD" value="@Request.QueryString["From_date"]" />
+                            <script>$("#tu_ngay").datetimepicker({ timepicker: false, format: 'Y-m-d' });</script><br /><br />
+                            <a>Đến Ngày</a><br /><br />
+                            <input class="den_ngay" id="den_ngay" placeholder=" Đến Ngày" name="To_date" type="DATE" format="YYYY-MM-DD" value="@Request.QueryString["To_date"]" /><br /><br />
+                            <script>$("#den_ngay").datetimepicker({ timepicker: false, format: 'Y-m-d' });</script>
+                            <input type="text" id="dropdownInput" list="dropdownList" placeholder="Tìm kiếm danh mục">
+                            <datalist id="dropdownList">
+                                @foreach (var item in ViewBag.DataItems)
+                                {
+                                    <option value="@item.Ma_Dt" data-madt="@item.Ma_Dt" data-ten="@item.Ten_Dt" data-diachi="@item.Dia_Chi" data-dvcs="@item.Dvcs">@item.Ten_Dt</option>
+                                }
+                            </datalist>
+                            <input type="hidden" name="Ma_Dt" id="selectedOption">
 
 
-                        <div>
-                            <button class="submit" type="submit" id="runReportButton" onclick="runReport()"> Chạy Báo Cáo </button>
+                            <div>
+                                <button class="submit" type="submit" id="runReportButton" onclick="runReport()"> Chạy Báo Cáo </button>
+                            </div>
                         </div>
-                    </div>
-                </form>
-            </li>
-        </ul>
+                    </form>
+                </li>
+            </ul>
 
 
-        <form class="data-form" id="data-form">
-            <div>
-                <h3 style="margin-left:-500px; font-size:13px;">CÔNG TY CỔ PHẦN DƯỢC PHẨM OPC</h3>
-                <h3 style="font-weight:bold;color:black; font-size:13px;margin-left:-500px">CHI NHÁNH ĐÀ NẴNG</h3>
-            </div>
 
-            <br />
-
-            <div>
-                <h3 style="font-size: 25px; color: black; font-weight: bold">XÁC NHẬN THANH TOÁN</h3>
-                <br />
-            </div>
-            <div style="text-align:left;margin-left:30px">
-                <h5>-Căn cứ Luật thương mại số 36/2005/QH11 ngày 14/06/2005;</h5>
-                <h5>-Căn cứ vào hợp đồng số: ...../thỏa thuận của đôi bên.</h5>
-            </div>
-            <br />
-            <div class="flex-container">
-                <h5 style="display: inline-block;color:black;font-weight:bold">Khách hàng: <span style="font-size: 15px;">NHÀ THUỐC HẢI PHÒNG</span></h5>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <h5 style="display: inline-block; color: black; font-weight: bold">NV_01580</h5>
-            </div>
-            <div style="text-align: left; color: black; font-weight: bold">
-                <h5>Địa Chỉ: 1017 Hồng Bàng, phường 12, Quận 6, Tp.HCM </h5>
-            </div>
-            <br />
-            <div style="text-align:left;color:black;font-weight:bold">
-                <h5>Điều kiện thanh toán: </h5>
-            </div>
-
-            <div style="text-align:left">
-                <h5 style="font-size: 13px">Khi thanh toán ngay, Quý khách hàng được chiết khấu 2% trên giá trị thanh toán của những hóa đơn cụ thể như sau: </h5>
-            </div><br />
-            <div>
-                <table border="1" border-collapse="collapse">
-                    <tr style="font-size:10px;font-weight:bold;color:black">
-                        <th style="padding:10px">SỐ</th>
-                        <th>NGÀY HĐ</th>
-                        <th>NGÀY THU</th>
-                        <th>TIỀN HĐ</th>
-
-                        <th>CKTT</th>
-                        <th>TIỀN THANH TOÁN</th>
-                    </tr>
-                    <tbody>
-                        <tr>
-                            <td style="padding:30px"></td>
-                            <td style="padding:35px"></td>
-                            <td style="padding:35px"></td>
-
-                            <td style="padding:30px"></td>
-                            <td style="padding:30px"></td>
-                            <td>&nbsp;&nbsp;</td>
-                        </tr>
-                        <tr style="color:black;font-weight:bold">
-                            <td>&nbsp;&nbsp;</td>
-                            <td colspan="2">Tổng cộng: </td>
-
-                            <td>&nbsp;&nbsp;</td>
-
-                            <td>&nbsp;&nbsp;</td>
-                            <td>&nbsp;&nbsp;</td>
-                        </tr>
-                    </tbody>
-
-                </table>
-                <br />
-                <div style="text-align:left">
-                    <h5 style="word-wrap: break-word;font-size:15px">Khách hàng đã thanh toán số tiền;...................., nhận chiết khấu thanh toán số tiền:..................., nhận code <br />khuyến mãi số tiền:......... </h5>
-                </div><br />
-                <div style="text-align:right">
-                    <h4>Đà Nẵng, ngày&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tháng&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;năm&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h4>
-                </div>
-                @*<h4 style="margin-left:auto">P. KHCU &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Thủ kho&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Xưởng sản xuất</h4>*@
-                <div style="display:inline-block">
-                    <h4 style="display:inline-block">Khách Hàng</h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <h4 style="display:inline-block">Nhân viên thu tiền </h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <h4 style="display:inline-block">Người lập bảng</h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                </div><br />
-                <div>
-                    <h5 style="font-style:italic;text-align:left;margin-left:40px">(Ký, ghi họ tên)</h5>
-                </div>
-            </div>
-
-        </form>
+       
     </div>
 
+    <header class="header_part">
+        @if (Request.Cookies["UserName"].Value == "Admin-cnct" || Request.Cookies["UserName"].Value == "Admin-cntg" || Request.Cookies["UserName"].Value == "Admin-cnmd" || Request.Cookies["UserName"].Value == "Admin-cnh1" || Request.Cookies["UserName"].Value == "Admin-cnvt"
+                      || Request.Cookies["UserName"].Value == "Admin-cnnt" || Request.Cookies["UserName"].Value == "Admin - cndn" || Request.Cookies["UserName"].Value == "Admin - cnna" || Request.Cookies["UserName"].Value == "Admin - cnhn")
+        {
+
+
+
+            <a href="/Home/AboutCN" style="cursor:pointer">
+                <img src="~/Images/opc.png" style="height:60px;width:60px;margin-left:10px">
+            </a>
+        }
+        else
+        {
+            <a href="/Home/About" style="cursor:pointer">
+                <img src="~/Images/opc.png" style="height:60px;width:60px;margin-left:10px">
+            </a>
+        }
+        <h4>Báo Cáo Doanh Thu Chi Nhánh</h4>
+    </header>
+    <div class="container">
+
+
+        <div class="row">
+            <div class="col-12">
+                <div class="data_table">
+                    <table id="example" class="table table-striped table-bordered">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Tên Đơn Vị</th>
+                                <th>Doanh Thu OPC</th>
+                                <th>Khoán OPC</th>
+                                <th>Tỷ Lệ OPC</th>
+                                <th>Doanh Thu Cồn</th>
+                                <th>Khoán Cồn</th>
+                                <th>Tỷ Lệ Cồn</th>
+                                <th>Doanh Thu Sủi</th>
+                                <th>Khoán Sủi</th>
+                                <th>Tỷ Lệ Sủi</th>
+                                <th>Doanh Thu Phiến</th>
+                                <th>Khoán Phiến</th>
+                                <th>Tỷ Lệ Phiến</th>
+                                <th>Doanh Thu 25</th>
+                                <th>Khoán 25</th>
+                                <th>Tỷ Lệ 25</th>
+                                <th>Doanh Thu Combo</th>
+                                <th>Doanh Thu Khác</th>
+                                <th>Tổng Thực Hiện</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="~/assets/js/jquery-3.6.0.min.js"></script>
+    <script src="~/assets/js/datatables.min.js"></script>
+    <script src="~/assets/js/pdfmake.min.js"></script>
+    <script src="~/assets/js/vfs_fonts.js"></script>
+    <script src="~/assets/js/custom.js"></script>
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <script>
         // Lấy giá trị từ các trường input
@@ -628,8 +670,8 @@
         var toDate = document.getElementById("den_ngay").value;
 
         // Đặt Cookies với giá trị từ người dùng
-        document.cookie = "From_date=" + fromDate;
-        document.cookie = "To_date=" + toDate;
+        document.cookie = "From_date1=" + fromDate;
+        document.cookie = "To_date1=" + toDate;
     </script>
     <script>
         document.getElementById("dropdownInput").addEventListener("input", function () {
@@ -658,14 +700,18 @@
                     if (selectedOption) {
                         var tenDt = selectedOption.text.toString();
                         var selectedDiaChi = selectedOption.getAttribute('data-diachi');
-                        var selectedDvcs = selectedOption.getAttribute('data-Dvcs');
-                        document.cookie = `Ten_Dt=${encodeURIComponent(tenDt)}; expires=Thu, 01 Jan 2099 00:00:00 UTC; path=/;`;
+                        var selectedDvcs = selectedOption.getAttribute('data-dvcs'); // Corrected attribute name
+                        var selectedDt = selectedOption.getAttribute('data-madt');
+                        var selectedTen = selectedOption.getAttribute('data-ten');
+                        document.cookie = 'Ten_Dt=' +selectedTen;
                         document.cookie = 'Dia_Chi=' + selectedDiaChi;
                         document.cookie = 'Dvcs=' + selectedDvcs;
+                        document.cookie = 'Ma_DT=' + selectedDt;
                     }
                 });
             }
         });
+
 
 
     </script>
@@ -732,9 +778,9 @@
                 }
 
                 newTab.innerHTML = `
-                                                    <a href="${tabHref}">${tabTitle}</a>
-                                                    <a class="closeTab" href="">✕</a>
-                                                `;
+                                                                <a href="${tabHref}">${tabTitle}</a>
+                                                                <a class="closeTab" href="">✕</a>
+                                                            `;
                 tabControlTabs.appendChild(newTab);
 
                 // Sự kiện khi người dùng nhấp vào nút đóng tab
@@ -765,9 +811,9 @@
                 const newTab = document.createElement("li");
                 newTab.classList.add("tab", "selected");
                 newTab.innerHTML = `
-                                                        <a href="${tabHref}">${tabTitle}</a>
-                                                        <a class="closeTab" href="">✕</a>
-                                                    `;
+                                                                    <a href="${tabHref}">${tabTitle}</a>
+                                                                    <a class="closeTab" href="">✕</a>
+                                                                `;
                 tabControlTabs.appendChild(newTab);
 
                 // Sự kiện khi người dùng nhấp vào nút đóng tab
