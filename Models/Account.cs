@@ -11,6 +11,7 @@ namespace web4.Models
         public string Name { get; set; }
         public string Password { get; set; }
         public string Ma_DvCs { get; set; }
+       public string Ma_DvCs_2 { get; set; }
         public string Ma_DvCs_1 { get; set; }
         public string From_date { get; set; }
         public string To_date { get; set; }

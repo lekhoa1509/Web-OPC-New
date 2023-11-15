@@ -491,11 +491,11 @@
 
 <body>
     @*<div class="tab-control" style="position:fixed;bottom:50px">
-        <ul class="tabs" style="background-color: #1d1b31">
-            <li class="tab selected"><a href="/Home/About" style="padding-right:5px">Home</a></li>
+            <ul class="tabs" style="background-color: #1d1b31">
+                <li class="tab selected"><a href="/Home/About" style="padding-right:5px">Home</a></li>
 
-        </ul>
-    </div>*@
+            </ul>
+        </div>*@
     <div class="loader" style="z-index:1"></div>
     <span id="spanText" class="text-loading">[usp_DanhSachHoaDon_SAP]</span>
     <div class="sidebar">
@@ -504,7 +504,7 @@
         </div>
         <ul class="nav-links" style="justify-content: center; display:flex;margin-left:10px">
             <li>
-                <form id="dateForm" action="danhsachhoadon_SAP" method="post" onsubmit="handleFormSubmit(event)">
+                <form id="dateForm" action="danhsachhoadon_SAP_CN" method="post" onsubmit="handleFormSubmit(event)">
                     <div id="locBC">
                         <span id="spanText" class="text-loading">[usp_DanhSachHoaDon_SAP]</span>
                         <a>Từ Ngày</a><br /><br />
@@ -513,7 +513,15 @@
                         <a>Đến Ngày</a><br /><br />
                         <input class="den_ngay" id="den_ngay" placeholder=" Đến Ngày" name="To_date" type="DATE" format="YYYY-MM-DD" value="@Request.QueryString["To_date"]" /><br /><br />
                         <script>$("#den_ngay").datetimepicker({ timepicker: false, format: 'Y-m-d' });</script>
+                        <div class="select-btn">
+                            <select name="Ma_DvCs_2" id="Ma_DvCs_2">
+                                <option value="OPC_TP_01">Chi Nhánh HCM</option>
+                                <option value="OPC_TP_03">Cửa hàng phú lâm</option>
+                                <option value="OPC_TP_04">Cửa hàng phùng hưng</option>
+                            </select>
+                        </div>
                     </div>
+
 
                     <div class="checkContainer">
                         <label class="custom-checkbox">
@@ -634,7 +642,7 @@
 
                                 <th>Discount</th>
                                 <th>Loại vật Tư</th>
-                             
+
                                 <th>DVT</th>
                                 <th>Số Lượng Xuất Theo HĐ</th>
                                 <th>ĐVT HĐ</th>
@@ -646,6 +654,7 @@
                                 <th>số lô</th>
                                 <th>hạn dùng</th>
                                 <th>Kênh</th>
+
                                 <th>Tình Trạng</th>
 
                             </tr>
@@ -653,30 +662,31 @@
                         <tbody>
                             @foreach (DataRow row2 in Model.Tables[0].Rows)
                             {
-                            <tr>
-                                <td style="text-align:right">@row2["Ngay_Ct"]</td>
-                                <td style="text-align:right">@row2["so_ct"]</td>
-                                <td style="text-align:right">@row2["ma_dt"]</td>
-                                <td>@row2["ten_dt"]</td>
-                                <td style="text-align:right">@row2["ma_vt"]</td>
-                                <td>@row2["ten_vt"]</td>
+                                <tr>
+                                    <td style="text-align:right">@row2["Ngay_Ct"]</td>
+                                    <td style="text-align:right">@row2["so_ct"]</td>
+                                    <td style="text-align:right">@row2["ma_dt"]</td>
+                                    <td>@row2["ten_dt"]</td>
+                                    <td style="text-align:right">@row2["ma_vt"]</td>
+                                    <td>@row2["ten_vt"]</td>
 
-                                <td style="text-align:right">@row2["Discount"]%</td>
-                                <td>@row2["Loai_Vt"]</td>
-                                <td style="text-align:right">@row2["DVT"]</td>
-                                <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["so_luong"]))</td>
-                                <td style="text-align:right">@row2["DVT_HD"]</td>
-                                <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Tien"]))</td>
-                                <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Tong_tien"]))</td>
-                                <td style="text-align:right">@row2["so_HDDT"]</td>
-                                <td style="text-align:right">@row2["Ngay_HDDT"]</td>
-                                <td style="text-align:right">@row2["kho_xuat"]</td>
-                                <td style="text-align:right">@row2["so_lo"]</td>
-                                <td style="text-align:right">@row2["Han_Dung"]</td>
-                                <td style="text-align:right">@row2["kenh"]</td>
-                                <td>@row2["Trang_Thai"]</td>
+                                    <td style="text-align:right">@row2["Discount"]%</td>
+                                    <td>@row2["Loai_Vt"]</td>
+                                    <td style="text-align:right">@row2["DVT"]</td>
+                                    <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["so_luong"]))</td>
+                                    <td style="text-align:right">@row2["DVT_HD"]</td>
+                                    <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Tien"]))</td>
+                                    <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Tong_tien"]))</td>
+                                    <td style="text-align:right">@row2["so_HDDT"]</td>
+                                    <td style="text-align:right">@row2["Ngay_HDDT"]</td>
+                                    <td style="text-align:right">@row2["kho_xuat"]</td>
+                                    <td style="text-align:right">@row2["so_lo"]</td>
+                                    <td style="text-align:right">@row2["Han_Dung"]</td>
+                                    <td style="text-align:right">@row2["kenh"]</td>
 
-                            </tr>
+                                    <td>@row2["Trang_Thai"]</td>
+
+                                </tr>
                             }
 
 
@@ -698,6 +708,7 @@
     <script src="~/assets/js/custom.js"></script>
     <script>
         function runReport() {
+
             const uncheckedCheckboxIndexes = [];
             const checkboxes = document.querySelectorAll('input[name="myCheckbox"]');
 
@@ -712,7 +723,11 @@
             // Hiển thị thẻ span có id là "spanText"
             const spanElement = document.getElementById("spanText");
             spanElement.style.display = "block";
+            var selectedValue = document.getElementById("Ma_DvCs_2").value;
+            document.cookie = "Ma_DvCs_2=" + selectedValue;
+
         }
+
     </script>
     <script>
         function handleFormSubmit(event) {
@@ -847,9 +862,9 @@
                 const newTab = document.createElement("li");
                 newTab.classList.add("tab", "selected");
                 newTab.innerHTML = `
-                                                                                <a href="${tabHref}">${tabTitle}</a>
-                                                                                <a class="closeTab" href="">✕</a>
-                                                                            `;
+                                                                                    <a href="${tabHref}">${tabTitle}</a>
+                                                                                    <a class="closeTab" href="">✕</a>
+                                                                                `;
                 tabControlTabs.appendChild(newTab);
 
                 // Sự kiện khi người dùng nhấp vào nút đóng tab
@@ -1071,9 +1086,9 @@
                 const newTab = document.createElement("li");
                 newTab.classList.add("tab", "selected");
                 newTab.innerHTML = `
-                                                <a href="${subMenuLinkHref}">${tabTitle}</a>
-                                                <a class="closeTab" href="">✕</a>
-                                            `;
+                                                    <a href="${subMenuLinkHref}">${tabTitle}</a>
+                                                    <a class="closeTab" href="">✕</a>
+                                                `;
                 tabControlTabs.appendChild(newTab);
 
                 // Chuyển view tới thẻ li tương ứng
@@ -1119,9 +1134,9 @@
                 const newTab = document.createElement("li");
                 newTab.classList.add("tab", "selected");
                 newTab.innerHTML = `
-                                        <a href="${subMenuLinkHref}">${tabTitle}</a>
-                                        <a class="closeTab" href="">✕</a>
-                                    `;
+                                            <a href="${subMenuLinkHref}">${tabTitle}</a>
+                                            <a class="closeTab" href="">✕</a>
+                                        `;
                 tabControlTabs.appendChild(newTab);
 
                 // Chuyển view tới thẻ li tương ứng
