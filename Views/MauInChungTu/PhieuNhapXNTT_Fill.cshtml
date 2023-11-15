@@ -618,7 +618,7 @@
                 <img src="~/Images/opc.png" style="height:60px;width:60px;margin-left:10px">
             </a>
         }
-        <h4>Báo Cáo Doanh Thu Chi Nhánh</h4>
+        <h4>PHIẾU XÁC NHẬN THANH TOÁN</h4>
     </header>
     <div class="container">
 
@@ -629,25 +629,13 @@
                     <table id="example" class="table table-striped table-bordered">
                         <thead class="table-dark">
                             <tr>
-                                <th>Tên Đơn Vị</th>
-                                <th>Doanh Thu OPC</th>
-                                <th>Khoán OPC</th>
-                                <th>Tỷ Lệ OPC</th>
-                                <th>Doanh Thu Cồn</th>
-                                <th>Khoán Cồn</th>
-                                <th>Tỷ Lệ Cồn</th>
-                                <th>Doanh Thu Sủi</th>
-                                <th>Khoán Sủi</th>
-                                <th>Tỷ Lệ Sủi</th>
-                                <th>Doanh Thu Phiến</th>
-                                <th>Khoán Phiến</th>
-                                <th>Tỷ Lệ Phiến</th>
-                                <th>Doanh Thu 25</th>
-                                <th>Khoán 25</th>
-                                <th>Tỷ Lệ 25</th>
-                                <th>Doanh Thu Combo</th>
-                                <th>Doanh Thu Khác</th>
-                                <th>Tổng Thực Hiện</th>
+                                <th style="width:150px">Số Chứng Từ</th>
+                                <th style="width:150px">Mã Đối Tượng</th>
+                                <th style="width:150px">Tên Đối Tượng</th>
+                                <th style="width:150px"> Tổng tiền</th>
+                                <th style="width:150px">CKTT</th>
+                                <th  style="width:150px">Tiền TT</th>
+                               
                             </tr>
                         </thead>
                         <tbody>
@@ -664,7 +652,7 @@
     <script src="~/assets/js/vfs_fonts.js"></script>
     <script src="~/assets/js/custom.js"></script>
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-    <script>
+    @*<script>
         // Lấy giá trị từ các trường input
         var fromDate = document.getElementById("tu_ngay").value;
         var toDate = document.getElementById("den_ngay").value;
@@ -672,7 +660,7 @@
         // Đặt Cookies với giá trị từ người dùng
         document.cookie = "From_date1=" + fromDate;
         document.cookie = "To_date1=" + toDate;
-    </script>
+    </script>*@
     <script>
         document.getElementById("dropdownInput").addEventListener("input", function () {
             var inputValue = this.value;
@@ -715,7 +703,18 @@
 
 
     </script>
+
     <script>
+        function displaySelectedDate() {
+            // Lấy các giá trị ngày đã chọn từ trường nhập liệu
+            const fromDate = document.getElementById('tu_ngay').value;
+            const toDate = document.getElementById('den_ngay').value;
+
+            // Hiển thị các giá trị ngày đã chọn lên thẻ h5
+            const selectedDateDisplay = document.getElementById('selectedDateDisplay');
+            selectedDateDisplay.innerText = `Từ ngày: ${fromDate} - Đến ngày: ${toDate}`;
+            window.location.href = selectedDateDisplay;
+        }
         function handleFormSubmit(event) {
             event.preventDefault(); // Ngăn mặc định nộp biểu mẫu
 
@@ -728,7 +727,7 @@
             setFormattedCookie("To_date", toDate);
 
             // Gửi biểu mẫu sau khi đã lưu Cookie
-            event.target.submit();
+            event.target.submit();  
         }
 
         function setFormattedCookie(cookieName, dateString) {
@@ -736,9 +735,38 @@
             var day = date.getDate();
             var month = date.getMonth() + 1;
             var year = date.getFullYear();
-            var formattedDate = day + "/" + month + "/" + year;
+            var formattedDate = year + "-" + month + "-" + day;
             document.cookie = cookieName + "=" + formattedDate;
         }
+
+
+        document.getElementById("dateForm").addEventListener("submit", (event) => {
+            event.preventDefault();
+            displaySelectedDate();
+            // Show the loader when the form is submitted
+            showLoader();
+
+            // Lấy các giá trị ngày đã chọn từ trường nhập liệu
+            const fromDate = document.getElementById('tu_ngay').value;
+            const toDate = document.getElementById('den_ngay').value;
+
+            // Tạo URL mới với các tham số truy vấn
+            const form = event.target;
+            const actionUrl = `${form.action}?From_date=${fromDate}&To_date=${toDate}`;
+
+            // Chuyển hướng tới URL mới với các giá trị ngày đã chọn làm các tham số truy vấn
+            window.location.href = actionUrl;
+        });
+
+        window.addEventListener("load", () => {
+            // Hide the loader after the page is loaded
+            hideLoader();
+            const fromDate = urlParams.get('From_date');
+            const toDate = urlParams.get('To_date');
+            if (fromDate && toDate) {
+                displaySelectedDate();
+            }
+        });
     </script>
 
 

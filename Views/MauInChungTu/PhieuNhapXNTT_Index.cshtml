@@ -1,9 +1,20 @@
 ﻿﻿﻿
 
 @{ ViewBag.Title = "PHIẾU NHẬP XÁC NHẬN THANH TOÁN";
+    var fromDateQueryParam = Request.QueryString["From_date"];
+    var fromDateCookieValue = Request.Cookies["From_date"].Value;
 
+    // Sử dụng giá trị từ Query String nếu có, ngược lại sử dụng giá trị từ Cookies
+    var fromDate = string.IsNullOrEmpty(fromDateQueryParam) ? fromDateCookieValue : fromDateQueryParam;
+
+    var toDateQueryParam = Request.QueryString["To_date"];
+    var toDateCookieValue = Request.Cookies["To_date"].Value;
+
+    // Sử dụng giá trị từ Query String nếu có, ngược lại sử dụng giá trị từ Cookies
+    var toDate = string.IsNullOrEmpty(toDateQueryParam) ? toDateCookieValue : toDateQueryParam;
 }
 @using System.Data;
+@using System.Globalization;
 <!DOCTYPE html>
 <html lang="en">
 
@@ -381,10 +392,10 @@
                     <div id="locBC">
 
                         <a>Từ Ngày</a><br /><br />
-                        <input class="tu_ngay" placeholder="Từ Ngày" id="tu_ngay" name="From_date" type="date" format="YYYY-MM-DD" value="@Request.Cookies["From_date"].Value" />
+                        <input class="tu_ngay" placeholder="Từ Ngày" id="tu_ngay" name="From_date" type="date" format="YYYY-MM-DD" value="@Request.QueryString["From_date"]" />
                         <script>$("#tu_ngay").datetimepicker({ timepicker: false, format: 'Y-m-d' });</script><br /><br />
                         <a>Đến Ngày</a><br /><br />
-                        <input class="den_ngay" id="den_ngay" placeholder=" Đến Ngày" name="To_date" type="DATE" format="YYYY-MM-DD" value="@Request.Cookies["To_date"].Value" /><br /><br />
+                        <input class="den_ngay" id="den_ngay" placeholder=" Đến Ngày" name="To_date" type="DATE" format="YYYY-MM-DD" value="@Request.QueryString["To_date"]" /><br /><br />
                         <script>$("#den_ngay").datetimepicker({ timepicker: false, format: 'Y-m-d' });</script>
                         <input type="text" id="dropdownInput" list="dropdownList" placeholder="Tìm kiếm danh mục">
                         <datalist id="dropdownList">
@@ -400,10 +411,10 @@
                             <button class="submit" type="submit" onclick="checkAndUpdateCookies();nextPage('@Url.Action("PhieuNhapXNTT", "MauInChungTu")')"> In Tất Cả </button>
                         </div>*@
                     <div>
-                        <button class="submit" type="submit" id="runReportButton" onclick="checkAndUpdateCookies()"> Thay đổi đối tượng </button>
+                        <button class="submit" type="submit" id="runReportButton" onclick="checkAndUpdateCookies()"> Thay Đổi</button>
                     </div>
                 </form>
-                @*<button style="margin-top:20px" type="button" onclick="openNewTab('@Url.Action("PhieuNhapXNTT","MauInChungTu",new { From_date= Request.Cookies["From_date"].Value,})')">In Tất Cả</button>*@
+                <button style="margin-top:20px" type="button" onclick="openNewTab()">In Tất Cả</button>
 
 
             </li>
@@ -415,7 +426,7 @@
             <img src="~/assets/images/logo.png" alt="" class="img-fluid">
         </a>
         <h4>PHIẾU XÁC NHẬN THANH TOÁN</h4>
-        <h5 style="color:white">Từ @Request.Cookies["From_date"].Value đến @Request.Cookies["To_date"].Value</h5>
+        <h5 style="color:white">Từ @fromDate đến @toDate</h5>
     </header>
     <!-- =======  Data-Table  = Start  ========================== -->
     <div class="container">
@@ -433,10 +444,8 @@
                             <tr>
                                 <th>Số Ct</th>
                                 <th>Mã Đối Tượng</th>
-
                                 <th>Tên Đối Tượng</th>
-                                <th>Tong_tien</th>
-
+                                <th>Tổng tiền</th>
                                 <th>In</th>
                                 <td></td>
 
@@ -458,7 +467,7 @@
                                             <td>@row2["Ma_Dt"]</td>
 
                                             <td>@row2["Ten_Dt"]</td>
-                                            <td>@row2["Tong_Tien"]</td>
+                                            <td style="text-align:right">@row2["Tong_Tien"]</td>
                                             <td onclick="saveSelectedValueToCookie(this.parentNode.parentNode);runReport('@Url.Action("PhieuNhapXNTT", "MauInChungTu", new { So_Ct = row2["So_Ct"] })')"><span class="material-symbols-outlined print-icon">print</span></td>
                                             <td><button onclick="scrollToBottom()">Xem</button></td>
 
@@ -508,9 +517,9 @@
                                     <td>@row3["Han_Thanh_Toan"]</td>
                                     <td>@row3["Ma_Dt"]</td>
                                     <td>@row3["Ten_Dt"]</td>
-                                    <td>@row3["Tong_Tien"]</td>
-                                    <td>@row3["CKTT"]</td>
-                                    <td>@row3["Tien_TT"]</td>
+                                    <td style="text-align:right">@row3["Tong_Tien"]</td>
+                                    <td style="text-align:right">@row3["CKTT"]</td>
+                                    <td style="text-align:right">@row3["Tien_TT"]</td>
                                 </tr>
                             }
 
@@ -535,32 +544,42 @@
     <script src="~/assets/js/pdfmake.min.js"></script>
     <script src="~/assets/js/vfs_fonts.js"></script>
     <script src="~/assets/js/custom.js"></script>
+
     <script>
-    function openNewTab(url) {
-        window.open(url, '_blank').;
-    }
-}
+        function updateCookies() {
+            var tuNgay = Request.QueryString["From_date"];
+            var denNgay = Request.QueryString["To_date"];
 
 
-        // Open the URL in a new tab
-        window.open(url, '_blank');
-    }
+            // Lưu giá trị vào cookies
+            document.cookie = "From_date=" + tuNgay;
+            document.cookie = "To_date=" + denNgay;
+
+
+            // In giá trị ra console để kiểm tra (có thể xóa dòng này sau khi kiểm tra hoạt động đúng)
+            console.log("From_date:", tuNgay);
+            console.log("To_date:", denNgay);
+
+        }
+
+  
     </script>
+
     <script>
-        //function handleFormSubmit(event) {
-        //    event.preventDefault(); // Ngăn mặc định nộp biểu mẫu
+        function handleFormSubmit(event) {
+            event.preventDefault(); // Ngăn mặc định nộp biểu mẫu
+            showLoader();
+            // Lấy giá trị từ các trường input
+            var fromDate = document.getElementById("tu_ngay").value;
+            var toDate = document.getElementById("den_ngay").value;
 
-        //    // Lấy giá trị từ các trường input
-        //    var fromDate = document.getElementById("tu_ngay").value;
-        //    var toDate = document.getElementById("den_ngay").value;
+            // Định dạng và lưu giá trị vào Cookie
+            const form = event.target;
+            const actionUrl = `${form.action}?From_date=${fromDate}&To_date=${toDate}`;
 
-        //    // Định dạng và lưu giá trị vào Cookie
-        //    setFormattedCookie("From_date", fromDate);
-        //    setFormattedCookie("To_date", toDate);
-
-        //    // Gửi biểu mẫu sau khi đã lưu Cookie
-        //    event.target.submit();
-        //}
+            // Chuyển hướng tới URL mới với các giá trị ngày đã chọn làm các tham số truy vấn
+            window.location.href = actionUrl;
+        }
         // Set the "Từ Ngày" input to the first day of the current month
         function setFirstDayOfCurrentMonth() {
             const currentDate = new Date();
@@ -605,6 +624,12 @@
         function checkAndUpdateCookies() {
             var selected = "";
             document.cookie = "So_Ct=" + selected;
+            var tuNgay = document.getElementById('tu_ngay').value;
+            var denNgay = document.getElementById('den_ngay').value;
+            var selectedOption = document.getElementById('selectedOption').value;
+
+
+            document.cookie = `Ma_DT=${encodeURIComponent(selectedOption)}; expires=Thu, 01 Jan 2099 00:00:00 UTC; path=/;`;
 
         }
         function saveSelectedValueToCookie(row) {
@@ -613,6 +638,8 @@
         }
 
         document.addEventListener("DOMContentLoaded", function () {
+            document.cookie = "From_date=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            document.cookie = "To_date=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
             var tableRows = document.querySelectorAll("#example tbody tr");
 
             tableRows.forEach(function (row) {
@@ -629,7 +656,23 @@
             }
         }
     </script>
-    <script>
+        <script>
+       function openNewTab() {
+           var selected = "";
+           document.cookie = "So_Ct=" + selected;
+           var tuNgay = '@Request.QueryString["From_date"]' ==""? '@Request.Cookies["From_date"].Value': '@Request.QueryString["From_date"]';
+           var denNgay = '@Request.QueryString["To_date"]' ==""? '@Request.Cookies["To_date"].Value': '@Request.QueryString["To_date"]';;
+
+        // Tạo URL với các giá trị từ dropdown làm tham số
+        var url = '@Url.Action("PhieuNhapXNTT", "MauInChungTu")?From_date=' + tuNgay + '&To_date=' + denNgay;
+
+        // Mở tab mới với URL được tạo
+        window.open(url, '_blank');
+    }
+
+
+    </script>
+        <script>
         function nextPage(actionUrl) {
             var url = actionUrl;
 
@@ -647,6 +690,7 @@
         function runReport(url) {
             const spanElement = document.getElementById("spanText");
             spanElement.style.display = "block";
+          
             var selectedValue = document.cookie.replace(/(?:(?:^|.*;\s*)So_Ct\s*=\s*([^;]*).*$)|^.*$/, "$1");
 
             // Sử dụng AJAX để gửi giá trị lên controller
@@ -683,7 +727,7 @@
             }
         });
 
-    </script>
+        </script>
 
 
     <script>
@@ -708,36 +752,45 @@
             loader.classList.remove("loader-hidden");
 
         }
+        function displaySelectedDate() {
+            // Lấy các giá trị ngày đã chọn từ trường nhập liệu
+            const fromDate = document.getElementById('tu_ngay').value;
+            const toDate = document.getElementById('den_ngay').value;
 
+            // Hiển thị các giá trị ngày đã chọn lên thẻ h5
+            const selectedDateDisplay = document.getElementById('selectedDateDisplay');
+            selectedDateDisplay.innerText = `Từ ngày: ${fromDate} - Đến ngày: ${toDate}`;
+            window.location.href = selectedDateDisplay;
+        }
         // Function to hide the loader
         function hideLoader() {
             const loader = document.querySelector(".loader");
             loader.classList.add("loader-hidden");
         }
 
-        // Add an event listener to the form submission
-        //document.getElementById("dateForm").addEventListener("submit", (event) => {
-        //    event.preventDefault();
+        document.getElementById("dateForm").addEventListener("submit", (event) => {
+            event.preventDefault();
+            displaySelectedDate();
+            // Show the loader when the form is submitted
+            showLoader();
 
-        //    // Show the loader when the form is submitted
-        //    showLoader();
+            // Lấy các giá trị ngày đã chọn từ trường nhập liệu
+            const fromDate = document.getElementById('tu_ngay').value;
+            const toDate = document.getElementById('den_ngay').value;
 
-        //    // Lấy các giá trị ngày đã chọn từ trường nhập liệu
-        //    const fromDate = document.getElementById('tu_ngay').value;
-        //    const toDate = document.getElementById('den_ngay').value;
+            // Tạo URL mới với các tham số truy vấn
+            const form = event.target;
+            const actionUrl = `${form.action}?From_date=${fromDate}&To_date=${toDate}`;
 
-        //    // Tạo URL mới với các tham số truy vấn
-        //    const form = event.target;
-        //    const actionUrl = `${form.action}?From_date=${fromDate}&To_date=${toDate}`;
-
-        //    // Chuyển hướng tới URL mới với các giá trị ngày đã chọn làm các tham số truy vấn
-        // /*   window.location.href = actionUrl;*/
-        //});
+            // Chuyển hướng tới URL mới với các giá trị ngày đã chọn làm các tham số truy vấn
+            window.location.href = actionUrl;
+        });
 
         // Add event listener for window load event
         window.addEventListener("load", () => {
             // Hide the loader after the page is loaded
             hideLoader();
+
         });
 
     </script>

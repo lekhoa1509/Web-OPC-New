@@ -1,6 +1,6 @@
 ﻿﻿﻿﻿﻿﻿
 @{ ViewBag.Title = "Phiếu Xác Nhận Thanh Toán";
-   
+
     string Dvcs = Request.Cookies["Dvcs"] != null ? HttpUtility.UrlDecode(Request.Cookies["Dvcs"].Value) : "";
     string extractedText = "";
 
@@ -8,6 +8,8 @@
     {
         extractedText = Dvcs.Substring(10); // Cắt 10 ký tự đầu tiên
     }
+    var fromDate = Request.QueryString["From_date"] == "" ? Request.Cookies["From_date"].Value : Request.QueryString["From_date"];
+    var toDate = Request.QueryString["To_date"] == "" ? Request.Cookies["To_date"].Value : Request.QueryString["To_date"];
 
 }
 @using System.Data;
@@ -407,6 +409,7 @@
                 display: none;
             }
         }
+
         tr {
             page-break-inside: avoid;
         }
@@ -541,7 +544,7 @@
                 window.location.href = selectedDateDisplay;
             }
         </script>
-    
+
         <script>
             // Lấy tất cả các phần tử có class "branch"
             var branches = document.querySelectorAll('.branch');

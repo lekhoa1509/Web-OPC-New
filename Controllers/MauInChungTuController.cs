@@ -201,8 +201,8 @@ namespace web4.Controllers
 
             ViewBag.DataItems = dmDlist;
             string Pname = "[usp_XacNhanCKTT_SAP]";
-            var fromDate = Request.Cookies["From_date"].Value;
-            var toDate = Request.Cookies["To_Date"].Value;
+            //var fromDate = Request.Cookies["From_date"].Value;
+            //var toDate = Request.Cookies["To_Date"].Value;
 
             var MaDt = Request.Cookies["Ma_DT"] != null ? Request.Cookies["Ma_DT"].Value : string.Empty;
 
@@ -229,8 +229,8 @@ namespace web4.Controllers
         public ActionResult PhieuNhapXNTT(MauInChungTu MauIn)
         {
             string ma_dvcs = Request.Cookies["Ma_dvcs"].Value;
-            var fromDate = Request.Cookies["From_date"].Value;
-            var toDate = Request.Cookies["To_Date"].Value;
+            var fromDate = MauIn.From_date =="" ? Request.Cookies["From_date"].Value : MauIn.From_date;
+            var toDate = MauIn.To_date==""?Request.Cookies["To_Date"].Value : MauIn.To_date;
             var MaDt = Request.Cookies["Ma_DT"] != null ? Request.Cookies["Ma_DT"].Value : string.Empty;
             DataSet ds = new DataSet();
             connectSQL();
@@ -254,8 +254,8 @@ namespace web4.Controllers
                 using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
                 {
                    
-                    cmd.Parameters.AddWithValue("@_Tu_Ngay", MauIn.From_date);
-                    cmd.Parameters.AddWithValue("@_Den_Ngay", MauIn.To_date);
+                    cmd.Parameters.AddWithValue("@_Tu_Ngay", fromDate);
+                    cmd.Parameters.AddWithValue("@_Den_Ngay", toDate);
                     cmd.Parameters.AddWithValue("@_Ma_dt", MaDt);
                     cmd.Parameters.AddWithValue("@_so_Ct", SoCT);
                     cmd.Parameters.AddWithValue("@_ma_dvcs",ma_dvcs );
