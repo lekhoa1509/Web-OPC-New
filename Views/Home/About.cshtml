@@ -534,12 +534,19 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                                 <tr style="height:30px">
                                     <td style="text-align: left">
                                         <li style=" list-style-type: none;" class="liTitle">
-                                            <a href="" onclick="runReport('@Url.Action("BangKeHoaDonGiaoHang", "BKHoaDonGiaoHang")'
-                                                      )">8.Bảng Kê Hóa Đơn Giao Hàng</a>
+                                            <a href="" @*onclick="runReport('@Url.Action("BangKeHoaDonGiaoHang", "BKHoaDonGiaoHang")'
+                                                      )"*@>8.Bảng Kê Hóa Đơn Giao Hàng</a>
                                         </li>
                                     </td>
                                 </tr>
-
+                                <tr style="height:30px">
+                                    <td style="text-align: left">
+                                        <li style=" list-style-type: none;" class="liTitle">
+                                            <a href="" onclick="runReport('@Url.Action("BangKeNopTien_Fill", "BangKeNopTien")'
+                                                      )">9.Theo Dõi Bảng Kê Nộp Tiền</a>
+                                        </li>
+                                    </td>
+                                </tr>
                             </tbody>
 
 

@@ -1,4 +1,4 @@
-﻿﻿﻿
+﻿﻿﻿﻿
 
 @{ ViewBag.Title = "PHIẾU NHẬP XÁC NHẬN THANH TOÁN";
     var fromDateQueryParam = Request.QueryString["From_date"];
@@ -311,14 +311,15 @@
 
         .text-loading {
             position: fixed;
-            bottom: 10px;
-            left: 10px;
+            top: 60%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             font-size: 13px;
             color: black;
-            z-index: 1;
-            background-color: rgba(255, 255, 255, 0.9); /* Background color for the span */
+            z-index: 2;
+            background-color: rgba(255, 255, 255, 0.9);
             padding: 5px 10px;
-            display: none; /* Hide the span element initially */
+            display: none;
         }
 
         .expandable-icon {
@@ -396,6 +397,11 @@
                         <script>$("#tu_ngay").datetimepicker({ timepicker: false, format: 'Y-m-d' });</script><br /><br />
                         <a>Đến Ngày</a><br /><br />
                         <input class="den_ngay" id="den_ngay" placeholder=" Đến Ngày" name="To_date" type="DATE" format="YYYY-MM-DD" value="@Request.QueryString["To_date"]" /><br /><br />
+                        <script>$("#den_ngay").datetimepicker({ timepicker: false, format: 'Y-m-d' });</script>
+
+
+                        <a>Ngày Ký</a><br /><br />
+                        <input class="ngay_ky" id="ngay_ky" placeholder=" Ngày Ký" name="date" type="DATE" format="YYYY-MM-DD" value="" /><br /><br />
                         <script>$("#den_ngay").datetimepicker({ timepicker: false, format: 'Y-m-d' });</script>
                         <input type="text" id="dropdownInput" list="dropdownList" placeholder="Tìm kiếm danh mục">
                         <datalist id="dropdownList">
@@ -562,13 +568,45 @@
 
         }
 
-  
-    </script>
 
+    </script>
+    <script>
+        function changeTime() {
+            // Lấy giá trị từ ngày và đến ngày từ các trường input
+            var fromDate3 = document.getElementById("tu_ngay").value;
+            var toDate3 = document.getElementById("den_ngay").value;
+            var ngayKyValue = document.getElementById("ngay_ky").value;
+            // Tạo cookie 'fromIn' với giá trị là từ ngày
+            document.cookie = "fromIn=" + fromDate3;
+            var ngayKyDate = new Date(ngayKyValue);
+            var ngay = ngayKyDate.getDate();
+            var thang = ngayKyDate.getMonth() + 1; // Tháng bắt đầu từ 0, nên cộng thêm 1
+            var nam = ngayKyDate.getFullYear();
+            document.cookie = "ngay=" + ngay;
+            document.cookie = "thang=" + thang;
+            document.cookie = "nam=" + nam;
+            document.cookie = "From_date=" + fromDate3;
+            document.cookie = "To_date=" + toDate3;
+
+            // Tạo cookie 'toIn' với giá trị là đến ngày
+            document.cookie = "toIn=" + toDate3;
+            setFormatted("fromIn", fromDate3);
+            setFormatted("toIn", toDate3);
+        }
+        function setFormatted(cookieName, dateString) {
+            var date = new Date(dateString);
+            var day = date.getDate();
+            var month = date.getMonth() + 1;
+            var year = date.getFullYear();
+            var formattedDate = day + "/" + month + "/" + year;
+            document.cookie = cookieName + "=" + formattedDate;
+        }
+    </script>
     <script>
         function handleFormSubmit(event) {
             event.preventDefault(); // Ngăn mặc định nộp biểu mẫu
             showLoader();
+            changeTime();
             // Lấy giá trị từ các trường input
             var fromDate = document.getElementById("tu_ngay").value;
             var toDate = document.getElementById("den_ngay").value;
@@ -622,6 +660,8 @@
     </script>
     <script>
         function checkAndUpdateCookies() {
+            const spanElement = document.getElementById("spanText");
+            spanElement.style.display = "block";
             var selected = "";
             document.cookie = "So_Ct=" + selected;
             var tuNgay = document.getElementById('tu_ngay').value;
@@ -629,7 +669,7 @@
             var selectedOption = document.getElementById('selectedOption').value;
 
 
-            document.cookie = `Ma_DT=${encodeURIComponent(selectedOption)}; expires=Thu, 01 Jan 2099 00:00:00 UTC; path=/;`;
+           /* document.cookie = `Ma_DT=${encodeURIComponent(selectedOption)}; expires=Thu, 01 Jan 2099 00:00:00 UTC; path=/;`;*/
 
         }
         function saveSelectedValueToCookie(row) {
@@ -656,7 +696,7 @@
             }
         }
     </script>
-        <script>
+    <script>
        function openNewTab() {
            var selected = "";
            document.cookie = "So_Ct=" + selected;
@@ -672,7 +712,7 @@
 
 
     </script>
-        <script>
+    <script>
         function nextPage(actionUrl) {
             var url = actionUrl;
 
@@ -688,9 +728,9 @@
             window.open(url, '_blank')
         }
         function runReport(url) {
-            const spanElement = document.getElementById("spanText");
-            spanElement.style.display = "block";
-          
+            //const spanElement = document.getElementById("spanText");
+            //spanElement.style.display = "block";
+
             var selectedValue = document.cookie.replace(/(?:(?:^|.*;\s*)So_Ct\s*=\s*([^;]*).*$)|^.*$/, "$1");
 
             // Sử dụng AJAX để gửi giá trị lên controller
@@ -727,7 +767,7 @@
             }
         });
 
-        </script>
+    </script>
 
 
     <script>

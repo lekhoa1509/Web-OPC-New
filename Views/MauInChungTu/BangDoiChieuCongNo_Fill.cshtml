@@ -618,11 +618,11 @@
                         var selectedOption = document.querySelector("#dropdownList option[value='" + dropdownInput.value + "']");
 
                         if (selectedOption) {
-                            var tenDt = selectedOption.text.toString();
+                            var tenDt = selectedOption.getAttribute('data-ten');
                             var selectedDiaChi = selectedOption.getAttribute('data-diachi');
                             var selectedDvcs = selectedOption.getAttribute('data-Dvcs');
                             var selectedDvcs1 = selectedOption.getAttribute('data-dvcs1');
-                            document.cookie = `Ten_Dt=${encodeURIComponent(tenDt)}; expires=Thu, 01 Jan 2099 00:00:00 UTC; path=/;`;
+                            document.cookie = 'Ten_Dt=' + tenDt;
                             document.cookie = 'Dia_Chi=' + selectedDiaChi;
                             document.cookie = 'Dvcs=' + selectedDvcs;
                             document.cookie = 'Dvcs1=' + selectedDvcs1;

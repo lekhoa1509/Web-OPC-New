@@ -310,6 +310,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\BangKeHoaDonController.cs" />
+    <Compile Include="Controllers\BangKeNopTienController.cs" />
     <Compile Include="Controllers\BaoCaoBanHangCNController.cs" />
     <Compile Include="Controllers\BaoCaoBanHangTDVController.cs" />
     <Compile Include="Controllers\PhieuKeToanController.cs" />
@@ -1078,6 +1079,8 @@
     <Content Include="Views\BangKeHoaDon\danhsachhoadon_SAP_CN.cshtml" />
     <Content Include="Views\BangKeHoaDon\DanhSachHoaDon_Fill_HCM.cshtml" />
     <Content Include="Views\PhieuKeToan\PhieuKeToan.cshtml" />
+    <Content Include="Views\MauInChungTu\PhieuNhapXNTT_Index.cshtml" />
+    <Content Include="Views\BangKeNopTien\BangKeNopTien_Fill.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

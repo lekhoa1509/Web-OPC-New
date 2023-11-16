@@ -8,11 +8,11 @@
     {
         extractedText = Dvcs.Substring(10); // Cắt 10 ký tự đầu tiên
     }
-    var fromDate = Request.QueryString["From_date"] == "" ? Request.Cookies["From_date"].Value : Request.QueryString["From_date"];
-    var toDate = Request.QueryString["To_date"] == "" ? Request.Cookies["To_date"].Value : Request.QueryString["To_date"];
+
 
 }
 @using System.Data;
+@using System.Globalization;
 <!DOCTYPE html>
 <html>
 <head>
@@ -429,8 +429,9 @@
 
             <div>
                 <h3 style="font-size: 25px; color: black; font-weight: bold">XÁC NHẬN THANH TOÁN</h3>
-                <h5>Từ @Request.Cookies["From_date"].Value đến @Request.Cookies["To_date"].Value</h5>
-                <br />
+
+                <h5>Từ @Request.Cookies["fromIn"].Value đến @Request.Cookies["toIn"].Value</h5>
+
             </div>
             <div style="width:600px">
                 <h5 style="text-align:left">-Căn cứ Luật thương mại số 36/2005/QH11 ngày 14/06/2005;</h5>
@@ -502,7 +503,7 @@
                         <h5 style="word-wrap: break-word;font-size:15px">Khách hàng đã thanh toán số tiền:...................., nhận chiết khấu thanh toán số tiền:...................</h5>
                     </div><br />
                     <div style="text-align:right">
-                        <h4 class="branch">@extractedText, ngày&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tháng&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;năm&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h4>
+                        <h4 class="branch">@extractedText, ngày @Request.Cookies["ngay"].Value tháng @Request.Cookies["thang"].Value năm @Request.Cookies["nam"].Value</h4>
 
                     </div>
                     @*<h4 style="margin-left:auto">P. KHCU &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Thủ kho&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Xưởng sản xuất</h4>*@

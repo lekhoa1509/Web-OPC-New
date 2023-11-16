@@ -229,8 +229,10 @@ namespace web4.Controllers
         public ActionResult PhieuNhapXNTT(MauInChungTu MauIn)
         {
             string ma_dvcs = Request.Cookies["Ma_dvcs"].Value;
-            var fromDate = MauIn.From_date =="" ? Request.Cookies["From_date"].Value : MauIn.From_date;
-            var toDate = MauIn.To_date==""?Request.Cookies["To_Date"].Value : MauIn.To_date;
+            //var fromDate = MauIn.From_date =="" ? Request.Cookies["From_date"].Value : MauIn.From_date;
+            //var toDate = MauIn.To_date==""?Request.Cookies["To_Date"].Value : MauIn.To_date;
+            var fromDate = Request.Cookies["From_date"].Value;
+            var toDate = Request.Cookies["To_date"].Value;
             var MaDt = Request.Cookies["Ma_DT"] != null ? Request.Cookies["Ma_DT"].Value : string.Empty;
             DataSet ds = new DataSet();
             connectSQL();
@@ -273,10 +275,10 @@ namespace web4.Controllers
             //string query = "exec usp_Vth_BC_BHCNTK_CN @_ngay_Ct1 = '" + Acc.From_date + "',@_Ngay_Ct2 ='"+ Acc.To_date+"',@_Ma_Dvcs='"+ Acc.Ma_DvCs_1+"'";
             string Pname = "[usp_MauInChungTuSO_Detail_SAP]";
 
-            //MauIn.From_date = Request.Cookies["From_date"].Value;
-            //MauIn.To_date = Request.Cookies["To_Date"].Value;
+            MauIn.From_date = Request.Cookies["From_date"].Value;
+            MauIn.To_date = Request.Cookies["To_Date"].Value;
             //MauIn.UserName = Request.Cookies["UserName"].Value;
-
+            var SoCt = Request.Cookies["SoCt"].Value;
 
             using (SqlCommand cmd = new SqlCommand(Pname, con))
             {
@@ -289,7 +291,7 @@ namespace web4.Controllers
                 {
                     cmd.Parameters.AddWithValue("@_Tu_Ngay", MauIn.From_date);
                     cmd.Parameters.AddWithValue("@_Den_Ngay", MauIn.To_date);
-                    cmd.Parameters.AddWithValue("@_so_Ct", MauIn.So_Ct);
+                    cmd.Parameters.AddWithValue("@_so_Ct", SoCt);
                     cmd.Parameters.AddWithValue("@_username", MauIn.UserName);
                     sda.Fill(ds);
 
