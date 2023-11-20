@@ -2273,22 +2273,22 @@ namespace web4.Controllers
                     var endRow = startRow + combinedData.Count;
                
                     worksheet.Cells[endRow, startColumn +1].Value = "BÁO CÁO CỦA NGƯỜI PHỤ TRÁCH THU: ";
-                    worksheet.Cells[endRow+1, startColumn+1].Value = "-TỔNG GIÁ TRỊ NỢ: ";
-                    worksheet.Cells[endRow+2, startColumn+1].Value = "-TỔNG GIÁ TRỊ KẾ HOẠCH GIAO NHẬN THU: ";
-                    worksheet.Cells[endRow + 3, startColumn + 1].Value = "-TỔNG GIÁ TRỊ NỢ GIAO NHẬN THU ĐƯỢC: ";
-                    worksheet.Cells[endRow + 4, startColumn + 1].Value = "-TỔNG GIÁ TRỊ KẾ HOẠCH KHÁCH HÀNG CK: ";
-                    worksheet.Cells[endRow + 5, startColumn + 1].Value = "-TỔNG GIÁ TRỊ NỢ KHÁCH HÀNG CK: ";
-                    worksheet.Cells[endRow + 6, startColumn + 1].Value = "-TỔNG GIÁ TRỊ KẾ HOẠCH TRÌNH DƯỢC VIÊN THU: ";
-                    worksheet.Cells[endRow + 7, startColumn + 1].Value = "-TỔNG GIÁ TRỊ NỢ TRÌNH DƯỢC VIÊN THU ĐƯỢC: ";
+                    worksheet.Cells[endRow+1, startColumn+1].Value = "-Tổng giá trị nợ:.................................................................. ";
+                    worksheet.Cells[endRow+2, startColumn+1].Value = "-Tổng giá trị kế hoạch giao nhận thu:.................................. ";
+                    worksheet.Cells[endRow + 3, startColumn + 1].Value = "-Tổng giá trị nợ giao nhận thu được:................................... ";
+                    worksheet.Cells[endRow + 4, startColumn + 1].Value = "-Tổng giá trị kế hoạch khách hàng CK:............................... ";
+                    worksheet.Cells[endRow + 5, startColumn + 1].Value = "-Tổng giá trị nợ khách hàng CK:.........................................";
+                    worksheet.Cells[endRow + 6, startColumn + 1].Value = "-Tổng giá trị kế hoạch trình dược viên thu:......................... ";
+                    worksheet.Cells[endRow + 7, startColumn + 1].Value = "-Tổng giá trị nợ trình dược viên thu được:.......................... ";
                 
 
 
-                    worksheet.Cells[endRow + 1, startColumn + 4].Value = "-TỶ LỆ % KẾ HOẠCH GN THU SO VỚI NỢ:";
-                    worksheet.Cells[endRow + 2, startColumn + 4].Value = "-TỶ LỆ % GN THU ĐƯỢC SO VỚI KẾ HOẠCH: ";
-                    worksheet.Cells[endRow + 3, startColumn + 4].Value = "-TỶ LỆ % KH CK SO VỚI NỢ: ";
-                   worksheet.Cells[endRow + 4, startColumn + 4].Value = "-TỶ LỆ % KH CK SO VỚI KẾ HOẠCH: ";
-                    worksheet.Cells[endRow + 5, startColumn + 4].Value = "-TỶ LỆ % KẾ HOẠCH TDV THU SO VỚI NỢ:";
-                    worksheet.Cells[endRow + 6, startColumn + 4].Value = "-TỶ LỆ % TDV THU ĐƯỢC SO VỚI KẾ HOẠCH: ";
+                    worksheet.Cells[endRow + 1, startColumn + 4].Value = "-Tỷ lệ % kế hoạch GN thu so với nợ:................................";
+                    worksheet.Cells[endRow + 2, startColumn + 4].Value = "-Tỷ lệ % GN thu được so với kế hoạch:............................";
+                    worksheet.Cells[endRow + 3, startColumn + 4].Value = "-Tỷ lệ % KH CK so với nợ:............................................... ";
+                   worksheet.Cells[endRow + 4, startColumn + 4].Value = "-Tỷ lệ % KH CK so với kế hoạch: ....................................";
+                    worksheet.Cells[endRow + 5, startColumn + 4].Value = "-Tỷ lệ % kế hoạch TDV thu so với nợ:..............................";
+                    worksheet.Cells[endRow + 6, startColumn + 4].Value = "-Tỷ lệ % TDV thu được so với kế hoạch: ..........................";
                     int nextRow = endRow + 7;
                     worksheet.Cells[nextRow , startColumn + 7].Value = $"Ngày     tháng     năm";
                     worksheet.Cells[nextRow, startColumn + 7].Style.Font.Bold = true;
@@ -2336,7 +2336,38 @@ namespace web4.Controllers
         }
         public ActionResult BienBanBanGiaoNTHH()
         {
-            return View();
+            DataSet ds = new DataSet();
+            connectSQL();
+          
+            //string query = "exec usp_Vth_BC_BHCNTK_CN @_ngay_Ct1 = '" + Acc.From_date + "',@_Ngay_Ct2 ='"+ Acc.To_date+"',@_Ma_Dvcs='"+ Acc.Ma_DvCs_1+"'";
+            string Pname = "[usp_DanhSachHoaDonBBBG_SAP]";
+            var fromDate = Request.Cookies["From_date"].Value;
+            var toDate = Request.Cookies["To_Date"].Value;
+
+            var Dvcs = Request.Cookies["MA_DVCS"].Value == "" ? Request.Cookies["Dvcs3"].Value : Request.Cookies["MA_DVCS"].Value;
+            //var MaTDV = Request.Cookies["Ma_CbNv"] != null ? Request.Cookies["Ma_CbNv"].Value : string.Empty;
+            var MaDt = Request.Cookies["Ma_Dt"] != null ? Request.Cookies["Ma_Dt"].Value : string.Empty;
+            
+
+            using (SqlCommand cmd = new SqlCommand(Pname, con))
+            {
+                cmd.CommandTimeout = 950;
+
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                {
+                    cmd.Parameters.AddWithValue("@_Tu_Ngay", fromDate);
+                    cmd.Parameters.AddWithValue("@_Den_Ngay", toDate);
+                    cmd.Parameters.AddWithValue("@_Ma_Dt", MaDt);
+                  
+                    cmd.Parameters.AddWithValue("@_ma_dvcs", Dvcs);
+                    sda.Fill(ds);
+
+                }
+            }
+            return View(ds);
         }
 
         public List<BKHoaDonGiaoHang> LoadDmDt1()
@@ -2385,22 +2416,22 @@ namespace web4.Controllers
 
             return dataItems;
         }
-        public ActionResult BienBanBanGiaoNTHH_Index()
+        public ActionResult BienBanBanGiaoNTHH_Index(MauInChungTu MauIn)
         {
             DataSet ds = new DataSet();
             connectSQL();
-            //List<BKHoaDonGiaoHang> dmDList = LoadDmTDV();
-            //List<BKHoaDonGiaoHang> dmDListDt = LoadDmDt();
-            //string query = "exec usp_Vth_BC_BHCNTK_CN @_ngay_Ct1 = '" + Acc.From_date + "',@_Ngay_Ct2 ='"+ Acc.To_date+"',@_Ma_Dvcs='"+ Acc.Ma_DvCs_1+"'";
-            string Pname = "[usp_DanhSachHoaDon_SAP]";
+            List<MauInChungTu> dmDlist = LoadDmDt("");
+
+            ViewBag.DataItems = dmDlist;
+          
+            string Pname = "[usp_DanhSachHoaDonBBBG_SAP]";
             var fromDate = Request.Cookies["From_date"].Value;
             var toDate = Request.Cookies["To_Date"].Value;
 
-            //var Dvcs = Request.Cookies["MA_DVCS"].Value == "" ? Request.Cookies["Dvcs3"].Value : Request.Cookies["MA_DVCS"].Value;
-            //var MaTDV = Request.Cookies["Ma_CbNv"] != null ? Request.Cookies["Ma_CbNv"].Value : string.Empty;
-            var MaDt = Request.Cookies["Ma_DT"] != null ? Request.Cookies["Ma_DT"].Value : string.Empty;
-            //ViewBag.DataTDV = dmDList;
-            //ViewBag.DataDt = dmDListDt;
+            var Dvcs = Request.Cookies["MA_DVCS"].Value;
+           
+            var MaDt = Request.Cookies["Ma_Dt"] != null ? Request.Cookies["Ma_Dt"].Value : string.Empty;
+            
 
             using (SqlCommand cmd = new SqlCommand(Pname, con))
             {
@@ -2415,7 +2446,7 @@ namespace web4.Controllers
                     cmd.Parameters.AddWithValue("@_Den_Ngay", toDate);
                     cmd.Parameters.AddWithValue("@_Ma_Dt", MaDt);
                     //cmd.Parameters.AddWithValue("@_Ma_CbNv", MaTDV);
-                    //cmd.Parameters.AddWithValue("@_Ma_DvCs", Dvcs);
+                    cmd.Parameters.AddWithValue("@_ma_dvcs", Dvcs);
                     sda.Fill(ds);
 
                 }
@@ -2424,49 +2455,9 @@ namespace web4.Controllers
         }
         public ActionResult BienBanBanGiaoNTHH_Fill()
         {
-            string ma_dvcs = Request.Cookies["Ma_dvcs"] != null ? Request.Cookies["Ma_dvcs"].Value : string.Empty;
-            if (string.IsNullOrEmpty(ma_dvcs))
-            {
-                return View(); // Trả về null nếu ma_dvcs rỗng
-            }
+            List<MauInChungTu> dmDlist = LoadDmDt("");
 
-            // Gọi LoadDmHD với Ma_TDV để lấy dữ liệu đã lọc theo Ma_TDV
-            List<BKHoaDonGiaoHang> dmDList = LoadDmTDV();
-            List<BKHoaDonGiaoHang> dmDListDt = LoadDmDt1();
-            //var distinctDataTDV = dmDList
-            //    .GroupBy(x => x.Ten_TDV)
-            //    .Select(x => x.First())
-            //    .ToList();
-
-            //// var distinctDataItems = dmDList
-            ////.GroupBy(x => x.So_Ct_E)
-            ////.Select(x => x.First())
-            //.ToList();
-
-
-            ViewBag.DataTDV = dmDList;
-            ViewBag.DataDt = dmDListDt;
-
-
-            DataSet ds = new DataSet();
-            connectSQL();
-            string Pname = "[usp_DanhSachTDV]";
-
-            using (SqlCommand cmd = new SqlCommand(Pname, con))
-            {
-                cmd.CommandTimeout = 950;
-                cmd.Connection = con;
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                con.Open();
-
-                using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
-                {
-
-                    cmd.Parameters.AddWithValue("@_ma_dvcs", ma_dvcs);
-                    sda.Fill(ds);
-                }
-            }
+            ViewBag.DataItems = dmDlist;
             return View();
         }
 

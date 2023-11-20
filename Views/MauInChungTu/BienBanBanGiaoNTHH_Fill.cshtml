@@ -1,4 +1,5 @@
 ﻿
+
 @{
     ViewBag.Title = "BIÊN BẢN BÀN GIAO VÀ NGHIỆM THU HÀNG HÓA";
 }
@@ -475,7 +476,7 @@
 
 <body>
     <div class="loader" style="z-index:1"></div>
-    <span id="spanText" class="text-loading">[usp_DanhSachHoaDon_SAP]</span>
+    <span id="spanText" class="text-loading">[usp_DanhSachHoaDonBBBG_SAP]</span>
     <div class="sidebar">
         <div class="logo-details">
 
@@ -491,45 +492,17 @@
                         <input class="den_ngay" id="den_ngay" placeholder="Đến Ngày" name="To_date" type="date" format="YYYY-MM-DD" value="@Request.QueryString["To_date"]" /><br /><br />
                         <script>$("#den_ngay").datetimepicker({ timepicker: false, format: 'Y-m-d' });</script>
                     </div>
-                    <div class="select-btnDt" style="width:100px">
-                        <select id="dropdownDt" class="select2" style="width: 200px" name="Ma_DT" onchange="saveSelectedDTValueToCookie()">
-                            <option value="">Chọn Khách Hàng</option>
-                            @if (ViewBag.DataDt != null)
-                            {
-                                foreach (var item in ViewBag.DataDt) 
-                                {
-                                    <option value="@item.Ma_CbNv" data-hoten="@item.Ma_CbNv">@item.Ma_CbNv @item.hoten</option>
-                                }
-                            }
-                        </select>
-
-                    </div>
-                    @*<div class="select-btn" style="width:100px">
-                            <select name="Ma_Dvcs" id="maDvCsSelect" onchange="saveSelectedValueToCookie()">
-                                <option value="" style="background-color: #020024;color:white">Vui lòng chọn đối tượng</option>
-                                <option value="OPC_B1">Công Ty Cổ Phần Dược Phẩm OPC</option>
-                                <option value="OPC_B2">Nhà Máy Bình Dương</option>
-                                <option value="OPC_TP">CN Hồ Chí Minh</option>
-                                <option value="OPC_CT">CN Cần Thơ</option>
-                                <option value="OPC_TG">CN Tiền Giang</option>
-                                <option value="OPC_MD">CN Miền Đông</option>
-                                <option value="OPC_VT">CN Vũng Tàu</option>
-                                <option value="OPC_NT">CN Nha Trang</option>
-                                <option value="OPC_DN">CN Đà Nẵng</option>
-                                <option value="OPC_NA">CN Nghệ An</option>
-                                <option value="OPC_HN">CN Hà Nội</option>
-                            </select>
-                        </div>*@
-                    @*<div class="select-btn" style="width:100px;margin-top:20px"> 
-                            <select name="Loai_Ct" id="loaiCt" onchange="saveSelectedValueToLoaiCt()">
-                                <option style="background-color: #020024;color:white">Vui lòng chọn loại phiếu</option>
-                                <option value="1">Phiếu Xuất</option>
-                                <option value="0">Phiếu Nhập</option>
-
-                            </select>
-                        </div>*@
+                    <input type="text" id="dropdownInput" list="dropdownList" placeholder="Tìm kiếm danh mục">
+                    <datalist id="dropdownList">
+                        @foreach (var item in ViewBag.DataItems)
+                        {
+                            <option value="@item.Ma_Dt" data-ten="@item.Ten_Dt" data-maDt="@item.Ma_Dt" data-diachi="@item.Dia_Chi" data-dvcs="@item.Dvcs" data-dvcs1="@item.Dvcs1">@item.Ten_Dt</option>
+                        }
+                    </datalist>
+                    <input type="hidden" name="Ma_Dt" id="selectedOption">
+                  
                     <div>
-                        <button class="submit" type="submit" onclick="runReport();saveSelectedValueToCookie()"> Chạy Báo Cáo </button>
+                        <button class="submit" type="submit" id="runReportButton"onclick="runReport();saveSelectedValueToCookie()"> Chạy Báo Cáo </button>
                     </div>
                 </form>
             </li>
@@ -606,15 +579,55 @@
     <script src="~/assets/js/custom.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $("#dropdownDt").select2();
-        });
+
+        <script>
+            document.getElementById("dropdownInput").addEventListener("input", function () {
+                var inputValue = this.value;
+            var options = document.querySelectorAll("#dropdownList option");
+
+            for (var i = 0; i < options.length; i++) {
+                    if (options[i].getAttribute("value") === inputValue) {
+                document.getElementById("selectedOption").value = inputValue;
+
+            break;
+                    }
+                }
+            });
+
+
+
+            document.addEventListener("DOMContentLoaded", function () {
+                var runReportButton = document.getElementById("runReportButton");
+
+            if (runReportButton) {
+                runReportButton.addEventListener("click", function () {
+                    var dropdownInput = document.getElementById("dropdownInput");
+                    var selectedOption = document.querySelector("#dropdownList option[value='" + dropdownInput.value + "']");
+
+                    if (selectedOption) {
+                        var maDt = selectedOption.getAttribute('data-maDt');
+                        var tenDt = selectedOption.getAttribute('data-ten');
+                        var diachi = selectedOption.getAttribute('data-diachi');
+                        document.cookie = 'Ma_Dt=' + maDt;
+                        document.cookie = 'Dia_Chi=' + diachi;
+                        document.cookie = 'Ten_DT=' + tenDt;
+                    } else {
+                        var selected = "";
+                        document.cookie = 'Ma_Dt=' + selected;
+                        document.cookie = 'Ten_DT=' + selected;
+                        document.cookie = 'Dia_Chi=' + selected;
+                    }
+                });
+                }
+            });
+
+
     </script>
+
     <script>
         function saveSelectedValueToCookie() {
-           
-       
+
+
             var from_date = document.getElementById("tu_ngay").value;
             var to_date = document.getElementById("den_ngay").value;
             document.cookie = "From_date=" + from_date;
@@ -676,10 +689,10 @@
             // Lấy các giá trị ngày đã chọn từ trường nhập liệu
             const fromDate = document.getElementById('tu_ngay').value;
             const toDate = document.getElementById('den_ngay').value;
-         
+
                 document.cookie = "From_date=" + from_date;
                 document.cookie = "To_date=" + to_date;
-            
+
             // Tạo URL mới với các tham số truy vấn
             const form = event.target;
             const actionUrl = `${form.action}?From_date=${fromDate}&To_date=${toDate}`;

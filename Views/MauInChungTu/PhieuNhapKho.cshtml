@@ -611,7 +611,12 @@
 </span></h4>
                 <h4 style=" font-size: 12px;">- Họ tên người giao hàng: <span style="color:black;font-weight:bold"></span></h4>
                 <h4 style=" font-size: 12px;">- Theo.................. số.............. &nbsp;&nbsp;&nbsp;&nbsp;ngày.......tháng.......năm.........của:<span style="color:black;font-weight:bold"></span></h4>
-                <h4 style=" font-size: 12px;">- Nhập tại kho: <span style="color:black;font-weight:bold"></span></h4>
+                <h4 style=" font-size: 12px;">- Nhập tại kho: <span style="color:black;font-weight:bold">
+    @foreach (DataRow row in Model.Tables[2].Rows)
+    {
+        @row["Kho_Nhap"]
+    }
+</span></h4>
                 <h4 style=" font-size: 12px;">- Địa chỉ:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color:black;font-weight:bold"></span></h4>
                 <h4 style=" font-size: 12px;">- Nội dung: <span style="color:black;font-weight:bold">
     @foreach (DataRow row in Model.Tables[1].Rows)
@@ -700,7 +705,7 @@
                 </div>
                 <div class="header" style="margin-left:20px">
                     <h4>Người lập phiếu&nbsp;&nbsp;&nbsp;&nbsp;</h4>
-                    <h4 style="margin-right:10px">Người giao hàng</h4>
+                    <h4 style="margin-right:10px">Người nhận hàng</h4>
                     <h4>Thủ Kho</h4>
                     <h4 style="margin-right:35px">GĐ.Đơn vị</h4>
                 </div>

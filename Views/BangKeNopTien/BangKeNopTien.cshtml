@@ -1,4 +1,5 @@
 ﻿
+
 @{ ViewBag.Title = " THEO DÕI BẢNG KÊ NỘP TIỀN "; }
 @using System.Data;
 <!DOCTYPE html>
@@ -584,11 +585,11 @@
                     <datalist id="dropdownList">
                         @foreach (var item in ViewBag.DataItems)
                         {
-                            <option value="@item.Ma_Dt" data-ten="@item.Ten_Dt" data-maDt="@item.Ma_Dt" data-dvcs="@item.Dvcs" data-dvcs1="@item.Dvcs1">@item.Ten_Dt</option>
+                            <option value="@item.Ma_Dt" data-ten="@item.Ma_Dt" data-diachi="@item.Dia_Chi" data-dvcs="@item.Dvcs" data-dvcs1="@item.Dvcs1">@item.Ten_Dt</option>
                         }
                     </datalist>
                     <input type="hidden" name="Ma_Dt" id="selectedOption">
-                    <a>Tìm TDV</a><br /><br />
+                    <h6>Chọn TDV</h6><br /><br />
 
 
 
@@ -600,21 +601,6 @@
                         }
                     </datalist>
                     <input type="hidden" name="Ma_TDV" id="selectedOptionTDV">
-
-
-                    @*<div class="select-btn" style="width:100px;margin-top:10px">
-            <select id="dropdownMaTDV" class="select2" style="width: 200px" name="Ma_TDV" onchange="saveSelectedTDVValueToCookie()">
-                <option value="">Chọn mã TDV</option>
-                @if (ViewBag.DataTDV != null)
-                {
-                    foreach (var item in ViewBag.DataTDV)
-                    {
-                        <option value="@item.Ma_CbNv" data-hoten="@item.Ma_CbNv">@item.Ma_CbNv @item.hoten</option>
-                    }
-                }
-            </select>
-
-        </div>*@
                     <div>
                         <button class="submit" type="submit" id="runReportButton" onclick="runReport()">
                             Chạy Báo Cáo
@@ -658,30 +644,68 @@
                     <table id="example" class="table table-striped table-bordered">
                         <thead class="table-dark">
                             <tr>
-                                <th>STT</th>
                                 <th>Khách hàng</th>
                                 <th>Mã Đối Tượng</th>
                                 <th>Số Hóa Đơn</th>
                                 <th>Ngày Hóa Đơn</th>
+                                <th>Ngày Đến Hạn</th>
                                 <th>Tiền Hóa Đơn</th>
-                                <th>Tiền Nộp</th>
-                                <th>Tiền Thu</th>
-                                <th>Số PMH</th>
-                                <th>Tiền PMH</th>
                                 <th>Số Phiếu Thu</th>
+                                <th>Số External</th>
                                 <th>Ngày Phiếu Thu</th>
-                                <th>Diễn Giải</th>
-                                <th>Tên DvCs</th>
-                                <th>Tên CbNv</th>
-                                <th>Mã CbNv</th>
+                                <th>Tiền TT</th>
+                                <th>Loại Chứng Từ</th>
+                                <th>Số Chứng Từ</th>
                                 <th>Mã TDV</th>
-                                <th>Mã NvGh</th>
-                                <th>Số Hợp Đồng</th>
+                                <th>Tên TDV</th>
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach (DataRow row2 in Model.Tables[0].Rows)
+                            {
+
+
+                                <tr>
+                                    <td>@row2["Ten_Dt"]</td>
+                                    <td>@row2["Ma_Dt"]</td>
+                                    <td>@row2["So_HD_InV"]</td>
+                                    <td>@row2["Ngay_HD"]</td>
+                                    <td>@row2["Ngay_Den_Han"]</td>
+                                    <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Tien_HD_InV"]))</td>
+                                    <td>@row2["So_PT"]</td>
+                                    <td>@row2["So_External_Sap"]</td>
+                                    <td>@row2["Ngay_PT"]</td>
+                                    <td style="text-align:right">@String.Format("{0:#,###}", row2["Tien_TT"])</td>
+                                    <td>@row2["Loai_Ct"]</td>
+                                    <td>@row2["So_Ct"]</td>
+                                    <td>@row2["Ma_TDV"]</td>
+                                    <td>@row2["Ten_TDV"]</td>
+                                </tr>
+
+
+
+                            }
                         </tbody>
+                        <tfoot>
+                            <tr id="total-row" style="background-color: burlywood">
+                                <td colspan="9"><strong>Tổng trang:</strong></td>
+                                <td class="total-tien" style="text-align:right"></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr id="total-row-tong-cong" style="background-color: burlywood">
+                                <td colspan="9"><strong>Tổng cộng(Tất cả):</strong></td>
+                                <td class="total-tienTT" style="text-align:right"></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
                     </table>
+
                 </div>
             </div>
         </div>
@@ -696,32 +720,6 @@
     <script src="~/assets/js/pdfmake.min.js"></script>
     <script src="~/assets/js/vfs_fonts.js"></script>
     <script src="~/assets/js/custom.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $("#dropdownMaTDV").select2();
-        });
-    </script>
-    @*<script>
-        document.addEventListener("DOMContentLoaded", function () {
-            var dropdownMaTDV = document.getElementById("dropdownMaTDV");
-
-            if (dropdownMaTDV) {
-                dropdownMaTDV.addEventListener("change", function () {
-                    var selectedOption = dropdownMaTDV.options[dropdownMaTDV.selectedIndex];
-
-                    if (selectedOption) {
-                        var maTDV = selectedOption.value;
-                        document.cookie = 'Ma_TDV=' + maTDV;
-                    } else {
-                        var selected = "";
-                        document.cookie = 'Ma_TDV=' + selected;
-                    }
-                });
-            }
-        });
-    </script>*@
     <script>
         document.getElementById("dropdownInput").addEventListener("input", function () {
             var inputValue = this.value;
@@ -747,18 +745,81 @@
                     var selectedOption = document.querySelector("#dropdownList option[value='" + dropdownInput.value + "']");
 
                     if (selectedOption) {
-                        var tenDt = selectedOption.getAttribute('data-maDt');
+                        var tenDt = selectedOption.getAttribute('data-ten');
                         document.cookie = 'Ma_Dt=' + tenDt;
                     } else {
-                        var selected = "";
-                        document.cookie = 'Ma_Dt=' + selected;
+                        var select = "";
+                        document.cookie = 'Ma_Dt=' + select;
                     }
+
                 });
             }
         });
 
 
     </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Lấy tất cả các ô chứa giá trị cột "Tiền TT"
+            var tienTTCells = document.querySelectorAll('#example tbody td:nth-child(10)');
+
+            // Biến để tính tổng
+            var totalTienTT = 0;
+
+            // Lặp qua từng ô và tính tổng
+            tienTTCells.forEach(function (cell) {
+                var valueWithoutCommas = cell.textContent.replace(/,/g, ''); // Loại bỏ dấu phẩy
+                totalTienTT += parseFloat(valueWithoutCommas);
+            });
+
+            // Gán tổng vào ô của hàng tfoot
+            document.querySelector('#total-row-tong-cong .total-tienTT').textContent = formatCurrency(totalTienTT);
+        });
+
+        // Hàm định dạng số tiền thành chuỗi có dấu phẩy
+        function formatCurrency(amount) {
+            return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            function calculateTotal() {
+                // Lấy tất cả các ô chứa giá trị cột "Tiền TT"
+                var tienTTCells = document.querySelectorAll('#example tbody td:nth-child(10)');
+
+                // Biến để tính tổng Tiền TT
+                var totalTienTT = 0;
+
+                // Lặp qua từng ô và tính tổng
+                tienTTCells.forEach(function (cell) {
+                    var valueWithoutCommas = cell.textContent.replace(/,/g, ''); // Loại bỏ dấu phẩy
+                    totalTienTT += parseFloat(valueWithoutCommas);
+                });
+
+                // Gán tổng Tiền TT vào ô của hàng tfoot "Tổng trang"
+                document.querySelector('#total-row .total-tien').textContent = formatCurrency(totalTienTT);
+
+                // Gán tổng Tiền TT vào ô của hàng tfoot "Tổng cộng(Tất cả)"
+               /* document.querySelector('#total-row-tong-cong .total-tienTT').textContent = formatCurrency(totalTienTT);*/
+            }
+
+            // Gọi hàm calculateTotal khi trang được tải và khi có sự kiện thay đổi trên trang
+            calculateTotal();
+
+            // Hàm định dạng số tiền thành chuỗi có dấu phẩy
+            function formatCurrency(amount) {
+                return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            }
+
+            // Thêm sự kiện cho việc thay đổi trang
+            $('#example').on('draw.dt', function () {
+                calculateTotal();
+            });
+        });
+
+    </script>
+
+
     <script>
         document.getElementById("dropdownInputTDV").addEventListener("input", function () {
             var inputValue = this.value;
@@ -796,6 +857,9 @@
 
 
     </script>
+
+
+
     <script>
         // Set the "Từ Ngày" input to the first day of the current month
         function setFirstDayOfCurrentMonth() {

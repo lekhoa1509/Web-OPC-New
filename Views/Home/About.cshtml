@@ -271,7 +271,7 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                             }
                             else
                             {
-                                <li class="liTitle"><a href="/DoanhThuChiNhanh/DanhSachHoaDon_Fill">2.1.Bảng Kê Chứng Từ SO</a></li>
+                                <li class="liTitle"><a href="/bangkehoadon/DanhSachHoaDon_Fill">2.1.Bảng Kê Chứng Từ SO</a></li>
                             }
                            
                             <li class="liTitle"><a href="/BaoCaobanHangCN/BaoCaoBanHangCN_Fill">2.3.Báo Cáo Bán Hàng CN</a></li>
@@ -334,50 +334,50 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
         </nav>
         <div style="width:auto;float:right">
             @*<div class="home-content1" style="width:100%;height:100%">
-                    <div class="overview-boxes" style="background-color:red">
-                        <div class="box" style="overflow:auto;width:400px;height:200px">
-                            <table id="product" style="width:500px;height:200px; border-collapse: collapse;overflow:scroll">
+                <div class="overview-boxes" style="background-color:red">
+                    <div class="box" style="overflow:auto;width:400px;height:200px">
+                        <table id="product" style="width:500px;height:200px; border-collapse: collapse;overflow:scroll">
 
-                                <tr class="title">
-                                    <th colspan="4" class="top10" style="font-size:18px;padding:5px">Top 10 sản phẩm bán chạy</th>
-                                </tr>
-                                <tr class="title" style="background-color:black;color:white;width:30px;padding:5px">
-                                    <td style="padding-right:10px">STT</td>
-                                    <td>Mã Vật Tư</td>
-                                    <td>Tên Vật Tư</td>
-                                    <td>Doanh Thu</td>
-                                </tr>
-                                <tbody>
-                                    @if (Model != null && Model.Tables.Count > 0 && Model.Tables[0].Rows.Count > 0)
-                                    {
-                                        int stt = 1;
-                                        foreach (DataRow row4 in Model.Tables[0].Rows)
-                                        {
-                                            <tr>
-                                                <td style="padding:10px">@stt</td>
-                                                <td>@row4["Ma_Vt"]</td>
-                                                <td>@row4["Ten_Vt"]</td>
-                                                <td>@String.Format("{0:n0}", Convert.ToDecimal(row4["Doanh_Thu"]))</td>
-                                            </tr>
-                                            stt++;
-                                        }
-                                    }
-                                    else
+                            <tr class="title">
+                                <th colspan="4" class="top10" style="font-size:18px;padding:5px">Top 10 sản phẩm bán chạy</th>
+                            </tr>
+                            <tr class="title" style="background-color:black;color:white;width:30px;padding:5px">
+                                <td style="padding-right:10px">STT</td>
+                                <td>Mã Vật Tư</td>
+                                <td>Tên Vật Tư</td>
+                                <td>Doanh Thu</td>
+                            </tr>
+                            <tbody>
+                                @if (Model != null && Model.Tables.Count > 0 && Model.Tables[0].Rows.Count > 0)
+                                {
+                                    int stt = 1;
+                                    foreach (DataRow row4 in Model.Tables[0].Rows)
                                     {
                                         <tr>
-                                            <td colspan="4">No data available.</td>
+                                            <td style="padding:10px">@stt</td>
+                                            <td>@row4["Ma_Vt"]</td>
+                                            <td>@row4["Ten_Vt"]</td>
+                                            <td>@String.Format("{0:n0}", Convert.ToDecimal(row4["Doanh_Thu"]))</td>
                                         </tr>
+                                        stt++;
                                     }
-                                </tbody>
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="4">No data available.</td>
+                                    </tr>
+                                }
+                            </tbody>
 
-                            </table>
-                        </div>
-
-
-
+                        </table>
                     </div>
 
-                </div>*@
+
+
+                </div>
+
+            </div>*@
             <div class="home-content1" style="width:100%">
                 <div class="overview-boxes" style="background-color:red">
                     <div class="box" style="overflow:auto;width:400px;height:200px">
@@ -487,7 +487,7 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                                         else
                                         {
                                             <li class="liTitle" style="list-style-type:none">
-                                                <a href="" onclick="runReport('@Url.Action("danhsachhoadon_SAP", "bangkehoadon")'
+                                                <a href="" onclick="runReport('@Url.Action("DanhSachHoaDon_Fill", "bangkehoadon")'
                                                       )">2.Bảng Kê Hóa đơn</a>
                                             </li>}
                                     </td>
@@ -539,14 +539,7 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                                         </li>
                                     </td>
                                 </tr>
-                                <tr style="height:30px">
-                                    <td style="text-align: left">
-                                        <li style=" list-style-type: none;" class="liTitle">
-                                            <a href="" onclick="runReport('@Url.Action("BangKeNopTien_Fill", "BangKeNopTien")'
-                                                      )">9.Theo Dõi Bảng Kê Nộp Tiền</a>
-                                        </li>
-                                    </td>
-                                </tr>
+
                             </tbody>
 
 
@@ -561,50 +554,50 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
         </div>
         <div style="width:auto;float:right">
             @*<div class="home-content1" style="width:100%;height:100%">
-                    <div class="overview-boxes" style="background-color:red">
-                        <div class="box" style="overflow:auto;width:400px;height:200px">
-                            <table id="product" style="width:500px;height:200px; border-collapse: collapse;overflow:scroll">
+                <div class="overview-boxes" style="background-color:red">
+                    <div class="box" style="overflow:auto;width:400px;height:200px">
+                        <table id="product" style="width:500px;height:200px; border-collapse: collapse;overflow:scroll">
 
-                                <tr class="title">
-                                    <th colspan="4" class="top10" style="font-size:18px;padding:5px">Top 10 sản phẩm bán chạy</th>
-                                </tr>
-                                <tr class="title" style="background-color:black;color:white;width:30px;padding:5px">
-                                    <td style="padding-right:10px">STT</td>
-                                    <td>Mã Vật Tư</td>
-                                    <td>Tên Vật Tư</td>
-                                    <td>Doanh Thu</td>
-                                </tr>
-                                <tbody>
-                                    @if (Model != null && Model.Tables.Count > 0 && Model.Tables[0].Rows.Count > 0)
-                                    {
-                                        int stt = 1;
-                                        foreach (DataRow row4 in Model.Tables[0].Rows)
-                                        {
-                                            <tr>
-                                                <td style="padding:10px">@stt</td>
-                                                <td>@row4["Ma_Vt"]</td>
-                                                <td>@row4["Ten_Vt"]</td>
-                                                <td>@String.Format("{0:n0}", Convert.ToDecimal(row4["Doanh_Thu"]))</td>
-                                            </tr>
-                                            stt++;
-                                        }
-                                    }
-                                    else
+                            <tr class="title">
+                                <th colspan="4" class="top10" style="font-size:18px;padding:5px">Top 10 sản phẩm bán chạy</th>
+                            </tr>
+                            <tr class="title" style="background-color:black;color:white;width:30px;padding:5px">
+                                <td style="padding-right:10px">STT</td>
+                                <td>Mã Vật Tư</td>
+                                <td>Tên Vật Tư</td>
+                                <td>Doanh Thu</td>
+                            </tr>
+                            <tbody>
+                                @if (Model != null && Model.Tables.Count > 0 && Model.Tables[0].Rows.Count > 0)
+                                {
+                                    int stt = 1;
+                                    foreach (DataRow row4 in Model.Tables[0].Rows)
                                     {
                                         <tr>
-                                            <td colspan="4">No data available.</td>
+                                            <td style="padding:10px">@stt</td>
+                                            <td>@row4["Ma_Vt"]</td>
+                                            <td>@row4["Ten_Vt"]</td>
+                                            <td>@String.Format("{0:n0}", Convert.ToDecimal(row4["Doanh_Thu"]))</td>
                                         </tr>
+                                        stt++;
                                     }
-                                </tbody>
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="4">No data available.</td>
+                                    </tr>
+                                }
+                            </tbody>
 
-                            </table>
-                        </div>
-
-
-
+                        </table>
                     </div>
 
-                </div>*@
+
+
+                </div>
+
+            </div>*@
             <div class="home-content1" style="width:100%">
                 <div class="overview-boxes" style="background-color:red">
                     <div class="box" style="overflow:auto;width:400px;height:200px">
@@ -640,6 +633,14 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                                         </li>
                                     </td>
                                 </tr>
+                                <tr style="height:30px">
+                                    <td style="text-align: left">
+                                        <li style=" list-style-type: none;" class="liTitle">
+                                            <a href="" onclick="runReport('@Url.Action("BangKeNopTien_Fill", "BangKeNopTien")'
+                                                      )">4.THEO DÕI BẢNG KÊ NỘP TIỀN</a>
+                                        </li>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -651,71 +652,71 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
 
             </div>
             @*<div class="home-content1" style="width:100%">
-                    <div class="overview-boxes" style="background-color:red">
-                        <div class="box" style="overflow:auto;width:400px;height:200px">
-                            <table style="width:500px;height:200px; border-collapse: collapse;overflow:scroll">
+                <div class="overview-boxes" style="background-color:red">
+                    <div class="box" style="overflow:auto;width:400px;height:200px">
+                        <table style="width:500px;height:200px; border-collapse: collapse;overflow:scroll">
 
-                                <tr class="title">
-                                    <th colspan="4" class="top10" style="font-size:18px;padding:5px;height:10px">BÁO CÁO PHÂN TÍCH KHUYẾN MÃI</th>
+                            <tr class="title">
+                                <th colspan="4" class="top10" style="font-size:18px;padding:5px;height:10px">BÁO CÁO PHÂN TÍCH KHUYẾN MÃI</th>
+                            </tr>
+
+                            <tbody style="float:left">
+
+                                <tr style="height:30px">
+                                    <td style="text-align: left"> <li style=" list-style-type: none;" class="liTitle"><a href="/BaoCaoHopDong/BaoCaoHopDongMar_Fill">1.BÁO CÁO HỢP ĐỒNG MARKETING</a></li></td>
                                 </tr>
-
-                                <tbody style="float:left">
-
-                                    <tr style="height:30px">
-                                        <td style="text-align: left"> <li style=" list-style-type: none;" class="liTitle"><a href="/BaoCaoHopDong/BaoCaoHopDongMar_Fill">1.BÁO CÁO HỢP ĐỒNG MARKETING</a></li></td>
-                                    </tr>
-                                    <tr style="height:30px">
-                                        <td style="text-align: left"> <li style=" list-style-type: none;" class="liTitle"><a href="/BaoCaoHopDong/BaoCaoChiTietHD_Fill">2.BÁO CÁO CHI TIẾT HỢP ĐỒNG </a></li></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-
-
+                                <tr style="height:30px">
+                                    <td style="text-align: left"> <li style=" list-style-type: none;" class="liTitle"><a href="/BaoCaoHopDong/BaoCaoChiTietHD_Fill">2.BÁO CÁO CHI TIẾT HỢP ĐỒNG </a></li></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
-                </div>*@
+
+
+
+                </div>
+            </div>*@
 
             @*<div class="home-content1" style="width:100%">
-                    <div class="overview-boxes" style="background-color:red">
-                        <div class="box" style="overflow:auto;width:400px;height:200px">
-                            <table style="width:500px;height:200px; border-collapse: collapse;overflow:scroll">
+                <div class="overview-boxes" style="background-color:red">
+                    <div class="box" style="overflow:auto;width:400px;height:200px">
+                        <table style="width:500px;height:200px; border-collapse: collapse;overflow:scroll">
 
-                                <tr class="title">
-                                    <th colspan="4" class="top10" style="font-size:18px;padding:5px;height:50px">BÁO CÁO NGHIỆP VỤ</th>
+                            <tr class="title">
+                                <th colspan="4" class="top10" style="font-size:18px;padding:5px;height:50px">BÁO CÁO NGHIỆP VỤ</th>
+                            </tr>
+
+                            <tbody style="float:left">
+
+                                <tr style="height:30px">
+                                    <td style="text-align: left"> <li style=" list-style-type: none;" class="liTitle"><a href="/bangkehoadon/bangkehoadon_Fill">1.Bảng Kê Chứng Từ SO</a></li></td>
                                 </tr>
-
-                                <tbody style="float:left">
-
-                                    <tr style="height:30px">
-                                        <td style="text-align: left"> <li style=" list-style-type: none;" class="liTitle"><a href="/bangkehoadon/bangkehoadon_Fill">1.Bảng Kê Chứng Từ SO</a></li></td>
-                                    </tr>
-                                    <tr style="height:30px">
-                                        <td style="text-align: left"> <li style=" list-style-type: none;" class="liTitle"><a href="/BaoCaobanHangCN/BaoCaoBanHangCN_Fill">2.Báo Cáo Bán Hàng CN</a></li></td>
-                                    </tr>
-                                    <tr style="height:30px">
-                                        <td style="text-align: left"> <li style=" list-style-type: none;" class="liTitle"><a href="/BaoCaoBanHangTDV/BaoCaoBanHangTDV_Fill">3.Báo Cáo Bán Hàng TDV</a></td>
-                                    </tr>
-                                    <tr style="height:30px">
-                                        <td style="text-align: left"> <li style=" list-style-type: none;" class="liTitle"><a href="/BaoCaoTienVeCN/BaoCaoTienVeCN_Fill">4.Báo Cáo Tiền Về CN</a></li></td>
-                                    </tr>
-                                    <tr style="height:30px">
-                                        <td style="text-align: left"> <li style=" list-style-type: none;" class="liTitle"><a href="/BaoCaoTienVeCN/BaoCaoTienVeTDV_Fill">5.Báo Cáo Tiền Về TDV</a></li></td>
-                                    </tr>
-                                    <tr style="height:30px">
-                                        <td style="text-align: left"> <li style=" list-style-type: none;" class="liTitle"><a href="/BaoCaoDoanhThuGamHangTheoDoiTuong/BaoCaoDoanhThuGamHangTheoDoiTuong_Fill">6.Báo Cáo Doanh Thu Gam Theo Đối Tượng</a></li></td>
-                                    </tr>
-                                </tbody>
+                                <tr style="height:30px">
+                                    <td style="text-align: left"> <li style=" list-style-type: none;" class="liTitle"><a href="/BaoCaobanHangCN/BaoCaoBanHangCN_Fill">2.Báo Cáo Bán Hàng CN</a></li></td>
+                                </tr>
+                                <tr style="height:30px">
+                                    <td style="text-align: left"> <li style=" list-style-type: none;" class="liTitle"><a href="/BaoCaoBanHangTDV/BaoCaoBanHangTDV_Fill">3.Báo Cáo Bán Hàng TDV</a></td>
+                                </tr>
+                                <tr style="height:30px">
+                                    <td style="text-align: left"> <li style=" list-style-type: none;" class="liTitle"><a href="/BaoCaoTienVeCN/BaoCaoTienVeCN_Fill">4.Báo Cáo Tiền Về CN</a></li></td>
+                                </tr>
+                                <tr style="height:30px">
+                                    <td style="text-align: left"> <li style=" list-style-type: none;" class="liTitle"><a href="/BaoCaoTienVeCN/BaoCaoTienVeTDV_Fill">5.Báo Cáo Tiền Về TDV</a></li></td>
+                                </tr>
+                                <tr style="height:30px">
+                                    <td style="text-align: left"> <li style=" list-style-type: none;" class="liTitle"><a href="/BaoCaoDoanhThuGamHangTheoDoiTuong/BaoCaoDoanhThuGamHangTheoDoiTuong_Fill">6.Báo Cáo Doanh Thu Gam Theo Đối Tượng</a></li></td>
+                                </tr>
+                            </tbody>
 
 
-                            </table>
-                        </div>
-
-
-
+                        </table>
                     </div>
 
-                </div>*@
+
+
+                </div>
+
+            </div>*@
         </div>
         <div style="width:auto;float:right">
 
@@ -802,6 +803,35 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                                         </li>
                                     </td>
                                 </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div style="width:auto;float:right">
+
+            <div class="home-content1" style="width:100%">
+                <div class="overview-boxes" style="background-color:red">
+                    <div class="box" style="overflow:auto;width:400px;height:200px">
+                        <table style="width:500px;height:200px; border-collapse: collapse;overflow:scroll">
+
+                            <tr class="title" style="height:20px">
+                                <th colspan="4" class="top10" style="font-size:18px;padding:5px;height:10px">Báo Cáo Công Nợ</th>
+                            </tr>
+
+                            <tbody style="float:left">
+
+                                <tr style="height:30px">
+                                    <td style="text-align: left">
+                                        <li style=" list-style-type: none;" class="liTitle">
+                                            <a href="" onclick="runReport('@Url.Action("", "BaoCaoCongNo")'
+                                                      )">1.Báo Cáo Nợ Quá Hạn</a>
+                                        </li>
+                                    </td>
+                                </tr>
+                              
                             </tbody>
                         </table>
                     </div>
