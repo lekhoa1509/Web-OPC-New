@@ -1081,6 +1081,9 @@
     <Content Include="Views\PhieuKeToan\PhieuKeToan.cshtml" />
     <Content Include="Views\MauInChungTu\PhieuNhapXNTT_Index.cshtml" />
     <Content Include="Views\BangKeNopTien\BangKeNopTien_Fill.cshtml" />
+    <Content Include="Views\MauInChungTu\BienBanBanGiaoNTHH_Fill.cshtml" />
+    <Content Include="Views\MauInChungTu\BienBanBanGiaoNTHH_Index.cshtml" />
+    <Content Include="Views\BangKeNopTien\BangKeNopTien.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

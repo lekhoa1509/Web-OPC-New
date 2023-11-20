@@ -84,7 +84,7 @@
             align-items: center;
             margin-left: auto;
             margin-right: auto;
-            height: 50px;
+            height: 30px;
         }
 
         table {
@@ -577,14 +577,14 @@
                 <table id="export" border="1" border-collapse="collapse" style="width:700px">
                     <thead style="display: table-header-group">
                         <tr style="font-size: 13px; font-weight: bold; color: black;">
-                            <th style="padding:10px">SỐ</th>
-                            <th>KHÁCH HÀNG</th>
-                            <th>NGÀY HÓA ĐƠN</th>
-                            <th>SỐ HÓA ĐƠN</th>
-                            <th>NGÀY THANH TOÁN</th>
-                            <th>GN THU</th>
-                            <th>TDV THU</th>
-                            <th>TỔNG TIỀN</th>
+                            <th style="padding:5px">SỐ</th>
+                            <th style="padding:5px">KHÁCH HÀNG</th>
+                            <th style="padding:5px">NGÀY HÓA ĐƠN</th>
+                            <th style="padding:5px">SỐ HÓA ĐƠN</th>
+                            <th style="padding:5px">NGÀY THANH TOÁN</th>
+                            <th style="padding:5px">GN THU</th>
+                            <th style="padding:5px">TDV THU</th>
+                            <th style="padding:5px">TỔNG TIỀN</th>
                         </tr>
                     </thead>
                     <tbody style="font-size:13px;color:black">
@@ -601,9 +601,9 @@
                                     // Nếu cột "Ten_Dt" thay đổi, thêm hàng mới
                                     if (currentDT != null)
                                     {
-                                        <tr>
-                                            <td colspan="7" style="text-align:center;color:black;font-weight:bold">Tổng cộng:</td>
-                                            <td style="text-align:right;color:black;font-weight:bold">@string.Format("{0:n0}", totalCongNo.ToString("N0").Replace(",", "."))</td>
+                                        <tr style="padding:5px">
+                                            <td colspan="7" style="text-align:center;color:black;font-weight:bold;padding:5px">Tổng cộng:</td>
+                                            <td style="text-align:right;color:black;font-weight:bold;padding:5px">@string.Format("{0:n0}", totalCongNo.ToString("N0").Replace(",", "."))</td>
 
                                         </tr>
                                         totalCongNo = 0;
@@ -655,7 +655,7 @@
                             //Thêm hàng cuối cùng
                             if (currentDT != null)
                             {
-                                <tr>
+                                <tr style="padding:5px">
                                     <td colspan="7" style="text-align:center;color:black;font-weight:bold">Tổng cộng:</td>
                                     <td style="text-align:right;font-weight:bold;color:black">@string.Format("{0:n0}", totalCongNo.ToString("N0").Replace(",", "."))</td>
 
