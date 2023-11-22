@@ -487,7 +487,7 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                                         else
                                         {
                                             <li class="liTitle" style="list-style-type:none">
-                                                <a href="" onclick="runReport('@Url.Action("danhsachhoadon_SAP", "bangkehoadon")'
+                                                <a href="" onclick="runReport('@Url.Action("DanhSachHoaDon_Fill", "bangkehoadon")'
                                                       )">2.Bảng Kê Hóa đơn</a>
                                             </li>}
                                     </td>
@@ -539,7 +539,14 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                                         </li>
                                     </td>
                                 </tr>
-                               
+                                <tr style="height:30px">
+                                    <td style="text-align: left">
+                                        <li style=" list-style-type: none;" class="liTitle">
+                                            <a href="" onclick="runReport('@Url.Action("BaoCaoDTTinhLuongCTV_Fill", "BaoCaoBanHangCTV")'
+                                                      )">9.Báo Cáo Doanh Thu Tính Lương CTV</a>
+                                        </li>
+                                    </td>
+                                </tr>
                             </tbody>
 
 
@@ -638,6 +645,14 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                                         <li style=" list-style-type: none;" class="liTitle">
                                             <a href="" onclick="runReport('@Url.Action("BangKeNopTien_Fill", "BangKeNopTien")'
                                                       )">4.THEO DÕI BẢNG KÊ NỘP TIỀN</a>
+                                        </li>
+                                    </td>
+                                </tr>
+                                <tr style="height:30px">
+                                    <td style="text-align: left">
+                                        <li style=" list-style-type: none;" class="liTitle">
+                                            <a href="" onclick="runReport('@Url.Action("PhanTichBanHang_Fill", "PhanTichBanHang")'
+                                                      )">5.PHÂN TÍCH BÁN HÀNG</a>
                                         </li>
                                     </td>
                                 </tr>

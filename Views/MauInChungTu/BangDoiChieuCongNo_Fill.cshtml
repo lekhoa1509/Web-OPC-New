@@ -438,10 +438,12 @@
                         <a>Đối Tượng</a><br /><br />
                         <input type="text" id="dropdownInput" list="dropdownList" placeholder="Tìm kiếm danh mục">
                         <datalist id="dropdownList">
-                            @foreach (var item in ViewBag.DataItems)
-                            {
+                            @{ var l = ViewBag.DataItems;
+                                foreach (var item in l)
+                                {
                                 <option value="@item.Ma_Dt" data-ten="@item.Ten_Dt" data-diachi="@item.Dia_Chi" data-dvcs="@item.Dvcs" data-dvcs1="@item.Dvcs1">@item.Ten_Dt</option>
-                            }
+                                    }
+                                }
                         </datalist>
                         <input type="hidden" name="Ma_Dt" id="selectedOption">
 

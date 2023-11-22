@@ -1,6 +1,6 @@
 ﻿﻿﻿
 @{ ViewBag.Title = "Sổ Tồn Nợ Phải Thu";
-    var ma_TDV = Request.Cookies["Ma_CbNv"].Value;
+    var ma_TDV = Request.Cookies["Ma_TDV"].Value;
     var Ten_TDV = Request.Cookies["Ten_TDV"].Value;
     var DenNgay = Request.Cookies["To_date"].Value;
     DateTime ngay = DateTime.ParseExact(DenNgay, "yyyy-MM-dd", CultureInfo.InvariantCulture);

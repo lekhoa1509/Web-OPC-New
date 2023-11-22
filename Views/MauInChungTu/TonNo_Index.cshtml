@@ -1,4 +1,4 @@
-﻿
+﻿﻿
 
 @{
     ViewBag.Title = "SỔ CHI TIẾT TỒN NỢ PHẢI THU";
@@ -492,22 +492,31 @@
                         <input class="den_ngay" id="den_ngay" placeholder="Đến Ngày" name="To_date" type="date" format="YYYY-MM-DD" value="@Request.QueryString["To_date"]" /><br /><br />
                         <script>$("#den_ngay").datetimepicker({ timepicker: false, format: 'Y-m-d' });</script>
                     </div>
-                    <div class="select-btn" style="width:100px">
-                        <select id="dropdownMaTDV" class="select2" style="width: 200px" name="selectedValue">
-                            <option value="">Chọn mã TDV</option>
-                            @if (ViewBag.DataTDV != null)
-                            {
-                            foreach (var item in ViewBag.DataTDV)
-                            {
-                                <option value="@item.Ma_CbNv"data-hoten="@item.hoten">@item.Ma_CbNv-@item.hoten</option>
-                            }
-                            }
-                        </select>
-                        
-                    </div>
+                    <h6>Chọn Đối Tượng</h6>
+                    <br />
+                    <input type="text" id="dropdownInput" list="dropdownList" placeholder="Tìm kiếm đối tượng">
+                    <datalist id="dropdownList">
+                        @foreach (var item in ViewBag.DataItems)
+                        {
+                            <option value="@item.Ma_Dt" data-ten="@item.Ten_Dt" data-maDt="@item.Ma_Dt" data-dvcs="@item.Dvcs" data-dvcs1="@item.Dvcs1">@item.Ten_Dt</option>
+                        }
+                    </datalist>
+                    <input type="hidden" name="Ma_Dt" id="selectedOption">
+                    <a>Tìm TDV</a><br /><br />
+
+
+
+                    <input type="text" id="dropdownInputTDV" list="dropdownListTDV" placeholder="Tìm kiếm TDV">
+                    <datalist id="dropdownListTDV">
+                        @foreach (var item in ViewBag.DataTDV)
+                        {
+                            <option value="@item.Ma_CbNv" data-hoten="@item.hoten"data-Ma_CbNv="@item.Ma_CbNv">@*@item.Ma_CbNv*@ @item.hoten</option>
+                        }
+                    </datalist>
+                    <input type="hidden" name="Ma_TDV" id="selectedOptionTDV">
 
                     <div>
-                        <button class="submit" type="submit" onclick="saveSelectedValueToCookie(); runReport('@Url.Action("TonNo_Fill", "MauInChungTu")')"> Chạy Báo Cáo </button>
+                        <button class="submit" type="submit"id="runReportButton" onclick="saveSelectedValueToCookie(); runReport('@Url.Action("TonNo_Fill", "MauInChungTu")')"> Chạy Báo Cáo </button>
                     </div>
                 </form>
             </li>
@@ -553,7 +562,7 @@
                                 <th>GN Thu</th>
                                 <th>TDV Thu</th>
                                 <th>Tổng tiền</th>
-                                
+
                             </tr>
                         </thead>
                         <tbody>
@@ -583,6 +592,83 @@
     <script src="~/assets/js/pdfmake.min.js"></script>
     <script src="~/assets/js/vfs_fonts.js"></script>
     <script src="~/assets/js/custom.js"></script>
+    <script>
+        document.getElementById("dropdownInput").addEventListener("input", function () {
+            var inputValue = this.value;
+            var options = document.querySelectorAll("#dropdownList option");
+
+            for (var i = 0; i < options.length; i++) {
+                if (options[i].getAttribute("value") === inputValue) {
+                    document.getElementById("selectedOption").value = inputValue;
+
+                    break;
+                }
+            }
+        });
+
+
+
+        document.addEventListener("DOMContentLoaded", function () {
+            var runReportButton = document.getElementById("runReportButton");
+
+            if (runReportButton) {
+                runReportButton.addEventListener("click", function () {
+                    var dropdownInput = document.getElementById("dropdownInput");
+                    var selectedOption = document.querySelector("#dropdownList option[value='" + dropdownInput.value + "']");
+
+                    if (selectedOption) {
+                        var tenDt = selectedOption.getAttribute('data-maDt');
+                        document.cookie = 'Ma_Dt=' + tenDt;
+                    } else {
+                        var selected = "";
+                        document.cookie = 'Ma_Dt=' + selected;
+                    }
+                });
+            }
+        });
+
+
+    </script>
+    <script>
+        document.getElementById("dropdownInputTDV").addEventListener("input", function () {
+            var inputValue = this.value;
+            var options = document.querySelectorAll("#dropdownListTDV option");
+
+            for (var i = 0; i < options.length; i++) {
+                if (options[i].getAttribute("value") === inputValue) {
+                    document.getElementById("selectedOptionTDV").value = inputValue;
+
+                    break;
+                }
+            }
+        });
+
+
+
+        document.addEventListener("DOMContentLoaded", function () {
+            var runReportButton = document.getElementById("runReportButton");
+
+            if (runReportButton) {
+                runReportButton.addEventListener("click", function () {
+                    var dropdownInput = document.getElementById("dropdownInputTDV");
+                    var selectedOption = document.querySelector("#dropdownListTDV option[value='" + dropdownInput.value + "']");
+
+                    if (selectedOption) {
+                        var MaTDV = selectedOption.getAttribute('data-Ma_CbNv');
+                        var TenTDV = selectedOption.getAttribute('data-hoten');
+                        document.cookie = 'Ma_TDV=' + MaTDV;
+                        document.cookie = 'Ten_TDV=' + TenTDV;
+                    } else {
+                        var selected = "";
+                        document.cookie = 'Ma_TDV=' + selected;
+                        document.cookie = 'Ten_TDV=' + selected;
+                    }
+                });
+            }
+        });
+
+
+    </script>
     <script>
         document.getElementById("dropdownMaTDV").addEventListener("change", function () {
             var selectedValue = this.value; // Lấy giá trị đã chọn
@@ -639,12 +725,12 @@
     </script>
     <script>
         function saveSelectedValueToCookie() {
-        
-       
-           var from_date = document.getElementById("tu_ngay").value;
+
+
+            var from_date = document.getElementById("tu_ngay").value;
             var to_date = document.getElementById("den_ngay").value;
             // Lưu giá trị vào cookie với tên là "Dvcs3" và thời gian sống là 1 ngày (86400 giây)
-          
+
             document.cookie = "From_date=" + from_date;
             document.cookie = "To_date=" + to_date;
         }
@@ -789,9 +875,9 @@
                 }
 
                 newTab.innerHTML = `
-                                                <a href="${tabHref}">${tabTitle}</a>
-                                                <a class="closeTab" href="">✕</a>
-                                            `;
+                                                                <a href="${tabHref}">${tabTitle}</a>
+                                                                <a class="closeTab" href="">✕</a>
+                                                            `;
                 tabControlTabs.appendChild(newTab);
 
                 // Sự kiện khi người dùng nhấp vào nút đóng tab
@@ -822,9 +908,9 @@
                 const newTab = document.createElement("li");
                 newTab.classList.add("tab", "selected");
                 newTab.innerHTML = `
-                                                    <a href="${tabHref}">${tabTitle}</a>
-                                                    <a class="closeTab" href="">✕</a>
-                                                `;
+                                                                    <a href="${tabHref}">${tabTitle}</a>
+                                                                    <a class="closeTab" href="">✕</a>
+                                                                `;
                 tabControlTabs.appendChild(newTab);
 
                 // Sự kiện khi người dùng nhấp vào nút đóng tab
@@ -959,7 +1045,7 @@
 
     </script>
 
- 
+
 
 
 
