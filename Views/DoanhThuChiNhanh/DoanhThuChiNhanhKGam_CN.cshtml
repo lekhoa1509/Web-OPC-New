@@ -674,8 +674,8 @@
                                 <tr>
                                     <td>@row2["Ten_DvCs"]</td>
 
-                                    <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Tong_Thuc_Hien"]))</td>
-                                    <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Tong_Khoan"]))</td>
+                                    <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Tong_Thuc_Hien"])).Replace(",", ".")</td>
+                                    <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Tong_Khoan"])).Replace(",", ".")</td>
                                     <td class="total-tyle" style="text-align:right">
                                         <script>
         var tyLeValue = parseFloat('@row2["Ty_Le"]');

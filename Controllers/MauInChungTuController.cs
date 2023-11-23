@@ -2015,14 +2015,15 @@ namespace web4.Controllers
         }
         public ActionResult TonNo_Fill()
         {
-            List<MauInChungTu> dmDlist = LoadDmDt("");
-            List<BKHoaDonGiaoHang> dmDListDt = LoadDmDt3();
-            ViewBag.DataItems = dmDlist;
+            //List<MauInChungTu> dmDlist = LoadDmDt("");
+            //List<BKHoaDonGiaoHang> dmDListDt = LoadDmDt3();
+            //ViewBag.DataItems = dmDlist;
             DataSet ds = new DataSet();
             connectSQL();
           
             //var So_Ct = SoCt;
             var ma_Cbnv = Request.Cookies["Ma_TDV"].Value;
+            var ma_dvcs = Request.Cookies["MA_DVCS"].Value;
             var ma_dt = Request.Cookies["Ma_Dt"].Value;
             //string query = "exec usp_Vth_BC_BHCNTK_CN @_ngay_Ct1 = '" + Acc.From_date + "',@_Ngay_Ct2 ='"+ Acc.To_date+"',@_Ma_Dvcs='"+ Acc.Ma_DvCs_1+"'";
             string Pname = "[usp_RpCongNoChiTietTDV_SAP]";
@@ -2045,6 +2046,7 @@ namespace web4.Controllers
                 {
                     cmd.Parameters.AddWithValue("@_Tu_Ngay", fromDate);
                     cmd.Parameters.AddWithValue("@_Den_Ngay", toDate);
+                    cmd.Parameters.AddWithValue("@_Ma_DvCs", ma_dvcs);
                     cmd.Parameters.AddWithValue("@_Ma_CbNv", ma_Cbnv);
                     cmd.Parameters.AddWithValue("@_Ma_Dt", ma_dt);
 
