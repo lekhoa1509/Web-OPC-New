@@ -1,9 +1,16 @@
 ﻿﻿﻿
 
 @{ ViewBag.Title = "BIÊN BẢN BÀN GIAO VÀ NGHIỆM THU HÀNG HÓA";
+    var fromDate = Request.Cookies["From_date"].Value;
+    var toDate = Request.Cookies["To_date"].Value;
+    var fromDateValue = DateTime.ParseExact(fromDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+    var toDateValue = DateTime.ParseExact(toDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
 
+    var formattedFromDate = fromDateValue.ToString("dd/MM/yyyy");
+    var formattedToDate = toDateValue.ToString("dd/MM/yyyy");
 }
 @using System.Data;
+@using System.Globalization;
 <!DOCTYPE html>
 <html lang="en">
 
@@ -389,7 +396,8 @@
                         <input class="den_ngay" id="den_ngay" placeholder=" Đến Ngày" name="To_date" type="DATE" format="YYYY-MM-DD" value="@Request.QueryString["To_date"]" /><br /><br />
                         <script>$("#den_ngay").datetimepicker({ timepicker: false, format: 'Y-m-d' });</script>
                     </div>
-                    <input type="text" id="dropdownInput" list="dropdownList" placeholder="Tìm kiếm danh mục">
+                    <h6>Chọn đối tượng:</h6>
+                    <input type="text" id="dropdownInput" list="dropdownList" placeholder="Tìm kiếm đối tượng">
                     <datalist id="dropdownList">
                         @foreach (var item in ViewBag.DataItems)
                         {
@@ -409,7 +417,7 @@
             <img src="~/assets/images/logo.png" alt="" class="img-fluid">
         </a>
         <h4>BIÊN BẢN BÀN GIAO VÀ NGHIỆM THU HÀNG HÓA</h4>
-        <h5 style="color:white">Từ @Request.QueryString["From_date"] đến @Request.QueryString["To_date"]</h5>
+        <h5 style="color:white">Từ @formattedFromDate đến @formattedToDate</h5>
     </header>
     <!-- =======  Data-Table  = Start  ========================== -->
     <div class="container">

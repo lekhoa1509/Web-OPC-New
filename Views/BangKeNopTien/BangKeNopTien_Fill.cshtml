@@ -579,7 +579,7 @@
                         <script>$("#den_ngay").datetimepicker({ timepicker: false, format: 'Y-m-d' });</script>
                     </div>
                     <h6>Chọn Đối Tượng</h6>
-                    <br />
+
                     <input type="text" id="dropdownInput" list="dropdownList" placeholder="Tìm kiếm đối tượng">
                     <datalist id="dropdownList">
                         @foreach (var item in ViewBag.DataItems)
@@ -587,8 +587,8 @@
                             <option value="@item.Ma_Dt" data-ten="@item.Ten_Dt" data-maDt="@item.Ma_Dt" data-dvcs="@item.Dvcs" data-dvcs1="@item.Dvcs1">@item.Ten_Dt</option>
                         }
                     </datalist>
-                    <input type="hidden" name="Ma_Dt" id="selectedOption">
-                    <a>Tìm TDV</a><br /><br />
+                    <input type="hidden" name="Ma_Dt" id="selectedOption"><br /><br />
+                    <a>Tìm TDV</a>
 
 
 
@@ -603,18 +603,18 @@
 
 
                     @*<div class="select-btn" style="width:100px;margin-top:10px">
-            <select id="dropdownMaTDV" class="select2" style="width: 200px" name="Ma_TDV" onchange="saveSelectedTDVValueToCookie()">
-                <option value="">Chọn mã TDV</option>
-                @if (ViewBag.DataTDV != null)
-                {
-                    foreach (var item in ViewBag.DataTDV)
-                    {
-                        <option value="@item.Ma_CbNv" data-hoten="@item.Ma_CbNv">@item.Ma_CbNv @item.hoten</option>
-                    }
-                }
-            </select>
+                            <select id="dropdownMaTDV" class="select2" style="width: 200px" name="Ma_TDV" onchange="saveSelectedTDVValueToCookie()">
+                                <option value="">Chọn mã TDV</option>
+                                @if (ViewBag.DataTDV != null)
+                                {
+                                    foreach (var item in ViewBag.DataTDV)
+                                    {
+                                        <option value="@item.Ma_CbNv" data-hoten="@item.Ma_CbNv">@item.Ma_CbNv @item.hoten</option>
+                                    }
+                                }
+                            </select>
 
-        </div>*@
+                        </div>*@
                     <div>
                         <button class="submit" type="submit" id="runReportButton" onclick="runReport()">
                             Chạy Báo Cáo
@@ -703,25 +703,45 @@
             $("#dropdownMaTDV").select2();
         });
     </script>
+  <script>
+      $(document).ready(function () {
+    var table = $('#example').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            'excelHtml5'
+        ]
+    });
+
+    // Bắt sự kiện khi nút Excel được nhấn
+    table.on('buttons-action', function (e, buttonApi, dataTable, node, config) {
+        if (buttonApi.text() === 'Excel') {
+            // Đoạn mã xử lý khi nút Excel được nhấn
+            console.log('Nút xuất Excel đã được nhấn!');
+            // Thêm mã xử lý xuất Excel ở đây nếu cần
+        }
+    });
+});
+
+  </script>
     @*<script>
-        document.addEventListener("DOMContentLoaded", function () {
-            var dropdownMaTDV = document.getElementById("dropdownMaTDV");
+            document.addEventListener("DOMContentLoaded", function () {
+                var dropdownMaTDV = document.getElementById("dropdownMaTDV");
 
-            if (dropdownMaTDV) {
-                dropdownMaTDV.addEventListener("change", function () {
-                    var selectedOption = dropdownMaTDV.options[dropdownMaTDV.selectedIndex];
+                if (dropdownMaTDV) {
+                    dropdownMaTDV.addEventListener("change", function () {
+                        var selectedOption = dropdownMaTDV.options[dropdownMaTDV.selectedIndex];
 
-                    if (selectedOption) {
-                        var maTDV = selectedOption.value;
-                        document.cookie = 'Ma_TDV=' + maTDV;
-                    } else {
-                        var selected = "";
-                        document.cookie = 'Ma_TDV=' + selected;
-                    }
-                });
-            }
-        });
-    </script>*@
+                        if (selectedOption) {
+                            var maTDV = selectedOption.value;
+                            document.cookie = 'Ma_TDV=' + maTDV;
+                        } else {
+                            var selected = "";
+                            document.cookie = 'Ma_TDV=' + selected;
+                        }
+                    });
+                }
+            });
+        </script>*@
     <script>
         document.getElementById("dropdownInput").addEventListener("input", function () {
             var inputValue = this.value;

@@ -12,6 +12,12 @@
 
     // Sử dụng giá trị từ Query String nếu có, ngược lại sử dụng giá trị từ Cookies
     var toDate = string.IsNullOrEmpty(toDateQueryParam) ? toDateCookieValue : toDateQueryParam;
+  
+    var fromDateValue = DateTime.ParseExact(fromDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+    var toDateValue = DateTime.ParseExact(toDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+
+    var formattedFromDate = fromDateValue.ToString("dd/MM/yyyy");
+    var formattedToDate = toDateValue.ToString("dd/MM/yyyy");
 }
 @using System.Data;
 @using System.Globalization;
@@ -432,7 +438,7 @@
             <img src="~/assets/images/logo.png" alt="" class="img-fluid">
         </a>
         <h4>PHIẾU XÁC NHẬN THANH TOÁN</h4>
-        <h5 style="color:white">Từ @fromDate đến @toDate</h5>
+        <h5 style="color:white">Từ @formattedFromDate đến @formattedToDate</h5>
     </header>
     <!-- =======  Data-Table  = Start  ========================== -->
     <div class="container">

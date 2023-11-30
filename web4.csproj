@@ -317,6 +317,7 @@
     <Compile Include="Controllers\CongNoChiTietController.cs" />
     <Compile Include="Controllers\PhanTichBanHangController.cs" />
     <Compile Include="Controllers\PhieuKeToanController.cs" />
+    <Compile Include="Controllers\SoChiTietPhaiThuController.cs" />
     <Compile Include="Controllers\TheoDoiHDThauController.cs" />
     <Compile Include="Controllers\BaoCaoDoanhThuGamHangTheoDoiTuongController.cs" />
     <Compile Include="Controllers\BaoCaoHopDongController.cs" />
@@ -1093,6 +1094,8 @@
     <Content Include="Views\BaoCaoBanHangCTV\BaoCaoDTTinhLuongCTV.cshtml" />
     <Content Include="Views\CongNoChiTiet\CongNoChiTietKH_Fill.cshtml" />
     <Content Include="Views\CongNoChiTiet\CongNoChiTietKH.cshtml" />
+    <Content Include="Views\SoChiTietPhaiThu\SoChiTietPhaiThu_Fill.cshtml" />
+    <Content Include="Views\SoChiTietPhaiThu\SoChiTietPhaiThu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

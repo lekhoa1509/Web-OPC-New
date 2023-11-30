@@ -516,79 +516,91 @@
                         <input class="den_ngay" id="den_ngay" placeholder=" Đến Ngày" name="To_date" type="DATE" format="YYYY-MM-DD" value="@Request.QueryString["To_date"]" /><br /><br />
                         <script>$("#den_ngay").datetimepicker({ timepicker: false, format: 'Y-m-d' });</script>
                     </div>
-
-                    <div class="checkContainer">
-                        <label class="custom-checkbox">
-                            <input type="checkbox" name="myCheckbox" value="option1" checked>
-                            <span class="checkmark"></span>
-                            Ngày Chứng Từ
-                        </label>
-                        <label class="custom-checkbox">
-                            <input type="checkbox" name="myCheckbox" value="option1" checked>
-                            <span class="checkmark"></span>
-                            Số Chứng Từ
-                        </label>
-                        <label class="custom-checkbox">
-                            <input type="checkbox" name="myCheckbox" value="option1" checked>
-                            <span class="checkmark"></span>
-                            Mã Đối Tượng
-                        </label>
-                        <label class="custom-checkbox">
-                            <input type="checkbox" name="myCheckbox" value="option1" checked>
-                            <span class="checkmark"></span>
-                            Tên Đối Tượng
-                        </label>
-                        <label class="custom-checkbox">
-                            <input type="checkbox" name="myCheckbox" value="option1" checked>
-                            <span class="checkmark"></span>
-                            Mã Vật Tư
-                        </label>
-                        <label class="custom-checkbox">
-                            <input type="checkbox" name="myCheckbox" value="option1" checked>
-                            <span class="checkmark"></span>
-                            Tên Vật Tư
-                        </label>
-                        <label class="custom-checkbox">
-                            <input type="checkbox" name="myCheckbox" value="option1" checked>
-                            <span class="checkmark"></span>
-                            Mã KM
-                        </label>
-                        <label class="custom-checkbox">
-                            <input type="checkbox" name="myCheckbox" value="option1" checked>
-                            <span class="checkmark"></span>
-                            Discount
-                        </label>
-                        <label class="custom-checkbox">
-                            <input type="checkbox" name="myCheckbox" value="option1" checked>
-                            <span class="checkmark"></span>
-                            Loại Vật Tư
-                        </label>
-                        <label class="custom-checkbox">
-                            <input type="checkbox" name="myCheckbox" value="option1" checked>
-                            <span class="checkmark"></span>
-                            Số Lượng
-                        </label>
-                        <label class="custom-checkbox">
-                            <input type="checkbox" name="myCheckbox" value="option1" checked>
-                            <span class="checkmark"></span>
-                            Tiền(-VAT)
-                        </label>
-                        <label class="custom-checkbox">
-                            <input type="checkbox" name="myCheckbox" value="option1" checked>
-                            <span class="checkmark"></span>
-                            Tiền(+VAT)
-                        </label>
-                        <label class="custom-checkbox">
-                            <input type="checkbox" name="myCheckbox" value="option1" checked>
-                            <span class="checkmark"></span>
-                            Tình Trạng
-                        </label>
-                        <label class="custom-checkbox">
-                            <input type="checkbox" name="myCheckbox" value="option1" checked>
-                            <span class="checkmark"></span>
-                            Mã DVCS
-                        </label>
+                    <h6>Chọn đơn vị bán hàng:</h6>
+                    <div class="select-btn" style="width:80px;margin-top:10px;">
+                        <select name="Ma_Dvcs" id="maDvCsSelect" onchange="saveSelectedValueToCookie()" style="width:150px">
+                            <option value="" style="background-color: #020024;color:white">Đơn Vị Bán Hàng</option>
+                            @*<option value="OPC_B1">Công Ty Cổ Phần Dược Phẩm OPC</option>*@
+                            <option value="OPC_HN_04">CPC1</option>
+                            <option value="OPC_DN_03">OPC2</option>
+                            <option value="OPC_TP_03">Cửa hàng Phú Lâm</option>
+                            <option value="OPC_TP_04">Cửa hàng Phùng Hưng</option>
+                            <option value="OPC_TP_05">Cửa hàng Online HCM</option>
+                           
+                        </select>
                     </div>
+                    @*<div class="checkContainer">
+            <label class="custom-checkbox">
+                <input type="checkbox" name="myCheckbox" value="option1" checked>
+                <span class="checkmark"></span>
+                Ngày Chứng Từ
+            </label>
+            <label class="custom-checkbox">
+                <input type="checkbox" name="myCheckbox" value="option1" checked>
+                <span class="checkmark"></span>
+                Số Chứng Từ
+            </label>
+            <label class="custom-checkbox">
+                <input type="checkbox" name="myCheckbox" value="option1" checked>
+                <span class="checkmark"></span>
+                Mã Đối Tượng
+            </label>
+            <label class="custom-checkbox">
+                <input type="checkbox" name="myCheckbox" value="option1" checked>
+                <span class="checkmark"></span>
+                Tên Đối Tượng
+            </label>
+            <label class="custom-checkbox">
+                <input type="checkbox" name="myCheckbox" value="option1" checked>
+                <span class="checkmark"></span>
+                Mã Vật Tư
+            </label>
+            <label class="custom-checkbox">
+                <input type="checkbox" name="myCheckbox" value="option1" checked>
+                <span class="checkmark"></span>
+                Tên Vật Tư
+            </label>
+            <label class="custom-checkbox">
+                <input type="checkbox" name="myCheckbox" value="option1" checked>
+                <span class="checkmark"></span>
+                Mã KM
+            </label>
+            <label class="custom-checkbox">
+                <input type="checkbox" name="myCheckbox" value="option1" checked>
+                <span class="checkmark"></span>
+                Discount
+            </label>
+            <label class="custom-checkbox">
+                <input type="checkbox" name="myCheckbox" value="option1" checked>
+                <span class="checkmark"></span>
+                Loại Vật Tư
+            </label>
+            <label class="custom-checkbox">
+                <input type="checkbox" name="myCheckbox" value="option1" checked>
+                <span class="checkmark"></span>
+                Số Lượng
+            </label>
+            <label class="custom-checkbox">
+                <input type="checkbox" name="myCheckbox" value="option1" checked>
+                <span class="checkmark"></span>
+                Tiền(-VAT)
+            </label>
+            <label class="custom-checkbox">
+                <input type="checkbox" name="myCheckbox" value="option1" checked>
+                <span class="checkmark"></span>
+                Tiền(+VAT)
+            </label>
+            <label class="custom-checkbox">
+                <input type="checkbox" name="myCheckbox" value="option1" checked>
+                <span class="checkmark"></span>
+                Tình Trạng
+            </label>
+            <label class="custom-checkbox">
+                <input type="checkbox" name="myCheckbox" value="option1" checked>
+                <span class="checkmark"></span>
+                Mã DVCS
+            </label>
+        </div>*@
 
                     <div>
                         <button class="submit" type="submit" onclick="runReport()"> Chạy Báo Cáo </button>
@@ -666,6 +678,18 @@
     <script src="~/assets/js/custom.js"></script>
 
     <script>
+        function saveSelectedValueToCookie() {
+            var select = document.getElementById("maDvCsSelect");
+            var selectedValue = select.options[select.selectedIndex].value;
+            if (selectedValue === "") {
+                // Hiển thị hộp thoại cảnh báo nếu không có giá trị được chọn
+                window.alert("Vui lòng chọn một giá trị trong dropdown.");
+            } else {
+                // Cập nhật cookie với giá trị đã chọn
+                document.cookie = "Ma_DvBh=" + selectedValue + "; expires=" + new Date(Date.now() + 86400 * 1000).toUTCString();
+            }
+           
+        }
         // Set the "Từ Ngày" input to the first day of the current month
         function setFirstDayOfCurrentMonth() {
             const currentDate = new Date();

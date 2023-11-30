@@ -513,13 +513,12 @@
                         <a>Đến Ngày</a><br /><br />
                         <input class="den_ngay" id="den_ngay" placeholder=" Đến Ngày" name="To_date" type="DATE" format="YYYY-MM-DD" value="@Request.QueryString["To_date"]" /><br /><br />
                         <script>$("#den_ngay").datetimepicker({ timepicker: false, format: 'Y-m-d' });</script>
-                        <div class="select-btn">
-                            <select name="Ma_DvCs_2" id="Ma_DvCs_2">
-                                <option value="OPC_TP_01">Chi Nhánh HCM</option>
-                                <option value="OPC_TP_03">Cửa hàng phú lâm</option>
-                                <option value="OPC_TP_04">Cửa hàng phùng hưng</option>
-                            </select>
-                        </div>
+                        <select name="Ma_DvBh" id="Ma_DvCs_2">
+                            @*<option value="OPC_TP_01">Chi Nhánh HCM</option>*@
+                            <option value="OPC_TP_03">Cửa hàng phú lâm</option>
+                            <option value="OPC_TP_04">Cửa hàng phùng hưng</option>
+                            <option value="OPC_TP_05">Cửa hàng Online HCM</option>
+                        </select>
                     </div>
 
 
@@ -724,7 +723,7 @@
             const spanElement = document.getElementById("spanText");
             spanElement.style.display = "block";
             var selectedValue = document.getElementById("Ma_DvCs_2").value;
-            document.cookie = "Ma_DvCs_2=" + selectedValue;
+            document.cookie = "Ma_DvBh=" + selectedValue;
 
         }
 

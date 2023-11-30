@@ -456,11 +456,11 @@
 
 <body>
     @*<div class="tab-control" style="position:fixed;bottom:0">
-        <ul class="tabs" style="background-color: #1d1b31; bottom: 0; left: 0; right: 0;">
-            <li class="tab selected"><a href="/Home/About" style="padding-right:5px">Home</a></li>
+            <ul class="tabs" style="background-color: #1d1b31; bottom: 0; left: 0; right: 0;">
+                <li class="tab selected"><a href="/Home/About" style="padding-right:5px">Home</a></li>
 
-        </ul>
-    </div>*@
+            </ul>
+        </div>*@
     <div class="loader" style="z-index:1"></div>
     <span id="spanText" class="text-loading">[usp_BaoCaoTienVeCN_SAP]</span>
     <div class="sidebar">
@@ -504,9 +504,10 @@
                     <table id="example" class="table table-striped table-bordered">
                         <thead class="table-dark">
                             <tr>
-                                <th>Mã Đơn Vị</th>
-                                <th>Tên Đơn Vị</th>
-                                <th>Tiền Thu</th>
+                                <th style="width:20%">Mã Đơn Vị</th>
+                                <th style="width:20%">Tên Đơn Vị</th>
+                                <th style="width:20%">Tiền Thu Trước Thuế</th>
+                                <th style="width:20%">Tiền Thu Sau Thuế</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -516,8 +517,8 @@
                                     <td>@row2["Ma_dvcs"]</td>
                                     <td>@row2["ten_DvCs"]</td>
 
-                                    <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Tien_Thu"]))</td>
-
+                                    <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Tien_Thu_TT"])).Replace(".", ",")</td>
+                                    <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Tien_Thu"])).Replace(".", ",")</td>
                                 </tr>
                             }
 
@@ -525,8 +526,10 @@
                         </tbody>
                         <tfoot>
                             <tr id="total-row" style="background-color: burlywood">
-                                <td class="num" colspan="2">Tổng cộng:</td>
+                                <td class="num" colspan="2"style="font-weight:bold">Tổng cộng:</td>
+                                <td class="num" style="text-align:right"><span id="sum1"></span></td>
                                 <td class="num" style="text-align:right"><span id="sum"></span></td>
+
                             </tr>
                         </tfoot>
                     </table>
@@ -638,6 +641,57 @@
             }
         });</script>
     <script>
+        $(document).ready(function () {
+            var dataTable = $('#example').DataTable();
+
+            function calculateTotal() {
+                var totalColumns = new Array(3).fill(0);
+
+                dataTable.rows({ search: 'applied' }).every(function () {
+                    var rowData = this.data();
+                    rowData.forEach(function (cellValue, columnIndex) {
+                        var columnValue = parseFloat(cellValue.toString().replace(/,/g, ''));
+                        if (!isNaN(columnValue)) {
+                            totalColumns[columnIndex] += columnValue;
+                        }
+                    });
+                });
+
+                updateTotalValues(totalColumns);
+            }
+            function updateTotalValues(totalColumns) {
+                // Gán giá trị tổng từng cột vào các biến riêng
+                var sum = totalColumns[2];
+
+
+                // Hiển thị giá trị tổng từng cột lên view
+
+                $('#sum1').text(formatNumber(sum));
+
+                var grandTotal = totalColumns.reduce(function (total, value) {
+                    return total + value;
+                }, 0);
+
+                $('#grand-total').text(formatNumber(grandTotal));
+            }
+
+            calculateTotal();
+
+            $('input').on('input', function () {
+                calculateTotal();
+            });
+
+            // Sự kiện lắng nghe khi giá trị ô input trong bảng thay đổi
+            $('#example tbody').on('input', 'input', function () {
+                calculateTotal();
+            });
+
+            function formatNumber(number) {
+                return number.toLocaleString('en-US');
+            }
+        });
+    </script>
+    <script>
         document.addEventListener("DOMContentLoaded", function () {
             const tabControlTabs = document.querySelector(".tab-control .tabs");
 
@@ -656,9 +710,9 @@
                 const newTab = document.createElement("li");
                 newTab.classList.add("tab", "selected");
                 newTab.innerHTML = `
-                                <a href="${tabHref}">${tabTitle}</a>
-                                <a class="closeTab" href="">✕</a>
-                            `;
+                                        <a href="${tabHref}">${tabTitle}</a>
+                                        <a class="closeTab" href="">✕</a>
+                                    `;
                 tabControlTabs.appendChild(newTab);
 
                 // Sự kiện khi người dùng nhấp vào nút đóng tab
@@ -923,9 +977,9 @@
                 const newTab = document.createElement("li");
                 newTab.classList.add("tab", "selected");
                 newTab.innerHTML = `
-                                                            <a href="${subMenuLinkHref}">${tabTitle}</a>
-                                                            <a class="closeTab" href="">✕</a>
-                                                        `;
+                                                                    <a href="${subMenuLinkHref}">${tabTitle}</a>
+                                                                    <a class="closeTab" href="">✕</a>
+                                                                `;
                 tabControlTabs.appendChild(newTab);
 
                 // Chuyển view tới thẻ li tương ứng
@@ -971,9 +1025,9 @@
                 const newTab = document.createElement("li");
                 newTab.classList.add("tab", "selected");
                 newTab.innerHTML = `
-                                                    <a href="${subMenuLinkHref}">${tabTitle}</a>
-                                                    <a class="closeTab" href="">✕</a>
-                                                `;
+                                                            <a href="${subMenuLinkHref}">${tabTitle}</a>
+                                                            <a class="closeTab" href="">✕</a>
+                                                        `;
                 tabControlTabs.appendChild(newTab);
 
                 // Chuyển view tới thẻ li tương ứng

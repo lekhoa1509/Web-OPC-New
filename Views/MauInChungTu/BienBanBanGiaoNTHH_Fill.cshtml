@@ -492,7 +492,8 @@
                         <input class="den_ngay" id="den_ngay" placeholder="Đến Ngày" name="To_date" type="date" format="YYYY-MM-DD" value="@Request.QueryString["To_date"]" /><br /><br />
                         <script>$("#den_ngay").datetimepicker({ timepicker: false, format: 'Y-m-d' });</script>
                     </div>
-                    <input type="text" id="dropdownInput" list="dropdownList" placeholder="Tìm kiếm danh mục">
+                    <h6>Chọn Đối Tượng:</h6>
+                    <input type="text" id="dropdownInput" list="dropdownList" placeholder="Tìm kiếm đối tượng">
                     <datalist id="dropdownList">
                         @foreach (var item in ViewBag.DataItems)
                         {

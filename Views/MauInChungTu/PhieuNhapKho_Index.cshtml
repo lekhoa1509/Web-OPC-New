@@ -1,9 +1,17 @@
 ﻿﻿﻿
 
 @{ ViewBag.Title = "Mẫu Phiếu Nhập Kho";
+    var fromDate = Request.Cookies["From_date"].Value;
+    var toDate = Request.Cookies["To_date"].Value;
+    var fromDateValue = DateTime.ParseExact(fromDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+    var toDateValue = DateTime.ParseExact(toDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+
+    var formattedFromDate = fromDateValue.ToString("dd/MM/yyyy");
+    var formattedToDate = toDateValue.ToString("dd/MM/yyyy");
     var loaiCt = Request.Cookies["LoaiCt"].Value;
-    }
+}
 @using System.Data;
+@using System.Globalization;
 <!DOCTYPE html>
 <html lang="en">
 
@@ -375,22 +383,22 @@
         <div class="logo-details">
 
         </div>
-        <ul class="nav-links" style="display: flex; justify-content: center;">
+        <ul class="nav-links" style="display: flex; justify-content: center;margin-left:-40px">
             <li>
                 <form id="dateForm" action="PhieuNhapKho_Index" method="post">
                     <div id="locBC">
 
                         <a>Từ Ngày</a><br /><br />
-                        <input class="tu_ngay" placeholder="Từ Ngày" id="tu_ngay" name="From_date" type="date" format="YYYY-MM-DD" value="@Request.QueryString["From_date"]" />
+                        <input class="tu_ngay" placeholder="Từ Ngày" id="tu_ngay" name="From_date" type="date" format="YYYY-MM-DD" value="@Request.Cookies["From_date"].Value" />
                         <script>$("#tu_ngay").datetimepicker({ timepicker: false, format: 'Y-m-d' });</script><br /><br />
                         <a>Đến Ngày</a><br /><br />
-                        <input class="den_ngay" id="den_ngay" placeholder=" Đến Ngày" name="To_date" type="DATE" format="YYYY-MM-DD" value="@Request.QueryString["To_date"]" /><br /><br />
+                        <input class="den_ngay" id="den_ngay" placeholder=" Đến Ngày" name="To_date" type="DATE" format="YYYY-MM-DD" value="@Request.Cookies["To_date"].Value" /><br /><br />
                         <script>$("#den_ngay").datetimepicker({ timepicker: false, format: 'Y-m-d' });</script>
                     </div>
-                    @*<div class="select-btn" style="width:100px">
-                        <select name="Ma_Dvcs" id="maDvCsSelect" onchange="saveSelectedValueToCookie()">
+                    <div class="select-btn" style="width:100px">
+                        <select name="Ma_Dvcs" id="maDvCsSelect" onchange="saveSelectedValueDVCS()">
                             <option value="" style="background-color: #020024;color:white">Vui lòng chọn đối tượng</option>
-                            <option value="OPC_B1">Công Ty Cổ Phần Dược Phẩm OPC</option>
+                            <option value="OPC_B1">Công Ty CP Dược Phẩm OPC</option>
                             <option value="OPC_B2">Nhà Máy Bình Dương</option>
                             <option value="OPC_TP">CN Hồ Chí Minh</option>
                             <option value="OPC_CT">CN Cần Thơ</option>
@@ -412,8 +420,8 @@
                         </select>
                     </div>
                     <div>
-            <button class="submit" type="submit" onclick="runReport()"> Chạy Báo Cáo </button>
-        </div>*@
+                        <button class="submit" type="submit" onclick="reload()"> Chạy Báo Cáo </button>
+                    </div>
                 </form>
             </li>
         </ul>
@@ -424,15 +432,15 @@
             <img src="~/assets/images/logo.png" alt="" class="img-fluid">
         </a>
         <h4>Mẫu In Phiếu Nhập Kho</h4>
-        <h5 style="color:white">Từ @Request.QueryString["From_date"] đến @Request.QueryString["To_date"]</h5>
+        <h5 style="color:white">Từ @formattedFromDate đến @formattedToDate</h5>
     </header>
     <!-- =======  Data-Table  = Start  ========================== -->
     <div class="container">
-        <div class="container">
+        @*<div class="container">
 
-            <span>Search: <input type="Text" name="" id="myInput" placeholder="Số Chứng Từ" onkeyup="searchFun()"></span>
-            <div class="search"></div>
-        </div>
+                <span>Search: <input type="Text" name="" id="myInput" placeholder="Số Chứng Từ" onkeyup="searchFun()"></span>
+                <div class="search"></div>
+            </div>*@
         <div class="row">
             <div class="col-12">
 
@@ -463,7 +471,7 @@
                                             <td>@row2["Ngay_Ct"]</td>
 
                                             <td>@row2["Kho_Nhap_Xuat"]</td>
-                                            <td  onclick="saveSelectedValueToCookie(this.parentNode.parentNode);runReport('@Url.Action("PhieuNhapKho", "MauInChungTu", new { So_Ct = row2["So_Ct"] })')"><span class="material-symbols-outlined print-icon">print</span></td>
+                                            <td onclick="saveSelectedValueToCookie(this.parentNode.parentNode);runReport('@Url.Action("PhieuNhapKho", "MauInChungTu", new { So_Ct = row2["So_Ct"] })')"><span class="material-symbols-outlined print-icon">print</span></td>
                                             <td><button onclick="scrollToBottom()">Xem</button></td>
 
                                         </tr>
@@ -475,7 +483,7 @@
                     </table>
 
                 </div>
-                <div class="data_table"style="margin-top:20px">
+                <div class="data_table" style="margin-top:20px">
                     <table id="example2" class="table table-striped table-bordered" style="width:100%">
                         <thead class="table-dark">
                             <tr>
@@ -488,37 +496,37 @@
                                 {
 
 
-<th>Số lượng Xuất</th>
-            }
-            else
-            {
-<th>Số lượng nhập</th>
-            }
-                                    <th>Đơn vị tính</th>
+                                    <th>Số lượng Xuất</th>
+                                }
+                                else
+                                {
+                                    <th>Số lượng nhập</th>
+                                }
+                                <th>Đơn vị tính</th>
 
 
 
 
-                                </tr>
+                            </tr>
                         </thead>
                         <tbody>
 
                             @foreach (DataRow row3 in Model.Tables[0].Rows)
                             {
-                            <tr>
+                                <tr>
 
-                                <td>@row3["So_Ct"]</td>
-                                <td>@row3["Ma_Vt"]</td>
-                                <td>@row3["Ten_Vt"]</td>
-                                <td>@row3["So_Lo"]</td>
-                                @if (loaiCt == "1")
-                                {
-                                    <td>@row3["So_Luong_Xuat"]</td>
-                }
-                else
-                {
-                            <td>@row3["So_Luong_Nhap"]</td>
-                }
+                                    <td>@row3["So_Ct"]</td>
+                                    <td>@row3["Ma_Vt"]</td>
+                                    <td>@row3["Ten_Vt"]</td>
+                                    <td>@row3["So_Lo"]</td>
+                                    @if (loaiCt == "1")
+                                    {
+                                        <td>@row3["So_Luong_Xuat"]</td>
+                                    }
+                                    else
+                                    {
+                                        <td>@row3["So_Luong_Nhap"]</td>
+                                    }
                                     <td>@row3["Dvt"]</td>
 
                                 </tr>
@@ -548,6 +556,21 @@
 
 
     <script>
+        function saveSelectedValueToLoaiCt() {
+            var select = document.getElementById("loaiCt");
+            var selectedValue = select.options[select.selectedIndex].value;
+            document.cookie = "LoaiCt=" + selectedValue + "; expires=" + new Date(Date.now() + 86400 * 1000).toUTCString();
+        }
+        function saveSelectedValueDVCS() {
+            var select = document.getElementById("maDvCsSelect");
+            var selectedValue = select.options[select.selectedIndex].value;
+            var from_date = document.getElementById("tu_ngay").value;
+            var to_date = document.getElementById("den_ngay").value;
+            // Lưu giá trị vào cookie với tên là "Dvcs3" và thời gian sống là 1 ngày (86400 giây)
+            document.cookie = "Dvcs3=" + selectedValue + "; expires=" + new Date(Date.now() + 86400 * 1000).toUTCString();
+            document.cookie = "From_date=" + from_date;
+            document.cookie = "To_date=" + to_date;
+        }
         function saveSelectedValueToCookie(row) {
             var soCt = row.getAttribute("data-soct"); // Lấy giá trị Số Ct từ thuộc tính data-soct của hàng
             document.cookie = "So_Ct=" + soCt;
@@ -571,7 +594,21 @@
         }
     </script>
     <script>
-
+        function reload() {
+            var selectedValue = document.cookie.replace(/(?:(?:^|.*;\s*)Dvcs3\s*=\s*([^;]*).*$)|^.*$/, "$1");
+            const spanElement = document.getElementById("spanText");
+            spanElement.style.display = "block";
+            showLoader();
+            // Sử dụng AJAX để gửi giá trị lên controller
+            $.ajax({
+                type: "POST",
+                url: "PhieuNhapKho_Index", // Điều chỉnh URL tương ứng với controller của bạn
+                data: { Ma_Dvcs: selectedValue },
+                success: function (data) {
+                    // Xử lý phản hồi từ controller (nếu cần)
+                }
+            });
+        }
         function runReport(url) {
             const spanElement = document.getElementById("spanText");
             spanElement.style.display = "block";

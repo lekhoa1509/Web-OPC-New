@@ -134,7 +134,12 @@ namespace web4.Controllers
             var MaDt = Request.Cookies["Ma_Dt"] != null ? Request.Cookies["Ma_Dt"].Value : string.Empty;
             var MaTDV = Request.Cookies["Ma_TDV"].Value;
             DataSet ds = new DataSet();
-
+            if (ma_dvcs == "OPC_B1")
+            {
+                string ma_dvcsFirst3Chars = ma_dvcs == "OPC_B1" ? ma_dvcs.Substring(0, 3) : ma_dvcs;
+                string first3Chars = ma_dvcsFirst3Chars.Substring(0, 3);
+                ma_dvcs = first3Chars;
+            }
             ViewBag.DataTDV = dmDlistTDV;
             ViewBag.DataItems = dmDlist;
             connectSQL();

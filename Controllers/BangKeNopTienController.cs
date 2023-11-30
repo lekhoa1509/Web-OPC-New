@@ -199,6 +199,12 @@ namespace web4.Controllers
             string ma_dvcs = Request.Cookies["Ma_dvcs"].Value;
             //var fromDate = Request.Cookies["From_date"].Value;
             //var toDate = Request.Cookies["To_Date"].Value;
+            if (ma_dvcs == "OPC_B1")
+            {
+                string ma_dvcsFirst3Chars = ma_dvcs == "OPC_B1" ? ma_dvcs.Substring(0, 3) : ma_dvcs;
+                string first3Chars = ma_dvcsFirst3Chars.Substring(0, 3);
+                ma_dvcs = first3Chars;
+            }
             var MaDt = Request.Cookies["Ma_DT"] != null ? Request.Cookies["Ma_DT"].Value : string.Empty;
             var MaTDV = Request.Cookies["Ma_TDV"].Value;
             DataSet ds = new DataSet();

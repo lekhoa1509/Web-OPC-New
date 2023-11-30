@@ -1,6 +1,7 @@
-﻿
+﻿﻿
 @{ ViewBag.Title = "Bao Cao Doanh Thu CN";
-    Layout = null;}
+    Layout = null;
+}
 @using System.Data;
 <!DOCTYPE html>
 <html lang="en">
@@ -512,15 +513,16 @@
                 .tab-control ul li {
                     text-align: center;
                 }
+
         .tab.selected-tab {
             pointer-events: none;
             background-color: #3763a3; /* Màu nền của tab */
         }
 
             .tab.selected-tab a {
-            
                 color: white /* Màu nền của tab */
             }
+
             .tab.selected-tab .closeTab {
                 pointer-events: auto;
             }
@@ -557,7 +559,7 @@
 <!-- =============== Design & Develop By = MJ MARAZ   ====================== -->
 
 <body>
-   
+
     <div class="loader" style="z-index:1"></div>
 
     <div class="sidebar" style="margin-left:10px">
@@ -642,7 +644,7 @@
                                 <th style="width:120px">Doanh Thu</th>
                                 <th style="width:120px">Khoán</th>
                                 <th style="width:120px">Tỷ lệ</th>
-                                <th style="width:120px">Lũy Kế</th>
+                                <th style="width:120px">Lũy Kế</th> 
                             </tr>
                         </thead>
                         <tbody>
@@ -650,8 +652,8 @@
                             {
                                 <tr>
                                     <td>@row2["Ten_DvCs"]</td>
-                                    <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Tong_Thuc_Hien"]))</td>
-                                    <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Tong_Khoan"]))</td>
+                                    <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Tong_Thuc_Hien"])).Replace(".",",")</td>
+                                    <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Tong_Khoan"])).Replace(".", ",")</td>
                                     <td class="total-tyle" style="text-align:right">
                                         <script>
                         var tyLeValue = parseFloat('@row2["Ty_Le"]');
@@ -664,11 +666,11 @@
                             parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                             return parts.join('.') + '%';
                         }
-                                        </script>   
+                                        </script>
                                     </td>
                                     <td class="num" style="text-align:right">0</td>
                                 </tr>
-}
+                            }
 
                             @*@foreach (DataRow row3 in Model.Tables[1].Rows)
                                                             {
@@ -1492,9 +1494,9 @@
                     const newTab = document.createElement("li");
                     newTab.classList.add("tab", "selected");
                     newTab.innerHTML = `
-                                                    <a href="${tabHref}">${tabTitle}</a>
-                                                    <a class="closeTab" href="">✕</a>
-                                                `;
+                                                            <a href="${tabHref}">${tabTitle}</a>
+                                                            <a class="closeTab" href="">✕</a>
+                                                        `;
                     tabControlTabs.appendChild(newTab);
 
                     // Sự kiện khi người dùng nhấp vào nút đóng tab
@@ -1760,9 +1762,9 @@
                     const newTab = document.createElement("li");
                     newTab.classList.add("tab", "selected");
                     newTab.innerHTML = `
-                                    <a href="${subMenuLinkHref}">${tabTitle}</a>
-                                    <a class="closeTab" href="">✕</a>
-                                `;
+                                            <a href="${subMenuLinkHref}">${tabTitle}</a>
+                                            <a class="closeTab" href="">✕</a>
+                                        `;
                     tabControlTabs.appendChild(newTab);
 
                     // Chuyển view tới thẻ li tương ứng
@@ -1808,9 +1810,9 @@
                     const newTab = document.createElement("li");
                     newTab.classList.add("tab", "selected");
                     newTab.innerHTML = `
-                            <a href="${subMenuLinkHref}">${tabTitle}</a>
-                            <a class="closeTab" href="">✕</a>
-                        `;
+                                    <a href="${subMenuLinkHref}">${tabTitle}</a>
+                                    <a class="closeTab" href="">✕</a>
+                                `;
                     tabControlTabs.appendChild(newTab);
 
                     // Chuyển view tới thẻ li tương ứng
