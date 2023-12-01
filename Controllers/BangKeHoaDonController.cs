@@ -73,7 +73,7 @@ namespace web4.Controllers
             //Acc.UserName = Request.Cookies["UserName"].Value;
             //string query = "exec usp_Vth_BC_BHCNTK_CN @_ngay_Ct1 = '" + Acc.From_date + "',@_Ngay_Ct2 ='"+ Acc.To_date+"',@_Ma_Dvcs='"+ Acc.Ma_DvCs_1+"'";
             string Pname = "[usp_DanhSachHoaDon_SAP]";
-            var Ma_DvBh = Request.Cookies["Ma_DvBh"].Value;
+            //var Ma_DvBh = Request.Cookies["Ma_DvBh"].Value;
             Acc.UserName = Response.Cookies["UserName"].Value;
 
             using (SqlCommand cmd = new SqlCommand(Pname, con))
@@ -93,7 +93,7 @@ namespace web4.Controllers
                     cmd.Parameters.AddWithValue("@_Ma_Dt", Acc.Ma_dt);
                     cmd.Parameters.AddWithValue("@_Tinh_Trang", Acc.Tinh_Trang);
                     cmd.Parameters.AddWithValue("@_username", Acc.UserName);
-                    cmd.Parameters.AddWithValue("@_Ma_DvBh", Ma_DvBh);
+                    //cmd.Parameters.AddWithValue("@_Ma_DvBh", Ma_DvBh);
 
                     sda.Fill(ds);
 
@@ -113,7 +113,7 @@ namespace web4.Controllers
             //Acc.UserName = Request.Cookies["UserName"].Value;
             //string query = "exec usp_Vth_BC_BHCNTK_CN @_ngay_Ct1 = '" + Acc.From_date + "',@_Ngay_Ct2 ='"+ Acc.To_date+"',@_Ma_Dvcs='"+ Acc.Ma_DvCs_1+"'";
             string Pname = "[usp_DanhSachHoaDon_SAP]";
-            var Ma_DvBh = Request.Cookies["Ma_DvBh"].Value;
+            //var Ma_DvBh = Request.Cookies["Ma_DvBh"].Value;
             Acc.UserName = Request.Cookies["UserName"].Value;
 
             using (SqlCommand cmd = new SqlCommand(Pname, con))
@@ -133,7 +133,7 @@ namespace web4.Controllers
                     cmd.Parameters.AddWithValue("@_Ma_Dt", Acc.Ma_dt);
                     cmd.Parameters.AddWithValue("@_Tinh_Trang", Acc.Tinh_Trang);
                     cmd.Parameters.AddWithValue("@_username", Acc.UserName);
-                    cmd.Parameters.AddWithValue("@_Ma_DvBh", Ma_DvBh);
+                    //cmd.Parameters.AddWithValue("@_Ma_DvBh", Ma_DvBh);
                     sda.Fill(ds);
 
                 }

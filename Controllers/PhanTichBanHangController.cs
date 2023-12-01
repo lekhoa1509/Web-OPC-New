@@ -229,9 +229,9 @@ namespace web4.Controllers
             ViewBag.DataVT = dmDlistVT;
             //string query = "exec usp_Vth_BC_BHCNTK_CN @_ngay_Ct1 = '" + Acc.From_date + "',@_Ngay_Ct2 ='"+ Acc.To_date+"',@_Ma_Dvcs='"+ Acc.Ma_DvCs_1+"'";
             string Pname = "[usp_PhanTichBanHang_SAP]";
-            var Ma_TDV = Request.Cookies["Ma_TDV"].Value;
+            //var Ma_TDV = Request.Cookies["Ma_TDV"].Value;
             var Ma_Dt = Request.Cookies["Ma_Dt"].Value;
-            var Ma_Vt = Request.Cookies["Ma_Vt"].Value;
+            //var Ma_Vt = Request.Cookies["Ma_Vt"].Value;
             ViewBag.ProcedureName = Pname;
 
             using (SqlCommand cmd = new SqlCommand(Pname, con))
@@ -248,8 +248,8 @@ namespace web4.Controllers
                     cmd.Parameters.AddWithValue("@_Den_Ngay", Acc.To_date);
                     cmd.Parameters.AddWithValue("@_ma_dvcs", Acc.Ma_DvCs_1);
                     cmd.Parameters.AddWithValue("@_Ma_Dt", Ma_Dt);
-                    cmd.Parameters.AddWithValue("@_Ma_CbNv", Ma_TDV);
-                    cmd.Parameters.AddWithValue("@_Ma_Vt", Ma_Vt);
+                    //cmd.Parameters.AddWithValue("@_Ma_CbNv", Ma_TDV);
+                    //cmd.Parameters.AddWithValue("@_Ma_Vt", Ma_Vt);
                     sda.Fill(ds);
 
                 }

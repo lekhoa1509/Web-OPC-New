@@ -723,8 +723,10 @@
                                     <th>Tên Đối Tượng</th>
                                     <th>ĐVT</th>
                                     <th>Số Lượng</th>
-                                    <th>Giá</th>
-                                    <th>Tiền TT</th>
+                                    <th>Kênh BH</th>
+                                    <th>Tổng tiền</th>
+                                    @*<th>Giá</th>*@
+                                    @*<th>Tiền TT</th>*@
                                 }
                                 else if (Request.Cookies["SelectedChiTiet"].Value == "ma_vt")
                                 {
@@ -733,8 +735,10 @@
                                     <th>Tên Vật Tư</th>
                                     <th>ĐVT</th>
                                     <th>Số Lượng</th>
-                                    <th>Giá</th>
-                                    <th>Tiền TT</th>
+                                    <th>Kênh BH</th>
+                                    <th>Tổng tiền</th>
+                                    @*<th>Giá</th>*@
+                                    @*<th>Tiền TT</th>*@
                                 }
                                 else if (Request.Cookies["SelectedChiTiet"].Value == "so_ct")
                                 {
@@ -743,8 +747,10 @@
                                     <th>Số Chứng Từ</th>
                                     <th>ĐVT</th>
                                     <th>Số Lượng</th>
-                                    <th>Giá</th>
-                                    <th>Tiền TT</th>
+                                    <th>Kênh BH</th>
+                                    <th>Tổng tiền</th>
+                                    @*<th>Giá</th>*@
+                                    @*<th>Tiền TT</th>*@
                                 }
                                 else if (Request.Cookies["SelectedChiTiet"].Value == "Loai_Vt")
                                 {
@@ -754,8 +760,10 @@
                                     <th>Tên Vật Tư</th>
                                     <th>ĐVT</th>
                                     <th>Số Lượng</th>
-                                    <th>Giá</th>
-                                    <th>Tiền TT</th>
+                                    <th>Kênh BH</th>
+                                    <th>Tổng tiền</th>
+                                    @*<th>Giá</th>*@
+                                    @*<th>Tiền TT</th>*@
                                 }
                             </tr>
                         </thead>
@@ -813,17 +821,19 @@
                                 {
                                     foreach (var row2 in entry.Value)
                                     {
-                                        <tr>
+                        <tr>
 
-                                            <td>@row2["ma_dt"]</td>
-                                            <td>@row2["ten_dt"]</td>
+                            <td>@row2["ma_dt"]</td>
+                            <td>@row2["ten_dt"]</td>
 
-                                            <td>@row2["dvt"]</td>
-                                            <td>@String.Format("{0:n0}", Convert.ToDecimal(row2["so_luong"]))</td>
-                                            <td>@String.Format("{0:n0}", Convert.ToDecimal(row2["Gia"]))</td>
-                                            <td>@String.Format("{0:n0}", Convert.ToDecimal(row2["Tien_TT"]))</td>
+                            <td>@row2["dvt"]</td>
+                            <td>@String.Format("{0:n0}", Convert.ToDecimal(row2["so_luong"]))</td>
+                            <th>@row2["Kenh_BH"]</th>
+                            <th style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Tong_tien"]))</th>
+                            @*<td>@String.Format("{0:n0}", Convert.ToDecimal(row2["Gia"]))</td>*@
+                            @*<td>@String.Format("{0:n0}", Convert.ToDecimal(row2["Tien_TT"]))</td>*@
 
-                                        </tr>
+                        </tr>
                                     }
 
 
@@ -832,51 +842,57 @@
                                 {
                                     foreach (var row2 in entry.Value)
                                     {
-                                        <tr>
+                        <tr>
 
-                                            <td>@row2["Ngay_ct"]</td>
-                                            <td>@row2["so_ct"]</td>
+                            <td>@row2["Ngay_ct"]</td>
+                            <td>@row2["so_ct"]</td>
 
-                                            <td>@row2["dvt"]</td>
-                                            <td>@String.Format("{0:n0}", Convert.ToDecimal(row2["so_luong"]))</td>
-                                            <td>@String.Format("{0:n0}", Convert.ToDecimal(row2["Gia"]))</td>
-                                            <td>@String.Format("{0:n0}", Convert.ToDecimal(row2["Tien_TT"]))</td>
+                            <td>@row2["dvt"]</td>
+                            <td>@String.Format("{0:n0}", Convert.ToDecimal(row2["so_luong"]))</td>
+                            <th>@row2["Kenh_BH"]</th>
+                            <th style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Tong_tien"]))</th>
+                            @*<td>@String.Format("{0:n0}", Convert.ToDecimal(row2["Gia"]))</td>*@
+                            @*<td>@String.Format("{0:n0}", Convert.ToDecimal(row2["Tien_TT"]))</td>*@
 
-                                        </tr>
+                        </tr>
                                     }
                                 }
                                 if (Request.Cookies["SelectedChiTiet"].Value == "ma_vt")
                                 {
                                     foreach (var row2 in entry.Value)
                                     {
-                                        <tr>
+                        <tr>
 
 
-                                            <td>@row2["ma_vt"]</td>
-                                            <td>@row2["ten_vt"]</td>
-                                            <td>@row2["dvt"]</td>
-                                            <td>@String.Format("{0:n0}", Convert.ToDecimal(row2["so_luong"]))</td>
-                                            <td>@String.Format("{0:n0}", Convert.ToDecimal(row2["Gia"]))</td>
-                                            <td>@String.Format("{0:n0}", Convert.ToDecimal(row2["Tien_TT"]))</td>
+                            <td>@row2["ma_vt"]</td>
+                            <td>@row2["ten_vt"]</td>
+                            <td>@row2["dvt"]</td>
+                            <td>@String.Format("{0:n0}", Convert.ToDecimal(row2["so_luong"]))</td>
+                            <th>@row2["Kenh_BH"]</th>
+                            <th style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Tong_tien"]))</th>
+                            @*<td>@String.Format("{0:n0}", Convert.ToDecimal(row2["Gia"]))</td>*@
+                            @*<td>@String.Format("{0:n0}", Convert.ToDecimal(row2["Tien_TT"]))</td>*@
 
-                                        </tr>
+                        </tr>
                                     }
                                 }
                                 if (Request.Cookies["SelectedChiTiet"].Value == "Loai_Vt")
                                 {
                                     foreach (var row2 in entry.Value)
                                     {
-                                        <tr>
-                                            <td>@row2["Loai_Vt"]</td>
+                        <tr>
+                            <td>@row2["Loai_Vt"]</td>
 
-                                            <td>@row2["ma_vt"]</td>
-                                            <td>@row2["ten_vt"]</td>
-                                            <td>@row2["dvt"]</td>
-                                            <td>@String.Format("{0:n0}", Convert.ToDecimal(row2["so_luong"]))</td>
-                                            <td>@String.Format("{0:n0}", Convert.ToDecimal(row2["Gia"]))</td>
-                                            <td>@String.Format("{0:n0}", Convert.ToDecimal(row2["Tien_TT"]))</td>
+                            <td>@row2["ma_vt"]</td>
+                            <td>@row2["ten_vt"]</td>
+                            <td>@row2["dvt"]</td>,
+                            <td>@String.Format("{0:n0}", Convert.ToDecimal(row2["so_luong"]))</td>
+                            <th>@row2["Kenh_BH"]</th>
+                            <th style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Tong_tien"]))</th>
+                            @*<td>@String.Format("{0:n0}", Convert.ToDecimal(row2["Gia"]))</td>*@
+                            @*<td>@String.Format("{0:n0}", Convert.ToDecimal(row2["Tien_TT"]))</td>*@
 
-                                        </tr>
+                        </tr>
                                     }
                                 }
                             }

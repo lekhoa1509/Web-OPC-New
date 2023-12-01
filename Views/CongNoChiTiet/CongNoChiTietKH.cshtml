@@ -687,27 +687,32 @@
                         <tbody>
                             @foreach (DataRow row2 in Model.Tables[0].Rows)
                             {
-                                <tr>
-                                    <td>@row2["Ma_Dt"]</td>
-                                    <td>@row2["So_Ct_Einv"]</td>
-                                    <td>@row2["Ngay_Ct2"]</td>
-                                    <td style="text-align:left">@row2["Ten_Dt"]</td>
-                                    <td>@row2["Ten_TDV"]</td>
-                                    <td>@row2["Han_Muc_No"]</td>
-                                    <td>@row2["Han_CKTT"]</td>
-                                    <td>@row2["Ma_LKH"]</td>
-                                    <td>@row2["Ten_LKH"]</td>
-                                    <td>@row2["So_Hop_Dong"]</td>
-                                    <td style="text-align:right">@string.Format("{0:#,###}", row2["Cong_No"]).Replace(",", ".")</td>
-                                    <td>@row2["Ngay_Den_Han2"]</td>
-                                    <td>@row2["So_Ngay_QH"]</td>
+                            <tr>
+                                <td>@row2["Ma_Dt"]</td>
+                                <td>@row2["So_Ct_Einv"]</td>
+                                <td>@row2["Ngay_Ct2"]</td>
+                                <td style="text-align:left">@row2["Ten_Dt"]</td>
+                                <td>@row2["Ten_TDV"]</td>
+                                <td>@row2["Han_Muc_No"]</td>
+                                <td>@row2["Han_CKTT"]</td>
+                                <td>@row2["Ma_LKH"]</td>
+                                <td>@row2["Ten_LKH"]</td>
+                                <td>@row2["So_Hop_Dong"]</td>
+                                <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Cong_No"]))</td>
 
-                                    <td style="text-align:right">@string.Format("{0:#,###}", row2["So_Tien_QH_1"]).Replace(",", ".")</td>
-                                    <td style="text-align:right">@string.Format("{0:#,###}", row2["So_Tien_QH_2"]).Replace(",", ".")</td>
-                                    <td style="text-align:right">@string.Format("{0:#,###}", row2["So_Tien_QH_3"]).Replace(",", ".")</td>
-                                    <td style="text-align:right">@string.Format("{0:#,###}", row2["So_Tien_QH_4"]).Replace(",", ".")</td>
 
-                                </tr>
+
+
+
+                                <td>@row2["Ngay_Den_Han2"]</td>
+                                <td>@row2["So_Ngay_QH"]</td>
+
+                                <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["So_Tien_QH_1"]))</td>
+                                <td style="text-align:right"> @String.Format("{0:n0}", Convert.ToDecimal(row2["So_Tien_QH_2"]))</td>
+                                <td style="text-align:right"> @String.Format("{0:n0}", Convert.ToDecimal(row2["So_Tien_QH_3"]))</td>
+                                <td style="text-align:right"> @String.Format("{0:n0}", Convert.ToDecimal(row2["So_Tien_QH_4"]))</td>
+
+                            </tr>
 
 
 
