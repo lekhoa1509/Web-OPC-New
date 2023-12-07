@@ -1,6 +1,6 @@
 ﻿﻿
 
-@{ ViewBag.Title = "Phiếu Xuất Kho";
+@{ ViewBag.Title = "BẢNG ĐỐI CHIẾU CÔNG NỢ";
     string ten_dt = Request.Cookies["ten_dt"] != null ? HttpUtility.UrlDecode(Request.Cookies["ten_dt"].Value) : "";
     string Dia_Chi = Request.Cookies["Dia_Chi"] != null ? HttpUtility.UrlDecode(Request.Cookies["Dia_Chi"].Value) : "";
     string Dvcs = Request.Cookies["Dvcs"] != null ? HttpUtility.UrlDecode(Request.Cookies["Dvcs"].Value) : "";
@@ -12,7 +12,7 @@
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Phiếu Xác Nhận Thanh Toán</title>
+    <title>BẢNG ĐỐI CHIẾU CÔNG NỢ</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link href="~/Styles/main.css" rel='stylesheet' type='text/css' media="all">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -452,15 +452,8 @@
             <div style="text-align:center">
                 <h3 style="font-size: 25px; color: black; font-weight: bold">BẢNG ĐỐI CHIẾU CÔNG NỢ</h3>
 
-                <h5 style="font-style:italic;color:black">
-                    Quý 3 năm    @foreach (DataRow row3 in Model.Tables[3].Rows)
-                    {
-                        @row3["Nam"]
-                        var nam = row3["Nam"].ToString();
-                        HttpCookie namCookie = new HttpCookie("nam");
-                        namCookie.Value = nam;
-                        Response.Cookies.Add(namCookie);
-                    }
+                <h5 id="quarterYear" style="font-style: italic; color: black;">
+                    <!-- The content will be dynamically set by JavaScript -->
                 </h5><br />
             </div>
 
@@ -595,15 +588,15 @@
 
             <div style="margin-top:10px">
                 <table id="export" border="1" border-collapse="collapse" style="width:800px;color:black">
-                  
-                        <tr style="font-size:13px;font-weight:bold;color:black">
-                            <th style="width:80px;font-size:14px" rowspan="2">STT</th>
-                            <th colspan="2" style="font-size:14px">HÓA ĐƠN</th>
-                            <th style="font-size:15px" rowspan="2">TIỀN HÓA ĐƠN <br />(ĐÃ TRỪ CODE KM)</th>
-                            <th style="font-size:15px; width:120px" rowspan="2">CODE KM</th>
-                            <th style="font-size:15px;width:120px" rowspan="2">GHI CHÚ</th>
 
-                        </tr>
+                    <tr style="font-size:13px;font-weight:bold;color:black">
+                        <th style="width:80px;font-size:14px" rowspan="2">STT</th>
+                        <th colspan="2" style="font-size:14px">HÓA ĐƠN</th>
+                        <th style="font-size:15px" rowspan="2">TIỀN HÓA ĐƠN <br />(ĐÃ TRỪ CODE KM)</th>
+                        <th style="font-size:15px; width:120px" rowspan="2">CODE KM</th>
+                        <th style="font-size:15px;width:120px" rowspan="2">GHI CHÚ</th>
+
+                    </tr>
 
                     <th style="width:150px;font-size:14px">SỐ</th>
                     <th style="width: 150px; font-size: 14px">NGÀY</th>
@@ -611,7 +604,7 @@
 
 
 
-                
+
                     <tbody>
                         @foreach (DataRow row3 in Model.Tables[2].Rows)
                         {
@@ -646,7 +639,7 @@
 
                         </tr>
                     </tbody>
-                   
+
 
                 </table>
                 <br />
@@ -658,7 +651,7 @@
                             var NgayTT = row3["Den_Ngay"].ToString();
                             HttpCookie NgayTTCookie = new HttpCookie("NgayTT");
                             NgayTTCookie.Value = NgayTT;
-                            Response.Cookies.Add(NgayTTCookie); 
+                            Response.Cookies.Add(NgayTTCookie);
                         }/  @foreach (DataRow row3 in Model.Tables[3].Rows)
                         {
                             @row3["Den_Thang"]
@@ -709,7 +702,7 @@
                             Response.Cookies.Add(SDTCookie);
                         }
                     </h5>
-          
+
                     <h5 style="text-align: left;">
                         Số tiền còn nợ đề nghị Quý khách hàng thanh toán bằng tiền mặt hoặc chuyển khoản vào tài khoản @Dvcs, số tài khoản: @foreach (DataRow row3 in Model.Tables[4].Rows)
                         {
@@ -805,6 +798,52 @@
             file.click();
         }
 
+    </script>
+    <script>
+        // Function to get the value of a cookie by name
+        function getCookieValue(cookieName) {
+            var name = cookieName + "=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var cookieArray = decodedCookie.split(';');
+            for (var i = 0; i < cookieArray.length; i++) {
+                var cookie = cookieArray[i].trim();
+                if (cookie.indexOf(name) == 0) {
+                    return cookie.substring(name.length, cookie.length);
+                }
+            }
+            return null;
+        }
+
+        // Function to update the content of the <h5> tag
+        function updateQuarterYear() {
+            // Get the value of the 'From_date' cookie
+            var fromDateCookie = getCookieValue('To_date');
+
+            // If the cookie is present, extract the month and proceed
+            if (fromDateCookie) {
+                var fromDateObj = new Date(fromDateCookie);
+                var month = fromDateObj.getMonth() + 1; // Adding 1 since getMonth() returns 0-based index
+
+                // Determine the quarter based on the month
+                var quarter = Math.floor((month + 2) / 3); // Calculate the quarter (1-4)
+
+                // Get the year from the 'From_date' cookie
+                var year = fromDateObj.getFullYear();
+
+                // Set the content of the <h5> tag
+                var h5Element = $('#quarterYear'); // Using jQuery to select the <h5> element
+                h5Element.text('Tháng ' + month + ' năm ' + year);
+            } else {
+                // Handle the case where the 'From_date' cookie is not present
+                console.error("The 'From_date' cookie is not set.");
+            }
+        }
+
+        // Function to be executed when the page is fully loaded
+        $(document).ready(function () {
+            // Call the updateQuarterYear function when the page loads
+            updateQuarterYear();
+        });
     </script>
     @*<script>
             document.addEventListener("DOMContentLoaded", function () {
@@ -957,38 +996,38 @@
 
     </script>
     @*<script>
-        document.addEventListener("DOMContentLoaded", function () {
-            var tableData = []; // Mảng lưu dữ liệu
+            document.addEventListener("DOMContentLoaded", function () {
+                var tableData = []; // Mảng lưu dữ liệu
 
-            // Lặp qua từng hàng trong bảng
-            var rows = document.querySelectorAll("#export2 tbody tr");
-            rows.forEach(function (row) {
-                var rowData = [];
-                var cells = row.querySelectorAll("td");
+                // Lặp qua từng hàng trong bảng
+                var rows = document.querySelectorAll("#export2 tbody tr");
+                rows.forEach(function (row) {
+                    var rowData = [];
+                    var cells = row.querySelectorAll("td");
 
-                // Lặp qua từng ô dữ liệu trong hàng
-                cells.forEach(function (cell) {
-                    rowData.push(cell.textContent);
+                    // Lặp qua từng ô dữ liệu trong hàng
+                    cells.forEach(function (cell) {
+                        rowData.push(cell.textContent);
+                    });
+
+                    tableData.push(rowData); // Thêm mảng dữ liệu hàng vào mảng tableData
                 });
 
-                tableData.push(rowData); // Thêm mảng dữ liệu hàng vào mảng tableData
+                // Chia mảng thành hai phần
+                var halfLength = Math.ceil(tableData.length / 2);
+                var part1 = tableData.slice(0, halfLength);
+                var part2 = tableData.slice(halfLength);
+
+                // Chuyển mảng thành chuỗi JSON
+                var part1JSON = JSON.stringify(part1);
+                var part2JSON = JSON.stringify(part2);
+
+                // Lưu vào hai cookie riêng rẽ
+                Cookies.set("tableDataCookieHD1", part1JSON);
+                Cookies.set("tableDataCookieHD2", part2JSON);
             });
 
-            // Chia mảng thành hai phần
-            var halfLength = Math.ceil(tableData.length / 2);
-            var part1 = tableData.slice(0, halfLength);
-            var part2 = tableData.slice(halfLength);
-
-            // Chuyển mảng thành chuỗi JSON
-            var part1JSON = JSON.stringify(part1);
-            var part2JSON = JSON.stringify(part2);
-
-            // Lưu vào hai cookie riêng rẽ
-            Cookies.set("tableDataCookieHD1", part1JSON);
-            Cookies.set("tableDataCookieHD2", part2JSON);
-        });
-
-    </script>*@
+        </script>*@
     <script>
   function exportExcel() {
     window.location.href = '@Url.Action("ExportDoiChieuCongNo", "MauInChungTu")';

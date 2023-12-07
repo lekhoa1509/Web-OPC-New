@@ -1,5 +1,7 @@
 ﻿@{ ViewBag.Title = "Trang Chủ | OPCPHARMA";
     @model System.Data.DataSet
+    string username;
+    username = Request.Cookies["UserName"].Value;
 }
 @using System.Data;
 <!DOCTYPE html>
@@ -49,7 +51,7 @@
             color: #333;
         }
 
-        .tab {
+        /*.tab {
             float: left;
             height: 44px;
             margin: 0 8px -1px 0;
@@ -78,8 +80,8 @@
                 }
 
                 .tab.tabClosed {
-                    width: 0 !important; /* use important because we need to set the width of tabs in javascript in order to be able to animate them to 0 */
-                }
+                    width: 0 !important;*/ /* use important because we need to set the width of tabs in javascript in order to be able to animate them to 0 */
+                /*}
 
                     .tab.tabClosed a {
                         opacity: 0;
@@ -96,32 +98,32 @@
 
             .tab-control ul {
                 position: absolute;
-                bottom: 0px;
+                bottom: 0px;*/
                 /* left:300px;*/
-            }
+            /*}
 
                 .tab-control ul li {
                     text-align: center;
-                }
+                }*/
         /* Thêm lớp selected-tab vào tab đã chọn */
-        .tab.selected-tab {
-            background-color: #3763a3; /* Màu nền của tab */
-        }
+        /*.tab.selected-tab {
+            background-color: #3763a3;*/ /* Màu nền của tab */
+        /*}
 
             .tab.selected-tab a {
-                color: white /* Màu nền của tab */
-            }
+                color: white*/ /* Màu nền của tab */
+            /*}
 
         .selected-tab {
-            background-color: #007bff; /* Màu sắc của tab khi được chọn */
-            color: #fff; /* Màu văn bản của tab khi được chọn */
-        }
+            background-color: #007bff;*/ /* Màu sắc của tab khi được chọn */
+            /*color: #fff;*/ /* Màu văn bản của tab khi được chọn */
+        /*}*/
 
         /* Đảm bảo các tab khác không được chọn có màu sắc mặc định */
-        .tab:not(.selected-tab) {
-            background-color: #f8f9fa; /* Màu sắc mặc định của tab */
-            color: #000; /* Màu văn bản mặc định của tab */
-        }
+        /*.tab:not(.selected-tab) {
+            background-color: #f8f9fa;*/ /* Màu sắc mặc định của tab */
+            /*color: #000;*/ /* Màu văn bản mặc định của tab */
+        /*}*/
         div.fixed {
             color:black;
             position: fixed;
@@ -131,11 +133,17 @@
             background-color: white;
             border: 3px solid #11101d;
         }
+        .sidebar .nav-links li ul {
+            background-color: #427cac;
+        }
+        #active {
+            background-color: #427cac;
+        }
     </style>
 </head>
-<body>
+<body  style="background-color: #e0e8ee">
     <div class="loader" style="z-index:1"></div>
-    <div class="sidebar close">
+    <div class="sidebar close" style="background-color: #3f5161; color: #3483bd ">
         <div class="logo-details">
             <img src="~/Images/opc.png" style="height:50px;width:50px;margin-left:10px">
             <span class="logo_name" style="color: #da261f; font-family: 'Agency FB'; font-size: 40px;padding-left:10px">OPC</span>
@@ -224,7 +232,7 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                     <li>
                         <a href="#">1.Báo Cáo Quản Trị</a>
                         <ul>
-                            @if (string.Equals(ViewBag.Username, "admin", StringComparison.OrdinalIgnoreCase))
+                            @if (string.Equals(ViewBag.Username, "admin", StringComparison.OrdinalIgnoreCase) || username == "vpct-nhatanh")
                             {
 
 
@@ -234,7 +242,7 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                             {
                                 <li class="liTitle"><a href="/DoanhThuChiNhanh/DoanhThuChiNhanhKGam_CN_Fill">1.1.Doanh Thu Chi Nhánh</a></li>
                             }
-                            @if (string.Equals(ViewBag.UserName, "admin", StringComparison.OrdinalIgnoreCase))
+                            @if (string.Equals(ViewBag.UserName, "admin", StringComparison.OrdinalIgnoreCase) || username == "vpct-nhatanh")
                             {
 
 
@@ -321,11 +329,11 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
             </li>
         </ul>
     </div>
-    <section class="home-section">
+    <section class="home-section" style="background-color: #e0e8ee">
         <nav>
             <div class="home-content">
-                <i class='bx bx-menu'></i>
-                <span class="text">Trang chủ</span>
+                <i class='bx bx-menu'style="color: #3483bd"></i>
+                <span class="text" style="color: #3483bd">Trang chủ</span>
             </div>
             <div class="search-box">
                 <input type="text" placeholder="Search...">
@@ -380,17 +388,16 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                 </div>*@
             <div class="home-content1" style="width:100%">
                 <div class="overview-boxes" style="background-color:red">
-                    <div class="box" style="overflow:auto;width:400px;height:200px">
-                        <table style="width:500px;height:200px; border-collapse: collapse;overflow:scroll">
-
+                    <div class="box" style="overflow: auto; width: 400px; height: 200px; border-color: #3483bd">
+                        <table style="width: 500px; height: 200px; border-collapse: collapse; overflow: scroll; ">
                             <tr class="title">
-                                <th colspan="4" class="top10" style="font-size:18px;padding:5px">BÁO CÁO QUẢN TRỊ</th>
+                                <th colspan="4" class="top10" style="font-size: 18px; padding: 5px; background-color: #aec9e0; color: #3483bd ">BÁO CÁO QUẢN TRỊ</th>
                             </tr>
 
                             <tbody style="float:left">
                                 <tr style="height:30px">
                                     <td style="text-align: left">
-                                        @if (string.Equals(ViewBag.UserName, "admin", StringComparison.OrdinalIgnoreCase) || string.Equals(ViewBag.UserName, "opcadmin", StringComparison.OrdinalIgnoreCase))
+                                        @if (string.Equals(ViewBag.UserName, "admin", StringComparison.OrdinalIgnoreCase) || string.Equals(ViewBag.UserName, "opcadmin", StringComparison.OrdinalIgnoreCase) || string.Equals(ViewBag.UserName, "vpct-nhatanh", StringComparison.OrdinalIgnoreCase))
                                         {
                                             <li style=" list-style-type: none;" class="liTitle">
                                                 <a href="" onclick="runReport('@Url.Action("DoanhThuChiNhanhKGam_Fill", "DoanhThuChiNhanh")'
@@ -409,7 +416,7 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                                 <tr style="height:30px">
                                     <td style="text-align: left">
                                         @if (string.Equals(ViewBag.UserName, "admin", StringComparison.OrdinalIgnoreCase) ||
-string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase) || string.Equals(ViewBag.UserName, "opcadmin", StringComparison.OrdinalIgnoreCase))
+string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase) || string.Equals(ViewBag.UserName, "opcadmin", StringComparison.OrdinalIgnoreCase) || string.Equals(ViewBag.UserName, "vpct-nhatanh", StringComparison.OrdinalIgnoreCase))
                                         {
                                             <li style=" list-style-type: none;" class="liTitle">
                                                 <a href="" onclick="runReport('@Url.Action("DoanhThuChiNhanh_Admin_Fill", "DoanhThuChiNhanh")'
@@ -433,7 +440,14 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                                         </li>
                                     </td>
                                 </tr>
-
+                                <tr style="height:30px">
+                                    <td style="text-align: left">
+                                        <li style=" list-style-type: none;" class="liTitle">
+                                            <a href="" onclick="runReport('@Url.Action("BaoCaoKetQuaKinhDoanh_Fill", "BaoCaoKetQuaKinhDoanh")'
+                                                      )">4.Báo Cáo Kết Quả Kinh Doanh</a>
+                                        </li>
+                                    </td>
+                                </tr>
                             </tbody>
 
 
@@ -447,11 +461,11 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
             </div>
             <div class="home-content1" style="width:100%">
                 <div class="overview-boxes" style="background-color:red">
-                    <div class="box" style="overflow:auto;width:400px;height:200px">
+                    <div class="box" style="overflow: auto; width: 400px; height: 200px; border-color: #3483bd">
                         <table style="width:500px;height:200px; border-collapse: collapse;overflow:scroll">
 
                             <tr class="title">
-                                <th colspan="4" class="top10" style="font-size:18px;padding:5px;height:50px">BÁO CÁO NGHIỆP VỤ</th>
+                                <th colspan="4" class="top10" style="font-size: 18px; padding: 5px; height: 50px ;background-color: #aec9e0; color: #3483bd ">BÁO CÁO NGHIỆP VỤ</th>
                             </tr>
 
                             <tbody style="float:left">
@@ -615,11 +629,11 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
         </div>*@
             <div class="home-content1" style="width:100%">
                 <div class="overview-boxes" style="background-color:red">
-                    <div class="box" style="overflow:auto;width:400px;height:200px">
+                    <div class="box" style="overflow: auto; width: 400px; height: 200px; border-color: #3483bd">
                         <table style="width:500px;height:200px; border-collapse: collapse;overflow:scroll">
 
                             <tr class="title">
-                                <th colspan="4" class="top10" style="font-size:18px;padding:5px;height:10px">BÁO CÁO HỢP ĐỒNG</th>
+                                <th colspan="4" class="top10" style="font-size: 18px; padding: 5px; height: 10px; background-color: #aec9e0; color: #3483bd ">BÁO CÁO HỢP ĐỒNG</th>
                             </tr>
 
                             <tbody style="float:left">
@@ -676,11 +690,11 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
             </div>
             <div class="home-content1" style="width:100%">
                 <div class="overview-boxes" style="background-color:red">
-                    <div class="box" style="overflow:auto;width:400px;height:200px">
+                    <div class="box" style="overflow: auto; width: 400px; height: 200px; border-color: #3483bd">
                         <table style="width:500px;height:200px; border-collapse: collapse;overflow:scroll">
 
                             <tr class="title">
-                                <th colspan="4" class="top10" style="font-size:18px;padding:5px;height:10px">BÁO CÁO CÔNG NỢ</th>
+                                <th colspan="4" class="top10" style="font-size: 18px; padding: 5px; height: 10px; background-color: #aec9e0; color: #3483bd ">BÁO CÁO CÔNG NỢ</th>
                             </tr>
 
                             <tbody style="float:left">
@@ -790,11 +804,11 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
 
             <div class="home-content1" style="width:100%">
                 <div class="overview-boxes" style="background-color:red">
-                    <div class="box" style="overflow:auto;width:400px;height:200px">
+                    <div class="box" style="overflow: auto; width: 400px; height: 200px; border-color: #3483bd">
                         <table style="width:500px;height:200px; border-collapse: collapse;overflow:scroll">
 
                             <tr class="title" style="height:20px">
-                                <th colspan="4" class="top10" style="font-size:18px;padding:5px;height:20px">MẪU IN</th>
+                                <th colspan="4" class="top10" style="font-size: 18px; padding: 5px; height: 20px; background-color: #aec9e0; color: #3483bd ">MẪU IN</th>
                             </tr>
 
                             <tbody style="float:left">

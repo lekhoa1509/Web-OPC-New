@@ -314,6 +314,7 @@
     <Compile Include="Controllers\BaoCaoBanHangCNController.cs" />
     <Compile Include="Controllers\BaoCaoBanHangCTVController.cs" />
     <Compile Include="Controllers\BaoCaoBanHangTDVController.cs" />
+    <Compile Include="Controllers\BaoCaoKetQuaKinhDoanhController.cs" />
     <Compile Include="Controllers\CongNoChiTietController.cs" />
     <Compile Include="Controllers\PhanTichBanHangController.cs" />
     <Compile Include="Controllers\PhieuKeToanController.cs" />
@@ -1096,6 +1097,8 @@
     <Content Include="Views\CongNoChiTiet\CongNoChiTietKH.cshtml" />
     <Content Include="Views\SoChiTietPhaiThu\SoChiTietPhaiThu_Fill.cshtml" />
     <Content Include="Views\SoChiTietPhaiThu\SoChiTietPhaiThu.cshtml" />
+    <Content Include="Views\BaoCaoKetQuaKinhDoanh\BaoCaoKetQuaKinhDoanh_Fill.cshtml" />
+    <Content Include="Views\BaoCaoKetQuaKinhDoanh\BaoCaoKetQuaKinhDoanh.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,4 +1,4 @@
-﻿@{ ViewBag.Title = "Bao Cao Doanh Thu CN";
+﻿﻿@{ ViewBag.Title = "Bao Cao Doanh Thu CN";
     Layout = null; }
 @using System.Data;
 <!DOCTYPE html>
@@ -522,6 +522,7 @@
             background-color: cornflowerblue; /* Màu nền tab khi active */
             color: #fff; /* Màu chữ khi active */
         }
+
         .tab.selected-tab {
             pointer-events: none;
             background-color: #3763a3; /* Màu nền của tab */
@@ -568,13 +569,13 @@
 </head>
 <!-- =============== Design & Develop By = MJ MARAZ   ====================== -->
 
-<body>
+<body style="background-color: #e0e8ee ">
     @*<div class="tab-control" style="position:fixed;bottom:0">
-        <ul class="tabs" style="background-color: #1d1b31; bottom: 0; left: 0; right: 0;">
-            <li class="tab selected"><a href="/Home/About" style="padding-right:5px">Home</a></li>
+            <ul class="tabs" style="background-color: #1d1b31; bottom: 0; left: 0; right: 0;">
+                <li class="tab selected"><a href="/Home/About" style="padding-right:5px">Home</a></li>
 
-        </ul>
-    </div>*@
+            </ul>
+        </div>*@
     <div class="loader" style="z-index:1"></div>
 
     <div class="sidebar">
@@ -698,7 +699,7 @@
         </ul>
     </div>
 
-    <header class="header_part">
+    <header class="header_part" style="background-color: #aec9e0; color: #3483bd ">
         @if (Request.Cookies["UserName"].Value == "Admin-cnct" || Request.Cookies["UserName"].Value == "Admin-cntg" || Request.Cookies["UserName"].Value == "Admin-cnmd" || Request.Cookies["UserName"].Value == "Admin-cnh1" || Request.Cookies["UserName"].Value == "Admin-cnvt"
                       || Request.Cookies["UserName"].Value == "Admin-cnnt" || Request.Cookies["UserName"].Value == "Admin - cndn" || Request.Cookies["UserName"].Value == "Admin - cnna" || Request.Cookies["UserName"].Value == "Admin - cnhn")
         {
@@ -715,8 +716,8 @@
                 <img src="~/Images/opc.png" style="height:60px;width:60px;margin-left:10px">
             </a>
         }
-        <h4>Báo Cáo Doanh Thu Chi Nhánh</h4>
-        <h5 style="color: white">Từ @Request.QueryString["From_date"] đến @Request.QueryString["To_date"]</h5>
+        <h4 style="color:#3483bd">Báo Cáo Doanh Thu Chi Nhánh</h4>
+        <h5 style="color: #3483bd">Từ @Request.QueryString["From_date"] đến @Request.QueryString["To_date"]</h5>
     </header>
     <!-- =======  Data-Table  = Start  ========================== -->
 
@@ -1204,27 +1205,27 @@
 
     </script>
     @*<script>
-        $(document).ready(function () {
-            var table = $('#example').DataTable({
-                "pageLength": 10, // Số hàng trên mỗi trang
-                // Cấu hình khác cho DataTables
+            $(document).ready(function () {
+                var table = $('#example').DataTable({
+                    "pageLength": 10, // Số hàng trên mỗi trang
+                    // Cấu hình khác cho DataTables
+                });
+
+                // Sự kiện khi DataTables vẽ lại bảng
+                table.on('draw.dt', function () {
+                    // Kiểm tra xem hàng tổng cộng có nằm trên trang hiện tại hay không
+                    var totalRow = $('#total-row');
+                    var totalRowVisible = totalRow.is(':visible');
+
+                    // Nếu hàng tổng cộng không nằm trên trang hiện tại, chuyển nó lên trang đầu
+                    if (!totalRowVisible) {
+                        var tableBody = table.table().body();
+                        tableBody.prepend(totalRow);
+                    }
+                });
             });
 
-            // Sự kiện khi DataTables vẽ lại bảng
-            table.on('draw.dt', function () {
-                // Kiểm tra xem hàng tổng cộng có nằm trên trang hiện tại hay không
-                var totalRow = $('#total-row');
-                var totalRowVisible = totalRow.is(':visible');
-
-                // Nếu hàng tổng cộng không nằm trên trang hiện tại, chuyển nó lên trang đầu
-                if (!totalRowVisible) {
-                    var tableBody = table.table().body();
-                    tableBody.prepend(totalRow);
-                }
-            });
-        });
-
-    </script>*@
+        </script>*@
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const tabControlTabs = document.querySelector(".tab-control .tabs");
@@ -1244,9 +1245,9 @@
                 const newTab = document.createElement("li");
                 newTab.classList.add("tab", "selected");
                 newTab.innerHTML = `
-                                    <a href="${tabHref}">${tabTitle}</a>
-                                    <a class="closeTab" href="">✕</a>
-                                `;
+                                        <a href="${tabHref}">${tabTitle}</a>
+                                        <a class="closeTab" href="">✕</a>
+                                    `;
                 tabControlTabs.appendChild(newTab);
 
                 // Sự kiện khi người dùng nhấp vào nút đóng tab
@@ -1511,9 +1512,9 @@
                 const newTab = document.createElement("li");
                 newTab.classList.add("tab", "selected");
                 newTab.innerHTML = `
-                                            <a href="${subMenuLinkHref}">${tabTitle}</a>
-                                            <a class="closeTab" href="">✕</a>
-                                        `;
+                                                <a href="${subMenuLinkHref}">${tabTitle}</a>
+                                                <a class="closeTab" href="">✕</a>
+                                            `;
                 tabControlTabs.appendChild(newTab);
 
                 // Chuyển view tới thẻ li tương ứng
@@ -1559,9 +1560,9 @@
                 const newTab = document.createElement("li");
                 newTab.classList.add("tab", "selected");
                 newTab.innerHTML = `
-                                    <a href="${subMenuLinkHref}">${tabTitle}</a>
-                                    <a class="closeTab" href="">✕</a>
-                                `;
+                                        <a href="${subMenuLinkHref}">${tabTitle}</a>
+                                        <a class="closeTab" href="">✕</a>
+                                    `;
                 tabControlTabs.appendChild(newTab);
 
                 // Chuyển view tới thẻ li tương ứng
