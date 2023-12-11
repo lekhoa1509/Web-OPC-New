@@ -2305,9 +2305,112 @@ namespace web4.Controllers
         }
         public ActionResult BienBanBanGiaoNTHH()
         {
-            return View();
-        }
+            DataSet ds = new DataSet();
+            connectSQL();
+          
+            //string query = "exec usp_Vth_BC_BHCNTK_CN @_ngay_Ct1 = '" + Acc.From_date + "',@_Ngay_Ct2 ='"+ Acc.To_date+"',@_Ma_Dvcs='"+ Acc.Ma_DvCs_1+"'";
+            string Pname = "[usp_DanhSachHoaDonBBBG_SAP]";
+            var fromDate = Request.Cookies["From_date"].Value;
+            var toDate = Request.Cookies["To_Date"].Value;
 
+
+            var Dvcs = Request.Cookies["MA_DVCS"].Value == "" ? Request.Cookies["Dvcs3"].Value : Request.Cookies["MA_DVCS"].Value;
+            //var MaTDV = Request.Cookies["Ma_CbNv"] != null ? Request.Cookies["Ma_CbNv"].Value : string.Empty;
+            var MaDt = Request.Cookies["Ma_Dt"] != null ? Request.Cookies["Ma_Dt"].Value : string.Empty;
+            
+
+            using (SqlCommand cmd = new SqlCommand(Pname, con))
+            {
+                cmd.CommandTimeout = 950;
+
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                {
+                    cmd.Parameters.AddWithValue("@_Tu_Ngay", fromDate);
+                    cmd.Parameters.AddWithValue("@_Den_Ngay", toDate);
+                    cmd.Parameters.AddWithValue("@_Ma_Dt", MaDt);
+                  
+                    cmd.Parameters.AddWithValue("@_ma_dvcs", Dvcs);
+                    sda.Fill(ds);
+
+                }
+            }
+            return View(ds);
+
+
+            Dvcs = Request.Cookies["MA_DVCS"].Value == "" ? Request.Cookies["Dvcs3"].Value : Request.Cookies["MA_DVCS"].Value;
+            //var MaTDV = Request.Cookies["Ma_CbNv"] != null ? Request.Cookies["Ma_CbNv"].Value : string.Empty;
+            MaDt = Request.Cookies["Ma_Dt"] != null ? Request.Cookies["Ma_Dt"].Value : string.Empty;
+            
+
+            using (SqlCommand cmd = new SqlCommand(Pname, con))
+            {
+                cmd.CommandTimeout = 950;
+
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                {
+                    cmd.Parameters.AddWithValue("@_Tu_Ngay", fromDate);
+                    cmd.Parameters.AddWithValue("@_Den_Ngay", toDate);
+                    cmd.Parameters.AddWithValue("@_Ma_Dt", MaDt);
+                  
+                    cmd.Parameters.AddWithValue("@_ma_dvcs", Dvcs);
+                    sda.Fill(ds);
+
+                }
+            }
+            return View(ds);
+        }
+        public List<BKHoaDonGiaoHang> LoadDmDt3()
+        {
+            string ma_dvcs = Request.Cookies["Ma_dvcs"] != null ? Request.Cookies["Ma_dvcs"].Value : string.Empty;
+            connectSQL();
+
+            List<BKHoaDonGiaoHang> dataItems = new List<BKHoaDonGiaoHang>();
+            string appendedString = ma_dvcs == "OPC_B1" ? "_010203" : "_01"; // Dòng này cộng chuỗi dựa trên giá trị của Ma_dvcs
+            using (SqlConnection connection = new SqlConnection(con.ConnectionString))
+            {
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand("[usp_DmDtTdv_SAP_MauIn]", connection))
+                {
+                    command.CommandTimeout = 950;
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.AddWithValue("@_Ma_Dvcs", ma_dvcs + appendedString);
+
+                    using (SqlDataAdapter sda = new SqlDataAdapter(command))
+                    {
+                        DataSet ds = new DataSet();
+                        sda.Fill(ds);
+
+                        // Kiểm tra xem DataSet có bảng dữ liệu hay không
+                        if (ds.Tables.Count > 0)
+                        {
+                            DataTable dt = ds.Tables[0];
+
+                            foreach (DataRow row in dt.Rows)
+                            {
+                                BKHoaDonGiaoHang dataItem = new BKHoaDonGiaoHang
+                                {
+                                    Ma_CbNv = row["Ma_Dt"].ToString(),
+                                    hoten = row["Ten_Dt"].ToString(),
+                                    Ma_Dvcs = row["Dvcs"].ToString()
+                                };
+
+                                dataItems.Add(dataItem);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return dataItems;
+        }
         public List<BKHoaDonGiaoHang> LoadDmDt1()
         {
             string ma_dvcs = Request.Cookies["Ma_dvcs"] != null ? Request.Cookies["Ma_dvcs"].Value : string.Empty;
@@ -2354,29 +2457,29 @@ namespace web4.Controllers
 
             return dataItems;
         }
-        public ActionResult BienBanBanGiaoNTHH_Index()
+        public ActionResult BienBanBanGiaoNTHH_Index(MauInChungTu MauIn)
         {
-            string ma_dvcs = Request.Cookies["Ma_dvcs"] != null ? Request.Cookies["Ma_dvcs"].Value : string.Empty;
+            DataSet ds = new DataSet();
             connectSQL();
-            //List<BKHoaDonGiaoHang> dmDList = LoadDmTDV();
-            //List<BKHoaDonGiaoHang> dmDListDt = LoadDmDt();
-            //string query = "exec usp_Vth_BC_BHCNTK_CN @_ngay_Ct1 = '" + Acc.From_date + "',@_Ngay_Ct2 ='"+ Acc.To_date+"',@_Ma_Dvcs='"+ Acc.Ma_DvCs_1+"'";
-            string Pname = "[usp_DanhSachHoaDon_SAP]";
+            List<MauInChungTu> dmDlist = LoadDmDt("");
+
+            ViewBag.DataItems = dmDlist;
+          
+            string Pname = "[usp_DanhSachHoaDonBBBG_SAP]";
             var fromDate = Request.Cookies["From_date"].Value;
             var toDate = Request.Cookies["To_Date"].Value;
 
-            //var Dvcs = Request.Cookies["MA_DVCS"].Value == "" ? Request.Cookies["Dvcs3"].Value : Request.Cookies["MA_DVCS"].Value;
-            //var MaTDV = Request.Cookies["Ma_CbNv"] != null ? Request.Cookies["Ma_CbNv"].Value : string.Empty;
-            var MaDt = Request.Cookies["Ma_DT"] != null ? Request.Cookies["Ma_DT"].Value : string.Empty;
-            //ViewBag.DataTDV = dmDList;
-            //ViewBag.DataDt = dmDListDt;
+            var Dvcs = Request.Cookies["MA_DVCS"].Value;
+           
+            var MaDt = Request.Cookies["Ma_Dt"] != null ? Request.Cookies["Ma_Dt"].Value : string.Empty;
+            
 
-                using (SqlCommand command = new SqlCommand("[usp_DmDtTdv_SAP_MauIn]", connection))
-                {
-                    command.CommandTimeout = 950;
-                    command.CommandType = CommandType.StoredProcedure;
+            using (SqlCommand cmd = new SqlCommand(Pname, con))
+            {
+                cmd.CommandTimeout = 950;
 
-                    command.Parameters.AddWithValue("@_Ma_Dvcs", ma_dvcs + appendedString);
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
 
                 using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
                 {
@@ -2384,7 +2487,7 @@ namespace web4.Controllers
                     cmd.Parameters.AddWithValue("@_Den_Ngay", toDate);
                     cmd.Parameters.AddWithValue("@_Ma_Dt", MaDt);
                     //cmd.Parameters.AddWithValue("@_Ma_CbNv", MaTDV);
-                    //cmd.Parameters.AddWithValue("@_Ma_DvCs", Dvcs);
+                    cmd.Parameters.AddWithValue("@_ma_dvcs", Dvcs);
                     sda.Fill(ds);
 
                 }
@@ -2393,49 +2496,9 @@ namespace web4.Controllers
         }
         public ActionResult BienBanBanGiaoNTHH_Fill()
         {
-            string ma_dvcs = Request.Cookies["Ma_dvcs"] != null ? Request.Cookies["Ma_dvcs"].Value : string.Empty;
-            if (string.IsNullOrEmpty(ma_dvcs))
-            {
-                return View(); // Trả về null nếu ma_dvcs rỗng
-            }
+            List<MauInChungTu> dmDlist = LoadDmDt("");
 
-            // Gọi LoadDmHD với Ma_TDV để lấy dữ liệu đã lọc theo Ma_TDV
-            List<BKHoaDonGiaoHang> dmDList = LoadDmTDV();
-            List<BKHoaDonGiaoHang> dmDListDt = LoadDmDt1();
-            //var distinctDataTDV = dmDList
-            //    .GroupBy(x => x.Ten_TDV)
-            //    .Select(x => x.First())
-            //    .ToList();
-
-            //// var distinctDataItems = dmDList
-            ////.GroupBy(x => x.So_Ct_E)
-            ////.Select(x => x.First())
-            //.ToList();
-
-
-            ViewBag.DataTDV = dmDList;
-            ViewBag.DataDt = dmDListDt;
-
-
-            DataSet ds = new DataSet();
-            connectSQL();
-            string Pname = "[usp_DanhSachTDV]";
-
-            using (SqlCommand cmd = new SqlCommand(Pname, con))
-            {
-                cmd.CommandTimeout = 950;
-                cmd.Connection = con;
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                con.Open();
-
-                using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
-                {
-
-                    cmd.Parameters.AddWithValue("@_ma_dvcs", ma_dvcs);
-                    sda.Fill(ds);
-                }
-            }
+            ViewBag.DataItems = dmDlist;
             return View();
         }
 

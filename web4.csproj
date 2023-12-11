@@ -316,6 +316,7 @@
     <Compile Include="Controllers\BaoCaoBanHangTDVController.cs" />
     <Compile Include="Controllers\BaoCaoKetQuaKinhDoanhController.cs" />
     <Compile Include="Controllers\CongNoChiTietController.cs" />
+    <Compile Include="Controllers\CongTacVienController.cs" />
     <Compile Include="Controllers\PhanTichBanHangController.cs" />
     <Compile Include="Controllers\PhieuKeToanController.cs" />
     <Compile Include="Controllers\SoChiTietPhaiThuController.cs" />
@@ -336,6 +337,7 @@
     <Compile Include="Models\BKHoaDonGiaoHang.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\Chart.cs" />
+    <Compile Include="Models\CTV.cs" />
     <Compile Include="Models\MauInChungTu.cs" />
     <Compile Include="Models\StudentMarkDetails.cs" />
     <Compile Include="Models\TheoDoiHDThau.cs" />
@@ -352,13 +354,19 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="assets\bootstrap\css\bootstrap.min.css" />
+    <Content Include="assets\bootstrap\js\bootstrap.min.js" />
+    <Content Include="assets\css\Application-Form.css" />
     <Content Include="assets\css\bootstrap.min.css" />
     <Content Include="assets\css\datatables.min.css" />
     <Content Include="assets\css\style.css" />
+    <Content Include="assets\css\styles.min.css" />
     <Content Include="assets\images\favicon.png" />
     <Content Include="assets\images\Logo.png" />
     <Content Include="assets\js\ai.0.22.9-build00167.js" />
     <Content Include="assets\js\ai.0.22.9-build00167.min.js" />
+    <Content Include="assets\js\Application-Form-1.js" />
+    <Content Include="assets\js\Application-Form.js" />
     <Content Include="assets\js\bootstrap.bundle.min.js" />
     <Content Include="assets\js\bootstrap.js" />
     <Content Include="assets\js\bootstrap.min.js" />
@@ -378,6 +386,8 @@
     <Content Include="assets\js\pdfmake.min.js" />
     <Content Include="assets\js\respond.js" />
     <Content Include="assets\js\respond.min.js" />
+    <Content Include="assets\js\Script.js" />
+    <Content Include="assets\js\script.min.js" />
     <Content Include="assets\js\vfs_fonts.js" />
     <None Include="assets\js\_references.js" />
     <Content Include="assets\php\authication.php" />
@@ -1086,6 +1096,9 @@
     <Content Include="Views\PhieuKeToan\PhieuKeToan.cshtml" />
     <Content Include="Views\MauInChungTu\PhieuNhapXNTT_Index.cshtml" />
     <Content Include="Views\BangKeNopTien\BangKeNopTien_Fill.cshtml" />
+    <Content Include="Views\CongTacVien\InputCTV.cshtml" />
+    <Content Include="Views\CongTacVien\SaveCtV.cshtml" />
+    <Content Include="Views\CongTacVien\index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
