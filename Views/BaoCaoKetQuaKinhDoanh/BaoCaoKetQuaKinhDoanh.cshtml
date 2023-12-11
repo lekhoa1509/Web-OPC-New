@@ -1,7 +1,4 @@
 ﻿
-
-
-
 @{ ViewBag.Title = "BÁO CÁO KẾT QUẢ KINH DOANH";
     var fromDate = Request.Cookies["From_date"].Value;
     var toDate = Request.Cookies["To_date"].Value;
@@ -563,6 +560,21 @@
         .expandable-content {
             display: none;
         }
+        .expandable-content_detail{
+            display:none;
+        }
+        .expandable-content_detailCON {
+            display: none;
+        }
+        .expandable-content_detailSUI {
+            display: none;
+        }
+        .expandable-content_detailPHIEN {
+            display: none;
+        }
+        .expandable-content_detail25 {
+            display: none;
+        }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
@@ -649,13 +661,13 @@
 
 
     <header class="header_part" style="background-color: #aec9e0; color: #3483bd ">
-        @if (Request.Cookies["UserName"].Value == "Admin-cnct" || Request.Cookies["UserName"].Value == "Admin-cntg" || Request.Cookies["UserName"].Value == "Admin-cnmd" || Request.Cookies["UserName"].Value == "Admin-cnh1" || Request.Cookies["UserName"].Value == "Admin-cnvt"
-                      || Request.Cookies["UserName"].Value == "Admin-cnnt" || Request.Cookies["UserName"].Value == "Admin - cndn" || Request.Cookies["UserName"].Value == "Admin - cnna" || Request.Cookies["UserName"].Value == "Admin - cnhn")
+        @if (Request.Cookies["UserName"].Value == "admin-cnct" || Request.Cookies["UserName"].Value == "admin-cntg" || Request.Cookies["UserName"].Value == "admin-cnmd" || Request.Cookies["UserName"].Value == "admin-cnh1" || Request.Cookies["UserName"].Value == "admin-cnvt"
+                      || Request.Cookies["UserName"].Value == "admin-cnnt" || Request.Cookies["UserName"].Value == "admin - cndn" || Request.Cookies["UserName"].Value == "admin - cnna" || Request.Cookies["UserName"].Value == "admin - cnhn")
         {
 
 
 
-            <a href="/Home/AboutCN" style="cursor:pointer">
+            <a href="/Home/About1" style="cursor:pointer">
                 <img src="~/Images/opc.png" style="height:60px;width:60px;margin-left:10px">
             </a>
         }
@@ -675,7 +687,7 @@
 
         <div class="row">
             <div class="col-12">
-                <div class="data_table" style="height:max-content;width:1100px">
+                <div class="data_table" style="height:max-content;width:1400px">
                     <h6 style="text-align:left">I. KẾ HOẠCH - THỰC HIỆN GAM HÀNG</h6>
                     <table id="example" class="table table-striped table-bordered" style="height:max-content">
                         <thead class="table-dark">
@@ -695,81 +707,153 @@
                             @foreach (DataRow row2 in Model.Tables[0].Rows)
                             {
                                 <tr>
-                                    <td>@row2["Ten_Dvcs"]</td>
-                                    <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Tong_Thuc_Hien"]))</td>
-                                    <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Tong_Khoan"]))</td>
-                                    <td>@row2["Ty_Le"]%</td>
+                                    <th>@row2["Ten_Dvcs"]</th>
+                                    <td style="text-align: right; color: #3483bd;font-weight:bold">@String.Format("{0:n0}", Convert.ToDecimal(row2["Tong_Thuc_Hien"]))</td>
+                                    <td style="text-align: right; color: #3483bd; font-weight: bold">@String.Format("{0:n0}", Convert.ToDecimal(row2["Tong_Khoan"]))</td>
+                                    <td style="text-align: right; color: #3483bd; font-weight: bold">@row2["Ty_Le"]%</td>
                                 </tr>
 
 
 
-                                <tr class="table-dark expandable-content">
+                                @*<tr class="table-dark expandable-content">
 
-                                    <th style="background-color: #f1f1f1; border-top: hidden; border-bottom: hidden; border-left: none "></th>
-                                    <th>Doanh Thu OPC</th>
-                                    <th>Khoán OPC</th>
-                                    <th>Tỷ lệ OPC</th>
-                                </tr>
+                <th style="background-color: #f1f1f1; border-top: hidden; border-bottom: hidden; border-left: none "></th>
+                <th>Doanh Thu OPC</th>
+                <th>Khoán OPC</th>
+                <th>Tỷ lệ OPC</th>
+            </tr>*@
                                 <tr class="expandable-content">
-                                    <td></td>
+                                    <td style="font-weight:bold">OPC  <span class="material-symbols-outlined expandable-icon" onclick="toggleRowsOPC(this)">arrow_drop_down</span></td>
                                     <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Doanh_Thu_OPC"]))</td>
                                     <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Khoan_OPC"]))</td>
-                                    <td  style="text-align:right">@row2["TyLe_OPC"]%</td>
+                                    <td style="text-align:right">@row2["TyLe_OPC"]%</td>
                                 </tr>
 
-                                <tr class="table-dark expandable-content">
-
-                                    <th style="background-color: #f1f1f1; border-top: hidden; border-bottom: hidden; border-left: none "></th>
-                                    <th>Doanh Thu Cồn</th>
-                                    <th>Khoán Cồn</th>
-                                    <th>Tỷ lệ Cồn</th>
-                                </tr>
-                                <tr class="expandable-content">
-                                    <td class="here"></td>
-                                    <td  style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Doanh_Thu_Con"]))</td>
-                                    <td  style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Khoan_Con"]))</td>
-                                    <td  style="text-align:right">@row2["TyLe_Con"]%</td>
-                                </tr>
-                                <tr class="table-dark expandable-content">
+                                <tr class="expandable-content_detail" style="background-color:antiquewhite">
 
                                     <th style="background-color: #f1f1f1; border-top: hidden; border-bottom: hidden; border-left: none "></th>
-                                    <th>Doanh Thu Sủi</th>
-                                    <th>Khoán Sủi</th>
-                                    <th>Tỷ lệ Sủi</th>
+                                    <th>Mã Vật Tư- Tên Vật Tư</th>
+                                    <th>Số Lượng</th>
+                                    <th>Tổng Tiền</th>
                                 </tr>
+                                foreach (DataRow row in Model.Tables[6].Rows)
+                                {
+                                    if (row["Gam_hang"].ToString() == "OPC")
+                                    {
+                                        <tr class="expandable-content_detail">
+                                            <td>@row["Gam_hang"]</td>
+                                            <td style="text-align:left">@row["Ma_Vt"] - @row["Ten_Vt"]</td>
+                                            <td>@String.Format("{0:n0}", Convert.ToDecimal(row["So_Luong"]))</td>
+                                            <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row["Tong_Tien"]))</td>
+                                        </tr>
+                                    }
+
+                                }
                                 <tr class="expandable-content">
-                                    <td></td>
-                                    <td  style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Doanh_Thu_Sui"]))</td>
-                                    <td  style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Khoan_Sui"]))</td>
-                                    <td  style="text-align:right">@row2["TyLe_Sui"]%</td>
+                                    <td class="here" style="font-weight:bold">CỒN <span class="material-symbols-outlined expandable-icon" onclick="toggleRowsCON(this)">arrow_drop_down</span></td>
+                                    <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Doanh_Thu_Con"]))</td>
+                                    <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Khoan_Con"]))</td>
+                                    <td style="text-align:right">@row2["TyLe_Con"]%</td>
                                 </tr>
-                                <tr class="table-dark expandable-content">
+                                <tr class="expandable-content_detailCON" style="background-color:antiquewhite">
 
                                     <th style="background-color: #f1f1f1; border-top: hidden; border-bottom: hidden; border-left: none "></th>
-                                    <th>Doanh Thu Phiến</th>
-                                    <th>Khoán Phiến</th>
-                                    <th>Tỷ lệ Phiến</th>
+                                    <th>Mã Vật Tư- Tên Vật Tư</th>
+                                    <th>Số Lượng</th>
+                                    <th>Tổng Tiền</th>
                                 </tr>
+                                foreach (DataRow row in Model.Tables[6].Rows)
+                                {
+                                    if (row["Gam_hang"].ToString() == "CON")
+                                    {
+                                        <tr class="expandable-content_detailCON">
+                                            <td>@row["Gam_hang"]</td>
+                                            <td style="text-align:left">@row["Ma_Vt"] - @row["Ten_Vt"]</td>
+                                            <td>@String.Format("{0:n0}", Convert.ToDecimal(row["So_Luong"]))</td>
+                                            <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row["Tong_Tien"]))</td>
+                                        </tr>
+                                    }
+
+                                }
                                 <tr class="expandable-content">
-                                    <td> </td>
+                                    <td style="font-weight:bold"><div style="margin-left:8px" onclick="toggleRowsSUI(this)">SỦI  <span class="material-symbols-outlined expandable-icon">arrow_drop_down</span></div></td>
+                                    <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Doanh_Thu_Sui"]))</td>
+                                    <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Khoan_Sui"]))</td>
+                                    <td style="text-align:right">@row2["TyLe_Sui"]%</td>
+                                </tr>
+                                <tr class="expandable-content_detailSUI" style="background-color:antiquewhite">
+
+                                    <th style="background-color: #f1f1f1; border-top: hidden; border-bottom: hidden; border-left: none "></th>
+                                    <th>Mã Vật Tư- Tên Vật Tư</th>
+                                    <th>Số Lượng</th>
+                                    <th>Tổng Tiền</th>
+                                </tr>
+                                foreach (DataRow row in Model.Tables[6].Rows)
+                                {
+                                    if (row["Gam_hang"].ToString() == "SUI")
+                                    {
+                                        <tr class="expandable-content_detailSUI">
+                                            <td>@row["Gam_hang"]</td>
+                                            <td style="text-align:left">@row["Ma_Vt"] - @row["Ten_Vt"]</td>
+                                            <td>@String.Format("{0:n0}", Convert.ToDecimal(row["So_Luong"]))</td>
+                                            <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row["Tong_Tien"]))</td>
+                                        </tr>
+                                    }
+
+                                }
+                                <tr class="expandable-content">
+                                    <td style="font-weight:bold"><div style="margin-right:5px" onclick="toggleRowsPHIEN(this)">PHIẾN<span class="material-symbols-outlined expandable-icon">arrow_drop_down</span></div></td>
                                     <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Doanh_Thu_Phien"]))</td>
                                     <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Khoan_Phien"]))</td>
-                                    <td  style="text-align:right">@row2["TyLe_Phien"]%</td>
+                                    <td style="text-align:right">@row2["TyLe_Phien"]%</td>
                                 </tr>
-                                <tr class="table-dark expandable-content">
+                                <tr class="expandable-content_detailPHIEN" style="background-color:antiquewhite">
 
-                                    <th style="background-color: #f1f1f1;border-top:hidden;border-bottom:hidden;border-left:none "></th>
-                                    <th>Doanh Thu 25</th>
-                                    <th>Khoán 25</th>
-                                    <th>Tỷ lệ 25</th>
+                                    <th style="background-color: #f1f1f1; border-top: hidden; border-bottom: hidden; border-left: none "></th>
+                                    <th>Mã Vật Tư- Tên Vật Tư</th>
+                                    <th>Số Lượng</th>
+                                    <th>Tổng Tiền</th>
                                 </tr>
+                                foreach (DataRow row in Model.Tables[6].Rows)
+                                {
+                                    if (row["Gam_hang"].ToString() == "PHIEN")
+                                    {
+                                        <tr class="expandable-content_detailPHIEN">
+                                            <td>@row["Gam_hang"]</td>
+                                            <td style="text-align:left">@row["Ma_Vt"] - @row["Ten_Vt"]</td>
+                                            <td>@String.Format("{0:n0}", Convert.ToDecimal(row["So_Luong"]))</td>
+                                            <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row["Tong_Tien"]))</td>
+                                        </tr>
+                                    }
+
+                                }
                                 <tr class="expandable-content">
-                                    <td></td>
+                                    <td style="font-weight:bold">TW25<span class="material-symbols-outlined expandable-icon" onclick="toggleRows25(this)">arrow_drop_down</span></td>
                                     <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Doanh_Thu_25"]))</td>
                                     <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Khoan_25"]))</td>
-                                    <td  style="text-align:right">@row2["TyLe_25"]%</td>
+                                    <td style="text-align:right">@row2["TyLe_25"]%</td>
 
                                 </tr>
+                                <tr class="expandable-content_detail25" style="background-color:antiquewhite">
+
+                                    <th style="background-color: #f1f1f1; border-top: hidden; border-bottom: hidden; border-left: none "></th>
+                                    <th>Mã Vật Tư- Tên Vật Tư</th>
+                                    <th>Số Lượng</th>
+                                    <th>Tổng Tiền</th>
+                                </tr>
+                                foreach (DataRow row in Model.Tables[6].Rows)
+                                {
+                                    if (row["Gam_hang"].ToString() == "TW25")
+                                    {
+                                        <tr class="expandable-content_detail25">
+                                            <td>@row["Gam_hang"]</td>
+                                            <td style="text-align:left">@row["Ma_Vt"] - @row["Ten_Vt"]</td>
+                                            <td>@String.Format("{0:n0}", Convert.ToDecimal(row["So_Luong"]))</td>
+                                            <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row["Tong_Tien"]))</td>
+                                        </tr>
+                                    }
+
+                                }
 
                             }
 
@@ -777,45 +861,163 @@
                     </table>
 
                 </div>
-                <div style="display:flex;margin-top:20px">
+                <div style="display:flex;flex-direction:row;width:max-content">
+                    <div style="display: flex; flex-direction: column; margin-top: 20px; width: 700px; height: max-content">
 
-                    <div class="data_table" style="height:max-content">
-                        <h6 style="text-align:left">II. THỰC HIỆN THEO LOẠI KHÁCH HÀNG</h6>
-                        <table id="example" class="table table-striped table-bordered" style="height:max-content">
-                            <thead class="table-dark">
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Mã Loại KH</th>
-                                    <th>Loại KH</th>
-                                    <th>Doanh Thu</th>
-                                    <th>Khoán</th>
-                                    <th>Tỷ lệ</th>
-                                    <th>Tỷ lệ Cơ Cấu</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (DataRow row2 in Model.Tables[1].Rows)
-                                {
+                        <div class="data_table" style="height:max-content;width:700px">
+                            <h6 style="text-align:left">II. THỰC HIỆN THEO LOẠI KHÁCH HÀNG</h6>
+                            <table id="example2" class="table table-striped table-bordered" style="height:max-content">
+                                <thead class="table-dark">
                                     <tr>
-                                        <td>@row2["Id"]</td>
-                                        <td>@row2["Ma_Loai_KH"]</td>
-                                        <td>@row2["Loai_KH"]</td>
-                                        <td style="text-align:right">@String.Format("{0:n0}", row2["Doanh_Thu"])</td>
-                                        <td style="text-align:right">@String.Format("{0:n0}", row2["Khoan"])</td>
-                                        <td>@row2["Ty_Le"]%</td>
-                                        <td>@row2["Ty_Le_Co_Cau"]%</td>
+                                        @*<th>Id</th>*@
+                                        @*<th>Mã Loại KH</th>*@
+                                        <th>Loại KH </th>
+                                        <th>Doanh Thu</th>
+                                        <th>Khoán</th>
+                                        <th>Tỷ lệ</th>
+                                        <th>Tỷ lệ Cơ Cấu</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (DataRow row2 in Model.Tables[1].Rows)
+                                    {
+                                        <tr>
+                                            @*<td>@row2["Id"]</td>*@
+                                            @*<td>@row2["Ma_Loai_KH"]</td>*@
+                                            <td><strong>OTC</strong> <span class="material-symbols-outlined expandable-icon" onclick="toggleRows2(this)">arrow_drop_down</span></td>
+                                            <td style="text-align: right;color: #3483bd;font-weight:bold" id="tongdt-otc">@String.Format("{0:n0}", row2["TongDt_OTC"])</td>
+                                            <td style="text-align: right; color: #3483bd; font-weight: bold" id="tongkhoan-otc">@String.Format("{0:n0}", row2["TongKhoan_OTC"])</td>
+                                            <td style="color: #3483bd; font-weight: bold">@row2["TyLe_OTC"]%</td>
+                                            <td style="color: #3483bd; font-weight: bold ">100%</td>
+
+
+                                        </tr>
+                                    }
+                                    @foreach (DataRow row2 in Model.Tables[3].Rows)
+                                    {
+                                        if (row2["Ma_Loai_KH"].ToString() == "OTC")
+                                        {
+                                            <tr class="expandable-contentOTC">
+                                                @*<td>@row2["Id"]</td>*@
+                                                @*<td>@row2["Ma_Loai_KH"]</td>*@
+                                                <td style="color: black;font-weight:bold ">@row2["Loai_KH"]</td>
+                                                <td style="text-align:right">@String.Format("{0:n0}", row2["Doanh_Thu"])</td>
+                                                <td style="text-align:right">@String.Format("{0:n0}", row2["Khoan"])</td>
+                                                <td>@row2["Ty_Le"]%</td>
+                                                <td>@row2["Ty_Le_Co_Cau"]%</td>
+
+
+                                            </tr>
+                                        }
+                                    }
+                                    @foreach (DataRow row2 in Model.Tables[2].Rows)
+                                    {
+                                        <tr>
+                                            @*<td>@row2["Id"]</td>*@
+                                            @*<td>@row2["Ma_Loai_KH"]</td>*@
+                                            <td><strong>ETC</strong> <span class="material-symbols-outlined expandable-icon" onclick="toggleRows3(this)">arrow_drop_down</span></td>
+                                            <td style="text-align: right; color: #3483bd;font-weight:bold" id="tongdt-etc">@String.Format("{0:n0}", row2["TongDt_ETC"])</td>
+                                            <td style="text-align: right; color: #3483bd; font-weight: bold" id="tongkhoan-etc">@String.Format("{0:n0}", row2["TongKhoan_ETC"])</td>
+                                            <td style=" color: #3483bd; font-weight: bold">@row2["TyLe_ETC"]%</td>
+                                            <td style="color: #3483bd; font-weight: bold">100%</td>
+
+
+                                        </tr>
+                                    }
+                                    @foreach (DataRow row2 in Model.Tables[3].Rows)
+                                    {
+                                        if (row2["Ma_Loai_KH"].ToString() == "ETC")
+                                        {
+                                            <tr class="expandable-contentETC">
+                                                @*<td>@row2["Id"]</td>*@
+                                                @*<td>@row2["Ma_Loai_KH"]</td>*@
+                                                <td style="color: black;font-weight:bold ">@row2["Loai_KH"]</td>
+                                                <td style="text-align:right">@String.Format("{0:n0}", row2["Doanh_Thu"])</td>
+                                                <td style="text-align:right">@String.Format("{0:n0}", row2["Khoan"])</td>
+                                                <td>@row2["Ty_Le"]%</td>
+                                                <td>@row2["Ty_Le_Co_Cau"]%</td>
+
+
+                                            </tr>
+                                        }
+                                    }
+                                    @foreach (DataRow row2 in Model.Tables[3].Rows)
+                                    {
+                                        if (row2["Ma_Loai_KH"].ToString() == "KHAC")
+                                        {
+                                            <tr>
+
+                                                <td style="font-weight:bold ">@row2["Loai_KH"]</td>
+                                                <td style="text-align: right; color: #3483bd; font-weight: bold">@String.Format("{0:n0}", row2["Doanh_Thu"])</td>
+                                                <td style="color: #3483bd; text-align: right;font-weight:bold">@String.Format("{0:n0}", row2["Khoan"])</td>
+                                                <td style="color: #3483bd; font-weight: bold">@row2["Ty_Le"]%</td>
+                                                <td style="color: #3483bd; font-weight: bold ">@row2["Ty_Le_Co_Cau"]%</td>
+
+
+                                            </tr>
+                                        }
+                                    }
+
+                                </tbody>
+                                <tfoot>
+                                    @foreach (DataRow row2 in Model.Tables[0].Rows)
+                                    {
+                                        <tr id="tong-cong" style="background-color: burlywood;color:black;font-weight:bold">
+                                            <td><strong>Tổng cộng</strong></td>
+                                            <td style="text-align: right; font-weight:bold">@String.Format("{0:n0}", Convert.ToDecimal(row2["Tong_Thuc_Hien"]))</td>
+                                            <td style="text-align: right; font-weight: bold">@String.Format("{0:n0}", Convert.ToDecimal(row2["Tong_Khoan"]))</td>
+                                            <td style="text-align: right;  font-weight: bold">@row2["Ty_Le"]%</td>
+                                            <td>100%</td>
+                                        </tr>
+                                    }
+                                </tfoot>
+                            </table>
+
+                        </div>@**@
+                        <div class="data_table" style="height:max-content;width:700px;margin-top:20px">
+                            <h6 style="text-align:left">IV. THỰC HIỆN THEO ĐƠN VỊ</h6>
+                            <table id="example4" class="table table-striped table-bordered" style="height:max-content">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Mã Loại KH</th>
+                                        <th>Tên Loại KH</th>
+                                        <th>Doanh Thu</th>
+                                        <th>Tỷ Lệ Cơ Cấu</th>
+
 
 
                                     </tr>
-                                }
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    @foreach (DataRow row2 in Model.Tables[5].Rows)
+                                    {
+                                        <tr>
+                                            <td>@row2["Ma_LKH"]</td>
+                                            <td style="text-align:left">@row2["Ten_LKH"]</td>
+                                            <td style="text-align:right">@String.Format("{0:n0}", row2["Doanh_Thu"])</td>
+                                            <td style="text-align:right">@row2["Ty_Le_Co_Cau"]%</td>
+
+
+                                        </tr>
+                                    }
+                                </tbody>
+                                <tfoot>
+                                    <tr style="background-color: burlywood;color:black;font-weight:bold">
+                                        <td colspan="2"><strong>Tổng cộng</strong></td>
+
+                                        <td id="tong-doanh-thu_2" style="text-align:right"></td>
+                                        <td>100%</td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+
+                        </div>
+
 
                     </div>
-
-                    <div class="data_table" style="height:max-content">
+                    <div class="data_table" style="height:max-content;width:600px; margin-top:20px;margin-left:120px">
                         <h6 style="text-align:left">III. THỰC HIỆN THEO TỈNH THÀNH</h6>
-                        <table id="example" class="table table-striped table-bordered" style="height:max-content">
+                        <table id="example3" class="table table-striped table-bordered" style="height:max-content">
                             <thead class="table-dark">
                                 <tr>
                                     <th>Tỉnh Thành</th>
@@ -829,54 +1031,32 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (DataRow row2 in Model.Tables[2].Rows)
+                                @foreach (DataRow row2 in Model.Tables[4].Rows)
                                 {
-                                    <tr>
-                                        <td>@row2["Tinh_Thanh"]</td>
-                                        <td style="text-align:right">@string.Format("{0:n0}", row2["Doanh_Thu"])</td>
-                                        <td style="text-align:right">@String.Format("{0:n0}", row2["Doanh_Thu_OTC"])</td>
-                                        <td style="text-align:right">@String.Format("{0:n0}", row2["Doanh_Thu_ETC"])</td>
-                                        <td>@row2["Ty_Le_Co_Cau"]%</td>
+                    <tr>
+                        <td>@row2["Tinh_Thanh"]</td>
+                        <td style="text-align:right">@string.Format("{0:n0}", row2["Doanh_Thu"])</td>
+                        <td style="text-align:right">@String.Format("{0:n0}", row2["Doanh_Thu_OTC"])</td>
+                        <td style="text-align:right">@String.Format("{0:n0}", row2["Doanh_Thu_ETC"])</td>
+                        <td>@row2["Ty_Le_Co_Cau"]%</td>
 
 
-                                    </tr>
-                                }
+                    </tr>}
                             </tbody>
-                        </table>
-
-                    </div>
-                    <div class="data_table" style="height:max-content">
-                        <h6 style="text-align:left">IV. THỰC HIỆN THEO ĐƠN VỊ</h6>
-                        <table id="example" class="table table-striped table-bordered" style="height:max-content">
-                            <thead class="table-dark">
-                                <tr>
-                                    <th>Mã Loại KH</th>
-                                    <th>Tên Loại KH</th>
-                                    <th>Doanh Thu</th>
-                                    <th>Tỷ Lệ Cơ Cấu</th>
-
-
-
+                            <tfoot>
+                                <tr id="tong-cong" style="background-color: burlywood;color:black;font-weight:bold">
+                                    <td><strong>Tổng cộng</strong></td>
+                                    <td id="tong-doanh-thu" style="text-align:right"></td>
+                                    <td id="tong-doanh-thu-otc" style="text-align:right"></td>
+                                    <td id="tong-doanh-thu-etc" style="text-align:right"></td>
+                                    <td>100%</td>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (DataRow row2 in Model.Tables[3].Rows)
-                                {
-                                    <tr>
-                                        <td>@row2["Ma_LKH"]</td>
-                                        <td style="width:100px">@row2["Ten_LKH"]</td>
-                                        <td style="text-align:right">@String.Format("{0:n0}", row2["Doanh_Thu"])</td>
-                                        <td>@row2["Ty_Le_Co_Cau"]%</td>
-
-
-                                    </tr>
-                                }
-                            </tbody>
+                            </tfoot>
                         </table>
 
                     </div>
                 </div>
-
+                
             </div>
         </div>
     </div>
@@ -910,12 +1090,206 @@
                 }
             }
         }
+
+        function toggleRowsOPC(cell) {
+            var rowIndex = cell.parentElement.parentElement.rowIndex; // Adjusted to get the index of the parent row
+            var table = document.getElementById('example');
+            var rows = table.rows;
+
+            for (var i = rowIndex + 1; i < rows.length; i++) {
+                var row = rows[i];
+                if (row.classList.contains('expandable-content_detail')) {
+                    row.style.display = (row.style.display === 'none' || row.style.display === '') ? 'table-row' : 'none';
+                } else if (row.classList.contains('table-dark')) {
+                    break;
+                }
+            }
+        }
+        function toggleRowsCON(cell) {
+            var rowIndex = cell.parentElement.parentElement.rowIndex; // Adjusted to get the index of the parent row
+            var table = document.getElementById('example');
+            var rows = table.rows;
+
+            for (var i = rowIndex + 1; i < rows.length; i++) {
+                var row = rows[i];
+                if (row.classList.contains('expandable-content_detailCON')) {
+                    row.style.display = (row.style.display === 'none' || row.style.display === '') ? 'table-row' : 'none';
+                } else if (row.classList.contains('table-dark')) {
+                    break;
+                }
+            }
+        }
+        function toggleRowsSUI(cell) {
+            var rowIndex = cell.parentElement.parentElement.rowIndex; // Adjusted to get the index of the parent row
+            var table = document.getElementById('example');
+            var rows = table.rows;
+
+            for (var i = rowIndex + 1; i < rows.length; i++) {
+                var row = rows[i];
+                if (row.classList.contains('expandable-content_detailSUI')) {
+                    row.style.display = (row.style.display === 'none' || row.style.display === '') ? 'table-row' : 'none';
+                } else if (row.classList.contains('table-dark')) {
+                    break;
+                }
+            }
+        }
+        function toggleRowsPHIEN(cell) {
+            var rowIndex = cell.parentElement.parentElement.rowIndex; // Adjusted to get the index of the parent row
+            var table = document.getElementById('example');
+            var rows = table.rows;
+
+            for (var i = rowIndex + 1; i < rows.length; i++) {
+                var row = rows[i];
+                if (row.classList.contains('expandable-content_detailPHIEN')) {
+                    row.style.display = (row.style.display === 'none' || row.style.display === '') ? 'table-row' : 'none';
+                } else if (row.classList.contains('table-dark')) {
+                    break;
+                }
+            }
+        }
+        function toggleRows25(cell) {
+            var rowIndex = cell.parentElement.parentElement.rowIndex; // Adjusted to get the index of the parent row
+            var table = document.getElementById('example');
+            var rows = table.rows;
+
+            for (var i = rowIndex + 1; i < rows.length; i++) {
+                var row = rows[i];
+                if (row.classList.contains('expandable-content_detail25')) {
+                    row.style.display = (row.style.display === 'none' || row.style.display === '') ? 'table-row' : 'none';
+                } else if (row.classList.contains('table-dark')) {
+                    break;
+                }
+            }
+        }
+        //window.onload = function () {
+        //    // Ẩn các dòng con có class "expandable-contentOTC"
+        //    var table2 = document.getElementById('example');
+        //    var rows2 = table2.getElementsByClassName('expandable-content_detail');
+
+        //    for (var j = 0; j < rows2.length; j++) {
+        //        rows2[j].style.display = 'none';
+        //    }
+
+        //    // Ẩn các dòng con có class "expandable-contentETC"
+        //    //var rows3 = table2.getElementsByClassName('expandable-contentETC');
+
+        //    //for (var k = 0; k < rows3.length; k++) {
+        //    //    rows3[k].style.display = 'none';
+        //    //}
+        //};
     </script>
 
+    <script>
+        function toggleRows2(cell) {
+            var rowIndex = cell.parentElement.parentElement.rowIndex; // Adjusted to get the index of the parent row
+            var table = document.getElementById('example2');
+            var rows = table.rows;
 
+            for (var i = rowIndex + 1; i < rows.length; i++) {
+                var row = rows[i];
+                if (row.classList.contains('expandable-contentOTC')) {
+                    row.style.display = (row.style.display === 'none' || row.style.display === '') ? 'table-row' : 'none';
+                } else if (row.classList.contains('table-dark')) {
+                    break;
+                }
+            }
+        }
+    </script>
+    <script>
+        function toggleRows3(cell) {
+            var rowIndex = cell.parentElement.parentElement.rowIndex; // Adjusted to get the index of the parent row
+            var table = document.getElementById('example2');
+            var rows = table.rows;
 
+            for (var i = rowIndex + 1; i < rows.length; i++) {
+                var row = rows[i];
+                if (row.classList.contains('expandable-contentETC')) {
+                    row.style.display = (row.style.display === 'none' || row.style.display === '') ? 'table-row' : 'none';
+                } else if (row.classList.contains('table-dark')) {
+                    break;
+                }
+            }
+        }
+        // Thêm vào sau đoạn script toggleRows2
+        window.onload = function () {
+            // Ẩn các dòng con có class "expandable-contentOTC"
+            var table2 = document.getElementById('example2');
+            var rows2 = table2.getElementsByClassName('expandable-contentOTC');
 
+            for (var j = 0; j < rows2.length; j++) {
+                rows2[j].style.display = 'none';
+            }
 
+            // Ẩn các dòng con có class "expandable-contentETC"
+            var rows3 = table2.getElementsByClassName('expandable-contentETC');
+
+            for (var k = 0; k < rows3.length; k++) {
+                rows3[k].style.display = 'none';
+            }
+        };
+
+    </script>
+    @*<script>
+        //dang lam dang do tai day
+        // Lấy tất cả các ô trong cột "Doanh Thu"
+        var doanhThuOTCCells = document.getElementById("tongdt-otc").innerText;
+        var doanhThuETCCells = document.getElementById("tongdt-etc").innerText;
+        var khoanOTCCells = document.getElementById("tongkhoan-otc").innerText
+        var khoanETCCells = document.getElementById("tongkhoan-etc").innerText
+        var tongDoanhThu = 0;
+        var tongKhoan = 0;
+        var TyLe = 0;
+        // Tính tổng cột "Doanh Thu"
+        tongDoanhThu = doanhThuOTCCells + doanhThuETCCells;
+        doanhThuCells.forEach(function (cell) {
+            tongKhoan+= parseInt(cell.innerText.replace(/[^0-9]/g, ''), 10);
+        });
+        TyLe = (tongDoanhThu / tongKhoan) * 100;
+
+        // Hiển thị tổng cột "Doanh Thu"
+        document.getElementById("tong-doanh-thu-2").innerText = tongDoanhThu.toLocaleString();
+        //document.getElementById("tong-doanh-thu-otc-2").innerText = tongKhoan.toLocaleString();
+        //document.getElementById("tong-doanh-thu-etc-2").innerText = TyLe.toLocaleString();
+    </script>*@
+    <script>
+        // Lấy tất cả các ô trong cột "Doanh Thu"
+        var doanhThuCells = document.querySelectorAll("#example3 tbody td:nth-child(2)");
+        var doanhThuOTCCells = document.querySelectorAll("#example3 tbody td:nth-child(3)");
+        var doanhThuETCCells = document.querySelectorAll("#example3 tbody td:nth-child(4)");
+        var tongDoanhThu = 0;
+        var tongDoanhThuOTC = 0;
+        var tongDoanhThuETC = 0;
+        // Tính tổng cột "Doanh Thu"
+        doanhThuCells.forEach(function (cell) {
+            tongDoanhThu += parseInt(cell.innerText.replace(/[^0-9]/g, ''), 10);
+        });
+        doanhThuOTCCells.forEach(function (cell) {
+            tongDoanhThuOTC += parseInt(cell.innerText.replace(/[^0-9]/g, ''), 10);
+        });
+        doanhThuETCCells.forEach(function (cell) {
+            tongDoanhThuETC += parseInt(cell.innerText.replace(/[^0-9]/g, ''), 10);
+        });
+        // Hiển thị tổng cột "Doanh Thu"
+        document.getElementById("tong-doanh-thu").innerText = tongDoanhThu.toLocaleString();
+        document.getElementById("tong-doanh-thu-etc").innerText = tongDoanhThuETC.toLocaleString();
+        document.getElementById("tong-doanh-thu-otc").innerText = tongDoanhThuOTC.toLocaleString();
+
+    </script>
+    <script>
+        // Lấy tất cả các ô trong cột "Doanh Thu"
+        var doanhThuCells = document.querySelectorAll("#example4 tbody td:nth-child(3)");
+        var tongDoanhThu = 0;
+
+        // Tính tổng cột "Doanh Thu"
+        doanhThuCells.forEach(function (cell) {
+            tongDoanhThu += parseInt(cell.innerText.replace(/[^0-9]/g, ''), 10);
+        });
+        console.log(tongDoanhThu);
+
+        // Hiển thị tổng cột "Doanh Thu"
+        document.getElementById("tong-doanh-thu_2").innerText = tongDoanhThu.toLocaleString();
+
+    </script>
     @*<script>
             function toggleRows(cell) {
                 var rowIndex = cell.parentElement.rowIndex;

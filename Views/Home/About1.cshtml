@@ -152,7 +152,7 @@
         </div>
         <ul class="nav-links">
             <li id="active">
-                <a href="/Home/About">
+                <a href="/Home/About1">
                     <i class='bx bx-grid-alt'></i>
                     <span class="link_name">Trang chủ</span>
                 </a>
@@ -162,12 +162,12 @@
             </li>
             <li>
                 <div class="iocn-link">
-                    <a href="/DanhMuc/DanhMuc">
+                    <a href="#">
                         <i class='bx bx-collection'></i>
                         <span class="link_name">Danh mục</span>
                     </a>
                     <ul class="sub-menu blank">
-                        <li><a class="link_name" href="/DanhMuc/DanhMuc">Danh mục</a></li>
+                        <li><a class="link_name" href="#">Danh mục</a></li>
                     </ul>
                     @*<i class='bx bxs-chevron-down arrow'></i>*@
                 </div>
@@ -180,17 +180,17 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                         {
 
 
-                            <a href="/DanhMuc/ViewDanhMucKH_Fill" onclick="runReport()"> Khách hàng</a>
+                            <a href="#" onclick="runReport()"> Khách hàng</a>
                         }
                         else if (string.Equals(ViewBag.UserName, "OPCHCM001", StringComparison.OrdinalIgnoreCase))
                         {
 
 
-                            <a href="/DanhMuc/ViewDanhMucKH_FillCN" onclick="runReport()"> Khách hàng</a>
+                            <a href="#" onclick="runReport()"> Khách hàng</a>
                         }
                         else
                         {
-                            <a href="/DanhMuc/ViewDanhMucKHCN" onclick="runReport()"> Khách hàng</a>
+                            <a href="#" onclick="runReport()"> Khách hàng</a>
                         }
 
                     </li>
@@ -199,13 +199,13 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
             </li>
             <li>
                 <div class="iocn-link">
-                    <a href="/Home/MauIn">
+                    <a href="#">
                         <i class='bx bxs-printer'></i>
                         <span class="link_name">Mẫu In</span>
                     </a>
 
                 </div>
-                <ul class="sub-menu">
+                <!--<ul class="sub-menu">
                     <li><a class="link_name" href="/Home/MauIn">Mẫu In</a></li>
                     <li class="liTitle"><a href="/MauInChungTu/MauInNLCB_Fill">1.Chứng Từ Phiếu Nhập</a></li>
                     <li class="liTitle"><a href="/MauInChungTu/PhieuNhapXNTT_Fill">2.Phiếu Xác Nhận Thanh Toán</a></li>
@@ -215,22 +215,22 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                     <li class="liTitle"><a href="/MauInChungTu/BangDoiChieuCongNo_Fill">6.Bảng Đối Chiếu Doanh Thu - Công Nợ</a></li>
                     <li class="liTitle"><a href="/MauInChungTu/PhieuNhapKho_Fill">7.Phiếu Nhập Xuất Kho Khác</a></li>
                     <li class="liTitle"><a href="/MauInChungTu/TonNo_Fill">8.Sổ Chi Tiết Tồn Nợ Phải Thu</a></li>
-                    <li class="liTitle"><a href="/MauInChungTu/BienBanBanGiaoNTHH_Fill">9.Biên Bản Bàn Giao & Nghiệm Thu Hàng Hóa</a></li>
+                    <li class="liTitle"><a href="/MauInChungTu/BienBanBanGiaoNTHH_Fill">9.Biên Bản Bàn Giao & Nghiệm Thu Hàng Hóa</a></li>-->
                     @*<li><a href="#">Login Form</a></li>
                         <li><a href="#">Card Design</a></li>*@
-                </ul>
+                <!--</ul>-->
             </li>
 
             <li class="report-li">
                 <div class="iocn-link">
-                    <a href="/Home/MainBaoCao" onclick="showLoader()">
+                    <a href="#" >
                         <i class='bx bx-plug'></i>
                         <span class="link_name">Báo cáo</span>
                     </a>
                     @*<i class='bx bxs-chevron-down arrow'></i>*@
                 </div>
-                <ul class="sub-menu">
-                    <li><a class="link_name" href="/Home/MainBaoCao">Báo Cáo</a></li>
+                <!--<ul class="sub-menu">
+                    <li><a class="link_name" href="#">Báo Cáo</a></li>
                     <li>
                         <a href="#">1.Báo Cáo Quản Trị</a>
                         <ul>
@@ -290,11 +290,11 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                             <li class="liTitle"><a href="/BaoCaoTienVeCN/BaoCaoTienVeTDV_Fill">2.6.Báo Cáo Tiền Về TDV</a></li>
                             <li class="liTitle"><a href="/BaoCaoDoanhThuGamHangTheoDoiTuong/BaoCaoDoanhThuGamHangTheoDoiTuong_Fill">2.7.Doanh Thu Gam Theo Đối Tượng</a></li>
                         </ul>
-                    </li>
+                    </li>-->
 
 
                     <!-- Thêm các mục con khác của submenu "Báo cáo nghiệp vụ" nếu cần -->
-                </ul>
+                <!--</ul>-->
             </li>
 
 

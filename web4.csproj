@@ -187,8 +187,8 @@
     <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
     </Reference>
-    <Reference Include="System.Runtime, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>packages\System.Runtime.4.3.0\lib\net462\System.Runtime.dll</HintPath>
+    <Reference Include="System.Runtime, Version=4.1.1.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Runtime.4.3.1\lib\net462\System.Runtime.dll</HintPath>
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
@@ -319,6 +319,7 @@
     <Compile Include="Controllers\PhanTichBanHangController.cs" />
     <Compile Include="Controllers\PhieuKeToanController.cs" />
     <Compile Include="Controllers\SoChiTietPhaiThuController.cs" />
+    <Compile Include="Controllers\TheKhoController.cs" />
     <Compile Include="Controllers\TheoDoiHDThauController.cs" />
     <Compile Include="Controllers\BaoCaoDoanhThuGamHangTheoDoiTuongController.cs" />
     <Compile Include="Controllers\BaoCaoHopDongController.cs" />
@@ -1099,6 +1100,8 @@
     <Content Include="Views\SoChiTietPhaiThu\SoChiTietPhaiThu.cshtml" />
     <Content Include="Views\BaoCaoKetQuaKinhDoanh\BaoCaoKetQuaKinhDoanh_Fill.cshtml" />
     <Content Include="Views\BaoCaoKetQuaKinhDoanh\BaoCaoKetQuaKinhDoanh.cshtml" />
+    <Content Include="Views\TheKho\TheKho_Fill.cshtml" />
+    <Content Include="Views\TheKho\TheKho.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

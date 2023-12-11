@@ -397,7 +397,7 @@
                 justify-content: center;
                 /*  align-items: center;*/
                 min-height: 100vh;
-                margin: 0; /* Canh giữa nội dung trong data-form */
+                /* Canh giữa nội dung trong data-form */
             }
 
             h5 {
@@ -419,10 +419,10 @@
 
 
     <div class="forms-container">
-        <form class="data-form" id="data-form">
+        <form class="data-form" id="data-form" style="margin-top:-30px">
             <div>
-                <h3 style="margin-left:-450px; font-size:13px;">CÔNG TY CỔ PHẦN DƯỢC PHẨM OPC</h3>
-                <h3 style="font-weight:bold;color:black; font-size:13px;margin-left:-450px">@Dvcs</h3>
+                <h3 style="margin-left:-300px; font-size:13px;">CÔNG TY CỔ PHẦN DƯỢC PHẨM OPC</h3>
+                <h3 style="font-weight:bold;color:black; font-size:13px;margin-left:-400px">@Dvcs</h3>
             </div>
 
             <br />
@@ -434,29 +434,29 @@
 
             </div>
             <div style="width:600px">
-                <h5 style="text-align:left">-Căn cứ Luật thương mại số 36/2005/QH11 ngày 14/06/2005;</h5>
-                <h5 style="text-align:left">-Căn cứ vào hợp đồng số: ................../thỏa thuận của đôi bên.</h5>
+                <h5 style="text-align:left;margin-left:50px">-Căn cứ Luật thương mại số 36/2005/QH11 ngày 14/06/2005;</h5>
+                <h5 style="text-align: left; margin-left: 50px">-Căn cứ vào hợp đồng số: ................../thỏa thuận của đôi bên.</h5>
             </div>
             <br />
             <div class="flex-container" style="width:600px">
-                <h5 style="display: inline-block;color:black;font-weight:bold;text-align:left">Khách hàng: <span style="font-size: 15px;">@Request.Cookies["Ten_Dt"].Value</span></h5>
+                <h5 style="display: inline-block; color: black; font-weight: bold; text-align: left; margin-left: 50px">Khách hàng: <span style="font-size: 15px;">@Request.Cookies["Ten_Dt"].Value</span></h5>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <h5 style="display: inline-block; color: black; font-weight: bold"></h5>
             </div>
             <div style="color:black;font-weight:bold; font-size:15px;width:600px">
-                <h5 style="text-align:left">Địa chỉ: @Request.Cookies["Dia_Chi"].Value</h5>
+                <h5 style="text-align: left; margin-left: 50px">Địa chỉ: @Request.Cookies["Dia_Chi"].Value</h5>
             </div>
 
             <br />
-            <div style="text-align:left;color:black;font-weight:bold;margin-left:-510px">
+            <div style="text-align:left;color:black;font-weight:bold;margin-left:-410px">
                 <h5>Điều kiện thanh toán: </h5>
             </div>
 
             <div style="width:600px">
-                <h5 style="font-size: 14px;text-align:left">Khi thanh toán ngay, Quý khách hàng được chiết khấu 2% trên giá trị thanh toán của những hóa đơn cụ thể như sau: </h5>
+                <h5 style="font-size: 14px;text-align:left;margin-left:50px">Khi thanh toán ngay, Quý khách hàng được chiết khấu 2% trên giá trị thanh toán của những hóa đơn cụ thể như sau: </h5>
             </div><br />
             <div>
-                <table border="1" border-collapse="collapse" style="width:600px">
+                <table border="1" border-collapse="collapse" style="width:500px">
                     <thead stye="display: table-header-group;">
                         <tr style="font-size: 10px; font-weight: bold; color: black; page-break-inside:avoid">
                             <th style="padding:10px">SỐ</th>
@@ -500,20 +500,20 @@
                     </table>
                     <br />
                     <div style="text-align:left">
-                        <h5 style="word-wrap: break-word;font-size:15px">Khách hàng đã thanh toán số tiền:...................., nhận chiết khấu thanh toán số tiền:...................</h5>
+                        <h5 style="word-wrap: break-word;font-size:15px;text-align:left;margin-left:50px">Khách hàng đã thanh toán số tiền:............................, nhận chiết khấu thanh toán số tiền:............................</h5>
                     </div><br />
-                    <div style="text-align:right">
+                    <div style="text-align:right;margin-right:30px">
                         <h4 class="branch">@extractedText, ngày @Request.Cookies["ngay"].Value tháng @Request.Cookies["thang"].Value năm @Request.Cookies["nam"].Value</h4>
 
                     </div>
                     @*<h4 style="margin-left:auto">P. KHCU &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Thủ kho&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Xưởng sản xuất</h4>*@
-                    <div style="display:inline-block">
+                    <div style="display:inline-block;margin-left:20px">
                         <h4 style="display:inline-block">Khách Hàng</h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <h4 style="display:inline-block">Nhân viên thu tiền </h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <h4 style="display:inline-block">Người lập bảng</h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     </div><br />
                     <div>
-                        <h5 style="font-style:italic;text-align:left;margin-left:10px">(Ký, ghi họ tên)</h5>
+                        <h5 style="font-style:italic;text-align:left;margin-left:20px">(Ký, ghi họ tên)</h5>
                     </div>
                 </div>
                 <button class="print-button" onclick="printDataForm()" id="print">In Data</button>

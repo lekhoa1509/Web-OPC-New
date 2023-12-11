@@ -837,23 +837,23 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                                         </li>
                                     </td>
                                 </tr>
-                            
+
                                 @*<tr style="height:30px">
-                                    <td style="text-align: left">
-                                        <li style=" list-style-type: none;" class="liTitle">
-                                            <a href="" onclick="runReport('@Url.Action("BangDoiChieuCongNo_Fill", "MauInChungTu")'
-                                                      )">5.Bảng Đối Chiếu Doanh Thu - Công Nợ</a>
-                                        </li>
-                                    </td>
-                                </tr>
-                                <tr style="height:30px">
-                                    <td style="text-align: left">
-                                        <li style=" list-style-type: none;" class="liTitle">
-                                            <a href="" onclick="runReport('@Url.Action("BangDoiChieuDTCN_Fill", "MauInChungTu")'
-                                                      )">6.Bảng Đối Chiếu Công Nợ</a>
-                                        </li>
-                                    </td>
-                                </tr>*@
+                                <td style="text-align: left">
+                                    <li style=" list-style-type: none;" class="liTitle">
+                                        <a href="" onclick="runReport('@Url.Action("BangDoiChieuCongNo_Fill", "MauInChungTu")'
+                                                  )">5.Bảng Đối Chiếu Doanh Thu - Công Nợ</a>
+                                    </li>
+                                </td>
+                            </tr>
+                            <tr style="height:30px">
+                                <td style="text-align: left">
+                                    <li style=" list-style-type: none;" class="liTitle">
+                                        <a href="" onclick="runReport('@Url.Action("BangDoiChieuDTCN_Fill", "MauInChungTu")'
+                                                  )">6.Bảng Đối Chiếu Công Nợ</a>
+                                    </li>
+                                </td>
+                            </tr>*@
                                 <tr style="height:30px">
                                     <td style="text-align: left">
                                         <li style=" list-style-type: none;" class="liTitle">
@@ -862,7 +862,7 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                                         </li>
                                     </td>
                                 </tr>
-                           
+
                                 <tr style="height:30px">
                                     <td style="text-align: left">
                                         <li style=" list-style-type: none;" class="liTitle">
@@ -876,7 +876,54 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                     </div>
                 </div>
             </div>
+            <div class="home-content1" style="width:100%">
+                <div class="overview-boxes" style="background-color:red">
+                    <div class="box" style="overflow: auto; width: 400px; height: 200px; border-color: #3483bd">
+                        <table style="width:500px;height:200px; border-collapse: collapse;overflow:scroll">
 
+                            <tr class="title" style="height:5px">
+                                <th colspan="4" class="top10" style="font-size: 18px; padding: 5px; height: 20px; background-color: #aec9e0; color: #3483bd ">BÁO CÁO TỒN KHO</th>
+                            </tr>
+
+                            <tbody style="float:left">
+
+                                <tr style="height:30px">
+                                    <td style="text-align: left">
+                                        <li style=" list-style-type: none;" class="liTitle">
+                                            <a href="" onclick="runReport('@Url.Action("TheKho_Fill", "TheKho")'
+                                                      )">1.Thẻ Kho</a>
+                                        </li>
+                                    </td>
+                                </tr>
+                                <tr style="height:30px;visibility:hidden">
+                                    <td style="text-align: left">
+                                        <li style=" list-style-type: none;" class="liTitle">
+                                            <a href="" onclick="runReport('@Url.Action("TheKho_Fill", "TheKho")'
+                                                      )">1.Thẻ Kho</a>
+                                        </li>
+                                    </td>
+                                </tr>
+                                <tr style="height: 30px; visibility: hidden">
+                                    <td style="text-align: left">
+                                        <li style=" list-style-type: none;" class="liTitle">
+                                            <a href="" onclick="runReport('@Url.Action("TheKho_Fill", "TheKho")'
+                                                      )">1.Thẻ Kho</a>
+                                        </li>
+                                    </td>
+                                </tr>
+                                <tr style="height: 30px; visibility: hidden">
+                                    <td style="text-align: left">
+                                        <li style=" list-style-type: none;" class="liTitle">
+                                            <a href="" onclick="runReport('@Url.Action("TheKho_Fill", "TheKho")'
+                                                      )">1.Thẻ Kho</a>
+                                        </li>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
     <div class="fixed">

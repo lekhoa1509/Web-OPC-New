@@ -1,6 +1,7 @@
 ﻿
 @{ ViewBag.Title = "PHÂN TÍCH BÁN HÀNG";
-    Layout = null; }
+    Layout = null;
+    decimal tongTien = 0; }
 @using System.Data;
 <!DOCTYPE html>
 <html lang="en">
@@ -596,7 +597,7 @@
 </head>
 <!-- =============== Design & Develop By = MJ MARAZ   ====================== -->
 
-<body>
+<body style="background-color: #e0e8ee">
 
     <div class="loader" style="z-index:1"></div>
 
@@ -680,7 +681,7 @@
         </ul>
     </div>
 
-    <header class="header_part">
+    <header class="header_part" style="background-color: #aec9e0; color: #3483bd ">
         @if (Request.Cookies["UserName"].Value == "Admin-cnct" || Request.Cookies["UserName"].Value == "Admin-cntg" || Request.Cookies["UserName"].Value == "Admin-cnmd" || Request.Cookies["UserName"].Value == "Admin-cnh1" || Request.Cookies["UserName"].Value == "Admin-cnvt"
 || Request.Cookies["UserName"].Value == "Admin-cnnt" || Request.Cookies["UserName"].Value == "Admin - cndn" || Request.Cookies["UserName"].Value == "Admin - cnna" || Request.Cookies["UserName"].Value == "Admin - cnhn")
         {
@@ -697,8 +698,8 @@
                 <img src="~/Images/opc.png" style="height:60px;width:60px;margin-left:10px">
             </a>
         }
-        <h4>PHÂN TÍCH BÁN HÀNG</h4>
-        <h5 style="color: white">Từ @Request.QueryString["From_date"] đến @Request.QueryString["To_date"]</h5>
+        <h4 style="color: #3483bd">PHÂN TÍCH BÁN HÀNG</h4>
+        <h5 style="color: #3483bd">Từ @Request.QueryString["From_date"] đến @Request.QueryString["To_date"]</h5>
     </header>
     <!-- =======  Data-Table  = Start  ========================== -->
 
@@ -708,7 +709,12 @@
         <div class="row">
             @*<div id="chartContainer" class="box-chart"></div>*@
             <div class="col-12">
-                <div class="data_table">
+                <div class="container">
+
+                    <span>Search: <input type="Text" name="" id="myInput" placeholder="Tìm kiếm" onkeyup="searchFun()"></span>
+                    <div class="search"></div>
+                </div>
+                <div class="data_table" style="width:1200px">
                     @{
                         var rowsBySoCT = new Dictionary<object, List<DataRow>>();
 
@@ -793,92 +799,162 @@
                                     <th>Kênh BH</th>
                                     <th>Tổng tiền</th>
                                     <th>Mã Đối Tượng</th>
+
                                     <th>Mã Vật Tư</th>
                                     @*<th>Giá</th>*@
                                     @*<th>Tiền TT</th>*@
                                 }
-                              
+
                             </tr>
                         </thead>
-                        <tbody>
-                            @foreach (var entry in rowsBySoCT)
+                        @*<tfoot>
+
+                            </tfoot>*@
+                    <tbody>
+                        <tr style="background-color: burlywood">
+                            <td colspan="7" style="font-weight:bold;color:black;">Tổng tất cả:</td>
+                            @foreach (DataRow row3 in Model.Tables[1].Rows)
                             {
-                            <tr>
+                                <td style="text-align:right">@String.Format("{0:n0}", row3["Tong_Tien"])</td>
+                            }
+
+                        </tr>
+                        @foreach (var entry in rowsBySoCT)
+                        {
+                            <tr class="title">
                                 @if (Request.Cookies["SelectedNhom"].Value == "ma_vt")
                                 {
-                                    <td colspan="26" style="text-align:left">
+                                <td colspan="26" style="text-align:left">
 
-                                        <span class="material-symbols-outlined expandable-icon">arrow_drop_down</span><strong>Mã Vật Tư: @entry.Key - </strong>
-                                        @foreach (DataRow row in Model.Tables[0].Rows)
+                                    <span class="material-symbols-outlined expandable-icon">arrow_drop_down</span><strong>Mã Vật Tư: @entry.Key - </strong>
+                                    @foreach (DataRow row in Model.Tables[0].Rows)
+                                    {
+                                        if (row["ma_vt"] == entry.Key)
                                         {
-                                            if (row["ma_vt"] == entry.Key)
+                                            <strong>@row["ten_vt"]</strong>
+                                            tongTien = 0;
+                                            foreach (var row2 in entry.Value)
                                             {
-                                                <strong>@row["ten_vt"]</strong>
-                                                @*<h6 style="text-align:right;display:block">0</h6>*@
-                                                break;
+                                                tongTien += Convert.ToDecimal(row2["Tong_tien"]);
                                             }
+                                            break;
                                         }
 
-                                    </td>
-
+                                    }
+                                    <div style="text-align: right; color: #3483bd"> <strong> @String.Format("{0:n0}", tongTien)</strong></div>
+                                  
+                                </td>
+                                  
                                 }
-
-
                                 @if (Request.Cookies["SelectedNhom"].Value == "ma_dt")
                                 {
-                                    <td colspan="26" style="text-align:left">
+                            <td colspan="26" style="text-align:left">
 
-                                        <span class="material-symbols-outlined expandable-icon">arrow_drop_down</span><strong>Mã Đối Tượng: @entry.Key - </strong>
-                                        @foreach (DataRow row in Model.Tables[0].Rows)
+                                <span class="material-symbols-outlined expandable-icon">arrow_drop_down</span><strong>Mã Đối Tượng: @entry.Key - </strong>
+                                @foreach (DataRow row in Model.Tables[0].Rows)
+                                {
+                                    if (row["ma_dt"] == entry.Key)
+                                    {
+                                        <strong>@row["ten_dt"]</strong>
+                                        tongTien = 0;
+                                        foreach (var row2 in entry.Value)
                                         {
-                                            if (row["ma_dt"] == entry.Key)
-                                            {
-                                                <strong>@row["ten_dt"]</strong>
-                                                break;
-                                            }
+                                            tongTien += Convert.ToDecimal(row2["Tong_tien"]);
                                         }
-                                    </td>
+                                        break;
+                                    }
                                 }
-                                @if (Request.Cookies["SelectedNhom"].Value == "ma_tdv")
-                                {
-                                    <td colspan="26" style="text-align:left">
+                                <div style="text-align: right; color: #3483bd"> <strong> @String.Format("{0:n0}", tongTien)</strong></div>
+                            </td>
+                                    }
+                                    @if (Request.Cookies["SelectedNhom"].Value == "ma_tdv")
+                                    {
+                            <td colspan="26" style="text-align:left">
 
-                                        <span class="material-symbols-outlined expandable-icon">arrow_drop_down</span><strong>Mã TDV: @entry.Key - </strong>
-                                        @foreach (DataRow row in Model.Tables[0].Rows)
+                                <span class="material-symbols-outlined expandable-icon">arrow_drop_down</span><strong>Mã TDV: @entry.Key - </strong>
+                                @foreach (DataRow row in Model.Tables[0].Rows)
+                                {
+                                    if (row["Ma_TDV"] == entry.Key)
+                                    {
+                                        <strong>@row["Ten_TDV"]</strong>
+                                        tongTien = 0;
+                                        foreach (var row2 in entry.Value)
                                         {
-                                            if (row["Ma_TDV"] == entry.Key)
-                                            {
-                                                <strong>@row["Ten_TDV"]</strong>
-                                                break;
-                                            }
+                                            tongTien += Convert.ToDecimal(row2["Tong_tien"]);
                                         }
-                                    </td>
+                                        break;
+                                    }
                                 }
-                                @if (Request.Cookies["SelectedNhom"].Value == "Loai_Vt")
-                                {
-                                    <td colspan="26" style="text-align:left">
+                                <div style="text-align: right; color: #3483bd"> <strong> @String.Format("{0:n0}", tongTien)</strong></div>
+                            </td>
+                                    }
+                                    @if (Request.Cookies["SelectedNhom"].Value == "Loai_Vt")
+                                    {
+                            <td colspan="26" style="text-align:left">
 
-                                        <span class="material-symbols-outlined expandable-icon">arrow_drop_down</span> <strong>Loại Vật Tư: @entry.Key</strong>
-                                    </td>
-                                }
-                                @if (Request.Cookies["SelectedNhom"].Value == "so_ct")
+                                <span class="material-symbols-outlined expandable-icon">arrow_drop_down</span> <strong>Loại Vật Tư: @entry.Key</strong>
+                                @foreach (DataRow row in Model.Tables[0].Rows)
                                 {
-                                    <td colspan="26" style="text-align:left">
-                                        <span class="material-symbols-outlined expandable-icon">arrow_drop_down</span>   <strong>Số Chứng Từ: @entry.Key</strong>
-                                    </td>
-                                }
+                                    if (row["Loai_Vt"] == entry.Key)
+                                    {
 
-                                @if (Request.Cookies["SelectedNhom"].Value == "So_Hop_Dong_Ex")
+                                        tongTien = 0;
+                                        foreach (var row2 in entry.Value)
+                                        {
+                                            tongTien += Convert.ToDecimal(row2["Tong_tien"]);
+                                        }
+                                        break;
+                                    }
+                                }
+                                <div style="text-align: right; color: #3483bd"> <strong> @String.Format("{0:n0}", tongTien)</strong></div>
+                            </td>
+                                    }
+                                    @if (Request.Cookies["SelectedNhom"].Value == "so_ct")
+                                    {
+                            <td colspan="26" style="text-align:left">
+                                <span class="material-symbols-outlined expandable-icon">arrow_drop_down</span>   <strong>Số Chứng Từ: @entry.Key</strong>
+                                @foreach (DataRow row in Model.Tables[0].Rows)
                                 {
-                                    <td colspan="26" style="text-align:left">
-                                        <span class="material-symbols-outlined expandable-icon">arrow_drop_down</span>   <strong>Số Hợp Đồng: @entry.Key</strong>
-                                    </td>
-                                }
+                                    if (row["so_ct"] == entry.Key)
+                                    {
 
-                            </tr>
+                                        tongTien = 0;
+                                        foreach (var row2 in entry.Value)
+                                        {
+                                            tongTien += Convert.ToDecimal(row2["Tong_tien"]);
+                                        }
+                                        break;
+                                    }
+                                }
+                                <div style="text-align: right; color: #3483bd"> <strong> @String.Format("{0:n0}", tongTien)</strong></div>
+                            </td>
+                                    }
+
+                                    @if (Request.Cookies["SelectedNhom"].Value == "So_Hop_Dong_Ex")
+                                    {
+                            <td colspan="26" style="text-align:left">
+                                <span class="material-symbols-outlined expandable-icon">arrow_drop_down</span>   <strong>Số Hợp Đồng: @entry.Key</strong>
+                                @foreach (DataRow row in Model.Tables[0].Rows)
+                                {
+                                    if (row["So_Hop_Dong_Ex"] == entry.Key)
+                                    {
+
+                                        tongTien = 0;
+                                        foreach (var row2 in entry.Value)
+                                        {
+                                            tongTien += Convert.ToDecimal(row2["Tong_tien"]);
+                                        }
+                                        break;
+                                    }
+                                }
+                                <div style="text-align: right; color: #3483bd"> <strong> @String.Format("{0:n0}", tongTien)</strong></div>
+                            </td>
+                                    }
+
+                                </tr>
                                 if (Request.Cookies["SelectedChiTiet"].Value == "ma_dt")
                                 {
-                                    decimal tongTien = 0; // Tạo biến để tính tổng
+                                    tongTien = 0; // Tạo biến để tính tổng
 
                                     foreach (var row2 in entry.Value)
                                     {
@@ -898,17 +974,18 @@
 
                                         // Cập nhật tổng giá trị
                                         tongTien += Convert.ToDecimal(row2["Tong_tien"]);
+                                        ViewBag.SumDT = tongTien;
                                     }
 
-                                    <tr style="background-color: burlywood">
+                                    @*<tr style="background-color: burlywood">
                                         <td colspan="7" style="color:black;font-weight:bold">Tổng</td>
                                         <td style="text-align:right">@String.Format("{0:n0}", tongTien)</td>
-                                    </tr>
+                                    </tr>*@
                                 }
 
                                 if (Request.Cookies["SelectedChiTiet"].Value == "so_ct")
                                 {
-                                    decimal tongTien = 0;
+                                    tongTien = 0;
                                     foreach (var row2 in entry.Value)
                                     {
                                         <tr>
@@ -929,14 +1006,14 @@
                                         // Cập nhật tổng giá trị
                                         tongTien += Convert.ToDecimal(row2["Tong_tien"]);
                                     }
-                                    <tr style="background-color: burlywood">
+                                    @*<tr style="background-color: burlywood">
                                         <td colspan="7" style="color:black;font-weight:bold">Tổng</td>
                                         <td style="text-align:right">@String.Format("{0:n0}", tongTien)</td>
-                                    </tr>
+                                    </tr>*@
                                 }
                                 if (Request.Cookies["SelectedChiTiet"].Value == "ma_vt")
                                 {
-                                    decimal tongTien = 0;
+                                    tongTien = 0;
                                     foreach (var row2 in entry.Value)
                                     {
                                         <tr>
@@ -957,14 +1034,14 @@
                                         // Cập nhật tổng giá trị
                                         tongTien += Convert.ToDecimal(row2["Tong_tien"]);
                                     }
-                                    <tr style="background-color: burlywood">
+                                    @*<tr style="background-color: burlywood">
                                         <td colspan="7" style="color:black;font-weight:bold">Tổng</td>
                                         <td style="text-align:right">@String.Format("{0:n0}", tongTien)</td>
-                                    </tr>
+                                    </tr>*@
                                 }
                                 if (Request.Cookies["SelectedChiTiet"].Value == "Loai_Vt")
                                 {
-                                    decimal tongTien = 0;
+                                    tongTien = 0;
                                     foreach (var row2 in entry.Value)
                                     {
                                         <tr>
@@ -983,53 +1060,44 @@
                                         // Cập nhật tổng giá trị
                                         tongTien += Convert.ToDecimal(row2["Tong_tien"]);
                                     }
-                                    <tr style="background-color: burlywood">
+                                    @*<tr style="background-color: burlywood">
                                         <td colspan="7" style="color:black;font-weight:bold">Tổng</td>
                                         <td style="text-align:right">@String.Format("{0:n0}", tongTien)</td>
-                                    </tr>
+                                    </tr>*@
                                 }
 
                                 if (Request.Cookies["SelectedChiTiet"].Value == "ma_tdv")
                                 {
-                                    decimal tongTien = 0;
+                                    tongTien = 0;
                                     foreach (var row2 in entry.Value)
                                     {
-                        <tr>
-                            <td>@row2["Ma_TDV"]</td>
-                            <td>@row2["Ten_TDV"]</td>
+                                        <tr>
+                                            <td>@row2["Ma_TDV"]</td>
+                                            <td>@row2["Ten_TDV"]</td>
 
 
-                            <td>@row2["dvt"]</td>
-                            <td>@String.Format("{0:n0}", Convert.ToDecimal(row2["so_luong"]))</td>
-                            <td>@row2["Kenh_BH"]</td>
+                                            <td>@row2["dvt"]</td>
+                                            <td>@String.Format("{0:n0}", Convert.ToDecimal(row2["so_luong"]))</td>
+                                            <td>@row2["Kenh_BH"]</td>
 
-                            <td>@row2["ma_dt"]</td>
-                            <td>@row2["ma_vt"]</td>
-                            <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Tong_tien"]))</td>
-                            @*<td>@String.Format("{0:n0}", Convert.ToDecimal(row2["Gia"]))</td>*@
-                            @*<td>@String.Format("{0:n0}", Convert.ToDecimal(row2["Tien_TT"]))</td>*@
+                                            <td>@row2["ma_dt"]</td>
+                                            <td>@row2["ma_vt"]</td>
+                                            <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Tong_tien"]))</td>
+                                            @*<td>@String.Format("{0:n0}", Convert.ToDecimal(row2["Gia"]))</td>*@
+                                            @*<td>@String.Format("{0:n0}", Convert.ToDecimal(row2["Tien_TT"]))</td>*@
 
-                        </tr>
+                                        </tr>
                                         // Cập nhật tổng giá trị
                                         tongTien += Convert.ToDecimal(row2["Tong_tien"]);
                                     }
-                                    <tr style="background-color: burlywood">
+                                    @*<tr style="background-color: burlywood">
                                         <td colspan="7" style="color:black;font-weight:bold">Tổng</td>
                                         <td style="text-align:right">@String.Format("{0:n0}", tongTien)</td>
-                                    </tr>
+                                    </tr>*@
                                 }
                             }
                         </tbody>
-                        <tfoot>
-                            <tr style="background-color: burlywood"> 
-                                <td colspan="7" style="font-weight:bold;color:black;">Tổng tất cả:</td>
-                                @foreach (DataRow row3 in Model.Tables[1].Rows)
-                                {
-                                    <td style="text-align:right">@String.Format("{0:n0}", row3["Tong_Tien"])</td>
-                                }
 
-                            </tr>
-                        </tfoot>
                     </table>
 
                 </div>
@@ -1049,15 +1117,39 @@
     <script src="~/assets/js/vfs_fonts.js"></script>
     <script src="~/assets/js/custom.js"></script>
     <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+
+    <script>
+        const searchFun = () => {
+            let filter = document.getElementById('myInput').value.toUpperCase();
+            let myTable = document.getElementById('example');
+            let tr = myTable.getElementsByClassName('title');
+
+            for (let i = 0; i < tr.length; i++) {
+                let td = tr[i].getElementsByTagName('td')[0]; // Chọn cột trong class title (vd: cột đầu tiên)
+                if (td) {
+                    let textValue = td.textContent || td.innerHTML;
+                    if (textValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        };
+
+        document.getElementById('myInput').addEventListener('keyup', searchFun);
+
+    </script>
+
     <script>
         $(document).ready(function () {
+            // Ẩn tất cả các dòng con có class "expandable-content"
+            $('.expandable-content').hide();
+
             // Bắt sự kiện click trên icon xổ xuống
             $('.expandable-icon').on('click', function () {
-                // Tìm thẻ cha trực tiếp của icon (thẻ <td>)
-                var parentTd = $(this).closest('td');
-
-                // Tìm tất cả các thẻ con trực tiếp của thẻ cha (các dòng trong table)
-                var childRows = parentTd.closest('tr').nextUntil('tr:has(td[colspan="26"])');
+                // Các dòng con sẽ được ẩn/hiện
+                var childRows = $(this).closest('tr').nextUntil('tr:has(td[colspan="26"])');
 
                 // Toggle hiển thị/ẩn các dòng con
                 childRows.toggle();
@@ -1074,8 +1166,16 @@
                     $(this).html('arrow_drop_down');
                 }
             });
+
+            // Ẩn tất cả các dòng con khi trang được load
+            $('.expandable-icon').each(function () {
+                var childRows = $(this).closest('tr').nextUntil('tr:has(td[colspan="26"])');
+                childRows.hide();
+            });
         });
     </script>
+
+
 
 
 
