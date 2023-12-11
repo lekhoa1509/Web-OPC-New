@@ -1,13 +1,7 @@
 ﻿﻿﻿
 
 @{ ViewBag.Title = "BIÊN BẢN BÀN GIAO VÀ NGHIỆM THU HÀNG HÓA";
-    var fromDate = Request.Cookies["From_date"].Value;
-    var toDate = Request.Cookies["To_date"].Value;
-    var fromDateValue = DateTime.ParseExact(fromDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
-    var toDateValue = DateTime.ParseExact(toDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
-
-    var formattedFromDate = fromDateValue.ToString("dd/MM/yyyy");
-    var formattedToDate = toDateValue.ToString("dd/MM/yyyy");
+   
 }
 @using System.Data;
 @using System.Globalization;
@@ -396,18 +390,10 @@
                         <input class="den_ngay" id="den_ngay" placeholder=" Đến Ngày" name="To_date" type="DATE" format="YYYY-MM-DD" value="@Request.QueryString["To_date"]" /><br /><br />
                         <script>$("#den_ngay").datetimepicker({ timepicker: false, format: 'Y-m-d' });</script>
                     </div>
-                    <h6>Chọn đối tượng:</h6>
-                    <input type="text" id="dropdownInput" list="dropdownList" placeholder="Tìm kiếm đối tượng">
-                    <datalist id="dropdownList">
-                        @foreach (var item in ViewBag.DataItems)
-                        {
-                            <option value="@item.Ma_Dt" data-ten="@item.Ten_Dt" data-maDt="@item.Ma_Dt" data-diachi="@item.Dia_Chi" data-dvcs="@item.Dvcs" data-dvcs1="@item.Dvcs1">@item.Ten_Dt</option>
-                        }
-                    </datalist>
-                    <input type="hidden" name="Ma_Dt" id="selectedOption">
-                    <div>
-                            <button class="submit" type="submit"  id="runReportButton"onclick="nextPage();saveSelectedTime()"> Chạy Báo Cáo </button>
-                        </div>
+
+                    @*<div>
+                            <button class="submit" type="submit" onclick="runReport()"> Chạy Báo Cáo </button>
+                        </div>*@
                 </form>
             </li>
         </ul>
@@ -526,50 +512,7 @@
     <script src="~/assets/js/vfs_fonts.js"></script>
     <script src="~/assets/js/custom.js"></script>
 
-    <script>
-        document.getElementById("dropdownInput").addEventListener("input", function () {
-            var inputValue = this.value;
-            var options = document.querySelectorAll("#dropdownList option");
 
-            for (var i = 0; i < options.length; i++) {
-                if (options[i].getAttribute("value") === inputValue) {
-                    document.getElementById("selectedOption").value = inputValue;
-
-                    break;
-                }
-            }
-        });
-
-
-
-        document.addEventListener("DOMContentLoaded", function () {
-            var runReportButton = document.getElementById("runReportButton");
-
-            if (runReportButton) {
-                runReportButton.addEventListener("click", function () {
-                    var dropdownInput = document.getElementById("dropdownInput");
-                    var selectedOption = document.querySelector("#dropdownList option[value='" + dropdownInput.value + "']");
-
-
-                    if (selectedOption) {
-                        var maDt = selectedOption.getAttribute('data-maDt');
-                        var tenDt = selectedOption.getAttribute('data-ten');
-                        var diachi = selectedOption.getAttribute('data-diachi');
-                        document.cookie = 'Ma_Dt=' + maDt;
-                        document.cookie = 'Dia_Chi=' + diachi;
-                        document.cookie = 'Ten_DT=' + tenDt;
-                    } else {
-                        var selected = "";
-                        document.cookie = 'Ma_Dt=' + selected;
-                        document.cookie = 'Ten_DT=' + selected;
-                        document.cookie = 'Dia_Chi=' + selected;
-                    }
-                });
-            }
-        });
-
-
-    </script>
     <script>
 
         function saveSelectedTime() {
@@ -622,7 +565,8 @@
     <script>
 
         function runReport(url) {
-           
+            const spanElement = document.getElementById("spanText");
+            spanElement.style.display = "block";
             var selectedValue = document.cookie.replace(/(?:(?:^|.*;\s*)So_Ct\s*=\s*([^;]*).*$)|^.*$/, "$1");
 
             // Sử dụng AJAX để gửi giá trị lên controller

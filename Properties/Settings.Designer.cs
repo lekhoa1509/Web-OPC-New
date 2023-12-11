@@ -157,5 +157,14 @@ namespace web4.Properties {
                 return ((string)(this["Ma_DvCs_2"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Ten_Vt {
+            get {
+                return ((string)(this["Ten_Vt"]));
+            }
+        }
     }
 }

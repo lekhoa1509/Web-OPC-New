@@ -578,43 +578,105 @@
                         <input class="den_ngay" id="den_ngay" placeholder=" Đến Ngày" name="To_date" type="DATE" format="YYYY-MM-DD" value="@Request.QueryString["To_date"]" /><br /><br />
                         <script>$("#den_ngay").datetimepicker({ timepicker: false, format: 'Y-m-d' });</script>
                     </div>
-                    <h6>Chọn Đối Tượng</h6>
 
-                    <input type="text" id="dropdownInput" list="dropdownList" placeholder="Tìm kiếm đối tượng">
-                    <datalist id="dropdownList">
-                        @foreach (var item in ViewBag.DataItems)
-                        {
-                            <option value="@item.Ma_Dt" data-ten="@item.Ten_Dt" data-maDt="@item.Ma_Dt" data-dvcs="@item.Dvcs" data-dvcs1="@item.Dvcs1">@item.Ten_Dt</option>
-                        }
-                    </datalist>
-                    <input type="hidden" name="Ma_Dt" id="selectedOption"><br /><br />
-                    <a>Tìm TDV</a>
+                    <div class="checkContainer">
+                        <label class="custom-checkbox">
+                            <input type="checkbox" name="myCheckbox" value="option1" checked>
+                            <span class="checkmark"></span>
+                            STT
+                        </label>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" name="myCheckbox" value="option1" checked>
+                            <span class="checkmark"></span>
+                            Khách hàng
+                        </label>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" name="myCheckbox" value="option1" checked>
+                            <span class="checkmark"></span>
+                            Mã Đối Tượng
+                        </label>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" name="myCheckbox" value="option1" checked>
+                            <span class="checkmark"></span>
+                            Số Hóa Đơn
+                        </label>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" name="myCheckbox" value="option1" checked>
+                            <span class="checkmark"></span>
+                            Ngày Hóa Đơn
+                        </label>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" name="myCheckbox" value="option1" checked>
+                            <span class="checkmark"></span>
+                            Tiền Hóa Đơn
+                        </label>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" name="myCheckbox" value="option1" checked>
+                            <span class="checkmark"></span>
+                            Tiền Nộp
+                        </label>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" name="myCheckbox" value="option1" checked>
+                            <span class="checkmark"></span>
+                            Tiền Thu
+                        </label>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" name="myCheckbox" value="option1" checked>
+                            <span class="checkmark"></span>
+                            Số PMH
+                        </label>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" name="myCheckbox" value="option1" checked>
+                            <span class="checkmark"></span>
+                            Tiền PMH
+                        </label>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" name="myCheckbox" value="option1" checked>
+                            <span class="checkmark"></span>
+                            Số Phiếu Thu
+                        </label>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" name="myCheckbox" value="option1" checked>
+                            <span class="checkmark"></span>
+                            Ngày Phiếu Thu
+                        </label>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" name="myCheckbox" value="option1" checked>
+                            <span class="checkmark"></span>
+                            Diễn Giải
+                        </label>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" name="myCheckbox" value="option1" checked>
+                            <span class="checkmark"></span>
+                            Tên DvCs
+                        </label>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" name="myCheckbox" value="option1" checked>
+                            <span class="checkmark"></span>
+                            Tên CbNv
+                        </label>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" name="myCheckbox" value="option1" checked>
+                            <span class="checkmark"></span>
+                            Mã CbNv
+                        </label>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" name="myCheckbox" value="option1" checked>
+                            <span class="checkmark"></span>
+                            Mã TDV
+                        </label>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" name="myCheckbox" value="option1" checked>
+                            <span class="checkmark"></span>
+                            Mã NvGh
+                        </label>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" name="myCheckbox" value="option1" checked>
+                            <span class="checkmark"></span>
+                            Số Hợp Đồng
+                        </label>
+                    </div>
 
-
-
-                    <input type="text" id="dropdownInputTDV" list="dropdownListTDV" placeholder="Tìm kiếm TDV">
-                    <datalist id="dropdownListTDV">
-                        @foreach (var item in ViewBag.DataTDV)
-                        {
-                            <option value="@item.Ma_CbNv" data-Ma_CbNv="@item.Ma_CbNv">@*@item.Ma_CbNv*@ @item.hoten</option>
-                        }
-                    </datalist>
-                    <input type="hidden" name="Ma_TDV" id="selectedOptionTDV">
-
-
-                    @*<div class="select-btn" style="width:100px;margin-top:10px">
-                            <select id="dropdownMaTDV" class="select2" style="width: 200px" name="Ma_TDV" onchange="saveSelectedTDVValueToCookie()">
-                                <option value="">Chọn mã TDV</option>
-                                @if (ViewBag.DataTDV != null)
-                                {
-                                    foreach (var item in ViewBag.DataTDV)
-                                    {
-                                        <option value="@item.Ma_CbNv" data-hoten="@item.Ma_CbNv">@item.Ma_CbNv @item.hoten</option>
-                                    }
-                                }
-                            </select>
-
-                        </div>*@
                     <div>
                         <button class="submit" type="submit" id="runReportButton" onclick="runReport()">
                             Chạy Báo Cáo
@@ -696,124 +758,6 @@
     <script src="~/assets/js/pdfmake.min.js"></script>
     <script src="~/assets/js/vfs_fonts.js"></script>
     <script src="~/assets/js/custom.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $("#dropdownMaTDV").select2();
-        });
-    </script>
-  @*<script>
-      $(document).ready(function () {
-    var table = $('#example').DataTable({
-        dom: 'Bfrtip',
-        buttons: [
-            'excelHtml5'
-        ]
-    });
-
-    // Bắt sự kiện khi nút Excel được nhấn
-    table.on('buttons-action', function (e, buttonApi, dataTable, node, config) {
-        if (buttonApi.text() === 'Excel') {
-            // Đoạn mã xử lý khi nút Excel được nhấn
-            console.log('Nút xuất Excel đã được nhấn!');
-            // Thêm mã xử lý xuất Excel ở đây nếu cần
-        }
-    });
-});
-
-  </script>*@
-    @*<script>
-            document.addEventListener("DOMContentLoaded", function () {
-                var dropdownMaTDV = document.getElementById("dropdownMaTDV");
-
-                if (dropdownMaTDV) {
-                    dropdownMaTDV.addEventListener("change", function () {
-                        var selectedOption = dropdownMaTDV.options[dropdownMaTDV.selectedIndex];
-
-                        if (selectedOption) {
-                            var maTDV = selectedOption.value;
-                            document.cookie = 'Ma_TDV=' + maTDV;
-                        } else {
-                            var selected = "";
-                            document.cookie = 'Ma_TDV=' + selected;
-                        }
-                    });
-                }
-            });
-        </script>*@
-    <script>
-        document.getElementById("dropdownInput").addEventListener("input", function () {
-            var inputValue = this.value;
-            var options = document.querySelectorAll("#dropdownList option");
-
-            for (var i = 0; i < options.length; i++) {
-                if (options[i].getAttribute("value") === inputValue) {
-                    document.getElementById("selectedOption").value = inputValue;
-
-                    break;
-                }
-            }
-        });
-
-
-
-        document.addEventListener("DOMContentLoaded", function () {
-            var runReportButton = document.getElementById("runReportButton");
-
-            if (runReportButton) {
-                runReportButton.addEventListener("click", function () {
-                    var dropdownInput = document.getElementById("dropdownInput");
-                    var selectedOption = document.querySelector("#dropdownList option[value='" + dropdownInput.value + "']");
-
-                    if (selectedOption) {
-                        var tenDt = selectedOption.getAttribute('data-maDt');
-                        document.cookie = 'Ma_Dt=' + tenDt;
-                    } else {
-                        var selected = "";
-                        document.cookie = 'Ma_Dt=' + selected;
-                    }
-                });
-            }
-        });
-
-
-    </script>
-    <script>
-        document.getElementById("dropdownInputTDV").addEventListener("input", function () {
-            var inputValue = this.value;
-            var options = document.querySelectorAll("#dropdownListTDV option");
-
-            for (var i = 0; i < options.length; i++) {
-                if (options[i].getAttribute("value") === inputValue) {
-                    document.getElementById("selectedOptionTDV").value = inputValue;
-
-                    break;
-                }
-            }
-        });
-
-
-
-        document.addEventListener("DOMContentLoaded", function () {
-            var runReportButton = document.getElementById("runReportButton");
-
-            if (runReportButton) {
-                runReportButton.addEventListener("click", function () {
-                    var dropdownInput = document.getElementById("dropdownInputTDV");
-                    var selectedOption = document.querySelector("#dropdownListTDV option[value='" + dropdownInput.value + "']");
-
-                    if (selectedOption) {
-                        var MaTDV = selectedOption.getAttribute('data-Ma_CbNv');
-                        document.cookie = 'Ma_TDV=' + MaTDV;
-                    } else {
-                        var selected = "";
-                        document.cookie = 'Ma_TDV=' + selected;
-                    }
-                });
-            }
-        });
-
 
     </script>
     <script>

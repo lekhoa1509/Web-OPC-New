@@ -492,16 +492,43 @@
                         <input class="den_ngay" id="den_ngay" placeholder="Đến Ngày" name="To_date" type="date" format="YYYY-MM-DD" value="@Request.QueryString["To_date"]" /><br /><br />
                         <script>$("#den_ngay").datetimepicker({ timepicker: false, format: 'Y-m-d' });</script>
                     </div>
-                    <h6>Chọn Đối Tượng:</h6>
-                    <input type="text" id="dropdownInput" list="dropdownList" placeholder="Tìm kiếm đối tượng">
-                    <datalist id="dropdownList">
-                        @foreach (var item in ViewBag.DataItems)
-                        {
-                            <option value="@item.Ma_Dt" data-ten="@item.Ten_Dt" data-maDt="@item.Ma_Dt" data-diachi="@item.Dia_Chi" data-dvcs="@item.Dvcs" data-dvcs1="@item.Dvcs1">@item.Ten_Dt</option>
-                        }
-                    </datalist>
-                    <input type="hidden" name="Ma_Dt" id="selectedOption">
-                  
+                    <div class="select-btnDt" style="width:100px">
+                        <select id="dropdownDt" class="select2" style="width: 200px" name="Ma_DT" onchange="saveSelectedDTValueToCookie()">
+                            <option value="">Chọn Khách Hàng</option>
+                            @if (ViewBag.DataDt != null)
+                            {
+                                foreach (var item in ViewBag.DataDt) 
+                                {
+                                    <option value="@item.Ma_CbNv" data-hoten="@item.Ma_CbNv">@item.Ma_CbNv @item.hoten</option>
+                                }
+                            }
+                        </select>
+
+                    </div>
+                    @*<div class="select-btn" style="width:100px">
+                            <select name="Ma_Dvcs" id="maDvCsSelect" onchange="saveSelectedValueToCookie()">
+                                <option value="" style="background-color: #020024;color:white">Vui lòng chọn đối tượng</option>
+                                <option value="OPC_B1">Công Ty Cổ Phần Dược Phẩm OPC</option>
+                                <option value="OPC_B2">Nhà Máy Bình Dương</option>
+                                <option value="OPC_TP">CN Hồ Chí Minh</option>
+                                <option value="OPC_CT">CN Cần Thơ</option>
+                                <option value="OPC_TG">CN Tiền Giang</option>
+                                <option value="OPC_MD">CN Miền Đông</option>
+                                <option value="OPC_VT">CN Vũng Tàu</option>
+                                <option value="OPC_NT">CN Nha Trang</option>
+                                <option value="OPC_DN">CN Đà Nẵng</option>
+                                <option value="OPC_NA">CN Nghệ An</option>
+                                <option value="OPC_HN">CN Hà Nội</option>
+                            </select>
+                        </div>*@
+                    @*<div class="select-btn" style="width:100px;margin-top:20px"> 
+                            <select name="Loai_Ct" id="loaiCt" onchange="saveSelectedValueToLoaiCt()">
+                                <option style="background-color: #020024;color:white">Vui lòng chọn loại phiếu</option>
+                                <option value="1">Phiếu Xuất</option>
+                                <option value="0">Phiếu Nhập</option>
+
+                            </select>
+                        </div>*@
                     <div>
                         <button class="submit" type="submit" id="runReportButton"onclick="runReport();saveSelectedValueToCookie()"> Chạy Báo Cáo </button>
                     </div>
