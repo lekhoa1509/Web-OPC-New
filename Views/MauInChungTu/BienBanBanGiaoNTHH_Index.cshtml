@@ -1,9 +1,10 @@
 ﻿﻿﻿
 
 @{ ViewBag.Title = "BIÊN BẢN BÀN GIAO VÀ NGHIỆM THU HÀNG HÓA";
-
+   
 }
 @using System.Data;
+@using System.Globalization;
 <!DOCTYPE html>
 <html lang="en">
 
@@ -370,7 +371,7 @@
 </head>
 <!-- =============== Design & Develop By = MJ MARAZ   ====================== -->
 
-<body>
+<body style="background-color: #e0e8ee ">
     <div class="loader" style="z-index:1"></div>
     <span id="spanText" class="text-loading">[usp_DanhSachHoaDonBBBG_SAP]</span>
     <div class="sidebar">
@@ -389,28 +390,20 @@
                         <input class="den_ngay" id="den_ngay" placeholder=" Đến Ngày" name="To_date" type="DATE" format="YYYY-MM-DD" value="@Request.QueryString["To_date"]" /><br /><br />
                         <script>$("#den_ngay").datetimepicker({ timepicker: false, format: 'Y-m-d' });</script>
                     </div>
-                    <input type="text" id="dropdownInput" list="dropdownList" placeholder="Tìm kiếm danh mục">
-                    <datalist id="dropdownList">
-                        @foreach (var item in ViewBag.DataItems)
-                        {
-                            <option value="@item.Ma_Dt" data-ten="@item.Ten_Dt" data-maDt="@item.Ma_Dt" data-diachi="@item.Dia_Chi" data-dvcs="@item.Dvcs" data-dvcs1="@item.Dvcs1">@item.Ten_Dt</option>
-                        }
-                    </datalist>
-                    <input type="hidden" name="Ma_Dt" id="selectedOption">
-                    <div>
-                            <button class="submit" type="submit"  id="runReportButton"onclick="nextPage();saveSelectedTime()"> Chạy Báo Cáo </button>
-                        </div>
+
+                    @*<div>
+                            <button class="submit" type="submit" onclick="runReport()"> Chạy Báo Cáo </button>
+                        </div>*@
                 </form>
             </li>
         </ul>
     </div>
-
-    <header class="header_part">
+    <header class="header_part" style="background-color: #aec9e0; color: #3483bd ">
         <a href="/Home/About">
             <img src="~/assets/images/logo.png" alt="" class="img-fluid">
         </a>
-        <h4>BIÊN BẢN BÀN GIAO VÀ NGHIỆM THU HÀNG HÓA</h4>
-        <h5 style="color:white">Từ @Request.QueryString["From_date"] đến @Request.QueryString["To_date"]</h5>
+        <h4 style="color:#3483bd">BIÊN BẢN BÀN GIAO VÀ NGHIỆM THU HÀNG HÓA</h4>
+        <h5 style="color: #3483bd">Từ @formattedFromDate đến @formattedToDate</h5>
     </header>
     <!-- =======  Data-Table  = Start  ========================== -->
     <div class="container">
@@ -519,50 +512,7 @@
     <script src="~/assets/js/vfs_fonts.js"></script>
     <script src="~/assets/js/custom.js"></script>
 
-    <script>
-        document.getElementById("dropdownInput").addEventListener("input", function () {
-            var inputValue = this.value;
-            var options = document.querySelectorAll("#dropdownList option");
 
-            for (var i = 0; i < options.length; i++) {
-                if (options[i].getAttribute("value") === inputValue) {
-                    document.getElementById("selectedOption").value = inputValue;
-
-                    break;
-                }
-            }
-        });
-
-
-
-        document.addEventListener("DOMContentLoaded", function () {
-            var runReportButton = document.getElementById("runReportButton");
-
-            if (runReportButton) {
-                runReportButton.addEventListener("click", function () {
-                    var dropdownInput = document.getElementById("dropdownInput");
-                    var selectedOption = document.querySelector("#dropdownList option[value='" + dropdownInput.value + "']");
-
-
-                    if (selectedOption) {
-                        var maDt = selectedOption.getAttribute('data-maDt');
-                        var tenDt = selectedOption.getAttribute('data-ten');
-                        var diachi = selectedOption.getAttribute('data-diachi');
-                        document.cookie = 'Ma_Dt=' + maDt;
-                        document.cookie = 'Dia_Chi=' + diachi;
-                        document.cookie = 'Ten_DT=' + tenDt;
-                    } else {
-                        var selected = "";
-                        document.cookie = 'Ma_Dt=' + selected;
-                        document.cookie = 'Ten_DT=' + selected;
-                        document.cookie = 'Dia_Chi=' + selected;
-                    }
-                });
-            }
-        });
-
-
-    </script>
     <script>
 
         function saveSelectedTime() {
@@ -615,7 +565,8 @@
     <script>
 
         function runReport(url) {
-           
+            const spanElement = document.getElementById("spanText");
+            spanElement.style.display = "block";
             var selectedValue = document.cookie.replace(/(?:(?:^|.*;\s*)So_Ct\s*=\s*([^;]*).*$)|^.*$/, "$1");
 
             // Sử dụng AJAX để gửi giá trị lên controller

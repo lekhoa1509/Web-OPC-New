@@ -1,7 +1,16 @@
 ﻿﻿
 
-@{ ViewBag.Title = "Mẫu In Chứng Từ SO"; }
+@{ ViewBag.Title = "Mẫu In Chứng Từ SO";
+    var fromDate = Request.Cookies["From_date"].Value;
+    var toDate = Request.Cookies["To_date"].Value;
+    var fromDateValue = DateTime.ParseExact(fromDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+    var toDateValue = DateTime.ParseExact(toDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+
+    var formattedFromDate = fromDateValue.ToString("dd/MM/yyyy");
+    var formattedToDate = toDateValue.ToString("dd/MM/yyyy");
+}
 @using System.Data;
+@using System.Globalization;
 <!DOCTYPE html>
 <html lang="en">
 
@@ -368,7 +377,7 @@
 
 <body>
     <div class="loader" style="z-index:1"></div>
-    <span id="spanText" class="text-loading">[usp_MauInChungTu_SAP]</span>
+    <span id="spanText" class="text-loading">[[usp_MauInChungTuSO_SAP]</span>
     <div class="sidebar">
         <div class="logo-details">
 
@@ -399,7 +408,7 @@
             <img src="~/assets/images/logo.png" alt="" class="img-fluid">
         </a>
         <h4>Mẫu In Chứng Từ Phiếu Nhập</h4>
-        <h5 style="color:white">Từ @Request.QueryString["From_date"] đến @Request.QueryString["To_date"]</h5>
+        <h5 style="color:white">Từ @formattedFromDate đến @formattedToDate</h5>
     </header>
     <!-- =======  Data-Table  = Start  ========================== -->
     <div class="container">
@@ -421,7 +430,7 @@
                                 <th>Mã ĐT</th>
                                 <th>Tên ĐT</th>
                                 <th>In</th>
-                                
+
 
 
 
@@ -431,19 +440,19 @@
                         <tbody>
                             @foreach (DataRow row2 in Model.Tables[0].Rows)
                             {
-                            <tr class="table1-data" data-diachi="@row2["Dia_chi"]"
-                                data-tendt="@row2["Ten_dt"]" data-soct="@row2["So_Ct"]" data-ngay="@row2["ngay"]" data-thang="@row2["thang"]" data-nam="@row2["Nam"]">
-                                <td><span class="material-symbols-outlined expandable-icon">arrow_drop_down</span></td>
-                                <td>@row2["So_Ct"]</td>
-                                <td>@row2["ngay_ct"]</td>
-                                <td>@row2["Ma_dt"]</td>
-                                <td>@row2["Ten_Dt"]</td>
-                                <td><span class="material-symbols-outlined print-icon" onclick="openNewTab('@Url.Action("PhieuXuatKho_Fill", "MauInChungTu", new { So_Ct = row2["So_Ct"] })')">print</span></td>
+                                <tr class="table1-data" data-diachi="@row2["Dia_chi"]"
+                                    data-tendt="@row2["Ten_dt"]" data-soct="@row2["So_Ct"]" data-ngay="@row2["ngay"]" data-thang="@row2["thang"]" data-nam="@row2["Nam"]">
+                                    <td><span class="material-symbols-outlined expandable-icon">arrow_drop_down</span></td>
+                                    <td>@row2["So_Ct"]</td>
+                                    <td>@row2["ngay_ct"]</td>
+                                    <td>@row2["Ma_dt"]</td>
+                                    <td>@row2["Ten_Dt"]</td>
+                                    <td><span class="material-symbols-outlined print-icon" onclick="openNewTab('@Url.Action("PhieuXuatKho_Fill", "MauInChungTu", new { So_Ct = row2["So_Ct"] })')">print</span></td>
 
-                                <td style="display:none"></td>
-                                <td style="display:none"></td>
-                                <td style="display:none"></td>
-                            </tr>
+                                    <td style="display:none"></td>
+                                    <td style="display:none"></td>
+                                    <td style="display:none"></td>
+                                </tr>
                             }
 
 
@@ -457,7 +466,7 @@
                                     <td>@row3["Ten_vt"]</td>
                                     <td>@row3["Dvt"]</td>
                                     <td>@row3["so_luong"]</td>
-                                    
+
 
 
                                 </tr>
@@ -540,7 +549,7 @@
             // Chuyển hướng tới URL mới với các giá trị ngày đã chọn làm các tham số truy vấn
             window.location.href = actionUrl;
         });
-        
+
         // Add event listener for window load event
         window.addEventListener("load", () => {
             // Hide the loader after the page is loaded
@@ -595,7 +604,7 @@
                     document.cookie = `Nam=${nam}`;
                     document.cookie = `Ten_dt=${tendt}`;
                     document.cookie = `Dia_chi=${diachi}`;
-                /*    window.location.href = newUrl;*/
+                    /*    window.location.href = newUrl;*/
                 });
             });
         });

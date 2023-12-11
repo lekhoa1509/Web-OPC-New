@@ -409,7 +409,7 @@
         }
     </style>
 </head>
-<body>
+<body style="background-color: #e0e8ee ">
 
     <div class="forms-container">
         <ul class="nav-links" style="display: flex; justify-content: center;">
@@ -438,9 +438,11 @@
                         <a>Đối Tượng</a><br /><br />
                         <input type="text" id="dropdownInput" list="dropdownList" placeholder="Tìm kiếm danh mục">
                         <datalist id="dropdownList">
-                            @foreach (var item in ViewBag.DataItems)
-                            {
-                                <option value="@item.Ma_Dt" data-ten="@item.Ten_Dt" data-diachi="@item.Dia_Chi" data-dvcs="@item.Dvcs" data-dvcs1="@item.Dvcs1">@item.Ten_Dt</option>
+                            @{ var l = ViewBag.DataItems;
+                                foreach (var item in l)
+                                {
+                                    <option value="@item.Ma_Dt" data-ten="@item.Ten_Dt" data-diachi="@item.Dia_Chi" data-dvcs="@item.Dvcs" data-dvcs1="@item.Dvcs1">@item.Ten_Dt</option>
+                                }
                             }
                         </datalist>
                         <input type="hidden" name="Ma_Dt" id="selectedOption">
@@ -499,19 +501,19 @@
                     <h5 style="text-align: left">III. Số tiền khách hàng chưa thanh toán, tính đến cuối ngày: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;31/08/2023&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;là: 7.249.000 </h5>
                 </div>
                 <br />
-               <div>
-                   <h5 style="text-align: left;color:black">Số tiền bằng chữ là: Bảy triệu năm trăm ....... </h5>
-                   <h5 style="text-align: left;color:black">Chi tiết các hóa đơn chưa thanh toán: </h5>
+                <div>
+                    <h5 style="text-align: left;color:black">Số tiền bằng chữ là: Bảy triệu năm trăm ....... </h5>
+                    <h5 style="text-align: left;color:black">Chi tiết các hóa đơn chưa thanh toán: </h5>
                 </div>
-              
-               
+
+
 
                 <!--<div style="margin-left:-250px;text-align:left">
-    <h5>Đơn vị xuất hàng: Kho thành phẩm Cửa hàng Quận 10</h5>
-    <h5 style="margin-left:-5px">Địa chỉ: 134/1 Tô Hiến Thành, P15, Quận 10, TP.HCM</h5>-->
+                <h5>Đơn vị xuất hàng: Kho thành phẩm Cửa hàng Quận 10</h5>
+                <h5 style="margin-left:-5px">Địa chỉ: 134/1 Tô Hiến Thành, P15, Quận 10, TP.HCM</h5>-->
                 @*<h5 style="margin-left: 40px">Đơn vị nhận hàng:@Request.Cookies["Ten_dt"].Value</h5>*@
                 <!--<h5 style="margin-left: -120px">Diễn giải: Xuất hàng giao cho khách</h5>
-    </div>-->
+                </div>-->
 
 
                 <div style="margin-top:10px">
@@ -519,14 +521,14 @@
                         <tr style="font-size:10px;font-weight:bold;color:black">
                             <th style="padding:10px" rowspan="2">STT</th>
                             <th colspan="2">HÓA ĐƠN</th>
-                            
+
                             <th rowspan="2">SỐ TIỀN HD</th>
                             <th rowspan="2">GHI CHÚ</th>
 
                         </tr>
                         <th>Số</th>
                         <th>Ngày</th>
-                        
+
                         <tr>
                             <td></td>
                             <td></td>
@@ -538,16 +540,16 @@
                         <tbody>
 
                             @*@foreach (DataRow row3 in Model.Tables[1].Rows)
-            {
-                <tr class="table2-data hidden-row" data-soct="@row3["So_Ct"]">
+                                {
+                                    <tr class="table2-data hidden-row" data-soct="@row3["So_Ct"]">
 
 
-                    <td>@row3["so_Line_Id"]</td>
-                    <td>@row3["Ten_vt"]</td>
-                    <td>@row3["Dvt"]</td>
-                    <td>@row3["so_luong"]</td>
-                </tr>
-            }*@
+                                        <td>@row3["so_Line_Id"]</td>
+                                        <td>@row3["Ten_vt"]</td>
+                                        <td>@row3["Dvt"]</td>
+                                        <td>@row3["so_luong"]</td>
+                                    </tr>
+                                }*@
                         </tbody>
                         <tfoot>
                             <tr>
@@ -574,105 +576,128 @@
 
 
                     </div>
-                    
-        <div style="text-align:right;color:black">
-            <h5 style="text-align:right">Khánh Hòa, ngày 10 tháng 09 năm 2023</h5>
-        </div>
-              
+
+                    <div style="text-align:right;color:black">
+                        <h5 style="text-align:right">Khánh Hòa, ngày 10 tháng 09 năm 2023</h5>
+                    </div>
+
                     <div style="color:black;font-weight:bold">
-                     
+
                         <h5 style="text-align:left">ĐẠI DIỆN KHÁCH HÀNG</h5>
                         <h5 style="text-align:right;margin-top:-10px">
                             ĐẠI DIỆN CHI NHÁNH
                         </h5>
                     </div>
-               
+
 
             </form>
         </div>
-     </div>
-        <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    </div>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script>
+        // Function to delete a cookie by name
+        function deleteCookie(name) {
+            document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        }
 
-        <script>
-            document.getElementById("dropdownInput").addEventListener("input", function () {
-                var inputValue = this.value;
-                var options = document.querySelectorAll("#dropdownList option");
+        // Function to be executed when the page is fully loaded
+        document.addEventListener("DOMContentLoaded", function () {
+            // Call the deleteCookie function to remove the 'Ten_Dt' cookie
+            deleteCookie('Ten_Dt');
+        });
+    </script>
+    <script>
+        // Function to delete a cookie by name
+        function deleteCookie(name) {
+            document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        }
 
-                for (var i = 0; i < options.length; i++) {
-                    if (options[i].getAttribute("value") === inputValue) {
-                        document.getElementById("selectedOption").value = inputValue;
+        // Function to be executed when the page is fully loaded
+        document.addEventListener("DOMContentLoaded", function () {
+            // Call the deleteCookie function to remove the 'Ten_Dt' cookie
+            deleteCookie('Ten_Dt');
+        });
+    </script>
+    <script>
+        document.getElementById("dropdownInput").addEventListener("input", function () {
+            var inputValue = this.value;
+            var options = document.querySelectorAll("#dropdownList option");
 
-                        break;
+            for (var i = 0; i < options.length; i++) {
+                if (options[i].getAttribute("value") === inputValue) {
+                    document.getElementById("selectedOption").value = inputValue;
+
+                    break;
+                }
+            }
+        });
+
+
+
+        document.addEventListener("DOMContentLoaded", function () {
+            var runReportButton = document.getElementById("runReportButton");
+
+            if (runReportButton) {
+                runReportButton.addEventListener("click", function () {
+                    var dropdownInput = document.getElementById("dropdownInput");
+                    var selectedOption = document.querySelector("#dropdownList option[value='" + dropdownInput.value + "']");
+
+                    if (selectedOption) {
+                        var tenDt = selectedOption.getAttribute('data-ten');
+                        var selectedDiaChi = selectedOption.getAttribute('data-diachi');
+                        var selectedDvcs = selectedOption.getAttribute('data-Dvcs');
+                        var selectedDvcs1 = selectedOption.getAttribute('data-dvcs1');
+                        document.cookie = 'Ten_Dt=' + tenDt;
+                        document.cookie = 'Dia_Chi=' + selectedDiaChi;
+                        document.cookie = 'Dvcs=' + selectedDvcs;
+                        document.cookie = 'Dvcs1=' + selectedDvcs1;
                     }
-                }
-            });
-
-
-
-            document.addEventListener("DOMContentLoaded", function () {
-                var runReportButton = document.getElementById("runReportButton");
-
-                if (runReportButton) {
-                    runReportButton.addEventListener("click", function () {
-                        var dropdownInput = document.getElementById("dropdownInput");
-                        var selectedOption = document.querySelector("#dropdownList option[value='" + dropdownInput.value + "']");
-
-                        if (selectedOption) {
-                            var tenDt = selectedOption.getAttribute('data-ten');
-                            var selectedDiaChi = selectedOption.getAttribute('data-diachi');
-                            var selectedDvcs = selectedOption.getAttribute('data-Dvcs');
-                            var selectedDvcs1 = selectedOption.getAttribute('data-dvcs1');
-                            document.cookie = 'Ten_Dt=' + tenDt;
-                            document.cookie = 'Dia_Chi=' + selectedDiaChi;
-                            document.cookie = 'Dvcs=' + selectedDvcs;
-                            document.cookie = 'Dvcs1=' + selectedDvcs1;
-                        }
-                    });
-                }
-            });
-
-
-        </script>
-        <script>
-            // Set the "Từ Ngày" input to the first day of the current month
-            function setFirstDayOfCurrentMonth() {
-                const currentDate = new Date();
-                const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
-                const formattedDate = formatDate(firstDayOfMonth);
-
-                document.getElementById("tu_ngay").value = formattedDate;
+                });
             }
-            function setCurrentDate() {
-                const currentDate = new Date();
-                const formattedToDate = formatDate(currentDate);
-                document.getElementById("den_ngay").value = formattedToDate;
-            }
-            function setCurrentDateTT() {
-                const currentDate = new Date();
-                const formattedToDate = formatDate(currentDate);
-                document.getElementById("Ngay_TT").value = formattedToDate;
-            }
-            function setCurrentDateKy() {
-                const currentDate = new Date();
-                const formattedToDate = formatDate(currentDate);
-                document.getElementById("Ngay_Ky").value = formattedToDate;
-            }
-            // Format the date as "yyyy-mm-dd" for input type="date"
-            function formatDate(date) {
-                const year = date.getFullYear();
-                const month = (date.getMonth() + 1).toString().padStart(2, "0");
-                const day = date.getDate().toString().padStart(2, "0");
-                return `${year}-${month}-${day}`;
-            }
+        });
 
-            // Call the function to set the "Từ Ngày" input on page load
-            setFirstDayOfCurrentMonth();
-            setCurrentDate();
-            setCurrentDateKy();
-            setCurrentDateTT();
-        </script>
-        
-</body >
+
+    </script>
+    <script>
+        // Set the "Từ Ngày" input to the first day of the current month
+        function setFirstDayOfCurrentMonth() {
+            const currentDate = new Date();
+            const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+            const formattedDate = formatDate(firstDayOfMonth);
+
+            document.getElementById("tu_ngay").value = formattedDate;
+        }
+        function setCurrentDate() {
+            const currentDate = new Date();
+            const formattedToDate = formatDate(currentDate);
+            document.getElementById("den_ngay").value = formattedToDate;
+        }
+        function setCurrentDateTT() {
+            const currentDate = new Date();
+            const formattedToDate = formatDate(currentDate);
+            document.getElementById("Ngay_TT").value = formattedToDate;
+        }
+        function setCurrentDateKy() {
+            const currentDate = new Date();
+            const formattedToDate = formatDate(currentDate);
+            document.getElementById("Ngay_Ky").value = formattedToDate;
+        }
+        // Format the date as "yyyy-mm-dd" for input type="date"
+        function formatDate(date) {
+            const year = date.getFullYear();
+            const month = (date.getMonth() + 1).toString().padStart(2, "0");
+            const day = date.getDate().toString().padStart(2, "0");
+            return `${year}-${month}-${day}`;
+        }
+
+        // Call the function to set the "Từ Ngày" input on page load
+        setFirstDayOfCurrentMonth();
+        setCurrentDate();
+        setCurrentDateKy();
+        setCurrentDateTT();
+    </script>
+
+</body>
 
 </html >
 

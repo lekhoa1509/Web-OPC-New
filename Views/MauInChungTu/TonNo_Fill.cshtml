@@ -1,6 +1,6 @@
-﻿﻿﻿
+﻿﻿﻿﻿
 @{ ViewBag.Title = "Sổ Tồn Nợ Phải Thu";
-    var ma_TDV = Request.Cookies["Ma_CbNv"].Value;
+    var ma_TDV = Request.Cookies["Ma_TDV"].Value;
     var Ten_TDV = Request.Cookies["Ten_TDV"].Value;
     var DenNgay = Request.Cookies["To_date"].Value;
     DateTime ngay = DateTime.ParseExact(DenNgay, "yyyy-MM-dd", CultureInfo.InvariantCulture);
@@ -628,12 +628,11 @@
                                     <td>@row3["Ngay_Den_Han1"]</td>
                                     <td></td>
                                     <td>@row3["Ghi_Chu"]</td>
-                                    <td style="text-align:right">@string.Format("{0:#,###}", row3["Cong_No"])</td>
+                                    <td style="text-align:right">@string.Format("{0:#,###}", row3["Cong_No"]).Replace(",", ".")</td>
                                 </tr>
                                 stt++;
-                                string congNoString = row3["Cong_No"].ToString();
-                                // Gỡ bỏ dấu chấm (.) khỏi chuỗi
-                                congNoString = congNoString.Replace(".", "");
+                                var congnofirst = string.Format("{0:#,###}", row3["Cong_No"]);
+                                string congNoString = congnofirst.Replace(",", ""); // Gỡ bỏ dấu phẩy
 
                                 int congNo;
                                 if (int.TryParse(congNoString, out congNo))
@@ -641,9 +640,7 @@
                                     totalCongNo += congNo;
                                 }
 
-                                string totalCongNoString = totalCongNo.ToString();
-                                // Thay thế dấu phẩy bằng dấu chấm
-                                totalCongNoString = totalCongNoString.Replace(",", ".");
+                                string totalCongNoString = totalCongNo.ToString("N0", CultureInfo.InvariantCulture);
 
 
 
@@ -657,7 +654,7 @@
                             {
                                 <tr style="padding:5px">
                                     <td colspan="7" style="text-align:center;color:black;font-weight:bold">Tổng cộng:</td>
-                                    <td style="text-align:right;font-weight:bold;color:black">@string.Format("{0:n0}", totalCongNo.ToString("N0").Replace(",", "."))</td>
+                                    <td style="text-align:right;font-weight:bold;color:black">@totalCongNo.ToString("N0").Replace(",", ".")</td>
 
                                 </tr>
                             }
@@ -667,7 +664,7 @@
                                 <td colspan="7" style="color:black;font-weight:bold">TỔNG CÔNG NỢ:</td>
                                 @foreach (DataRow row2 in Model.Tables[1].Rows)
                                 {
-                                    <td style="text-align:right;font-weight:bold;color:black">@row2["Tong_CN"]</td>
+                                    <td style="text-align:right;font-weight:bold;color:black">@string.Format("{0:n0}", row2["Tong_CN"])</td>
 
                                 }
 

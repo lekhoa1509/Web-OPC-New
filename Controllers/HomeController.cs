@@ -58,9 +58,9 @@ namespace web4.Controllers
 
                 con.Close();
                 ViewBag.UserName = Acc.Name.ToString();
-                if(ViewBag.UserName == "Admin-cnct"||ViewBag.UserName =="Admin-cntg"||ViewBag.UserName == "Admin-cnmd" || ViewBag.UserName =="Admin-cnh1"||ViewBag.UserName =="Admin-cnvt"||ViewBag.UserName =="Admin-cnnt"||ViewBag.UserName=="Admin-cnna"||ViewBag.UserName=="Admin-cndn"||ViewBag.UserName =="Admin-cnhn")
+                if(ViewBag.UserName == "admin-cnct"||ViewBag.UserName =="admin-cntg"||ViewBag.UserName == "admin-cnmd" || ViewBag.UserName =="admin-cnh1"||ViewBag.UserName =="admin-cnvt"||ViewBag.UserName =="admin-cnnt"||ViewBag.UserName=="admin-cnna"||ViewBag.UserName=="admin-cndn"||ViewBag.UserName =="admin-cnhn")
                 {
-                    view = "AboutCN";
+                    view = "About1";
                 }
                 else
                 {
@@ -82,6 +82,8 @@ namespace web4.Controllers
         }
        public ActionResult About1()
         {
+            var username = Request.Cookies["UserName"].Value;
+            ViewBag.Username = username;
             return View();
         }
         public ActionResult About2()

@@ -1,4 +1,4 @@
-﻿
+﻿﻿
 @{ ViewBag.Title = "THEO DÕI HỢP ĐỒNG THẦU"; }
 @using System.Data;
 <!DOCTYPE html>
@@ -559,7 +559,7 @@
 </head>
 <!-- =============== Design & Develop By = MJ MARAZ   ====================== -->
 
-<body>
+<body style="background-color: #e0e8ee ">
     <div class="loader" style="z-index:1"></div>
 
     <div class="sidebar">
@@ -584,7 +584,8 @@
                             <option value="">Chọn Khách Hàng</option>
                             @if (ViewBag.DataDt != null)
                             {
-                                foreach (var item in ViewBag.DataDt)
+                                var listdt = ViewBag.DataDt;
+                                foreach (var item in listdt)
                                 {
                                     <option value="@item.Ma_CbNv" data-hoten="@item.Ma_CbNv">@item.Ma_CbNv @item.hoten</option>
                                 }
@@ -598,7 +599,8 @@
                             <option value="">Chọn mã TDV</option>
                             @if (ViewBag.DataTDV != null)
                             {
-                                foreach (var item in ViewBag.DataTDV)
+                                var list = ViewBag.DataTDV;
+                                foreach (var item in list)
                                 {
                                     <option value="@item.Ma_CbNv" data-hoten="@item.Ma_CbNv">@item.Ma_CbNv @item.hoten</option>
                                 }
@@ -623,12 +625,12 @@
                         </select>
                     </div>
                     <div>
-                        <button class="submit" type="button" id="xemTungHD" onclick="handleXemTungHD();">
+                        <button class="submit" type="button" id="xemTungHD" onclick="handleXemTungHD('@Url.Action("TheoDoiHopDongThau","TheoDoiHDThau")');">
                             Xem Từng HD
                         </button>
                     </div>
                     <div>
-                        <button class="submit" type="button" id="xemTatCa" onclick="handleXemTatCa();">
+                        <button class="submit" type="button" id="xemTatCa" onclick="handleXemTatCa('@Url.Action("TheoDoiHopDongThau_All","TheoDoiHDThau")');">
                             Xem Tất Cả
                         </button>
                     </div>
@@ -640,9 +642,9 @@
 
 
     <header class="header_part">
-        @if (Request.Cookies["UserName"].Value == "Admin-cnct" || Request.Cookies["UserName"].Value == "Admin-cntg" || Request.Cookies["UserName"].Value == "Admin-cnmd" || Request.Cookies["UserName"].Value == "Admin-cnh1" || Request.Cookies["UserName"].Value == "Admin-cnvt"
+        @*@if (Request.Cookies["UserName"].Value == "Admin-cnct" || Request.Cookies["UserName"].Value == "Admin-cntg" || Request.Cookies["UserName"].Value == "Admin-cnmd" || Request.Cookies["UserName"].Value == "Admin-cnh1" || Request.Cookies["UserName"].Value == "Admin-cnvt"
                           || Request.Cookies["UserName"].Value == "Admin-cnnt" || Request.Cookies["UserName"].Value == "Admin - cndn" || Request.Cookies["UserName"].Value == "Admin - cnna" || Request.Cookies["UserName"].Value == "Admin - cnhn")
-            {
+        {
 
 
 
@@ -655,7 +657,7 @@
                 <a href="/Home/About" style="cursor:pointer">
                     <img src="~/Images/opc.png" style="height:60px;width:60px;margin-left:10px">
                 </a>
-            }
+            }*@
         <h4>THEO DÕI HỢP ĐỒNG THẦU</h4>
     </header>
     <!-- =======  Data-Table  = Start  ========================== -->
@@ -701,7 +703,7 @@
     </div>
     <!-- =======  Data-Table  = End  ===================== -->
     <!-- ============ Java Script Files  ================== -->
-   
+
 
     <script src="~/assets/js/bootstrap.bundle.min.js"></script>
     <script src="~/assets/js/jquery-3.6.0.min.js"></script>
@@ -747,7 +749,7 @@
         });
     </script>
     <script>
-        function handleXemTungHD() {
+        function handleXemTungHD(actionUrl) {
             var select = document.getElementById("maDvCsSelect");
             var selectedValue = select.options[select.selectedIndex].value;
             var maDvcsCookieValue = "@Request.Cookies["MA_DVCS"].Value";
@@ -756,7 +758,7 @@
                 window.alert("Vui lòng chọn Đơn Vị Cơ Sở!");
                 return null;
             } else {
-                showLoader();
+               /* showLoader();*/
                 // Thực hiện các tác vụ cần thiết cho Xem Từng HD
                 runReport();
                 saveSelectedDTValueToCookie();
@@ -766,12 +768,15 @@
 
                 // Chuyển hướng đến action TheoDoiHopDongThau
                 document.getElementById("dateForm").action = "TheoDoiHopDongThau";
-                document.getElementById("dateForm").submit();
+               /* document.getElementById("dateForm").submit();*/
             }
+            var url = actionUrl;
+            var newWindow = window.open('', '_blank');
+            newWindow.location.href = url;
 
     }
 
-        function handleXemTatCa() {
+        function handleXemTatCa(actionUrl) {
             var select = document.getElementById("maDvCsSelect");
             var selectedValue = select.options[select.selectedIndex].value;
               var maDvcsCookieValue = "@Request.Cookies["MA_DVCS"].Value";
@@ -780,7 +785,7 @@
                 window.alert("Vui lòng chọn Đơn Vị Cơ Sở!");
                 return null;
             } else {
-                showLoader();
+              /*  showLoader();*/
                 // Thực hiện các tác vụ cần thiết cho Xem Tất Cả
                 runReport();
                 saveSelectedDTValueToCookie();
@@ -788,10 +793,12 @@
                 checkAndUpdateCookies();
                 saveNgay();
                 document.getElementById("dateForm").action = "TheoDoiHopDongThau_All";
-                document.getElementById("dateForm").submit();
+            /*    document.getElementById("dateForm").submit();*/
         // Chuyển hướng đến action TheoDoiHopDongThau_All
             }
-
+            var url = actionUrl;
+            var newWindow = window.open('', '_blank');
+            newWindow.location.href = url;
 
     }
     </script>
@@ -831,7 +838,7 @@
             } else if (selectedMaDvcsValue === "") {
                 document.cookie = "MA_DVCS=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
             }
-                
+
         }
 
     </script>
@@ -869,8 +876,8 @@
                 document.cookie = "Dvcs3=" + selectedValue + "; expires=" + new Date(Date.now() + 86400 * 1000).toUTCString();
             }
             // Lưu giá trị vào cookie với tên là "Dvcs3" và thời gian sống là 1 ngày (86400 giây)
-           
-      /*      document.cookie = "MA_DVCS=" + selectedValue + "; expires=" + new Date(Date.now() + 86400 * 1000).toUTCString();*/
+
+            /*      document.cookie = "MA_DVCS=" + selectedValue + "; expires=" + new Date(Date.now() + 86400 * 1000).toUTCString();*/
         }
     </script>
     <script>
@@ -943,8 +950,8 @@
             // Lưu trạng thái vào Local Storage
             localStorage.setItem('uncheckedCheckboxIndexes', JSON.stringify(uncheckedCheckboxIndexes));
             // Hiển thị thẻ span có id là "spanText"
-            const spanElement = document.getElementById("spanText");
-            spanElement.style.display = "block";
+            //const spanElement = document.getElementById("spanText");
+            //spanElement.style.display = "block";
         }
     </script>
     <script>

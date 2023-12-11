@@ -312,8 +312,13 @@
     <Compile Include="Controllers\BangKeHoaDonController.cs" />
     <Compile Include="Controllers\BangKeNopTienController.cs" />
     <Compile Include="Controllers\BaoCaoBanHangCNController.cs" />
+    <Compile Include="Controllers\BaoCaoBanHangCTVController.cs" />
     <Compile Include="Controllers\BaoCaoBanHangTDVController.cs" />
+    <Compile Include="Controllers\BaoCaoKetQuaKinhDoanhController.cs" />
+    <Compile Include="Controllers\CongNoChiTietController.cs" />
+    <Compile Include="Controllers\PhanTichBanHangController.cs" />
     <Compile Include="Controllers\PhieuKeToanController.cs" />
+    <Compile Include="Controllers\SoChiTietPhaiThuController.cs" />
     <Compile Include="Controllers\TheoDoiHDThauController.cs" />
     <Compile Include="Controllers\BaoCaoDoanhThuGamHangTheoDoiTuongController.cs" />
     <Compile Include="Controllers\BaoCaoHopDongController.cs" />
@@ -351,7 +356,7 @@
     <Content Include="assets\css\datatables.min.css" />
     <Content Include="assets\css\style.css" />
     <Content Include="assets\images\favicon.png" />
-    <Content Include="assets\images\logo.png" />
+    <Content Include="assets\images\Logo.png" />
     <Content Include="assets\js\ai.0.22.9-build00167.js" />
     <Content Include="assets\js\ai.0.22.9-build00167.min.js" />
     <Content Include="assets\js\bootstrap.bundle.min.js" />
@@ -1081,9 +1086,6 @@
     <Content Include="Views\PhieuKeToan\PhieuKeToan.cshtml" />
     <Content Include="Views\MauInChungTu\PhieuNhapXNTT_Index.cshtml" />
     <Content Include="Views\BangKeNopTien\BangKeNopTien_Fill.cshtml" />
-    <Content Include="Views\MauInChungTu\BienBanBanGiaoNTHH_Fill.cshtml" />
-    <Content Include="Views\MauInChungTu\BienBanBanGiaoNTHH_Index.cshtml" />
-    <Content Include="Views\BangKeNopTien\BangKeNopTien.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

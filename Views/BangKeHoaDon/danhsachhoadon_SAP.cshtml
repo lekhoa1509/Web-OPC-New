@@ -491,11 +491,11 @@
 
 <body>
     @*<div class="tab-control" style="position:fixed;bottom:50px">
-        <ul class="tabs" style="background-color: #1d1b31">
-            <li class="tab selected"><a href="/Home/About" style="padding-right:5px">Home</a></li>
+            <ul class="tabs" style="background-color: #1d1b31">
+                <li class="tab selected"><a href="/Home/About" style="padding-right:5px">Home</a></li>
 
-        </ul>
-    </div>*@
+            </ul>
+        </div>*@
     <div class="loader" style="z-index:1"></div>
     <span id="spanText" class="text-loading">[usp_DanhSachHoaDon_SAP]</span>
     <div class="sidebar">
@@ -514,82 +514,53 @@
                         <input class="den_ngay" id="den_ngay" placeholder=" Đến Ngày" name="To_date" type="DATE" format="YYYY-MM-DD" value="@Request.QueryString["To_date"]" /><br /><br />
                         <script>$("#den_ngay").datetimepicker({ timepicker: false, format: 'Y-m-d' });</script>
                     </div>
+                    <h6>Chọn Đối Tượng</h6>
 
-                    <div class="checkContainer">
-                        <label class="custom-checkbox">
-                            <input type="checkbox" name="myCheckbox" value="option1" checked>
-                            <span class="checkmark"></span>
-                            Ngày Chứng Từ
-                        </label>
-                        <label class="custom-checkbox">
-                            <input type="checkbox" name="myCheckbox" value="option1" checked>
-                            <span class="checkmark"></span>
-                            Số Chứng Từ
-                        </label>
-                        <label class="custom-checkbox">
-                            <input type="checkbox" name="myCheckbox" value="option1" checked>
-                            <span class="checkmark"></span>
-                            Mã Đối Tượng
-                        </label>
-                        <label class="custom-checkbox">
-                            <input type="checkbox" name="myCheckbox" value="option1" checked>
-                            <span class="checkmark"></span>
-                            Tên Đối Tượng
-                        </label>
-                        <label class="custom-checkbox">
-                            <input type="checkbox" name="myCheckbox" value="option1" checked>
-                            <span class="checkmark"></span>
-                            Mã Vật Tư
-                        </label>
-                        <label class="custom-checkbox">
-                            <input type="checkbox" name="myCheckbox" value="option1" checked>
-                            <span class="checkmark"></span>
-                            Tên Vật Tư
-                        </label>
-                        <label class="custom-checkbox">
-                            <input type="checkbox" name="myCheckbox" value="option1" checked>
-                            <span class="checkmark"></span>
-                            Mã KM
-                        </label>
-                        <label class="custom-checkbox">
-                            <input type="checkbox" name="myCheckbox" value="option1" checked>
-                            <span class="checkmark"></span>
-                            Discount
-                        </label>
-                        <label class="custom-checkbox">
-                            <input type="checkbox" name="myCheckbox" value="option1" checked>
-                            <span class="checkmark"></span>
-                            Loại Vật Tư
-                        </label>
-                        <label class="custom-checkbox">
-                            <input type="checkbox" name="myCheckbox" value="option1" checked>
-                            <span class="checkmark"></span>
-                            Số Lượng
-                        </label>
-                        <label class="custom-checkbox">
-                            <input type="checkbox" name="myCheckbox" value="option1" checked>
-                            <span class="checkmark"></span>
-                            Tiền(-VAT)
-                        </label>
-                        <label class="custom-checkbox">
-                            <input type="checkbox" name="myCheckbox" value="option1" checked>
-                            <span class="checkmark"></span>
-                            Tiền(+VAT)
-                        </label>
-                        <label class="custom-checkbox">
-                            <input type="checkbox" name="myCheckbox" value="option1" checked>
-                            <span class="checkmark"></span>
-                            Tình Trạng
-                        </label>
-                        <label class="custom-checkbox">
-                            <input type="checkbox" name="myCheckbox" value="option1" checked>
-                            <span class="checkmark"></span>
-                            Mã DVCS
-                        </label>
-                    </div>
+                    <input type="text" id="dropdownInput" list="dropdownList" placeholder="Tìm kiếm đối tượng">
+                    <datalist id="dropdownList">
+                        @foreach (var item in ViewBag.DataItems)
+                        {
+                            <option value="@item.Ma_Dt" data-ten="@item.Ten_Dt" data-maDt="@item.Ma_Dt" data-dvcs="@item.Dvcs" data-dvcs1="@item.Dvcs1">@item.Ten_Dt</option>
+                        }
+                    </datalist>
+                    <input type="hidden" name="Ma_Dt" id="selectedOption">
+                    <a>Tìm TDV</a>
+
+
+
+                    <input type="text" id="dropdownInputTDV" list="dropdownListTDV" placeholder="Tìm kiếm TDV">
+                    <datalist id="dropdownListTDV">
+                        @foreach (var item in ViewBag.DataTDV)
+                        {
+                            <option value="@item.Ma_CbNv" data-Ma_CbNv="@item.Ma_CbNv">@*@item.Ma_CbNv*@ @item.hoten</option>
+                        }
+                    </datalist>
+                    <input type="hidden" name="Ma_TDV" id="selectedOptionTDV">
+                    <a>Tìm Vật Tư</a>
+                    <input type="text" id="dropdownInputVT" list="dropdownListVT" placeholder="Tìm kiếm Vật Tư">
+                    <datalist id="dropdownListVT">
+                        @foreach (var item in ViewBag.DataVT)
+                        {
+                            <option value="@item.Ma_Vt" data-TenVt="@item.Ten_Vt" data-maVT="@item.Ma_Vt">@item.Ten_Vt</option>
+                        }
+                    </datalist>
+                    <input type="hidden" name="Ma_Vt" id="selectedOptionVT">
+                    <!--<h6>Chọn đơn vị bán hàng:</h6>
+                    <div class="select-btn" style="width:80px;margin-top:10px;">
+                        <select name="Ma_Dvcs" id="maDvCsSelect" onchange="saveSelectedValueToCookie()" style="width:150px">
+                            <option value="" style="background-color: #020024;color:white">Đơn Vị Bán Hàng</option>-->
+                    @*<option value="OPC_B1">Công Ty Cổ Phần Dược Phẩm OPC</option>*@
+                    <!--<option value="OPC_HN_04">CPC1</option>
+                            <option value="OPC_DN_03">OPC2</option>
+                            <option value="OPC_TP_03">Cửa hàng Phú Lâm</option>
+                            <option value="OPC_TP_04">Cửa hàng Phùng Hưng</option>
+                            <option value="OPC_TP_05">Cửa hàng Online HCM</option>
+
+                        </select>
+                    </div>-->
 
                     <div>
-                        <button class="submit" type="submit" onclick="runReport()"> Chạy Báo Cáo </button>
+                        <button class="submit" type="submit" id="runReportButton" onclick="runReport()"> Chạy Báo Cáo </button>
                     </div>
 
                 </form>
@@ -631,10 +602,12 @@
                                 <th>Tên Đối Tượng</th>
                                 <th>Mã Vt</th>
                                 <th>Tên Vật Tư</th>
-
+                                <th>Mã KM</th>
+                                <th>Mã TDV</th>
+                                <th>Tên TDV</th>
                                 <th>Discount</th>
                                 <th>Loại vật Tư</th>
-                             
+
                                 <th>DVT</th>
                                 <th>Số Lượng Xuất Theo HĐ</th>
                                 <th>ĐVT HĐ</th>
@@ -653,34 +626,54 @@
                         <tbody>
                             @foreach (DataRow row2 in Model.Tables[1].Rows)
                             {
-                            <tr>
-                                <td style="text-align:right">@row2["Ngay_Ct"]</td>
-                                <td style="text-align:right">@row2["so_ct"]</td>
-                                <td style="text-align:right">@row2["ma_dt"]</td>
-                                <td>@row2["ten_dt"]</td>
-                                <td style="text-align:right">@row2["ma_vt"]</td>
-                                <td>@row2["ten_vt"]</td>
+                                <tr>
+                                    <td style="text-align:right">@row2["Ngay_Ct1"]</td>
+                                    <td style="text-align:right">@row2["so_ct"]</td>
+                                    <td style="text-align:right">@row2["ma_dt"]</td>
+                                    <td>@row2["ten_dt"]</td>
+                                    <td style="text-align:right">@row2["ma_vt"]</td>
+                                    <td>@row2["ten_vt"]</td>
+                                    <td>@row2["ma_km"]</td>
+                                    <td>@row2["Ma_TDV"]</td>
+                                    <td>@row2["ten_tdv"]</td>
+                                    <td style="text-align:right">@row2["Discount"]%</td>
+                                    <td>@row2["Loai_Vt"]</td>
+                                    <td style="text-align:right">@row2["DVT"]</td>
+                                    <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["so_luong_HD"]))</td>
+                                    <td style="text-align:right">@row2["DVT_HD"]</td>
+                                    <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Tien"])).Replace(".", ",")</td>
+                                    <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Tong_tien"])).Replace(".", ",")</td>
+                                    <td style="text-align:right">@row2["so_HDDT"]</td>
+                                    <td style="text-align:right">@row2["Ngay_HDDT"]</td>
+                                    <td style="text-align:right">@row2["kho_xuat"]</td>
+                                    <td style="text-align:right">@row2["so_lo"]</td>
+                                    <td style="text-align:right">@row2["Han_Dung"]</td>
+                                    <td style="text-align:right">@row2["kenh"]</td>
+                                    <td>@row2["Trang_Thai"]</td>
 
-                                <td style="text-align:right">@row2["Discount"]%</td>
-                                <td>@row2["Loai_Vt"]</td>
-                                <td style="text-align:right">@row2["DVT"]</td>
-                                <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["so_luong_HD"]))</td>
-                                <td style="text-align:right">@row2["DVT_HD"]</td>
-                                <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Tien"]))</td>
-                                <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Tong_tien"]))</td>
-                                <td style="text-align:right">@row2["so_HDDT"]</td>
-                                <td style="text-align:right">@row2["Ngay_HDDT"]</td>
-                                <td style="text-align:right">@row2["kho_xuat"]</td>
-                                <td style="text-align:right">@row2["so_lo"]</td>
-                                <td style="text-align:right">@row2["Han_Dung"]</td>
-                                <td style="text-align:right">@row2["kenh"]</td>
-                                <td>@row2["Trang_Thai"]</td>
-
-                            </tr>
+                                </tr>
                             }
 
 
                         </tbody>
+                        <tfoot>
+                            @foreach (DataRow row in Model.Tables[1].Rows)
+                            {
+                                <tr style="background-color: burlywood">
+                                    <td colspan="14" style="font-weight:bold">Tổng cộng:</td>
+                                    <td>@row["Tong_Truoc_Thue"]</td>
+                                    <td>@row["Tong_Sau_Thue"]</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+
+                                </tr>
+                            }
+                            </tfoot>
                     </table>
                 </div>
             </div>
@@ -696,7 +689,134 @@
     <script src="~/assets/js/pdfmake.min.js"></script>
     <script src="~/assets/js/vfs_fonts.js"></script>
     <script src="~/assets/js/custom.js"></script>
+    @*<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>*@
+   
+
     <script>
+        document.getElementById("dropdownInput").addEventListener("input", function () {
+            var inputValue = this.value;
+            var options = document.querySelectorAll("#dropdownList option");
+
+            for (var i = 0; i < options.length; i++) {
+                if (options[i].getAttribute("value") === inputValue) {
+                    document.getElementById("selectedOption").value = inputValue;
+
+                    break;
+                }
+            }
+        });
+
+
+
+        document.addEventListener("DOMContentLoaded", function () {
+            var runReportButton = document.getElementById("runReportButton");
+
+            if (runReportButton) {
+                runReportButton.addEventListener("click", function () {
+                    var dropdownInput = document.getElementById("dropdownInput");
+                    var selectedOption = document.querySelector("#dropdownList option[value='" + dropdownInput.value + "']");
+
+                    if (selectedOption) {
+                        var tenDt = selectedOption.getAttribute('data-maDt');
+                        document.cookie = 'Ma_Dt=' + tenDt;
+                    } else {
+                        var selected = "";
+                        document.cookie = 'Ma_Dt=' + selected;
+                    }
+                });
+            }
+        });
+
+
+    </script>
+
+    <script>
+        document.getElementById("dropdownInputVT").addEventListener("input", function () {
+            var inputValue = this.value;
+            var options = document.querySelectorAll("#dropdownList option");
+
+            for (var i = 0; i < options.length; i++) {
+                if (options[i].getAttribute("value") === inputValue) {
+                    document.getElementById("selectedOption").value = inputValue;
+
+                    break;
+                }
+            }
+        });
+
+
+
+        document.addEventListener("DOMContentLoaded", function () {
+            var runReportButton = document.getElementById("runReportButton");
+
+            if (runReportButton) {
+                runReportButton.addEventListener("click", function () {
+                    var dropdownInput = document.getElementById("dropdownInputVT");
+                    var selectedOption = document.querySelector("#dropdownListVT option[value='" + dropdownInput.value + "']");
+
+                    if (selectedOption) {
+                        var tenDt = selectedOption.getAttribute('data-maVT');
+                        document.cookie = 'Ma_Vt=' + tenDt;
+                    } else {
+                        var selected = "";
+                        document.cookie = 'Ma_Vt=' + selected;
+                    }
+                });
+            }
+        });
+
+
+    </script>
+    <script>
+        document.getElementById("dropdownInputTDV").addEventListener("input", function () {
+            var inputValue = this.value;
+            var options = document.querySelectorAll("#dropdownListTDV option");
+
+            for (var i = 0; i < options.length; i++) {
+                if (options[i].getAttribute("value") === inputValue) {
+                    document.getElementById("selectedOptionTDV").value = inputValue;
+
+                    break;
+                }
+            }
+        });
+
+
+
+        document.addEventListener("DOMContentLoaded", function () {
+            var runReportButton = document.getElementById("runReportButton");
+
+            if (runReportButton) {
+                runReportButton.addEventListener("click", function () {
+                    var dropdownInput = document.getElementById("dropdownInputTDV");
+                    var selectedOption = document.querySelector("#dropdownListTDV option[value='" + dropdownInput.value + "']");
+
+                    if (selectedOption) {
+                        var MaTDV = selectedOption.getAttribute('data-Ma_CbNv');
+                        document.cookie = 'Ma_TDV=' + MaTDV;
+                    } else {
+                        var selected = "";
+                        document.cookie = 'Ma_TDV=' + selected;
+                    }
+                });
+            }
+        });
+
+
+    </script>
+    <script>
+        function saveSelectedValueToCookie() {
+            var select = document.getElementById("maDvCsSelect");
+            var selectedValue = select.options[select.selectedIndex].value;
+            if (selectedValue === "") {
+                // Hiển thị hộp thoại cảnh báo nếu không có giá trị được chọn
+                window.alert("Vui lòng chọn một giá trị trong dropdown.");
+            } else {
+                // Cập nhật cookie với giá trị đã chọn
+                document.cookie = "Ma_DvBh=" + selectedValue + "; expires=" + new Date(Date.now() + 86400 * 1000).toUTCString();
+            }
+
+        }
         function runReport() {
             const uncheckedCheckboxIndexes = [];
             const checkboxes = document.querySelectorAll('input[name="myCheckbox"]');
@@ -847,9 +967,9 @@
                 const newTab = document.createElement("li");
                 newTab.classList.add("tab", "selected");
                 newTab.innerHTML = `
-                                                                                <a href="${tabHref}">${tabTitle}</a>
-                                                                                <a class="closeTab" href="">✕</a>
-                                                                            `;
+                                                                                            <a href="${tabHref}">${tabTitle}</a>
+                                                                                            <a class="closeTab" href="">✕</a>
+                                                                                        `;
                 tabControlTabs.appendChild(newTab);
 
                 // Sự kiện khi người dùng nhấp vào nút đóng tab
@@ -1071,9 +1191,9 @@
                 const newTab = document.createElement("li");
                 newTab.classList.add("tab", "selected");
                 newTab.innerHTML = `
-                                                <a href="${subMenuLinkHref}">${tabTitle}</a>
-                                                <a class="closeTab" href="">✕</a>
-                                            `;
+                                                            <a href="${subMenuLinkHref}">${tabTitle}</a>
+                                                            <a class="closeTab" href="">✕</a>
+                                                        `;
                 tabControlTabs.appendChild(newTab);
 
                 // Chuyển view tới thẻ li tương ứng
@@ -1119,9 +1239,9 @@
                 const newTab = document.createElement("li");
                 newTab.classList.add("tab", "selected");
                 newTab.innerHTML = `
-                                        <a href="${subMenuLinkHref}">${tabTitle}</a>
-                                        <a class="closeTab" href="">✕</a>
-                                    `;
+                                                    <a href="${subMenuLinkHref}">${tabTitle}</a>
+                                                    <a class="closeTab" href="">✕</a>
+                                                `;
                 tabControlTabs.appendChild(newTab);
 
                 // Chuyển view tới thẻ li tương ứng
