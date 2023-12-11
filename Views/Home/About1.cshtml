@@ -407,14 +407,21 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                                                       )">1.Doanh Thu Chi Nhánh</a>
                                             </li>
                                         }
-                                        else
+                                        else if ((string.Equals(ViewBag.UserName, "admin-cnct", StringComparison.OrdinalIgnoreCase)) || (string.Equals(ViewBag.UserName, "admin-cntg", StringComparison.OrdinalIgnoreCase)) || (string.Equals(ViewBag.UserName, "admin-cnmd", StringComparison.OrdinalIgnoreCase)) || (string.Equals(ViewBag.UserName, "admin-cnh1", StringComparison.OrdinalIgnoreCase)) || (string.Equals(ViewBag.UserName, "admin-cnvt", StringComparison.OrdinalIgnoreCase)) || (string.Equals(ViewBag.UserName, "admin-cnnt", StringComparison.OrdinalIgnoreCase)) || (string.Equals(ViewBag.UserName, "admin-cnna", StringComparison.OrdinalIgnoreCase)) || (string.Equals(ViewBag.UserName, "admin-cndn", StringComparison.OrdinalIgnoreCase)) || (string.Equals(ViewBag.UserName, "admin-cnhn", StringComparison.OrdinalIgnoreCase)))
                                         {
-                                            <li style=" list-style-type: none;" class="liTitle">
+                                            <li hidden style="list-style-type: none;" class="liTitle">
                                                 <a href="" onclick="runReport('@Url.Action("DoanhThuChiNhanhKGam_CN_Fill", "DoanhThuChiNhanh")'
                                                       )">1.Doanh Thu Chi Nhánh</a>
                                             </li>
                                         }
-                                    </td>
+                                         else
+                                      {
+                                    <li  style="list-style-type: none;" class="liTitle">
+                                        <a href="" onclick="runReport('@Url.Action("DoanhThuChiNhanhKGam_CN_Fill", "DoanhThuChiNhanh")'
+                                                      )">1.Doanh Thu Chi Nhánh</a>
+                                    </li>
+                                           }
+                                      </td>
                                 </tr>
                                 <tr style="height:30px">
                                     <td style="text-align: left">
@@ -423,6 +430,13 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                                         {
                                             <li style=" list-style-type: none;" class="liTitle">
                                                 <a href="" onclick="runReport('@Url.Action("DoanhThuChiNhanh_Admin_Fill", "DoanhThuChiNhanh")'
+                                                      )">2.Doanh Thu Chi Nhánh Theo Gam</a>
+                                            </li>
+                                        }
+                                        else if ((string.Equals(ViewBag.UserName, "admin-cnct", StringComparison.OrdinalIgnoreCase)) || (string.Equals(ViewBag.UserName, "admin-cntg", StringComparison.OrdinalIgnoreCase)) || (string.Equals(ViewBag.UserName, "admin-cnmd", StringComparison.OrdinalIgnoreCase)) || (string.Equals(ViewBag.UserName, "admin-cnh1", StringComparison.OrdinalIgnoreCase)) || (string.Equals(ViewBag.UserName, "admin-cnvt", StringComparison.OrdinalIgnoreCase)) || (string.Equals(ViewBag.UserName, "admin-cnnt", StringComparison.OrdinalIgnoreCase)) || (string.Equals(ViewBag.UserName, "admin-cnna", StringComparison.OrdinalIgnoreCase)) || (string.Equals(ViewBag.UserName, "admin-cndn", StringComparison.OrdinalIgnoreCase)) || (string.Equals(ViewBag.UserName, "admin-cnhn", StringComparison.OrdinalIgnoreCase)))
+                                        {
+                                            <li hidden style="list-style-type: none;" class="liTitle">
+                                                <a href="" onclick="runReport('@Url.Action("DoanhThuChiNhanh_Fill", "DoanhThuChiNhanh")'
                                                       )">2.Doanh Thu Chi Nhánh Theo Gam</a>
                                             </li>
                                         }
@@ -437,18 +451,38 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                                 </tr>
                                 <tr style="height:30px">
                                     <td style="text-align: left">
-                                        <li style=" list-style-type: none;" class="liTitle">
-                                            <a href="" onclick="runReport('@Url.Action("DoanhThuChiNhanhTinhLuong_Fill", "DoanhThuChiNhanh")'
+                                        @if ((string.Equals(ViewBag.UserName, "admin-cnct", StringComparison.OrdinalIgnoreCase)) || (string.Equals(ViewBag.UserName, "admin-cntg", StringComparison.OrdinalIgnoreCase)) || (string.Equals(ViewBag.UserName, "admin-cnmd", StringComparison.OrdinalIgnoreCase)) || (string.Equals(ViewBag.UserName, "admin-cnh1", StringComparison.OrdinalIgnoreCase)) || (string.Equals(ViewBag.UserName, "admin-cnvt", StringComparison.OrdinalIgnoreCase)) || (string.Equals(ViewBag.UserName, "admin-cnnt", StringComparison.OrdinalIgnoreCase)) || (string.Equals(ViewBag.UserName, "admin-cnna", StringComparison.OrdinalIgnoreCase)) || (string.Equals(ViewBag.UserName, "admin-cndn", StringComparison.OrdinalIgnoreCase)) || (string.Equals(ViewBag.UserName, "admin-cnhn", StringComparison.OrdinalIgnoreCase)))
+                                        {
+                                            <li hidden style=" list-style-type: none;" class="liTitle">
+                                                <a href="" onclick="runReport('@Url.Action("DoanhThuChiNhanhTinhLuong_Fill", "DoanhThuChiNhanh")'
                                                       )">3.Doanh Thu Chi Nhánh Tính Lương</a>
-                                        </li>
+                                            </li>
+                                        }
+                                        else
+                                        {
+                                            <li style=" list-style-type: none;" class="liTitle">
+                                                <a href="" onclick="runReport('@Url.Action("DoanhThuChiNhanhTinhLuong_Fill", "DoanhThuChiNhanh")'
+                                                      )">3.Doanh Thu Chi Nhánh Tính Lương</a>
+                                            </li>
+                                        }
                                     </td>
                                 </tr>
                                 <tr style="height:30px">
                                     <td style="text-align: left">
-                                        <li style=" list-style-type: none;" class="liTitle">
-                                            <a href="" onclick="runReport('@Url.Action("BaoCaoKetQuaKinhDoanh_Fill", "BaoCaoKetQuaKinhDoanh")'
+                                        @if ((string.Equals(ViewBag.UserName, "admin-cnct", StringComparison.OrdinalIgnoreCase)) || (string.Equals(ViewBag.UserName, "admin-cntg", StringComparison.OrdinalIgnoreCase)) || (string.Equals(ViewBag.UserName, "admin-cnmd", StringComparison.OrdinalIgnoreCase)) || (string.Equals(ViewBag.UserName, "admin-cnh1", StringComparison.OrdinalIgnoreCase)) || (string.Equals(ViewBag.UserName, "admin-cnvt", StringComparison.OrdinalIgnoreCase)) || (string.Equals(ViewBag.UserName, "admin-cnnt", StringComparison.OrdinalIgnoreCase)) || (string.Equals(ViewBag.UserName, "admin-cnna", StringComparison.OrdinalIgnoreCase)) || (string.Equals(ViewBag.UserName, "admin-cndn", StringComparison.OrdinalIgnoreCase)) || (string.Equals(ViewBag.UserName, "admin-cnhn", StringComparison.OrdinalIgnoreCase)))
+                                        {
+                                            <li style=" list-style-type: none;" class="liTitle">
+                                                <a href="" onclick="runReport('@Url.Action("BaoCaoKetQuaKinhDoanh_Fill", "BaoCaoKetQuaKinhDoanh")'
+                                                      )">1.Báo Cáo Kết Quả Kinh Doanh</a>
+                                            </li>
+                                        }
+            else
+            {
+                                    <li style=" list-style-type: none;" class="liTitle">
+                                        <a href="" onclick="runReport('@Url.Action("BaoCaoKetQuaKinhDoanh_Fill", "BaoCaoKetQuaKinhDoanh")'
                                                       )">4.Báo Cáo Kết Quả Kinh Doanh</a>
-                                        </li>
+                                    </li>
+            }
                                     </td>
                                 </tr>
                             </tbody>

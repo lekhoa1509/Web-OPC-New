@@ -58,7 +58,7 @@ namespace web4.Controllers
 
                 con.Close();
                 ViewBag.UserName = Acc.Name.ToString();
-                if(ViewBag.UserName == "admin-cnct"||ViewBag.UserName =="admin-cntg"||ViewBag.UserName == "admin-cnmd" || ViewBag.UserName =="admin-cnh1"||ViewBag.UserName =="admin-cnvt"||ViewBag.UserName =="admin-cnnt"||ViewBag.UserName=="admin-cnna"||ViewBag.UserName=="admin-cndn"||ViewBag.UserName =="admin-cnhn")
+                if((string.Equals(ViewBag.UserName, "admin-cnct", StringComparison.OrdinalIgnoreCase))|| (string.Equals(ViewBag.UserName, "admin-cntg", StringComparison.OrdinalIgnoreCase)) || (string.Equals(ViewBag.UserName, "admin-cnmd", StringComparison.OrdinalIgnoreCase)) || (string.Equals(ViewBag.UserName, "admin-cnh1", StringComparison.OrdinalIgnoreCase)) || (string.Equals(ViewBag.UserName, "admin-cnvt", StringComparison.OrdinalIgnoreCase)) || (string.Equals(ViewBag.UserName, "admin-cnnt", StringComparison.OrdinalIgnoreCase)) || (string.Equals(ViewBag.UserName, "admin-cnna", StringComparison.OrdinalIgnoreCase)) || (string.Equals(ViewBag.UserName, "admin-cndn", StringComparison.OrdinalIgnoreCase)) || (string.Equals(ViewBag.UserName, "admin-cnhn", StringComparison.OrdinalIgnoreCase)))
                 {
                     view = "About1";
                 }
