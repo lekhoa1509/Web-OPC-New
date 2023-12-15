@@ -1,16 +1,61 @@
-﻿﻿﻿﻿
-@{ ViewBag.Title = "Sổ Tồn Nợ Phải Thu";
+﻿﻿﻿﻿﻿
+@{ ViewBag.Title = "CÔNG NỢ CHI TIẾT KH ETC";
+    string Dvcs = Request.Cookies["Dvcs"] != null ? HttpUtility.UrlDecode(Request.Cookies["Dvcs"].Value) : "";
     var ma_TDV = Request.Cookies["Ma_TDV"].Value;
     var Ten_TDV = Request.Cookies["Ten_TDV"].Value;
     var DenNgay = Request.Cookies["To_date"].Value;
+    if (Request.Cookies["MA_DVCS"].Value == "OPC_CT")
+    {
+        Dvcs = "Chi Nhánh Cần Thơ";
+    }
+    else if (Request.Cookies["MA_DVCS"].Value == "OPC_DN")
+    {
+        Dvcs = "Chi Nhánh Đà Nẵng";
+    }
+    else if (Request.Cookies["MA_DVCS"].Value == "OPC_TG")
+    {
+        Dvcs = "Chi Nhánh Tiền Giang";
+    }
+    else if (Request.Cookies["MA_DVCS"].Value == "OPC_MD")
+    {
+        Dvcs = "Chi Nhánh Miền Đông";
+    }
+    else if (Request.Cookies["MA_DVCS"].Value == "OPC_VT")
+    {
+        Dvcs = "Chi Nhánh Vũng Tàu";
+    }
+    else if (Request.Cookies["MA_DVCS"].Value == "OPC_NT")
+    {
+        Dvcs = "Chi Nhánh Nha Trang";
+    }
+    else if (Request.Cookies["MA_DVCS"].Value == "OPC_TP")
+    {
+        Dvcs = "Chi Nhánh Hồ Chí Minh";
+    }
+    else if (Request.Cookies["MA_DVCS"].Value == "OPC_NA")
+    {
+        Dvcs = "Chi Nhánh Nghệ An";
+    }
+    else if (Request.Cookies["MA_DVCS"].Value == "OPC_HN")
+    {
+        Dvcs = "Chi Nhánh Hà Nội";
+    }
     DateTime ngay = DateTime.ParseExact(DenNgay, "yyyy-MM-dd", CultureInfo.InvariantCulture);
 
     // Chuyển đổi thành chuỗi theo định dạng "DD/MM/YYYY"
     string ngayDaChinhSua = ngay.ToString("dd/MM/yyyy");
+    int Thang = ngay.Month;
+    int Nam = ngay.Year;
+    HttpCookie namCookie = new HttpCookie("Nam", Nam.ToString());
+    HttpCookie thangCookie = new HttpCookie("Thang", Thang.ToString());
+    thangCookie.Expires = DateTime.Now.AddDays(1);
+    namCookie.Expires = DateTime.Now.AddDays(1);
     HttpCookie ngayDaChinhSuaCookie = new HttpCookie("NgayDaChinhSua", ngayDaChinhSua);
     ngayDaChinhSuaCookie.Expires = DateTime.Now.AddDays(1); // Ví dụ: sống trong 1 ngày
 
     // Thêm cookie vào Response để nó được gửi về trình duyệt
+    Response.Cookies.Add(namCookie);
+    Response.Cookies.Add(thangCookie);
     Response.Cookies.Add(ngayDaChinhSuaCookie);
 }
 @using System.Data;
@@ -549,19 +594,19 @@
 
 
         <form class="data-form" id="data-form">
-            @*<div>
-                    <h3 style="margin-left:-500px; font-size:13px;">CÔNG TY CỔ PHẦN DƯỢC PHẨM OPC</h3>
-                    <h3 style="font-weight:bold;color:black; font-size:13px;margin-left:-500px">CHI NHÁNH ĐÀ NẴNG</h3>
-                </div>*@
+            <div>
+
+                <h3 style="font-weight:bold;color:black; font-size:13px;margin-left:-600px">@Dvcs</h3>
+            </div>
 
 
 
             <div>
-                <h3 style="font-size: 25px; color: black; font-weight: bold">SỔ CHI TIẾT TỒN NỢ PHẢI THU ĐẾN NGÀY @ngayDaChinhSua</h3>
+                <h3 style="font-size: 25px; color: black; font-weight: bold">CÔNG NỢ CHI TIẾT CỦA KHÁCH HÀNG ĐẾN @ngayDaChinhSua</h3>
 
             </div>
             <div style="text-align:left;margin-left:100px;color:black">
-                <h5>(Kế hoạch thu từ ngày ...../.....đến ngày...../.....)</h5>
+                <h5>Tháng @Request.Cookies["Thang"].Value năm @Request.Cookies["Nam"].Value</h5>
 
             </div>
             <br />
@@ -576,24 +621,39 @@
             <div>
                 <table id="export" border="1" border-collapse="collapse" style="width:700px">
                     <thead style="display: table-header-group">
-                        <tr style="font-size: 13px; font-weight: bold; color: black;">
-                            <th style="padding:5px">SỐ</th>
-                            <th style="padding:5px">KHÁCH HÀNG</th>
-                            <th style="padding:5px">NGÀY HÓA ĐƠN</th>
-                            <th style="padding:5px">SỐ HÓA ĐƠN</th>
-                            <th style="padding:5px">NGÀY THANH TOÁN</th>
-                            <th style="padding:5px">GN THU</th>
-                            <th style="padding:5px">TDV THU</th>
-                            <th style="padding:5px">TỔNG TIỀN</th>
+
+                        <tr style="color:black">
+                            @*<th rowspan="2">Mã KH</th>*@
+                            <th rowspan="2" style="width:100px">Khách Hàng</th>
+                            <th rowspan="2" style="width:100px">Người PT Thu</th>
+                            <th rowspan="2">Hạn mức nợ</th>
+                            <th colspan="2">Hóa Đơn</th>
+                            <th rowspan="2">Tổng tiền</th>
+                            <th rowspan="2">Ngày đến hạn TT</th>
+                            <th rowspan="2" style="width:100px">Số Ngày nợ quá hạn TT</th>
+                            <th colspan="4">Số tiền nợ quá hạn</th>
+                        </tr>
+                        <tr style="color:black">
+                            <th>Ngày</th>
+                            <th>Số</th>
+                            <th>Từ 1 đến 3 tháng</th>
+                            <th>Từ 4 đến 6 tháng</th>
+                            <th>Từ 7 đến 12 tháng</th>
+                            <th>> 1 năm</th>
+
+
                         </tr>
                     </thead>
-                    <tbody style="font-size:13px;color:black">
+                    <tbody style="font-size:13px;color:black;padding:5px">
                         @{
                             int stt = 1;
                             string currentDT = null;
                             int totalCongNo = 0;
                             bool firstTenDt = true;
-
+                            int total1 = 0;
+                            int total2 = 0;
+                            int total3 = 0;
+                            int total4 = 0;
                             foreach (DataRow row3 in Model.Tables[0].Rows)
                             {
                                 if (currentDT == null || currentDT != row3["Ma_Dt"].ToString())
@@ -602,49 +662,91 @@
                                     if (currentDT != null)
                                     {
                                         <tr style="padding:5px">
-                                            <td colspan="7" style="text-align:center;color:black;font-weight:bold;padding:5px">Tổng cộng:</td>
+                                            <td style="text-align:center;color:black;font-weight:bold;padding:5px">Tổng cộng:</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
                                             <td style="text-align:right;color:black;font-weight:bold;padding:5px">@string.Format("{0:n0}", totalCongNo.ToString("N0").Replace(",", "."))</td>
-
+                                            <td></td>
+                                            <td></td>
+                                            <td style="text-align:right;font-weight:bold;color:black">@string.Format("{0:n0}", total1.ToString("N0").Replace(",", "."))</td>
+                                            <td style="text-align:right;font-weight:bold;color:black">@string.Format("{0:n0}", total2.ToString("N0").Replace(",", "."))</td>
+                                            <td style="text-align:right;font-weight:bold;color:black">@string.Format("{0:n0}", total3.ToString("N0").Replace(",", "."))</td>
+                                            <td style="text-align:right;font-weight:bold;color:black">@string.Format("{0:n0}", total4.ToString("N0").Replace(",", "."))</td>
                                         </tr>
                                         totalCongNo = 0;
+                                        total1 = 0;
+                                        total2 = 0;
+                                        total3 = 0;
+                                        total4 = 0;
                                     }
                                     currentDT = row3["Ma_Dt"].ToString();
                                     firstTenDt = true;
                                 }
 
                                 <tr>
-                                    <td>@stt </td>
                                     @if (firstTenDt)
                                     {
-                                        <td style="text-align:left;height:max-content">@row3["Ten_Dt"]</td>
+                                        <td style="text-align:left">@row3["Ten_Dt"]</td>
                                         firstTenDt = false;
                                     }
                                     else
                                     {
                                         <td></td>
                                     }
-                                    <td>@row3["Ngay_Ct1"]</td>
+                                    <td>@row3["Ten_TDV"]</td>
+                                    <td>@row3["Han_Muc_No"]</td>
+                                    <td>@row3["Ngay_Ct2"]</td>
                                     <td>@row3["So_Ct_Einv"]</td>
-                                    <td>@row3["Ngay_Den_Han1"]</td>
-                                    <td></td>
-                                    <td>@row3["Ghi_Chu"]</td>
+
+
                                     <td style="text-align:right">@string.Format("{0:#,###}", row3["Cong_No"]).Replace(",", ".")</td>
+                                    <td>@row3["Ngay_Den_Han2"]</td>
+                                    <td style="text-align:right">@row3["So_Ngay_QH"]</td>
+                                    <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row3["So_Tien_QH_1"])).Replace(".", ",")</td>
+                                    <td style="text-align:right"> @String.Format("{0:n0}", Convert.ToDecimal(row3["So_Tien_QH_2"])).Replace(".", ",")</td>
+                                    <td style="text-align:right"> @String.Format("{0:n0}", Convert.ToDecimal(row3["So_Tien_QH_3"])).Replace(".", ",")</td>
+                                    <td style="text-align:right"> @String.Format("{0:n0}", Convert.ToDecimal(row3["So_Tien_QH_4"])).Replace(".", ",")</td>
                                 </tr>
                                 stt++;
                                 var congnofirst = string.Format("{0:#,###}", row3["Cong_No"]);
-                                string congNoString = congnofirst.Replace(",", ""); // Gỡ bỏ dấu phẩy
-
+                                var kq1 = string.Format("{0:#,###}", row3["So_Tien_QH_1"]);
+                                var kq2 = string.Format("{0:#,###}", row3["So_Tien_QH_2"]);
+                                var kq3 = string.Format("{0:#,###}", row3["So_Tien_QH_3"]);
+                                var kq4 = string.Format("{0:#,###}", row3["So_Tien_QH_4"]);
+                                string congNoString = congnofirst.Replace(".", ""); // Gỡ bỏ dấu phẩy
+                                string kq1string = kq1.Replace(".", "");
+                                string kq2string = kq2.Replace(".", "");
+                                string kq3string = kq3.Replace(".", "");
+                                string kq4string = kq4.Replace(".", "");
                                 int congNo;
+                                int result1, result2, result3, result4;
                                 if (int.TryParse(congNoString, out congNo))
                                 {
                                     totalCongNo += congNo;
                                 }
-
+                                if (int.TryParse(kq1string, out result1))
+                                {
+                                    total1 += result1;
+                                }
+                                if (int.TryParse(kq2string, out result2))
+                                {
+                                    total2 += result2;
+                                }
+                                if (int.TryParse(kq3string, out result3))
+                                {
+                                    total3 += result3;
+                                }
+                                if (int.TryParse(kq4string, out result4))
+                                {
+                                    total4 += result4;
+                                }
                                 string totalCongNoString = totalCongNo.ToString("N0", CultureInfo.InvariantCulture);
-
-
-
-
+                                string total1string = total1.ToString("N0", CultureInfo.InvariantCulture);
+                                string total2string = total2.ToString("N0", CultureInfo.InvariantCulture);
+                                string total3string = total3.ToString("N0", CultureInfo.InvariantCulture);
+                                string total4string = total4.ToString("N0", CultureInfo.InvariantCulture);
 
 
 
@@ -653,19 +755,37 @@
                             if (currentDT != null)
                             {
                                 <tr style="padding:5px">
-                                    <td colspan="7" style="text-align:center;color:black;font-weight:bold">Tổng cộng:</td>
+                                    <td style="text-align:center;color:black;font-weight:bold">Tổng cộng:</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
                                     <td style="text-align:right;font-weight:bold;color:black">@totalCongNo.ToString("N0").Replace(",", ".")</td>
-
+                                    <td></td>
+                                    <td></td>
+                                    <td style="text-align:right;font-weight:bold;color:black">@total1.ToString("N0").Replace(",", ".")</td>
+                                    <td style="text-align:right;font-weight:bold;color:black">@total2.ToString("N0").Replace(",", ".")</td>
+                                    <td style="text-align:right;font-weight:bold;color:black">@total3.ToString("N0").Replace(",", ".")</td>
+                                    <td style="text-align:right;font-weight:bold;color:black">@total4.ToString("N0").Replace(",", ".")</td>
                                 </tr>
                             }
 
                             // Hiển thị tổng cộng công nợ ở cuối
                             <tr>
-                                <td colspan="7" style="color:black;font-weight:bold">TỔNG CÔNG NỢ:</td>
+                                <td style="color:black;font-weight:bold">TỔNG CÔNG NỢ:</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                                 @foreach (DataRow row2 in Model.Tables[1].Rows)
                                 {
                                     <td style="text-align:right;font-weight:bold;color:black">@string.Format("{0:n0}", row2["Tong_CN"])</td>
-
+                                    <td></td>
+                                    <td></td>
+                                    <td style="text-align:right;font-weight:bold;color:black">@string.Format("{0:n0}", row2["Total_1"])</td>
+                                    <td style="text-align:right;font-weight:bold;color:black">@string.Format("{0:n0}", row2["Total_2"])</td>
+                                    <td style="text-align:right;font-weight:bold;color:black">@string.Format("{0:n0}", row2["Total_3"])</td>
+                                    <td style="text-align:right;font-weight:bold;color:black">@string.Format("{0:n0}", row2["Total_4"])</td>
                                 }
 
                             </tr>
@@ -684,23 +804,10 @@
                 <div style="display:flex;justify-content:space-between;align-items:center">
                     <div style="text-align:left;line-height:20px;color:black">
 
-                        <h5 style="font-size: 13px; text-align: left">-Tổng giá trị nợ:................................................................... </h5>
-                        <h5 style="font-size: 13px; text-align: left">-Tổng giá trị kế hoạch giao nhận thu:..........................................  </h5>
-                        <h5 style="font-size: 13px; text-align: left">-Tổng giá trị nợ giao nhận thu được: .......................................... </h5>
-                        <h5 style="font-size: 13px; text-align: left">-Tổng giá trị kế hoạch khách hàng CK: ..................................... </h5>
-                        <h5 style="font-size: 13px; text-align: left">-Tổng giá trị nợ khách hàng CK:.................................................  </h5>
-                        <h5 style="font-size: 13px; text-align: left">-Tổng giá trị kế hoạch trình dược viên thu:................................  </h5>
-                        <h5 style="font-size: 13px; text-align: left">-Tổng giá trị nợ trình dược viên thu được: ................................ </h5>
+                        <h5 style="font-size: 13px; text-align: left">-Tổng giá trị kế hoạch thu:...................................;Tỷ lệ KH/Tổng nợ:............. Thực hiện:....................;Tỷ lệ:............Điểm KPI:.............. </h5>
+
                     </div>
-                    <div style="text-align:right;line-height:20px;color:black;margin-right:30px">
-                        <h5 style="font-size: 13px; text-align: left"></h5>
-                        <h5 style="font-size: 13px; text-align: left">-Tỷ lệ % kế hoạch GN so với nợ:....................................... </h5>
-                        <h5 style="font-size: 13px; text-align: left">-Tỷ lệ % GN thu được so với kế hoạch: ........................... </h5>
-                        <h5 style="font-size: 13px; text-align: left">-Tỷ lệ % KH chiết khấu so với nợ:.................................... </h5>
-                        <h5 style="font-size: 13px; text-align: left">-Tỷ lệ % KH chiết khấu so với kế hoạch:.........................</h5>
-                        <h5 style="font-size: 13px; text-align: left">-Tỷ lệ % kế hoạch TDV thu so với nợ:.............................. </h5>
-                        <h5 style="font-size: 13px; text-align: left">-Tỷ lệ % TDV thu được so với kế hoạch:..........................</h5>
-                    </div>
+
                 </div>
                 <br />
                 <div style="text-align:right;margin-left:10px">
@@ -710,10 +817,10 @@
                 <div style="display:inline-block">
                     <h4 style="display:inline-block;color:black">PGĐ.Tài Chính</h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <h4 style="display: inline-block; color: black">Giám Sát</h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <h4 style="display: inline-block; color: black">Kế Toán Công Nợ</h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <h4 style="display: inline-block; color: black">Người Phụ Trách Thu</h4>
+                    <h4 style="display: inline-block; color: black">Người Phụ Trách Thu</h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <h4 style="display: inline-block; color: black">Kế Toán Công Nợ</h4>
                 </div><br />
-                <div style="display:flex;justify-content:space-between;align-items:center">
+                <div style="display:flex;justify-content:space-between;align-items:center;color:black">
                     <h5 style="font-style: italic; ">(Ký, ghi họ tên)</h5>
                     <h5 style="font-style: italic;  ">(Ký, ghi họ tên)</h5>
                     <h5 style="font-style: italic; ">(Ký, ghi họ tên)</h5>
@@ -723,7 +830,7 @@
 
         </form>
     </div>
-    <button id="export-button" onclick="exportExcel()">Xuất Excel</button>
+    @*<button id="export-button" onclick="exportExcel()">Xuất Excel</button>*@
     <input type="file" id="file-input" style="display: none">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}" />

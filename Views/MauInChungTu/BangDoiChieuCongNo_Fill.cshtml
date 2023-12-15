@@ -456,7 +456,7 @@
             </li>
         </ul>
 
-
+        <span id="spanText" class="text-loading">[usp_DoiChieuDoanhThuCongNo_SAP]</span>
         <div class="forms-container">
             <form class="data-form" id="data-form">
                 <div style="display:flex;justify-content:space-between;align-items:center">
@@ -509,11 +509,11 @@
 
 
                 <!--<div style="margin-left:-250px;text-align:left">
-                <h5>Đơn vị xuất hàng: Kho thành phẩm Cửa hàng Quận 10</h5>
-                <h5 style="margin-left:-5px">Địa chỉ: 134/1 Tô Hiến Thành, P15, Quận 10, TP.HCM</h5>-->
+            <h5>Đơn vị xuất hàng: Kho thành phẩm Cửa hàng Quận 10</h5>
+            <h5 style="margin-left:-5px">Địa chỉ: 134/1 Tô Hiến Thành, P15, Quận 10, TP.HCM</h5>-->
                 @*<h5 style="margin-left: 40px">Đơn vị nhận hàng:@Request.Cookies["Ten_dt"].Value</h5>*@
                 <!--<h5 style="margin-left: -120px">Diễn giải: Xuất hàng giao cho khách</h5>
-                </div>-->
+            </div>-->
 
 
                 <div style="margin-top:10px">
@@ -540,16 +540,16 @@
                         <tbody>
 
                             @*@foreach (DataRow row3 in Model.Tables[1].Rows)
-                                {
-                                    <tr class="table2-data hidden-row" data-soct="@row3["So_Ct"]">
+                            {
+                                <tr class="table2-data hidden-row" data-soct="@row3["So_Ct"]">
 
 
-                                        <td>@row3["so_Line_Id"]</td>
-                                        <td>@row3["Ten_vt"]</td>
-                                        <td>@row3["Dvt"]</td>
-                                        <td>@row3["so_luong"]</td>
-                                    </tr>
-                                }*@
+                                    <td>@row3["so_Line_Id"]</td>
+                                    <td>@row3["Ten_vt"]</td>
+                                    <td>@row3["Dvt"]</td>
+                                    <td>@row3["so_luong"]</td>
+                                </tr>
+                            }*@
                         </tbody>
                         <tfoot>
                             <tr>
@@ -659,6 +659,23 @@
 
     </script>
     <script>
+        function runReport() {
+
+            const uncheckedCheckboxIndexes = [];
+            const checkboxes = document.querySelectorAll('input[name="myCheckbox"]');
+
+            checkboxes.forEach((checkbox, index) => {
+                if (!checkbox.checked) {
+                    uncheckedCheckboxIndexes.push(index);
+                }
+            });
+
+            // Lưu trạng thái vào Local Storage
+            localStorage.setItem('uncheckedCheckboxIndexes', JSON.stringify(uncheckedCheckboxIndexes));
+            // Hiển thị thẻ span có id là "spanText"
+            const spanElement = document.getElementById("spanText");
+            spanElement.style.display = "block";
+        }
         // Set the "Từ Ngày" input to the first day of the current month
         function setFirstDayOfCurrentMonth() {
             const currentDate = new Date();

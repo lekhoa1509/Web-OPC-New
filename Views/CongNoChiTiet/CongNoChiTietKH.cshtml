@@ -698,7 +698,7 @@
                                 <td>@row2["Ma_LKH"]</td>
                                 <td>@row2["Ten_LKH"]</td>
                                 <td>@row2["So_Hop_Dong"]</td>
-                                <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Cong_No"]))</td>
+                                <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Cong_No"])).Replace(".",",")</td>
 
 
 
@@ -707,10 +707,10 @@
                                 <td>@row2["Ngay_Den_Han2"]</td>
                                 <td>@row2["So_Ngay_QH"]</td>
 
-                                <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["So_Tien_QH_1"]))</td>
-                                <td style="text-align:right"> @String.Format("{0:n0}", Convert.ToDecimal(row2["So_Tien_QH_2"]))</td>
-                                <td style="text-align:right"> @String.Format("{0:n0}", Convert.ToDecimal(row2["So_Tien_QH_3"]))</td>
-                                <td style="text-align:right"> @String.Format("{0:n0}", Convert.ToDecimal(row2["So_Tien_QH_4"]))</td>
+                                <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["So_Tien_QH_1"])).Replace(".", ",")</td>
+                                <td style="text-align:right"> @String.Format("{0:n0}", Convert.ToDecimal(row2["So_Tien_QH_2"])).Replace(".", ",")</td>
+                                <td style="text-align:right"> @String.Format("{0:n0}", Convert.ToDecimal(row2["So_Tien_QH_3"])).Replace(".", ",")</td>
+                                <td style="text-align:right"> @String.Format("{0:n0}", Convert.ToDecimal(row2["So_Tien_QH_4"])).Replace(".", ",")</td>
 
                             </tr>
 

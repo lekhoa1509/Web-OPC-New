@@ -409,6 +409,7 @@
     </style>
 </head>
 <body>
+    <span id="spanText" class="text-loading">[usp_DoiChieuDoanhThuCongNo_SAP]</span>
     <div class="forms-container">
         <ul class="nav-links" style="display: flex; justify-content: center;">
             <li>
@@ -603,7 +604,8 @@
             document.cookie = 'From_date=' + fromDate + '; path=/';
             document.cookie = 'To_date=' + toDate + '; path=/';
 
-            // Your other code or actions here, if needed
+            const spanElement = document.getElementById("spanText");
+            spanElement.style.display = "block";
         }
     </script>
 
@@ -636,7 +638,7 @@
                         var selectedDiaChi = selectedOption.getAttribute('data-diachi');
                         var selectedDvcs = selectedOption.getAttribute('data-Dvcs');
                         var selectedDvcs1 = selectedOption.getAttribute('data-dvcs1');
-                        document.cookie = 'Ten_Dt= '+encodeURIComponent(tenDt);
+                        document.cookie = 'Ten_Dt= ' + encodeURIComponent(tenDt);
                         document.cookie = 'Dia_Chi=' + selectedDiaChi;
                         document.cookie = 'Dvcs=' + selectedDvcs;
                         document.cookie = 'Dvcs1=' + selectedDvcs1;

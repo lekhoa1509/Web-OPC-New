@@ -588,7 +588,7 @@
                         }
                     </datalist>
                     <input type="hidden" name="Ma_Dt" id="selectedOption">
-                    <a>Tìm TDV</a>
+                    <h̉̉̉̉̉̉6>Tìm TDV</h̉̉̉̉̉̉6>
                     <input type="text" id="dropdownInputTDV" list="dropdownListTDV" placeholder="Tìm kiếm TDV">
                     <datalist id="dropdownListTDV">
                         @foreach (var item in ViewBag.DataTDV)
@@ -597,7 +597,7 @@
                         }
                     </datalist>
                     <input type="hidden" name="Ma_TDV" id="selectedOptionTDV">
-                    <a>Tìm Vật Tư</a>
+                    <h6>Tìm Vật Tư</h6>
                     <input type="text" id="dropdownInputVT" list="dropdownListVT" placeholder="Tìm kiếm Vật Tư">
                     <datalist id="dropdownListVT">
                         @foreach (var item in ViewBag.DataVT)
@@ -644,9 +644,10 @@
 
     <header class="header_part" style="background-color: #aec9e0; color: #3483bd ">
         @if (Request.Cookies["UserName"].Value == "Admin-cnct" || Request.Cookies["UserName"].Value == "Admin-cntg" || Request.Cookies["UserName"].Value == "Admin-cnmd" || Request.Cookies["UserName"].Value == "Admin-cnh1" || Request.Cookies["UserName"].Value == "Admin-cnvt"
-                      || Request.Cookies["UserName"].Value == "Admin-cnnt" || Request.Cookies["UserName"].Value == "Admin - cndn" || Request.Cookies["UserName"].Value == "Admin - cnna" || Request.Cookies["UserName"].Value == "Admin - cnhn")
+                     || Request.Cookies["UserName"].Value == "Admin-cnnt" || Request.Cookies["UserName"].Value == "Admin - cndn" || Request.Cookies["UserName"].Value == "Admin - cnna" || Request.Cookies["UserName"].Value == "Admin - cnhn" && Request.Cookies["UserName"].Value == "admin-cnct" || Request.Cookies["UserName"].Value == "admin-cntg" || Request.Cookies["UserName"].Value == "admin-cnmd" || Request.Cookies["UserName"].Value == "admin-cnh1" || Request.Cookies["UserName"].Value == "admin-cnvt"
+                     || Request.Cookies["UserName"].Value == "admin-cnnt" || Request.Cookies["UserName"].Value == "admin - cndn" || Request.Cookies["UserName"].Value == "admin - cnna" || Request.Cookies["UserName"].Value == "admin - cnhn")
         {
-            <a href="/Home/AboutCN" style="cursor:pointer">
+            <a href="/Home/About1" style="cursor:pointer">
                 <img src="~/Images/opc.png" style="height:60px;width:60px;margin-left:10px">
             </a>
         }

@@ -978,6 +978,7 @@
     <Content Include="Styles\core.css" />
     <Content Include="Styles\dashboard.css" />
     <Content Include="Styles\default.css" />
+    <Content Include="Styles\design_dashboard.css" />
     <Content Include="Styles\DT_TDV.css" />
     <Content Include="Styles\DT_TDV1.css" />
     <Content Include="Styles\font-awesome.min.css" />
@@ -1115,6 +1116,11 @@
     <Content Include="Views\BaoCaoKetQuaKinhDoanh\BaoCaoKetQuaKinhDoanh.cshtml" />
     <Content Include="Views\TheKho\TheKho_Fill.cshtml" />
     <Content Include="Views\TheKho\TheKho.cshtml" />
+    <Content Include="Views\CongNoChiTiet\CongNoChiTietKH_ETC_Fill.cshtml" />
+    <Content Include="Views\CongNoChiTiet\CongNoChiTietKH_ETC.cshtml" />
+    <Content Include="Views\CongNoChiTiet\CongNoChiTietKH_ETC_In.cshtml" />
+    <Content Include="Views\BaoCaoBanHangTDV\BaoCaoBanHangTDV_DB_Fill.cshtml" />
+    <Content Include="Views\BaoCaoBanHangTDV\BaoCaoBanHangTDV_DB.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

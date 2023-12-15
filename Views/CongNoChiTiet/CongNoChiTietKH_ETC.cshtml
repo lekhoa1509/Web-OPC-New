@@ -1,6 +1,8 @@
 ﻿
 
-@{ ViewBag.Title = " THEO DÕI BẢNG KÊ NỘP TIỀN ";
+
+
+@{ ViewBag.Title = "CÔNG NỢ CHI TIẾT CỦA KHÁCH HÀNG ETC";
     var fromDate = Request.Cookies["From_date"].Value;
     var toDate = Request.Cookies["To_date"].Value;
     var fromDateValue = DateTime.ParseExact(fromDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
@@ -10,8 +12,8 @@
     var formattedToDate = toDateValue.ToString("dd/MM/yyyy");
     System.Globalization.CultureInfo.CurrentCulture = new System.Globalization.CultureInfo("en-US");
     System.Globalization.CultureInfo.CurrentUICulture = new System.Globalization.CultureInfo("en-US");
+    decimal tongTien = 0;
 }
-    }
 @using System.Data;
 @using System.Globalization;
 <!DOCTYPE html>
@@ -544,6 +546,35 @@
             .tab.selected-tab .closeTab {
                 pointer-events: auto;
             }
+        .data_table {
+            max-height: 100%; /* Đặt chiều cao tối đa của container để có thanh cuộn */
+            overflow: auto;
+        }
+
+            .data_table thead{
+                position: sticky;
+                top: 0;
+                z-index: 100;
+            }
+        .custom-button {
+            margin-top:10px;
+            display: inline-block;
+            padding: 8px 15px;
+            background-color: blue;
+            color: white;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+            .custom-button:hover {
+                background-color: darkblue;
+            }
+      
     </style>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
@@ -555,12 +586,14 @@
 
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title> THEO DÕI BẢNG KÊ NỘP TIỀN</title>
+    <title>CÔNG NỢ CHI TIẾT CỦA KH ETC</title>
     <meta content="" name="description">
     <meta content="Author" name="MJ Maraz">
     <link href="~/assets/images/favicon.png" rel="icon">
     <link href="~/assets/images/favicon.png" rel="apple-touch-icon">
     <!-- Google Fonts -->
+    <link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <!-- ========================================================= -->
 
@@ -572,7 +605,7 @@
 </head>
 <!-- =============== Design & Develop By = MJ MARAZ   ====================== -->
 
-<body style="background-color: #e0e8ee">
+<body style="background-color: #e0e8ee ">
     <div class="loader" style="z-index:1"></div>
 
     <div class="sidebar">
@@ -581,9 +614,9 @@
         </div>
         <ul class="nav-links" style="justify-content: center; display:flex;margin-left:10px">
             <li>
-                <form id="dateForm" action="BangKeNopTien" method="post" onsubmit="handleFormSubmit(event)">
+                <form id="dateForm" action="CongNoChiTietKH_ETC" method="post" onsubmit="handleFormSubmit(event)">
                     <div id="locBC">
-                        <span id="spanText" class="text-loading">[usp_TheoDoiBangKeNopTien_SAP]</span>
+                        <span id="spanText" class="text-loading">[usp_RpCongNoPL5_SAP]</span>
                         <a>Từ Ngày</a><br /><br />
                         <input class="tu_ngay" placeholder="Từ Ngày" id="tu_ngay" name="From_date" type="date" format="YYYY-MM-DD" value="@Request.QueryString["From_date"]" />
                         <script>$("#tu_ngay").datetimepicker({ timepicker: false, format: 'Y-m-d' });</script><br /><br />
@@ -591,7 +624,7 @@
                         <input class="den_ngay" id="den_ngay" placeholder=" Đến Ngày" name="To_date" type="DATE" format="YYYY-MM-DD" value="@Request.QueryString["To_date"]" /><br /><br />
                         <script>$("#den_ngay").datetimepicker({ timepicker: false, format: 'Y-m-d' });</script>
                     </div>
-                    <h6>Chọn Đối Tượng</h6>
+                    <h6>Chọn Đối Tượng:</h6>
 
                     <input type="text" id="dropdownInput" list="dropdownList" placeholder="Tìm kiếm đối tượng">
                     <datalist id="dropdownList">
@@ -600,11 +633,9 @@
                             <option value="@item.Ma_Dt" data-ten="@item.Ma_Dt" data-diachi="@item.Dia_Chi" data-dvcs="@item.Dvcs" data-dvcs1="@item.Dvcs1">@item.Ten_Dt</option>
                         }
                     </datalist>
-                    <input type="hidden" name="Ma_Dt" id="selectedOption"><br /><br />
-                    <h6>Chọn TDV</h6>
-
-
-
+                    <input type="hidden" name="Ma_Dt" id="selectedOption">
+                    <br /><br />
+                    <h6>Chọn TDV:</h6>
                     <input type="text" id="dropdownInputTDV" list="dropdownListTDV" placeholder="Tìm kiếm TDV">
                     <datalist id="dropdownListTDV">
                         @foreach (var item in ViewBag.DataTDV)
@@ -614,13 +645,18 @@
                     </datalist>
                     <input type="hidden" name="Ma_TDV" id="selectedOptionTDV">
                     <div>
-                        <button class="submit" type="submit" id="runReportButton" onclick="runReport(); saveNgay();">
+                        <button class="submit" type="submit" id="runReportButton" onclick="runReport();saveNgay()">
                             Chạy Báo Cáo
                         </button>
 
                     </div>
 
+
+
                 </form>
+                <div class="custom-button">
+                   <a target="_blank" href="/CongNoChiTiet/CongNoChiTietKH_ETC_In"style="color:white;padding:5px">Print</a>
+                </div>
             </li>
         </ul>
     </div>
@@ -643,8 +679,8 @@
                 <img src="~/Images/opc.png" style="height:60px;width:60px;margin-left:10px">
             </a>
         }
-        <h4 style="color: #3483bd"> THEO DÕI BẢNG KÊ NỘP TIỀN</h4>
-        <h4 style="color: #3483bd">Từ @formattedFromDate đến @formattedToDate </h4>
+        <h4 style="color:#3483bd">CÔNG NỢ CHI TIẾT CỦA KH ETC</h4>
+        <h4 style="color:#3483bd">Từ @formattedFromDate đến @formattedToDate </h4>
     </header>
     <!-- =======  Data-Table  = Start  ========================== -->
 
@@ -653,74 +689,137 @@
 
         <div class="row">
             <div class="col-12">
-                <div class="data_table">
+                <div class="search-container">
+
+                    <span>Search: <input type="Text" name="" id="myInput" placeholder="Tìm kiếm" onkeyup="searchFun()"></span>
+                    <div class="search"></div>
+                </div>
+                <div class="data_table" style="width:max-content;max-height:800px">
+                    @{
+                        var rowsBySoCT = new Dictionary<object, List<DataRow>>();
+
+                        foreach (DataRow row in Model.Tables[0].Rows)
+                        {
+
+                            var soCT = row["Ma_Dt"];
+                            if (!rowsBySoCT.ContainsKey(soCT))
+                            {
+                                rowsBySoCT[soCT] = new List<DataRow>();
+                            }
+                            rowsBySoCT[soCT].Add(row);
+                        }
+                    }
                     <table id="example" class="table table-striped table-bordered">
                         <thead class="table-dark">
+
                             <tr>
-                                <th style="width:100px">Khách hàng</th>
-                                <th>Mã Đối Tượng</th>
-                                <th>Số Hóa Đơn</th>
-                                <th>Số Hợp Đồng Ex</th>
-                                <th>Ngày Hóa Đơn</th>
-                                <th>Ngày Đến Hạn</th>
-                                <th>Tiền Hóa Đơn</th>
-                                <th>Số Phiếu Thu</th>
-                                <th>Số External</th>
-                                <th>Ngày Phiếu Thu</th>
-                                <th>Tiền TT</th>
-                                <th>Loại Chứng Từ</th>
-                                <th>Số Chứng Từ</th>
-                                <th>Mã TDV</th>
-                                <th>Tên TDV</th>
+                                @*<th rowspan="2">Mã KH</th>*@
+                                <th rowspan="2" style="width:100px">Tên Khách Hàng</th>
+                                <th rowspan="2" style="width:100px">NV theo dõi công nợ</th>
+                                <th rowspan="2">Hạn mức nợ</th>
+                                <th colspan="2">Hóa Đơn</th>
+                                <th rowspan="2">Tổng tiền</th>
+                                <th rowspan="2">Ngày đến hạn TT</th>
+                                <th rowspan="2" style="width:100px">Số Ngày nợ quá hạn TT</th>
+                                <th colspan="4">Số tiền nợ quá hạn</th>
                             </tr>
+                            <tr>
+                                <th>Ngày</th>
+                                <th>Số</th>
+                                <th>Từ 1 đến 3 tháng</th>
+                                <th>Từ 4 đến 6 tháng</th>
+                                <th>Từ 7 đến 12 tháng</th>
+                                <th>> 1 năm</th>
+
+
+                            </tr>
+
+
                         </thead>
                         <tbody>
-                            @foreach (DataRow row2 in Model.Tables[0].Rows)
+                            <tr style="background-color: burlywood">
+                                <td colspan="11" style="font-weight:bold;color:black;">Tổng tất cả:</td>
+                                @foreach (DataRow row in Model.Tables[1].Rows)
+                                {
+                                    <td style="text-align:right">@row["Tong_CN"]</td>
+                                }
+                            </tr>
+                            @foreach (var entry in rowsBySoCT)
                             {
-
-
-                                <tr>
-                                    <td>@row2["Ten_Dt"]</td>
-                                    <td>@row2["Ma_Dt"]</td>
-                                    <td>@row2["So_HD_InV"]</td>
-                                    <td>@row2["So_Hop_Dong_Ex"]</td>
-                                    <td>@row2["Ngay_HD"]</td>
-                                    <td>@row2["Ngay_Den_Han"]</td>
-                                    <td style="text-align:right"> @String.Format("{0:n0}", Convert.ToDecimal(row2["Tien_HD_InV"])).Replace(".", ",")</td>
-                                    <td>@row2["So_PT"]</td>
-                                    <td>@row2["So_External_Sap"]</td>
-                                    <td>@row2["Ngay_PT"]</td>
-                                    <td style="text-align:right">@String.Format("{0:#,###}", row2["Tien_TT"]).Replace(".", ",")</td>
-                                    <td>@row2["Loai_Ct"]</td>
-                                    <td>@row2["So_Ct"]</td>
-                                    <td>@row2["Ma_TDV"]</td>
-                                    <td>@row2["Ten_TDV"]</td>
+                                <tr class="title">
+                                    <td colspan="12" style="text-align:left">
+                                        <span class="material-symbols-outlined expandable-icon">arrow_drop_down</span>
+                                        <strong>Tên đối tượng: @entry.Key - </strong>
+                                        @foreach (DataRow row in Model.Tables[0].Rows)
+                                        {
+                                            if (row["Ma_dt"] == entry.Key)
+                                            {
+                                                <strong>@row["Ten_dt"]</strong>
+                                                tongTien = 0;
+                                                foreach (var row2 in entry.Value)
+                                                {
+                                                    tongTien += Convert.ToDecimal(row2["Cong_No"]);
+                                                }
+                                                break;
+                                            }
+                                        }
+                                        <div style="text-align: right; color: #3483bd"> <strong> @String.Format("{0:n0}", tongTien)</strong></div>
+                                    </td>
                                 </tr>
 
+                                foreach (var row2 in entry.Value)
+                                {
+                                    <tr>
+                                        @*<td>@row2["Ma_Dt"]</td>*@
+                                        <td style="text-align:left">@row2["Ten_Dt"]</td>
+                                        <td style="text-align:left">@row2["Ten_TDV"]</td>
+                                        <td style="text-align:right">@row2["Han_Muc_No"]</td>
+                                        <td>@row2["Ngay_Ct2"]</td>
+                                        <td>@row2["So_Ct_Einv"]</td>
+                                        <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Cong_No"])).Replace(".", ",")</td>
+                                        <td>@row2["Ngay_Den_Han2"]</td>
+                                        <td style="text-align:right">@row2["So_Ngay_QH"]</td>
+                                        <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["So_Tien_QH_1"])).Replace(".", ",")</td>
+                                        <td style="text-align:right"> @String.Format("{0:n0}", Convert.ToDecimal(row2["So_Tien_QH_2"])).Replace(".", ",")</td>
+                                        <td style="text-align:right"> @String.Format("{0:n0}", Convert.ToDecimal(row2["So_Tien_QH_3"])).Replace(".", ",")</td>
+                                        <td style="text-align:right"> @String.Format("{0:n0}", Convert.ToDecimal(row2["So_Tien_QH_4"])).Replace(".", ",")</td>
+
+                                        @*<td>@row2["Han_CKTT"]</td>
+                                            <td>@row2["Ma_LKH"]</td>
+                                            <td>@row2["Ten_LKH"]</td>
+                                            <td>@row2["So_Hop_Dong"]</td>*@
 
 
+
+
+
+
+
+
+
+
+                                    </tr>
+
+
+
+                                }
                             }
                         </tbody>
-                        <tfoot>
-                            <tr id="total-row" style="background-color: burlywood">
-                                <td colspan="10"><strong>Tổng trang:</strong></td>
-                                <td class="total-tien" style="text-align:right"></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-
-                            </tr>
-                            <tr id="total-row-tong-cong" style="background-color: burlywood">
-                                <td colspan="10"><strong>Tổng cộng(Tất cả):</strong></td>
-                                <td class="total-tienTT" style="text-align:right"></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-
-                            </tr>
-                        </tfoot>
+                        @*<tfoot>
+                                @foreach (DataRow row in Model.Tables[1].Rows)
+                                {
+                                    <tr style="background-color: burlywood">
+                                        <td colspan="10"><strong>Tổng cộng:</strong></td>
+                                        <td style="text-align:right">@row["Tong_CN"]</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                }
+                            </tfoot>*@
                     </table>
 
                 </div>
@@ -738,41 +837,159 @@
     <script src="~/assets/js/vfs_fonts.js"></script>
     <script src="~/assets/js/custom.js"></script>
 
-    @*<script>
-                $(document).ready(function () {
-                var isExportingExcel = false;
+    <script>
+        const searchFun = () => {
+            let filter = document.getElementById('myInput').value.toUpperCase();
+            let myTable = document.getElementById('example');
+            let tr = myTable.getElementsByClassName('title');
 
-                var table = $('#example').DataTable({
-                    dom: 'Bfrtip',
-                buttons: [
-                {
-                    extend: 'excelHtml5',
-                text: 'Excel',
-                action: function (e, dt, node, config) {
-                    // Đặt biến cờ khi xuất Excel
-                    isExportingExcel = true;
-                dt.button(config).trigger();
-                isExportingExcel = false;
-                            }
-                        }
-                ]
-                });
-
-                // Bắt sự kiện khi nút Excel được nhấn
-                table.on('buttons-action', function (e, buttonApi, dataTable, node, config) {
-                    if (buttonApi.text() === 'Excel') {
-                        // Kiểm tra nếu đang xuất Excel
-                        if (isExportingExcel) {
-                    console.log('Nút xuất Excel đã được nhấn!');
-                            // Thêm mã xử lý xuất Excel ở đây nếu cần
-                        }
+            for (let i = 0; i < tr.length; i++) {
+                let td = tr[i].getElementsByTagName('td')[0]; // Chọn cột trong class title (vd: cột đầu tiên)
+                if (td) {
+                    let textValue = td.textContent || td.innerHTML;
+                    if (textValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
                     }
+                }
+            }
+        };
+
+        document.getElementById('myInput').addEventListener('keyup', searchFun);
+
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            // Ẩn tất cả các dòng con có class "expandable-content"
+            $('.expandable-content').hide();
+
+            // Bắt sự kiện click trên icon xổ xuống
+            $('.expandable-icon').on('click', function () {
+                // Các dòng con sẽ được ẩn/hiện
+                var childRows = $(this).closest('tr').nextUntil('tr:has(td[colspan="12"])');
+
+                // Toggle hiển thị/ẩn các dòng con
+                childRows.toggle();
+
+                // Lấy nội dung hiện tại của icon
+                var currentIcon = $(this).html();
+
+                // Thay đổi nội dung của icon dựa trên nội dung hiện tại
+                if (currentIcon === 'arrow_drop_down') {
+                    // Nếu đang mở rộng, đặt biểu tượng xuống
+                    $(this).html('arrow_right');
+                } else {
+                    // Nếu đang thu gọn, đặt biểu tượng ngang
+                    $(this).html('arrow_drop_down');
+                }
+            });
+
+            // Ẩn tất cả các dòng con khi trang được load
+            $('.expandable-icon').each(function () {
+                var childRows = $(this).closest('tr').nextUntil('tr:has(td[colspan="12"])');
+                childRows.hide();
+            });
+        });
+    </script>
+
+    @*<script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var numericCells = document.querySelectorAll('.numeric-column');
+                numericCells.forEach(function (cell) {
+                    var originalValue = parseFloat(cell.getAttribute('data-value'));
+                    cell.textContent = originalValue.toLocaleString('en-US');
                 });
             });
         </script>*@
+    @*<script>
+            document.addEventListener('DOMContentLoaded', function () {
+                // Khởi tạo DataTables
+                var table = $('#example').DataTable();
 
+                // Gọi hàm calculateTotal khi trang được tải và khi có sự kiện thay đổi trên trang
+                calculateTotal();
 
+                // Thêm sự kiện cho việc thay đổi trang
+                table.on('draw.dt', function () {
+                    calculateTotal();
+                });
+            });
+
+            // Hàm tính toán tổng
+            function calculateTotal() {
+                // Lấy DataTables
+                var table = $('#example').DataTable();
+
+                // Tính tổng của cột "Cong_No"
+                var totalCongNo = table.column(10, { page: 'all', search: 'applied' }).data().sum();
+
+                // Gán tổng của cột "Cong_No" vào ô của hàng tfoot "Tổng trang"
+                document.querySelector('#total-row .total-tien').textContent = formatCurrency(totalCongNo);
+
+                // Gán tổng của cột "Cong_No" vào ô của hàng tfoot "Tổng cộng(Tất cả)"
+                document.querySelector('#total-row-tong-cong .total-tienTT').textContent = formatCurrency(totalCongNo);
+            }
+
+            // Hàm định dạng số tiền thành chuỗi có dấu phẩy
+            function formatCurrency(amount) {
+                return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            }
+        </script>*@
+
+    @*<script>
+            document.addEventListener('DOMContentLoaded', function () {
+                // Khởi tạo DataTables
+                $('#example').DataTable();
+
+                // Gọi hàm calculateTotal khi trang được tải và khi có sự kiện thay đổi trên trang
+                calculateTotal();
+
+                // Thêm sự kiện cho việc thay đổi trang
+                $('#example').on('draw.dt', function () {
+                    calculateTotal();
+                });
+            });
+
+            // Hàm tính toán tổng
+            function calculateTotal() {
+                // Lấy tất cả các ô chứa giá trị cột "Tiền TT"
+                var tienTTCells = document.querySelectorAll('#example tbody td:nth-child(11)');
+
+                // Biến để tính tổng Tiền TT
+                var totalTienTT = 0;
+
+                // Lặp qua từng ô và tính tổng
+                tienTTCells.forEach(function (cell) {
+                    var valueWithoutCommas = cell.textContent.replace(/,/g, ''); // Loại bỏ dấu phẩy
+                    totalTienTT += parseFloat(valueWithoutCommas) || 0; // Cộng thêm 0 nếu giá trị không hợp lệ
+                });
+
+                // Gán tổng Tiền TT vào ô của hàng tfoot "Tổng trang"
+                document.querySelector('#total-row .total-tien').textContent = formatCurrency(totalTienTT);
+
+                // Gán tổng Tiền TT vào ô của hàng tfoot "Tổng cộng(Tất cả)"
+                document.querySelector('#total-row-tong-cong .total-tienTT').textContent = formatCurrency(totalTienTT);
+            }
+
+            // Hàm định dạng số tiền thành chuỗi có dấu phẩy
+            function formatCurrency(amount) {
+                return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            }
+        </script>*@
     <script>
+        function redirectToHref(url) {
+            window.open(url, '_blank');
+        }
+    </script>
+    <script>
+        function saveNgay() {
+            var from_date = document.getElementById("tu_ngay").value;
+            var to_date = document.getElementById("den_ngay").value;
+            document.cookie = "From_date=" + from_date;
+            document.cookie = "To_date=" + to_date;
+        }
         document.getElementById("dropdownInput").addEventListener("input", function () {
             var inputValue = this.value;
             var options = document.querySelectorAll("#dropdownList option");
@@ -813,7 +1030,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             // Lấy tất cả các ô chứa giá trị cột "Tiền TT"
-            var tienTTCells = document.querySelectorAll('#example tbody td:nth-child(11)');
+            var tienTTCells = document.querySelectorAll('#example tbody td:nth-child(10)');
 
             // Biến để tính tổng
             var totalTienTT = 0;
@@ -837,7 +1054,7 @@
         document.addEventListener('DOMContentLoaded', function () {
             function calculateTotal() {
                 // Lấy tất cả các ô chứa giá trị cột "Tiền TT"
-                var tienTTCells = document.querySelectorAll('#example tbody td:nth-child(11)');
+                var tienTTCells = document.querySelectorAll('#example tbody td:nth-child(10)');
 
                 // Biến để tính tổng Tiền TT
                 var totalTienTT = 0;
@@ -870,9 +1087,6 @@
         });
 
     </script>
-
-
-
 
 
     <script>
@@ -1012,12 +1226,7 @@
             const loader = document.querySelector(".loader");
             loader.classList.remove("loader-hidden");
         }
-        function saveNgay() {
-            var from_date = document.getElementById("tu_ngay").value;
-            var to_date = document.getElementById("den_ngay").value;
-            document.cookie = "From_date=" + from_date;
-            document.cookie = "To_date=" + to_date;
-        }
+
         // Function to hide the loader
         function hideLoader() {
             const loader = document.querySelector(".loader");
