@@ -21,5 +21,6 @@ namespace web4.Models
         public string Dvt { get; set; }
         public int Han_Muc { get; set; }
         public string Ten_Dt { get; set; }
+        public string CTVId { get; set; }
     }
 }
