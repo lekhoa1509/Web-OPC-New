@@ -335,10 +335,31 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\B30CTV.cs">
+      <DependentUpon>Detail.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\B30CTVDetail.cs">
+      <DependentUpon>Detail.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\BKHoaDonGiaoHang.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\Chart.cs" />
     <Compile Include="Models\CTV.cs" />
+    <Compile Include="Models\Detail.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Detail.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Detail.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Detail.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Detail.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Detail.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Models\MauInChungTu.cs" />
     <Compile Include="Models\StudentMarkDetails.cs" />
     <Compile Include="Models\TheoDoiHDThau.cs" />
@@ -768,6 +789,16 @@
     <Content Include="Images\Images2.jpg" />
     <Content Include="Images\opc.png" />
     <Content Include="Images\wave.png" />
+    <Content Include="Models\Detail.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Detail.edmx</DependentUpon>
+      <LastGenOutput>Detail.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\Detail.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Detail.edmx</DependentUpon>
+      <LastGenOutput>Detail.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\ej\web\office-365\icons\ejicons.woff" />
@@ -814,6 +845,13 @@
     <Content Include="Content\ej\mobile\images\ejmmobilefonts.eot" />
     <Content Include="assets\js\jquery-1.10.2.min.map" />
     <Content Include="Chart\Chart.cshtml" />
+    <EntityDeploy Include="Models\Detail.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Detail.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Detail.edmx.diagram">
+      <DependentUpon>Detail.edmx</DependentUpon>
+    </Content>
     <None Include="Properties\PublishProfiles\khoa.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -1099,7 +1137,6 @@
     <Content Include="Views\MauInChungTu\PhieuNhapXNTT_Index.cshtml" />
     <Content Include="Views\BangKeNopTien\BangKeNopTien_Fill.cshtml" />
     <Content Include="Views\CongTacVien\InputCTV.cshtml" />
-    <Content Include="Views\CongTacVien\SaveCtV.cshtml" />
     <Content Include="Views\CongTacVien\index.cshtml" />
     <Content Include="Views\MauInChungTu\BienBanBanGiaoNTHH_Fill.cshtml" />
     <Content Include="Views\MauInChungTu\BienBanBanGiaoNTHH_Index.cshtml" />

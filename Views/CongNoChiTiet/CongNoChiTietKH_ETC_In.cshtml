@@ -659,6 +659,7 @@
 
                             foreach (DataRow row3 in Model.Tables[0].Rows)
                             {
+
                                 if (currentDT == null || currentDT != row3["Ma_Dt"].ToString())
                                 {
                                     // Nếu cột "Ten_Dt" thay đổi, thêm hàng mới
@@ -740,6 +741,7 @@
 
                             }
                             //Thêm hàng cuối cùng
+
                             if (currentDT != null)
                             {
                                 <tr style="padding:5px">
