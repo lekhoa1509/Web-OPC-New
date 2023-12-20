@@ -101,9 +101,9 @@
                                 <td style="text-align:right">@row2["Ma_DT"]</td>
                                 <td>@row2["Ten_Dt"]</td>
                                 <td>@row2["Ma_dvcs"]</td>
-                                <td><a href="#">Edit</a></td>
-                                <td><a href="#">Đình Chỉ</a></td>
-                                <td hidden>@row2["CTVId"]</td>
+                                <td><a href="#" class="editBtn">Chỉnh Sửa</a></td>
+                                <td><a href="#" class="Coppy">Thêm Bản Sao Mới</a></td>
+                                <td hidden class="ctvid">@row2["CTVId"]</td>
                             </tr>
                             }
 
@@ -138,6 +138,16 @@
                // Redirect to the specified URL when the button is clicked
                window.location.href = '/congtacvien/InputCTV';
            });
+       });
+
+       $('.editBtn').click(function () {
+           var ctvId = $(this).closest('tr').find('.ctvid').text();
+           window.location.href = '/congtacvien/EditCTV?CTVId=' + ctvId;
+       });
+
+       $('.Coppy').click(function () {
+           var ctvId = $(this).closest('tr').find('.ctvid').text();
+           window.location.href = '/congtacvien/CoppyCTV?CTVId=' + ctvId;
        });
    </script>
    

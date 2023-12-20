@@ -1,4 +1,4 @@
-﻿@model web4.Models.CTV
+﻿@using System.Data;
 <html lang="en">
 
 <head>
@@ -7,6 +7,10 @@
     <title>Form cộng tác viên</title>
     <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assets/css/Application-Form.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
     <style>
         #dropdownInput, #selectedOption {
             border: 1px solid #ccc;
@@ -37,13 +41,16 @@
         .han-muc-input {
             width: 20%; /* Adjust width as needed */
         }
-        .ten-vt-input{
-            width:80%;
+
+        .ten-vt-input {
+            width: 80%;
         }
-        .ma-vt-input{
+
+        .ma-vt-input {
             width: 20%;
         }
-        #SaveCtV {
+
+        #UpdateCTV {
             display: block;
             margin: 10px auto; /* Center the buttons and add some spacing */
             padding: 10px 20px; /* Adjust padding as needed */
@@ -55,7 +62,6 @@
             cursor: pointer;
             background-color: #218838; /* Darker green on hover */
         }
-            
     </style>
 </head>
 
@@ -63,58 +69,73 @@
     <section>
         <h1 class="text-center text-capitalize">Hạn Mức Cộng Tác Viên</h1>
         <div class="container">
-          
-                <form action="SaveCtV" method="post">
+
+
+            <form action="SaveCtV" method="post">
                 @*<form>*@
+                @foreach (DataRow row2 in Model.Tables[0].Rows)
+                {
+
+                    DateTime ngayCt = (DateTime)row2["Ngay_Ct"];
+                    string formattedNgayCt = ngayCt.ToString("dd/MM/yyyy");
+
+
                     <div class="form-group mb-3">
                         <div class="row">
                             <div class="col">
-                                <p><strong>1. Ngày</strong>&nbsp;<span class="text-danger">*</span></p><input class="form-control" type="date" required="" name="Ngay_Ct" id="Ngay_Ct">
+                                <p><strong>1. Ngày</strong>&nbsp;<span class="text-danger">*</span></p>
+                                <input class="form-control datepicker" type="text" required="" name="Ngay_Ct" id="Ngay_Ct" value="@formattedNgayCt" />
                             </div>
                             <div class="col">
-                                <p><strong>2. SỐ</strong>&nbsp;<span class="text-danger">*</span></p><input class="form-control" type="text" required="" name="So_Ct" id="So_Ct">
+                                <p><strong>2. SỐ</strong>&nbsp;<span class="text-danger">*</span></p><input class="form-control" type="text" required="" name="So_Ct" id="So_Ct" value="@row2["So_Ct"]" readonly>
                             </div>
                         </div>
                     </div>
                     <div class="form-group mb-3">
                         <p><strong>3.Đơn Vị Cơ Sở</strong><span class="text-danger">*</span></p>
                     </div><select class="form-select" name="Dvcs" id="Dvcs">
-                        <option value="OPC_B1" selected="">Công Ty Cổ Phần Dược Phẩm OPC</option>
-                        <option value="OPC_TP" selected="">Chi Nhánh Hồ Chí Minh</option>
-                        <option value="OPC_CT" selected="">Chi nhánh Cần Thơ</option>
-                        <option value="OPC_TG" selected="">Chi Nhánh Tiền Giang</option>
-                        <option value="OPC_MD" selected="">Chi nhánh Miền Đông</option>
-                        <option value="OPC_VT" selected="">Chi Nhánh Vũng Tàu</option>
-                        <option value="OPC_NT" selected="">Chi Nhánh Nha Trang</option>
-                        <option value="OPC_DN" selected="">Chi Nhánh Đà Nẵng</option>
-                        <option value="OPC_NA" selected="">Chi Nhánh Nghệ An</option>
-                        <option value="OPC_HN" selected="">Chi Nhánh Hà Nội</option>
+                        <option value="OPC_B1" @(row2["Dvcs"].ToString() == "OPC_B1" ? "selected" : "")>Công Ty Cổ Phần Dược Phẩm OPC</option>
+                        <option value="OPC_TP" @(row2["Dvcs"].ToString() == "OPC_TP" ? "selected" : "")>Chi Nhánh Hồ Chí Minh</option>
+                        <option value="OPC_CT" @(row2["Dvcs"].ToString() == "OPC_CT" ? "selected" : "")>Chi nhánh Cần Thơ</option>
+                        <option value="OPC_TG" @(row2["Dvcs"].ToString() == "OPC_TG" ? "selected" : "")>Chi Nhánh Tiền Giang</option>
+                        <option value="OPC_MD" @(row2["Dvcs"].ToString() == "OPC_MD" ? "selected" : "")>Chi nhánh Miền Đông</option>
+                        <option value="OPC_VT" @(row2["Dvcs"].ToString() == "OPC_VT" ? "selected" : "")>Chi Nhánh Vũng Tàu</option>
+                        <option value="OPC_NT" @(row2["Dvcs"].ToString() == "OPC_NT" ? "selected" : "")>Chi Nhánh Nha Trang</option>
+                        <option value="OPC_DN" @(row2["Dvcs"].ToString() == "OPC_DN" ? "selected" : "")>Chi Nhánh Đà Nẵng</option>
+                        <option value="OPC_NA" @(row2["Dvcs"].ToString() == "OPC_NA" ? "selected" : "")>Chi Nhánh Nghệ An</option>
+                        <option value="OPC_HN" @(row2["Dvcs"].ToString() == "OPC_HN" ? "selected" : "")>Chi Nhánh Hà Nội</option>
                     </select>
+
                     <div class="form-group mb-3">
                         <p><strong>4. Đối Tượng&nbsp;</strong></p>
                     </div>
-                    <input type="text" id="dropdownInput" list="dropdownList" placeholder="Tìm kiếm danh mục" name="Ma_Dt">
+                    <input type="text" id="dropdownInput" list="dropdownList" placeholder="Tìm kiếm danh mục" name="Ma_Dt" value="@row2["Ma_Dt"]">
                     <datalist id="dropdownList">
                         @foreach (var item in ViewBag.DataItems)
                         {
                             <option value="@item.Ma_Dt" data-ten="@item.Ten_Dt" data-dvcs="@item.Dvcs">@item.Ten_Dt</option>
                         }
                     </datalist>
-                    <input name="Ten_Dt" id="selectedOption" readonly>
-                    <table id="example" class="table table-striped table-bordered">
-                        <thead class="table-dark">
-                            <tr>
-                                <th>Mã Vt</th>
-                                <th>Tên Vt</th>
-                                <th>Hạn Mức</th>
-                                <th>Xóa</th>
+                    <input name="Ten_Dt" id="selectedOption" value="@row2["Ten_Dt"]" readonly>
+                    <input name="CTVid" id="CtvId" value="@row2["CTVId"]" readonly hidden>
 
-                            </tr>
-                        </thead>
-                        <tbody>
+                }
+                <table id="example" class="table table-striped table-bordered">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Mã Vt</th>
+                            <th>Tên Vt</th>
+                            <th>Hạn Mức</th>
+                            <th>Xóa</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (DataRow row2 in Model.Tables[1].Rows)
+                        {
                             <tr>
                                 <td>
-                                    <input type="text" name="Ma_vt" id="Ma_vt" list="dropdownListVT" placeholder="Tìm kiếm danh mục">
+                                    <input type="text" name="Ma_vt" id="Ma_vt" list="dropdownListVT" value="@row2["Ma_Vt_SAP"]">
                                     <datalist id="dropdownListVT">
                                         @foreach (var item in ViewBag.DataItems2)
                                         {
@@ -122,24 +143,27 @@
                                         }
                                     </datalist>
                                 </td>
-                                <td> <input name="Ten_Vt" id="Ten_Vt" readonly></td>
-                                <td><input type="text" name="Han_Muc" class="han-muc-input" oninput="this.value = this.value.replace(/[^0-9.]/g, \'\')" /></td>
+                                <td><input type="text" name="Ten_Vt" id="Ten_Vt" list="dropdownListVT" value="@row2["Ten_Vt"]"> </td>
+                                <td><input type="text" name="Han_Muc" id="Han_Muc" list="dropdownListVT" value="@row2["Han_Muc"]"></td>
                                 <td><button class="deleteRowBtn">Xóa</button></td>
+
                             </tr>
-                        </tbody>
-                    </table>
-                    <button type="button" id="addRowBtn">Thêm dòng</button>
-                    <button class="submit" type="submit" id="SaveCtV">Lưu</button>
-                </form>
-            
-            </div>
+                        }
+                    </tbody>
+                </table>
+                <button type="button" id="addRowBtn">Thêm dòng</button>
+                <button class="submit" type="submit" id="UpdateCTV">Lưu</button>
+
+            </form>
+
+        </div>
     </section>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="/assets/js/Application-Form-1.js"></script>
     <script src="/assets/js/Application-Form.js"></script>
     @*</ng-><script src="/assets/js/script.js"></script>*@
-  
+
     <script>
         document.getElementById("dropdownInput").addEventListener("input", function () {
             var inputValue = this.value;
@@ -271,12 +295,12 @@
         });
     });
 
-        function SaveCtV(data) {
+        function UpdateCTV(data) {
             return $.ajax({
                 contentType: 'application/json; charset=utf-8',
                 dataType: 'json',
                 type: 'POST',
-                url: "/CongTacVien/SaveCtV",
+                url: "/CongTacVien/UpdateCTV",
                 data: data,
                 success: function (result) {
                     alert(result);
@@ -291,7 +315,7 @@
             });
         }
         //Collect Multiple Order List For Pass To Controller
-        $("#SaveCtV").click(function (e) {
+        $("#UpdateCTV").click(function (e) {
             e.preventDefault();
 
             var orderArr = [];
@@ -319,21 +343,27 @@
                 Dvcs: $("#Dvcs").val(),
                 Ma_Dt: $("#dropdownInput").val(),
                 Ten_Dt: $("#selectedOption").val(),
+                CTVId: $("#CtvId").val(),
+
                 details: orderArr
             });
 
-            $.when(SaveCtV(data)).then(function (response) {
+            $.when(UpdateCTV(data)).then(function (response) {
                 console.log(response);
             }).fail(function (err) {
                 console.log(err);
             });
         });
-
+        $(document).ready(function () {
+            $('.datepicker').datepicker({
+                dateFormat: 'dd/mm/yy' // Set the desired date format
+                // Add other options if needed
+            });
+        });
     </script>
 
 
 
-   
 
 
 </body>

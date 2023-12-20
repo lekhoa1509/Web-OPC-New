@@ -698,7 +698,7 @@
                                     {
                                         <td></td>
                                     }
-                                    @*<td>@row3["Ten_TDV"]</td>*@
+                                    <td>@row3["Ten_TDV"]</td>
                                     <td>@row3["Han_Muc_No"]</td>
                                     <td>@row3["Ngay_Ct2"]</td>
                                     <td>@row3["So_Ct_Einv"]</td>
@@ -707,10 +707,10 @@
                                     <td style="text-align:right">@string.Format("{0:#,###}", row3["Cong_No"]).Replace(",", ".")</td>
                                     <td>@row3["Ngay_Den_Han2"]</td>
                                     <td style="text-align:right">@row3["So_Ngay_QH"]</td>
-                                    <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row3["So_Tien_QH_1"])).Replace(",", ".")</td>
-                                    <td style="text-align:right"> @String.Format("{0:n0}", Convert.ToDecimal(row3["So_Tien_QH_2"])).Replace(",", ".")</td>
-                                    <td style="text-align:right"> @String.Format("{0:n0}", Convert.ToDecimal(row3["So_Tien_QH_3"])).Replace(",", ".")</td>
-                                    <td style="text-align:right"> @String.Format("{0:n0}", Convert.ToDecimal(row3["So_Tien_QH_4"])).Replace(",", ".")</td>
+                                    <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row3["So_Tien_QH_1"])).Replace(".", ",")</td>
+                                    <td style="text-align:right"> @String.Format("{0:n0}", Convert.ToDecimal(row3["So_Tien_QH_2"])).Replace(".", ",")</td>
+                                    <td style="text-align:right"> @String.Format("{0:n0}", Convert.ToDecimal(row3["So_Tien_QH_3"])).Replace(".", ",")</td>
+                                    <td style="text-align:right"> @String.Format("{0:n0}", Convert.ToDecimal(row3["So_Tien_QH_4"])).Replace(".", ",")</td>
                                 </tr>
                                 stt++;
                                 var congnofirst = string.Format("{0:#,###}", row3["Cong_No"]);
@@ -723,14 +723,28 @@
                                 string kq2string = kq2.Replace(".", "");
                                 string kq3string = kq3.Replace(".", "");
                                 string kq4string = kq4.Replace(".", "");
-                                totalCongNo += Convert.ToInt32(row3["Cong_No"]);
-                                total1 += Convert.ToInt32(row3["So_Tien_QH_1"]);
-                                total2 += Convert.ToInt32(row3["So_Tien_QH_2"]);
-                                total3 += Convert.ToInt32(row3["So_Tien_QH_3"]);
-                                total4 += Convert.ToInt32(row3["So_Tien_QH_4"]);
-
-
-
+                                int congNo;
+                                int result1, result2, result3, result4;
+                                if (int.TryParse(congNoString, out congNo))
+                                {
+                                    totalCongNo += congNo;
+                                }
+                                if (int.TryParse(kq1string, out result1))
+                                {
+                                    total1 += result1;
+                                }
+                                if (int.TryParse(kq2string, out result2))
+                                {
+                                    total2 += result2;
+                                }
+                                if (int.TryParse(kq3string, out result3))
+                                {
+                                    total3 += result3;
+                                }
+                                if (int.TryParse(kq4string, out result4))
+                                {
+                                    total4 += result4;
+                                }
                                 string totalCongNoString = totalCongNo.ToString("N0", CultureInfo.InvariantCulture);
                                 string total1string = total1.ToString("N0", CultureInfo.InvariantCulture);
                                 string total2string = total2.ToString("N0", CultureInfo.InvariantCulture);

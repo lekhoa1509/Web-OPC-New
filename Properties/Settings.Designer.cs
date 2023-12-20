@@ -166,5 +166,14 @@ namespace web4.Properties {
                 return ((string)(this["Ten_Vt"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string CTVid {
+            get {
+                return ((string)(this["CTVid"]));
+            }
+        }
     }
 }
