@@ -17,7 +17,7 @@ namespace web4.Controllers
         SqlCommand sqlc = new SqlCommand();
         SqlDataReader dt;
         // GET: BaoCaoTienVeCN
-        SAP_OPCEntities3 db = new SAP_OPCEntities3();
+       
 
         public void connectSQL()
         {
