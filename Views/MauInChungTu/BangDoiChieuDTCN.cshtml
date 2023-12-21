@@ -773,21 +773,27 @@
 
         </form>
     </div>
-    <button id="export-button" onclick="exportExcel()">Xuất Excel</button>
+    <button id="exportbutton">Xuất Excel</button>
+    <script src="~/Scripts/table2excel.js"></script>
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <input type="file" id="file-input" style="display: none">
+    <script src="//cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
-    <script type="text/javascript">
-        $(function () {
-            $("#export-button").click(function () {
-                $("#export").table2excel({
-                    filename: "ThongBaoNoQH.xls"
-                });
-            });
+    <script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.3/xlsx.full.min.js"></script>
+    <script>
+        document.getElementById("exportbutton").addEventListener('click', function () {
+            var table2excel = new Table2Excel();
+
+            // Tạo tên file dựa trên thời gian
+            var currentDate = new Date();
+            var fileName = "DoiChieuDTCN_" + currentDate.getFullYear() + (currentDate.getMonth() + 1) + currentDate.getDate() + ".xlsx";
+
+            table2excel.export(document.querySelectorAll("#export"), fileName);
         });
 
     </script>
