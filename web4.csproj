@@ -995,6 +995,7 @@
     <Content Include="Scripts\ej\web\ej.uploadbox.min.js" />
     <Content Include="Scripts\ej\web\ej.waitingpopup.min.js" />
     <Content Include="Scripts\ej\web\ej.web.all.min.js" />
+    <Content Include="Scripts\excellentexport.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />
     <Content Include="Scripts\jquery-2.2.3.min.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -1163,6 +1164,7 @@
     <Content Include="Views\CongTacVien\CoppyCTV.cshtml" />
     <Content Include="Views\SoQuyTienMat\SoQuyTienMat_Fill.cshtml" />
     <Content Include="Views\SoQuyTienMat\SoQuyTienMat.cshtml" />
+    <Content Include="Views\SoQuyTienMat\SoQuyTienMat_In.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

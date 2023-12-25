@@ -45,7 +45,7 @@ namespace web4.Controllers
             var fromDate = Request.Cookies["From_date"].Value;
             var toDate = Request.Cookies["To_Date"].Value;
             var MaDt = Request.Cookies["Ma_Dt"] != null ? Request.Cookies["Ma_Dt"].Value : string.Empty;
-            var MaTDV = Request.Cookies["Ma_TDV"].Value;
+            //var MaTDV = Request.Cookies["Ma_TDV"].Value;
             DataSet ds = new DataSet();
             //if (ma_dvcs == "OPC_B1")
             //{
@@ -78,7 +78,7 @@ namespace web4.Controllers
                     cmd.Parameters.AddWithValue("@_Tu_Ngay", fromDate);
                     cmd.Parameters.AddWithValue("@_Den_Ngay", toDate);
                     cmd.Parameters.AddWithValue("@_Ma_Dt", MaDt);
-                    cmd.Parameters.AddWithValue("@_Ma_CbNv", MaTDV);
+                    //cmd.Parameters.AddWithValue("@_Ma_CbNv", MaTDV);
                     cmd.Parameters.AddWithValue("@_Ma_DvCs", ma_dvcs);
                     sda.Fill(ds);
 

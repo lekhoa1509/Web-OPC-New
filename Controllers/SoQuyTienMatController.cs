@@ -66,5 +66,37 @@ namespace web4.Controllers
             }
             return View(ds);
         }
+        public ActionResult SoQuyTienMat_In(Account Acc)
+        {
+            DataSet ds = new DataSet();
+            connectSQL();
+            Acc.Ma_DvCs_1 = Request.Cookies["MA_DVCS"].Value;
+            //string query = "exec usp_Vth_BC_BHCNTK_CN @_ngay_Ct1 = '" + Acc.From_date + "',@_Ngay_Ct2 ='"+ Acc.To_date+"',@_Ma_Dvcs='"+ Acc.Ma_DvCs_1+"'";
+            string Pname = "[usp_SoQuyTienMat_SAP]";
+            var Ma_TK = Request.Cookies["Ma_TK"].Value;
+            ViewBag.ProcedureName = Pname;
+
+            using (SqlCommand cmd = new SqlCommand(Pname, con))
+            {
+                cmd.CommandTimeout = 950;
+
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                Acc.Ma_DvCs_1 = Request.Cookies["MA_DVCS"].Value;
+                using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                {
+
+                    cmd.Parameters.AddWithValue("@_Tu_Ngay", Acc.From_date);
+                    cmd.Parameters.AddWithValue("@_Den_Ngay", Acc.To_date);
+                    cmd.Parameters.AddWithValue("@_ma_dvcs", Acc.Ma_DvCs_1);
+                    cmd.Parameters.AddWithValue("@_Tk", Ma_TK);
+
+                    sda.Fill(ds);
+
+                }
+
+            }
+            return View(ds);
+        }
     }
 }

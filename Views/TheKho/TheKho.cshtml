@@ -20,9 +20,7 @@
 
 
     <style>
-        a:hover {
-            background-color: lightskyblue;
-        }
+    
 
         * {
             font-family: "Times New Roman";
@@ -775,7 +773,8 @@
                     </div>
 
                 </form>
-                <button id="exportbutton" style="border-radius: 20px; margin-left: 10px; margin-bottom: 10px;margin-top:10px; background-color: #aec9e0; color: #3483bd ">Xuất Excel </button>
+                <button style="border-radius: 10px; margin-left: 10px; margin-bottom: 10px;margin-top:10px; background-color: #aec9e0; color: #3483bd ">  
+                <a onclick="return ExcellentExport.excel(this, 'example', 'Sheet 1');" download="TheKho.xls" style="color: #3483bd">Xuất Excel </a> </button>
                 @*<div>
                         <button onclick="printPage()">
                             <i class="fa-solid fa-print"></i>
@@ -869,8 +868,10 @@
     <script src="~/assets/js/custom.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-    <script src="~/Scripts/table2excel.js"></script>
-    <script>
+    <script src="https://unpkg.com/excellentexport@4.0.0/dist/excellentexport.min.js"></script>
+
+    <script src="~/Scripts/excellentexport.js"></script>
+    @*<script>
         document.getElementById("exportbutton").addEventListener('click', function () {
             var table2excel = new Table2Excel();
 
@@ -881,7 +882,7 @@
             table2excel.export(document.querySelectorAll("#example"), fileName);
         });
 
-    </script>
+    </script>*@
     <script>
         $(document).ready(function () {
             $("#dropdownMaTDV").select2();
