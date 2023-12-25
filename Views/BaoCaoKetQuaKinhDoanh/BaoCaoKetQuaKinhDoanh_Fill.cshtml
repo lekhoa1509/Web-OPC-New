@@ -580,7 +580,7 @@
                         <input class="den_ngay" id="den_ngay" placeholder=" Đến Ngày" name="To_date" type="DATE" format="YYYY-MM-DD" value="@Request.QueryString["To_date"]" /><br /><br />
                         <script>$("#den_ngay").datetimepicker({ timepicker: false, format: 'Y-m-d' });</script>
                     </div>
-                    <h6>Chọn Đối Tượng:</h6>
+                    @*<h6>Chọn Đối Tượng:</h6>
 
                     <input type="text" id="dropdownInput" list="dropdownList" placeholder="Tìm kiếm đối tượng">
                     <datalist id="dropdownList">
@@ -599,7 +599,7 @@
                             <option value="@item.Ma_CbNv" data-Ma_CbNv="@item.Ma_CbNv">@item.Ma_CbNv @item.hoten</option>
                         }
                     </datalist>
-                    <input type="hidden" name="Ma_TDV" id="selectedOptionTDV">
+                    <input type="hidden" name="Ma_TDV" id="selectedOptionTDV">*@
 
 
                     @*<div class="select-btn" style="width:100px;margin-top:10px">

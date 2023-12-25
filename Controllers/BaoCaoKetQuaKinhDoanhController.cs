@@ -31,16 +31,16 @@ namespace web4.Controllers
         }
         public ActionResult BaoCaoKetQuaKinhDoanh_Fill()
         {
-            List<MauInChungTu> dmDlist = LoadDmDt("");
-            List<BKHoaDonGiaoHang> dmDlistTDV = LoadDmTDV();
-            ViewBag.DataItems = dmDlist;
-            ViewBag.DataTDV = dmDlistTDV;
+            //List<MauInChungTu> dmDlist = LoadDmDt("");
+            //List<BKHoaDonGiaoHang> dmDlistTDV = LoadDmTDV();
+            //ViewBag.DataItems = dmDlist;
+            //ViewBag.DataTDV = dmDlistTDV;
             return View();
         }
         public ActionResult BaoCaoKetQuaKinhDoanh()
         {
-            List<MauInChungTu> dmDlist = LoadDmDt("");
-            List<BKHoaDonGiaoHang> dmDlistTDV = LoadDmTDV();
+            //List<MauInChungTu> dmDlist = LoadDmDt("");
+            //List<BKHoaDonGiaoHang> dmDlistTDV = LoadDmTDV();
             string ma_dvcs = Request.Cookies["MA_DVCS"].Value;
             var fromDate = Request.Cookies["From_date"].Value;
             var toDate = Request.Cookies["To_Date"].Value;
@@ -53,8 +53,8 @@ namespace web4.Controllers
             //    string first3Chars = ma_dvcsFirst3Chars.Substring(0, 3);
             //    ma_dvcs = first3Chars;
             //}
-            ViewBag.DataTDV = dmDlistTDV;
-            ViewBag.DataItems = dmDlist;
+            //ViewBag.DataTDV = dmDlistTDV;
+            //ViewBag.DataItems = dmDlist;
             connectSQL();
             //var SoCT = Request.Cookies["So_Ct"] != null ? Request.Cookies["So_Ct"].Value : "";
             //MauIn.So_Ct = Request.Cookies["SoCt"].Value;

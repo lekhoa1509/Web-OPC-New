@@ -320,6 +320,7 @@
     <Compile Include="Controllers\PhanTichBanHangController.cs" />
     <Compile Include="Controllers\PhieuKeToanController.cs" />
     <Compile Include="Controllers\SoChiTietPhaiThuController.cs" />
+    <Compile Include="Controllers\SoQuyTienMatController.cs" />
     <Compile Include="Controllers\TheKhoController.cs" />
     <Compile Include="Controllers\TheoDoiHDThauController.cs" />
     <Compile Include="Controllers\BaoCaoDoanhThuGamHangTheoDoiTuongController.cs" />
@@ -1160,6 +1161,8 @@
     <Content Include="Views\BaoCaoBanHangTDV\BaoCaoBanHangTDV_DB.cshtml" />
     <Content Include="Views\CongTacVien\EditCTV.cshtml" />
     <Content Include="Views\CongTacVien\CoppyCTV.cshtml" />
+    <Content Include="Views\SoQuyTienMat\SoQuyTienMat_Fill.cshtml" />
+    <Content Include="Views\SoQuyTienMat\SoQuyTienMat.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

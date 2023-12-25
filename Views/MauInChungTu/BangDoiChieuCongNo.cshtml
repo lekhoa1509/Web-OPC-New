@@ -948,24 +948,48 @@
 
         </form>
     </div>
-    <button id="export-button" onclick="exportExcel()">Xuất Excel</button>
+    <button id="exportbutton">Xuất Excel</button>
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <input type="file" id="file-input" style="display: none">
+    <script src="~/Scripts/table2excel.js"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
-    <script type="text/javascript">
-        $(function () {
-            $("#export-button").click(function () {
-                $("#export").table2excel({
-                    filename: "ThongBaoNoQH.xls"
-                });
-            });
-        });
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
 
+    <script>
+        document.getElementById("exportbutton").addEventListener('click', function () {
+            // Tạo workbook
+            var wb = XLSX.utils.book_new();
+
+            // Lấy nội dung của bảng 1
+            var table1Content = document.getElementById("export").outerHTML;
+            var ws1 = XLSX.read(table1Content, { type: 'string' });
+
+            // Lấy nội dung của bảng 2
+            var table2Content = document.getElementById("export2").outerHTML;
+            var ws2 = XLSX.read(table2Content, { type: 'string' });
+
+            // Thêm sheet vào workbook
+            XLSX.utils.book_append_sheet(wb, ws1.Sheets[ws1.SheetNames[0]], 'Sheet1');
+            XLSX.utils.book_append_sheet(wb, ws2.Sheets[ws2.SheetNames[0]], 'Sheet2');
+
+            // Tạo tên file dựa trên thời gian
+            var currentDate = new Date();
+            var fileName = "BangDoiChieuCongNo_" + currentDate.getFullYear() + (currentDate.getMonth() + 1) + currentDate.getDate() + ".xlsx";
+
+            // Lưu workbook thành file
+            XLSX.writeFile(wb, fileName);
+        });
     </script>
+
+
+
+
+
+
     <script>
         function showFileInput() {
             // Sử dụng JavaScript để kích hoạt hộp thoại chọn vị trí lưu tệp
@@ -1129,6 +1153,43 @@
 
     </script>
     @*<script>
+            document.addEventListener("DOMContentLoaded", function () {
+                var tableData = []; // Mảng lưu dữ liệu
+
+                // Lặp qua từng hàng trong bảng
+                var rows = document.querySelectorAll("#export2 tbody tr");
+                rows.forEach(function (row) {
+                    var rowData = [];
+                    var cells = row.querySelectorAll("td");
+
+                    // Lặp qua từng ô dữ liệu trong hàng
+                    cells.forEach(function (cell) {
+                        rowData.push(cell.textContent);
+                    });
+
+                    tableData.push(rowData); // Thêm mảng dữ liệu hàng vào mảng tableData
+                });
+
+                // Chia mảng thành 5 phần (hoặc số phần bạn muốn)
+                var partSize = Math.ceil(tableData.length / 10);
+                var parts = [];
+                for (var i = 0; i < 10; i++) {
+                    var start = i * partSize;
+                    var end = (i === 9) ? tableData.length : start + partSize;
+                    var part = tableData.slice(start, end);
+                    parts.push(part);
+                }
+
+                // Chuyển mỗi phần thành chuỗi JSON và lưu vào các cookie riêng rẽ
+                for (var i = 0; i < parts.length; i++) {
+                    var partJSON = JSON.stringify(parts[i]);
+                    var cookieName = "tableDataCookieHD" + (i + 1);
+                    Cookies.set(cookieName, partJSON);
+                }
+            });
+
+        </script>*@
+    <script>
         document.addEventListener("DOMContentLoaded", function () {
             var tableData = []; // Mảng lưu dữ liệu
 
@@ -1146,63 +1207,26 @@
                 tableData.push(rowData); // Thêm mảng dữ liệu hàng vào mảng tableData
             });
 
-            // Chia mảng thành 5 phần (hoặc số phần bạn muốn)
-            var partSize = Math.ceil(tableData.length / 10);
-            var parts = [];
-            for (var i = 0; i < 10; i++) {
-                var start = i * partSize;
-                var end = (i === 9) ? tableData.length : start + partSize;
-                var part = tableData.slice(start, end);
-                parts.push(part);
-            }
-
+            // Chia mảng thành 2 phần (mỗi phần có 40 dòng dữ liệu)
+            var chunkSize = 23;
+            var part1 = tableData.slice(0, chunkSize);
+            var part2 = tableData.slice(chunkSize, chunkSize * 2);
+            /*   var part3 = tableData.slice(chunkSize * 2, chunkSize * 3);*/
+            /*    var part4 = tableData.slice(chunkSize * 3);*/
             // Chuyển mỗi phần thành chuỗi JSON và lưu vào các cookie riêng rẽ
-            for (var i = 0; i < parts.length; i++) {
-                var partJSON = JSON.stringify(parts[i]);
-                var cookieName = "tableDataCookieHD" + (i + 1);
-                Cookies.set(cookieName, partJSON);
-            }
+            var part1JSON = JSON.stringify(part1);
+            var part2JSON = JSON.stringify(part2);
+            /*    var part3JSON = JSON.stringify(part3);*/
+            /* var part4JSON = JSON.stringify(part4);*/
+
+            Cookies.set("tableDataCookieHD1", part1JSON);
+            Cookies.set("tableDataCookieHD2", part2JSON);
+            /*           Cookies.set("tableDataCookieHD3", part3JSON);*/
+            /*     Cookies.set("tableDataCookieHD4", part4JSON);*/
         });
 
-    </script>*@
-    <script>
-               document.addEventListener("DOMContentLoaded", function () {
-                   var tableData = []; // Mảng lưu dữ liệu
 
-                   // Lặp qua từng hàng trong bảng
-                   var rows = document.querySelectorAll("#export2 tbody tr");
-                   rows.forEach(function (row) {
-                       var rowData = [];
-                       var cells = row.querySelectorAll("td");
-
-                       // Lặp qua từng ô dữ liệu trong hàng
-                       cells.forEach(function (cell) {
-                           rowData.push(cell.textContent);
-                       });
-
-                       tableData.push(rowData); // Thêm mảng dữ liệu hàng vào mảng tableData
-                   });
-
-                   // Chia mảng thành 2 phần (mỗi phần có 40 dòng dữ liệu)
-                   var chunkSize = 23;
-                   var part1 = tableData.slice(0, chunkSize);
-                   var part2 = tableData.slice(chunkSize, chunkSize * 2);
-                /*   var part3 = tableData.slice(chunkSize * 2, chunkSize * 3);*/
-               /*    var part4 = tableData.slice(chunkSize * 3);*/
-                   // Chuyển mỗi phần thành chuỗi JSON và lưu vào các cookie riêng rẽ
-                   var part1JSON = JSON.stringify(part1);
-                   var part2JSON = JSON.stringify(part2);
-               /*    var part3JSON = JSON.stringify(part3);*/
-                  /* var part4JSON = JSON.stringify(part4);*/
-
-                   Cookies.set("tableDataCookieHD1", part1JSON);
-                   Cookies.set("tableDataCookieHD2", part2JSON);
-        /*           Cookies.set("tableDataCookieHD3", part3JSON);*/
-              /*     Cookies.set("tableDataCookieHD4", part4JSON);*/
-               });
-
-
-           </script>
+    </script>
     <script>
   function exportExcel() {
     window.location.href = '@Url.Action("ExportBaoCaoCongNo", "MauInChungTu")';

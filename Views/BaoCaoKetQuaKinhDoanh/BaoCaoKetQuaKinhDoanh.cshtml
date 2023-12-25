@@ -634,27 +634,7 @@
                         <input class="den_ngay" id="den_ngay" placeholder=" Đến Ngày" name="To_date" type="DATE" format="YYYY-MM-DD" value="@Request.QueryString["To_date"]" /><br /><br />
                         <script>$("#den_ngay").datetimepicker({ timepicker: false, format: 'Y-m-d' });</script>
                     </div>
-                    <h6>Chọn Đối Tượng:</h6>
-
-                    <input type="text" id="dropdownInput" list="dropdownList" placeholder="Tìm kiếm đối tượng">
-                    <datalist id="dropdownList">
-                        @foreach (var item in ViewBag.DataItems)
-                        {
-                            <option value="@item.Ma_Dt" data-ten="@item.Ma_Dt" data-diachi="@item.Dia_Chi" data-dvcs="@item.Dvcs" data-dvcs1="@item.Dvcs1">@item.Ten_Dt</option>
-                        }
-                    </datalist>
-                    <input type="hidden" name="Ma_Dt" id="selectedOption">
-                    <br /><br />
-                    <h6>Chọn TDV:</h6>
-                    <input type="text" id="dropdownInputTDV" list="dropdownListTDV" placeholder="Tìm kiếm TDV">
-                    <datalist id="dropdownListTDV">
-                        @foreach (var item in ViewBag.DataTDV)
-                        {
-                            <option value="@item.Ma_CbNv" data-Ma_CbNv="@item.Ma_CbNv">@*@item.Ma_CbNv*@ @item.hoten</option>
-
-                        }
-                    </datalist>
-                    <input type="hidden" name="Ma_TDV" id="selectedOptionTDV">
+               
                     <div>
                         <button class="submit" type="submit" id="runReportButton" onclick="runReport();saveNgay()">
                             Chạy Báo Cáo
@@ -700,10 +680,11 @@
         <div class="row">
             <div class="col-12">
                 <div class="data_table" style="height:max-content;width:1400px">
-                    <div style="display:flex"> <h6 style="text-align:left">I. KẾ HOẠCH - THỰC HIỆN GAM HÀNG</h6> 
-                    <button id="exportbutton" style="border-radius: 20px; margin-left: 10px; margin-bottom: 10px; background-color: #aec9e0; color: #3483bd ">
-                      Xuất Excel
-</button>
+                    <div style="display:flex">
+                        <h6 style="text-align:left">I. KẾ HOẠCH - THỰC HIỆN GAM HÀNG</h6>
+                        <button id="exportbutton" style="border-radius: 20px; margin-left: 10px; margin-bottom: 10px; background-color: #aec9e0; color: #3483bd ">
+                            Xuất Excel
+                        </button>
                     </div>
                     <table id="example" class="table table-striped table-bordered" style="height:max-content">
                         <thead class="table-dark">
@@ -881,9 +862,11 @@
                     <div style="display: flex; flex-direction: column; margin-top: 20px; width: 700px; height: max-content">
 
                         <div class="data_table" style="height:max-content;width:700px">
-                            <div style="display:flex"> <h6 style="text-align:left">II. THỰC HIỆN THEO LOẠI KHÁCH HÀNG</h6>  <button id="exportbutton2" style="border-radius: 20px; margin-left: 10px; margin-bottom: 10px; background-color: #aec9e0; color: #3483bd ">
-    Xuất Excel
-</button></div>
+                            <div style="display:flex">
+                                <h6 style="text-align:left">II. THỰC HIỆN THEO LOẠI KHÁCH HÀNG</h6>  <button id="exportbutton2" style="border-radius: 20px; margin-left: 10px; margin-bottom: 10px; background-color: #aec9e0; color: #3483bd ">
+                                    Xuất Excel
+                                </button>
+                            </div>
 
                             <table id="example2" class="table table-striped table-bordered" style="height:max-content">
                                 <thead class="table-dark">
@@ -898,19 +881,24 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    
                                     @foreach (DataRow row2 in Model.Tables[1].Rows)
                                     {
-                                        <tr>
-                                            @*<td>@row2["Id"]</td>*@
-                                            @*<td>@row2["Ma_Loai_KH"]</td>*@
-                                            <td><strong>OTC</strong> <span class="material-symbols-outlined expandable-icon" onclick="toggleRows2(this)">arrow_drop_down</span></td>
-                                            <td style="text-align: right;color: #3483bd;font-weight:bold" id="tongdt-otc">@String.Format("{0:n0}", row2["TongDt_OTC"])</td>
-                                            <td style="text-align: right; color: #3483bd; font-weight: bold" id="tongkhoan-otc">@String.Format("{0:n0}", row2["TongKhoan_OTC"])</td>
-                                            <td style="color: #3483bd; font-weight: bold">@row2["TyLe_OTC"]%</td>
-                                            <td style="color: #3483bd; font-weight: bold ">100%</td>
+                                    <tr>
+                                        @*<td>@row2["Id"]</td>*@
+                                        @*<td>@row2["Ma_Loai_KH"]</td>*@
+                                        <td style="background-color:antiquewhite"><strong>OTC</strong> <span class="material-symbols-outlined expandable-icon" onclick="toggleRows2(this)">arrow_drop_down</span></td>
+                                        <td style="text-align: right;color: #3483bd;font-weight:bold" id="tongdt-otc">@String.Format("{0:n0}", row2["TongDt_OTC"])</td>
+                                        <td style="text-align: right; color: #3483bd; font-weight: bold" id="tongkhoan-otc">@String.Format("{0:n0}", row2["TongKhoan_OTC"])</td>
+                                        <td style="color: #3483bd; font-weight: bold">@row2["TyLe_OTC"]%</td>
+                                        @foreach (DataRow row5 in Model.Tables[7].Rows)
+                                        {
+                                            <td style="color: #3483bd; font-weight: bold ">@row5["Sum_Ty_Le_OTC"]%</td>
+                                        }
 
 
-                                        </tr>
+
+                                    </tr>
                                     }
                                     @foreach (DataRow row2 in Model.Tables[3].Rows)
                                     {
@@ -925,23 +913,26 @@
                                                 <td>@row2["Ty_Le"]%</td>
                                                 <td>@row2["Ty_Le_Co_Cau"]%</td>
 
-
+                                               
                                             </tr>
                                         }
                                     }
                                     @foreach (DataRow row2 in Model.Tables[2].Rows)
                                     {
-                                        <tr>
-                                            @*<td>@row2["Id"]</td>*@
-                                            @*<td>@row2["Ma_Loai_KH"]</td>*@
-                                            <td><strong>ETC</strong> <span class="material-symbols-outlined expandable-icon" onclick="toggleRows3(this)">arrow_drop_down</span></td>
-                                            <td style="text-align: right; color: #3483bd;font-weight:bold" id="tongdt-etc">@String.Format("{0:n0}", row2["TongDt_ETC"])</td>
-                                            <td style="text-align: right; color: #3483bd; font-weight: bold" id="tongkhoan-etc">@String.Format("{0:n0}", row2["TongKhoan_ETC"])</td>
-                                            <td style=" color: #3483bd; font-weight: bold">@row2["TyLe_ETC"]%</td>
-                                            <td style="color: #3483bd; font-weight: bold">100%</td>
+                                <tr>
+                                    @*<td>@row2["Id"]</td>*@
+                                    @*<td>@row2["Ma_Loai_KH"]</td>*@
+                                    <td style="background-color:antiquewhite"><strong>ETC</strong> <span class="material-symbols-outlined expandable-icon" onclick="toggleRows3(this)">arrow_drop_down</span></td>
+                                    <td style="text-align: right; color: #3483bd;font-weight:bold" id="tongdt-etc">@String.Format("{0:n0}", row2["TongDt_ETC"])</td>
+                                    <td style="text-align: right; color: #3483bd; font-weight: bold" id="tongkhoan-etc">@String.Format("{0:n0}", row2["TongKhoan_ETC"])</td>
+                                    <td style=" color: #3483bd; font-weight: bold">@row2["TyLe_ETC"]%</td>
+                                    @foreach (DataRow row5 in Model.Tables[7].Rows)
+                                    {
+                                        <td style="color: #3483bd; font-weight: bold ">@row5["Sum_Ty_Le_ETC"]%</td>
+                                    }
 
 
-                                        </tr>
+                                </tr>
                                     }
                                     @foreach (DataRow row2 in Model.Tables[3].Rows)
                                     {
@@ -966,7 +957,7 @@
                                         {
                                             <tr>
 
-                                                <td style="font-weight:bold ">@row2["Loai_KH"]</td>
+                                                <td style="font-weight:bold;background-color:antiquewhite ">@row2["Loai_KH"]</td>
                                                 <td style="text-align: right; color: #3483bd; font-weight: bold">@String.Format("{0:n0}", row2["Doanh_Thu"])</td>
                                                 <td style="color: #3483bd; text-align: right;font-weight:bold">@String.Format("{0:n0}", row2["Khoan"])</td>
                                                 <td style="color: #3483bd; font-weight: bold">@row2["Ty_Le"]%</td>
@@ -993,54 +984,58 @@
                             </table>
 
                         </div>@**@
-                    <div class="data_table" style="height:max-content;width:700px;margin-top:20px">
-                        <div style="display:flex"> <h6 style="text-align:left">IV. THỰC HIỆN THEO ĐƠN VỊ</h6>  <button id="exportbutton4" style="border-radius: 20px; margin-left: 10px; margin-bottom: 10px; background-color: #aec9e0; color: #3483bd ">
-    Xuất Excel
-</button></div>
+                        <div class="data_table" style="height:max-content;width:700px;margin-top:20px">
+                            <div style="display:flex">
+                                <h6 style="text-align:left">IV. THỰC HIỆN THEO ĐƠN VỊ</h6>  <button id="exportbutton4" style="border-radius: 20px; margin-left: 10px; margin-bottom: 10px; background-color: #aec9e0; color: #3483bd ">
+                                    Xuất Excel
+                                </button>
+                            </div>
 
-                        <table id="example4" class="table table-striped table-bordered" style="height:max-content">
-                            <thead class="table-dark">
-                                <tr>
-                                    <th>Mã Loại KH</th>
-                                    <th>Tên Loại KH</th>
-                                    <th>Doanh Thu</th>
-                                    <th>Tỷ Lệ Cơ Cấu</th>
-
-
-
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (DataRow row2 in Model.Tables[5].Rows)
-                                {
+                            <table id="example4" class="table table-striped table-bordered" style="height:max-content">
+                                <thead class="table-dark">
                                     <tr>
-                                        <td>@row2["Ma_LKH"]</td>
-                                        <td style="text-align:left">@row2["Ten_LKH"]</td>
-                                        <td style="text-align:right">@String.Format("{0:n0}", row2["Doanh_Thu"])</td>
-                                        <td style="text-align:right">@row2["Ty_Le_Co_Cau"]%</td>
+                                        <th>Mã Loại KH</th>
+                                        <th>Tên Loại KH</th>
+                                        <th>Doanh Thu</th>
+                                        <th>Tỷ Lệ Cơ Cấu</th>
+
 
 
                                     </tr>
-                                }
-                            </tbody>
-                            <tfoot>
-                                <tr style="background-color: burlywood;color:black;font-weight:bold">
-                                    <td colspan="2"><strong>Tổng cộng</strong></td>
+                                </thead>
+                                <tbody>
+                                    @foreach (DataRow row2 in Model.Tables[5].Rows)
+                                    {
+                                        <tr>
+                                            <td>@row2["Ma_LKH"]</td>
+                                            <td style="text-align:left">@row2["Ten_LKH"]</td>
+                                            <td style="text-align:right">@String.Format("{0:n0}", row2["Doanh_Thu"])</td>
+                                            <td style="text-align:right">@row2["Ty_Le_Co_Cau"]%</td>
 
-                                    <td id="tong-doanh-thu_2" style="text-align:right"></td>
-                                    <td>100%</td>
-                                </tr>
-                            </tfoot>
-                        </table>
 
-                    </div>
+                                        </tr>
+                                    }
+                                </tbody>
+                                <tfoot>
+                                    <tr style="background-color: burlywood;color:black;font-weight:bold">
+                                        <td colspan="2"><strong>Tổng cộng</strong></td>
+
+                                        <td id="tong-doanh-thu_2" style="text-align:right"></td>
+                                        <td>100%</td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+
+                        </div>
 
 
                     </div>
                     <div class="data_table3" style="height:max-content;width:600px; margin-top:20px">
-                        <div style="display:flex"> <h6 style="text-align:left">III. THỰC HIỆN THEO TỈNH THÀNH</h6> <button id="exportbutton3" style="border-radius: 20px; margin-left: 10px; margin-bottom: 10px; background-color: #aec9e0; color: #3483bd ">
-    Xuất Excel
-</button></div>
+                        <div style="display:flex">
+                            <h6 style="text-align:left">III. THỰC HIỆN THEO TỈNH THÀNH</h6> <button id="exportbutton3" style="border-radius: 20px; margin-left: 10px; margin-bottom: 10px; background-color: #aec9e0; color: #3483bd ">
+                                Xuất Excel
+                            </button>
+                        </div>
 
                         <table id="example3" class="table table-striped table-bordered" style="height:max-content">
                             <thead class="table-dark">
@@ -1096,7 +1091,7 @@
     <script src="~/assets/js/pdfmake.min.js"></script>
     <script src="~/assets/js/vfs_fonts.js"></script>
     <script src="~/assets/js/custom.js"></script>
-  
+
     <script src="~/Scripts/table2excel.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <script src="//cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
@@ -1306,6 +1301,33 @@
         };
 
     </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Gọi hàm tính tỷ lệ cơ cấu
+            calculateAndSetPercentage();
+
+            function calculateAndSetPercentage() {
+                // Lấy tất cả các hàng của bảng OTC
+                var rowsOTC = document.querySelectorAll(".expandable-contentOTC");
+
+                // Khởi tạo biến để lưu tổng tỷ lệ cơ cấu
+                var totalPercentage = 0;
+
+                // Lặp qua từng hàng và tính tổng tỷ lệ cơ cấu
+                rowsOTC.forEach(function (row) {
+                    var percentage = parseFloat(row.querySelector("td:nth-child(5)").textContent);
+                    totalPercentage += isNaN(percentage) ? 0 : percentage;
+                });
+
+                // Gán tỷ lệ tính được cho hàng OTC tổng
+                var totalPercentageFormatted = totalPercentage.toFixed(2) + "%";
+                document.getElementById("tyle-otc-tong").textContent = totalPercentageFormatted;
+                console.log(totalPercentage);
+            }
+        });
+    </script>
+
+
     @*<script>
             //dang lam dang do tai day
             // Lấy tất cả các ô trong cột "Doanh Thu"
