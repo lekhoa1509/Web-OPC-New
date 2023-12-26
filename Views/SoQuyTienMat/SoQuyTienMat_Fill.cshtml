@@ -1,5 +1,7 @@
 ﻿
-@{ ViewBag.Title = "PHÂN TÍCH BÁN HÀNG"; }
+
+
+@{ ViewBag.Title = "SỔ QUỸ TIỀN MẶT"; }
 @using System.Data;
 <!DOCTYPE html>
 <html lang="en">
@@ -542,7 +544,7 @@
 
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>PHÂN TÍCH BÁN HÀNG</title>
+    <title>SỔ QUỸ TIỀN MẶT</title>
     <meta content="" name="description">
     <meta content="Author" name="MJ Maraz">
     <link href="~/assets/images/favicon.png" rel="icon">
@@ -559,7 +561,7 @@
 </head>
 <!-- =============== Design & Develop By = MJ MARAZ   ====================== -->
 
-<body  style="background-color: #e0e8ee">
+<body style="background-color: #e0e8ee ">
     <div class="loader" style="z-index:1"></div>
 
     <div class="sidebar">
@@ -568,9 +570,9 @@
         </div>
         <ul class="nav-links" style="justify-content: center; display:flex;margin-left:10px">
             <li>
-                <form id="dateForm" action="PhanTichBanHang" method="post" onsubmit="handleFormSubmit(event)">
+                <form id="dateForm" action="SoQuyTienMat" method="post" onsubmit="handleFormSubmit(event)">
                     <div id="locBC">
-                        <span id="spanText" class="text-loading">[usp_PhanTichBanHang_SAP]</span>
+                        <span id="spanText" class="text-loading">[usp_SoQuyTienMat_SAP]</span>
                         <a>Từ Ngày</a><br /><br />
                         <input class="tu_ngay" placeholder="Từ Ngày" id="tu_ngay" name="From_date" type="date" format="YYYY-MM-DD" value="@Request.QueryString["From_date"]" />
                         <script>$("#tu_ngay").datetimepicker({ timepicker: false, format: 'Y-m-d' });</script><br /><br />
@@ -578,66 +580,58 @@
                         <input class="den_ngay" id="den_ngay" placeholder=" Đến Ngày" name="To_date" type="DATE" format="YYYY-MM-DD" value="@Request.QueryString["To_date"]" /><br /><br />
                         <script>$("#den_ngay").datetimepicker({ timepicker: false, format: 'Y-m-d' });</script>
                     </div>
-                    <h6>Chọn Đối Tượng</h6>
-
-                    <input type="text" id="dropdownInput" list="dropdownList" placeholder="Tìm kiếm đối tượng">
-                    <datalist id="dropdownList">
-                        @foreach (var item in ViewBag.DataItems)
-                        {
-                            <option value="@item.Ma_Dt" data-ten="@item.Ten_Dt" data-maDt="@item.Ma_Dt" data-dvcs="@item.Dvcs" data-dvcs1="@item.Dvcs1">@item.Ten_Dt</option>
-                        }
-                    </datalist>
-                    <input type="hidden" name="Ma_Dt" id="selectedOption">
-                    <h̉̉̉̉̉̉6>Tìm TDV</h̉̉̉̉̉̉6>
-                    <input type="text" id="dropdownInputTDV" list="dropdownListTDV" placeholder="Tìm kiếm TDV">
-                    <datalist id="dropdownListTDV">
-                        @foreach (var item in ViewBag.DataTDV)
-                        {
-                            <option value="@item.Ma_CbNv" data-Ma_CbNv="@item.Ma_CbNv">@*@item.Ma_CbNv*@ @item.hoten</option>
-                        }
-                    </datalist>
-                    <input type="hidden" name="Ma_TDV" id="selectedOptionTDV">
-                    <h6>Tìm Vật Tư</h6>
-                    <input type="text" id="dropdownInputVT" list="dropdownListVT" placeholder="Tìm kiếm Vật Tư">
-                    <datalist id="dropdownListVT">
-                        @foreach (var item in ViewBag.DataVT)
-                        {
-                            <option value="@item.Ma_Vt" data-TenVt="@item.Ten_Vt"data-maVT="@item.Ma_Vt">@item.Ten_Vt</option>
-                        }
-                    </datalist>
-                    <input type="hidden" name="Ma_Vt" id="selectedOptionVT">
-                    <h6>Nhóm theo</h6>
+                    <h6>Chọn Tài Khoản</h6>
                     <div class="select-btn" style="width:100px;margin-top:10px">
                         <select name="Nhom" id="nhomtheoselect" onchange="saveSelectedValueToCookie()">
                             <option value="" style="background-color: #020024;color:white">Chọn giá trị</option>
-                            <option value="ma_vt" data-nhom="1">Theo mặt hàng</option>
-                            <option value="ma_dt" data-nhom="2">Theo đối tượng</option>
-                            <option value="so_ct" data-nhom="3">Theo chứng từ</option>
-                            <option value="Loai_Vt" data-nhom="4">Theo loại sản phẩm</option>
-                            <option value="ma_tdv" data-nhom="5">Theo TDV</option>
-                            <option value="So_Hop_Dong_Ex" data-nhom="6">Theo hợp đồng</option>
-                            <option value="Ma_LKH" data-nhom="7">Theo Loại KH</option>
+                            <option value="1111">1111</option>
+                            <option value="1121">1121</option>
+                            <option value="1131">1131</option>
+
                         </select>
                     </div>
-                    <br />
-                    <h6>Chi tiết</h6>
-                    <div class="select-btn" style="width:100px;margin-top:10px">
-                        <select name="Chitiet" id="chitietselect" onchange="saveSelectedValueToCookie2()">
-                            <option value="" style="background-color: #020024;color:white">Chọn giá trị</option>
-                            <option value="ma_vt" data-chitiet="1">Theo mặt hàng</option>
-                            <option value="ma_dt" data-chitiet="2">Theo đối tượng</option>
-                            <option value="so_ct" data-chitiet="3">Theo chứng từ</option>
-                            <option value="Loai_Vt" data-chitiet="4">Theo loại sản phẩm</option>
-                            <option value="ma_tdv" data-chitiet="5">Theo TDV</option>
-                            <option value="So_Hop_Dong_Ex" data-chitiet="6">Theo hợp đồng</option>
-                            <option value="Ma_LKH" data-chitiet="7">Theo Loại KH</option>
-                        </select>
-                    </div>
+                    @*<h6>Chọn Đối Tượng:</h6>
+
+        <input type="text" id="dropdownInput" list="dropdownList" placeholder="Tìm kiếm đối tượng">
+        <datalist id="dropdownList">
+            @foreach (var item in ViewBag.DataItems)
+            {
+                <option value="@item.Ma_Dt" data-ten="@item.Ten_Dt" data-maDt="@item.Ma_Dt" data-dvcs="@item.Dvcs" data-dvcs1="@item.Dvcs1">@item.Ten_Dt</option>
+            }
+        </datalist>
+        <input type="hidden" name="Ma_Dt" id="selectedOption"><br />
+        <br />
+        <a>Tìm TDV:</a>
+        <input type="text" id="dropdownInputTDV" list="dropdownListTDV" placeholder="Tìm kiếm TDV">
+        <datalist id="dropdownListTDV">
+            @foreach (var item in ViewBag.DataTDV)
+            {
+                <option value="@item.Ma_CbNv" data-Ma_CbNv="@item.Ma_CbNv">@item.Ma_CbNv @item.hoten</option>
+            }
+        </datalist>
+        <input type="hidden" name="Ma_TDV" id="selectedOptionTDV">*@
+
+
+                    @*<div class="select-btn" style="width:100px;margin-top:10px">
+            <select id="dropdownMaTDV" class="select2" style="width: 200px" name="Ma_TDV" onchange="saveSelectedTDVValueToCookie()">
+                <option value="">Chọn mã TDV</option>
+                @if (ViewBag.DataTDV != null)
+                {
+                    foreach (var item in ViewBag.DataTDV)
+                    {
+                        <option value="@item.Ma_CbNv" data-hoten="@item.Ma_CbNv">@item.Ma_CbNv @item.hoten</option>
+                    }
+                }
+            </select>
+
+        </div>*@
                     <div>
-                        <button class="submit" type="submit" id="runReportButton" onclick="runReport()">
+                        <button class="submit" type="submit" id="runReportButton" onclick="runReport();saveNgay()">
                             Chạy Báo Cáo
                         </button>
+
                     </div>
+
                 </form>
             </li>
         </ul>
@@ -645,11 +639,13 @@
 
 
     <header class="header_part" style="background-color: #aec9e0; color: #3483bd ">
-        @if (Request.Cookies["UserName"].Value == "Admin-cnct" || Request.Cookies["UserName"].Value == "Admin-cntg" || Request.Cookies["UserName"].Value == "Admin-cnmd" || Request.Cookies["UserName"].Value == "Admin-cnhcm" || Request.Cookies["UserName"].Value == "Admin-cnvt"
-                     || Request.Cookies["UserName"].Value == "Admin-cnnt" || Request.Cookies["UserName"].Value == "Admin-cndn" || Request.Cookies["UserName"].Value == "Admin-cnna" || Request.Cookies["UserName"].Value == "Admin-cnhn" && Request.Cookies["UserName"].Value == "admin-cnct" || Request.Cookies["UserName"].Value == "admin-cntg" || Request.Cookies["UserName"].Value == "admin-cnmd" || Request.Cookies["UserName"].Value == "admin-cnhcm" || Request.Cookies["UserName"].Value == "admin-cnvt"
-                     || Request.Cookies["UserName"].Value == "admin-cnnt" || Request.Cookies["UserName"].Value == "admin-cndn" || Request.Cookies["UserName"].Value == "admin-cnna" || Request.Cookies["UserName"].Value == "admin-cnhn")
+        @if (Request.Cookies["UserName"].Value == "Admin-cnct" || Request.Cookies["UserName"].Value == "Admin-cntg" || Request.Cookies["UserName"].Value == "Admin-cnmd" || Request.Cookies["UserName"].Value == "Admin-cnh1" || Request.Cookies["UserName"].Value == "Admin-cnvt"
+                      || Request.Cookies["UserName"].Value == "Admin-cnnt" || Request.Cookies["UserName"].Value == "Admin - cndn" || Request.Cookies["UserName"].Value == "Admin - cnna" || Request.Cookies["UserName"].Value == "Admin - cnhn")
         {
-            <a href="/Home/About1" style="cursor:pointer">
+
+
+
+            <a href="/Home/AboutCN" style="cursor:pointer">
                 <img src="~/Images/opc.png" style="height:60px;width:60px;margin-left:10px">
             </a>
         }
@@ -659,42 +655,36 @@
                 <img src="~/Images/opc.png" style="height:60px;width:60px;margin-left:10px">
             </a>
         }
-        <h4 style="color: #3483bd">PHÂN TÍCH BÁN HÀNG</h4>
+        <h4 style="color:#3483bd">SỔ QUỸ TIỀN MẶT</h4>
     </header>
     <!-- =======  Data-Table  = Start  ========================== -->
+
     <div class="container">
+
+
         <div class="row">
             <div class="col-12">
                 <div class="data_table">
                     <table id="example" class="table table-striped table-bordered">
                         <thead class="table-dark">
                             <tr>
-                                <th>Ngày Chứng Từ</th>
-                                <th>Số Chứng Từ</th>
-                                <th>Mã Đối Tượng</th>
-                                <th>Tên Đối Tượng</th>
-                                <th>Mã Vật Tư</th>
-                                <th>Tên Vật Tư</th>
-                                <th>ĐVT</th>
-                                <th>Số Lượng</th>
-                                <th>Giá</th>
-                                <th>Tiền TT</th>
-                                <th>Tiền</th>
-                                <th>Tổng Tiền</th>
-                                <th>Trạng Thái</th>
-                                <th>Loại Vật Tư</th>
-                                <th>VAT</th>
-                                <th>Discount</th>
-                                <th>Số Lượng HD</th>
-                                <th>DVT Hóa Đơn</th>
-                                <th>Hạn Dùng</th>
-                                <th>Số lô</th>
-                                <th>Sales Order ID</th>
-                                <th>Kho Xuất</th>
-                                <th>Ngày HDDT</th>
-                                <th>Số HDDT</th>
-                                <th>Số line ID</th>
-                                <th>Kênh</th>
+                           
+                                <th colspan="2">Chứng Từ</th>
+                                <th rowspan="2">Tên Khách Hàng</th>
+                                <th rowspan="2">Diễn giải</th>
+                                <th rowspan="2">TK đối ứng</th>
+                                <th colspan="2">Phát sinh</th>
+                                <th rowspan="2">Số dư</th>
+                               
+                            </tr>
+                            <tr>
+                                <th>Ngày</th>
+                                <th>Số</th>
+                                <th>Thu</th>
+                                <th>Chi</th>
+                              
+
+
                             </tr>
                         </thead>
                         <tbody>
@@ -714,6 +704,55 @@
     <script src="~/assets/js/pdfmake.min.js"></script>
     <script src="~/assets/js/vfs_fonts.js"></script>
     <script src="~/assets/js/custom.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#dropdownMaTDV").select2();
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var selectedInfoFromCookie = getCookie1('Ma_TK');
+            if (selectedInfoFromCookie) {
+                var selectElement = document.getElementById('nhomtheoselect');
+
+                // Đặt giá trị mặc định cho select dựa trên giá trị cookie
+                selectElement.value = selectedInfoFromCookie;
+
+                // Gọi hàm để lưu giá trị mới vào cookie nếu cần thiết
+                saveSelectedValueToCookie();
+            }
+        });
+
+        function saveSelectedValueToCookie() {
+            var selectedValue = $("#nhomtheoselect").val();
+            document.cookie = 'Ma_TK=' + selectedValue;
+
+            // Gọi hàm để nhóm dữ liệu dựa trên giá trị đã chọn
+        }
+     
+
+    </script>
+    @*<script>
+            document.addEventListener("DOMContentLoaded", function () {
+                var dropdownMaTDV = document.getElementById("dropdownMaTDV");
+
+                if (dropdownMaTDV) {
+                    dropdownMaTDV.addEventListener("change", function () {
+                        var selectedOption = dropdownMaTDV.options[dropdownMaTDV.selectedIndex];
+
+                        if (selectedOption) {
+                            var maTDV = selectedOption.value;
+                            document.cookie = 'Ma_TDV=' + maTDV;
+                        } else {
+                            var selected = "";
+                            document.cookie = 'Ma_TDV=' + selected;
+                        }
+                    });
+                }
+            });
+        </script>*@
     <script>
         document.getElementById("dropdownInput").addEventListener("input", function () {
             var inputValue = this.value;
@@ -744,44 +783,6 @@
                     } else {
                         var selected = "";
                         document.cookie = 'Ma_Dt=' + selected;
-                    }
-                });
-            }
-        });
-
-
-    </script>
-
-    <script>
-        document.getElementById("dropdownInputVT").addEventListener("input", function () {
-            var inputValue = this.value;
-            var options = document.querySelectorAll("#dropdownList option");
-
-            for (var i = 0; i < options.length; i++) {
-                if (options[i].getAttribute("value") === inputValue) {
-                    document.getElementById("selectedOption").value = inputValue;
-
-                    break;
-                }
-            }
-        });
-
-
-
-        document.addEventListener("DOMContentLoaded", function () {
-            var runReportButton = document.getElementById("runReportButton");
-
-            if (runReportButton) {
-                runReportButton.addEventListener("click", function () {
-                    var dropdownInput = document.getElementById("dropdownInputVT");
-                    var selectedOption = document.querySelector("#dropdownListVT option[value='" + dropdownInput.value + "']");
-
-                    if (selectedOption) {
-                        var tenDt = selectedOption.getAttribute('data-maVT');
-                        document.cookie = 'Ma_Vt=' + tenDt;
-                    } else {
-                        var selected = "";
-                        document.cookie = 'Ma_Vt=' + selected;
                     }
                 });
             }
@@ -890,28 +891,11 @@
         });
     </script>
     <script>
-        function saveSelectedValueToCookie() {
-            var selectedValue = $("#nhomtheoselect").val();
-            document.cookie = 'SelectedNhom=' + selectedValue;
-
-            var select = document.getElementById("nhomtheoselect");
-            var selectedOption = select.options[select.selectedIndex];
-            var info = selectedOption.getAttribute("data-nhom");
-            document.cookie = 'SelectedInfo=' + info;
-            // Gọi hàm để nhóm dữ liệu dựa trên giá trị đã chọn
-
-        }
-
-        function saveSelectedValueToCookie2() {
-            var selectedValue = $("#chitietselect").val();
-            document.cookie = 'SelectedChiTiet=' + selectedValue;
-
-            var select = document.getElementById("chitietselect");
-            var selectedOption = select.options[select.selectedIndex];
-            var info = selectedOption.getAttribute("data-chitiet");
-            document.cookie = 'SelectedChitiet=' + info;
-            // Gọi hàm để nhóm dữ liệu dựa trên giá trị đã chọn
-
+        function saveNgay() {
+            var from_date = document.getElementById("tu_ngay").value;
+            var to_date = document.getElementById("den_ngay").value;
+            document.cookie = "From_date=" + from_date;
+            document.cookie = "To_date=" + to_date;
         }
         function handleFormSubmit(event) {
             event.preventDefault();
@@ -982,14 +966,34 @@
                 displaySelectedDate();
             }
         });
-
-
-
-
     </script>
 
+    <script>
+        // Hàm lưu trạng thái checkbox vào Local Storage
+        function saveCheckboxState() {
+            const checkboxes = document.querySelectorAll('input[name="myCheckbox"]');
+            const checkboxState = {};
 
+            checkboxes.forEach((checkbox, index) => {
+                checkboxState[index] = checkbox.checked;
+            });
 
+            localStorage.setItem('checkboxState', JSON.stringify(checkboxState));
+        }
+
+        // Lưu trạng thái khi người dùng bỏ chọn checkbox
+        // Lắng nghe sự kiện thay đổi của các checkbox
+        document.addEventListener('DOMContentLoaded', function () {
+            const checkboxes = document.querySelectorAll('input[name="myCheckbox"]');
+
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function () {
+                    localStorage.setItem(checkbox.value, checkbox.checked);
+                });
+            });
+        });
+
+    </script>
 
 </body>
 

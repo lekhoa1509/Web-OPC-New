@@ -568,7 +568,7 @@
             </ul>
         </div>*@
 
-    <div class="forms-container" >
+    <div class="forms-container">
         <ul class="nav-links" style="display: flex; justify-content: center;">
 
             @*<form class="locBC-form" id="dateForm" action="PhieuNhapXNTT" method="post" onsubmit="handleFormSubmit(event)">
@@ -623,7 +623,7 @@
             <div>
                 <table id="export" border="1" border-collapse="collapse" style="width:1000px">
                     <thead style="display: table-header-group">
-
+                       
                         <tr style="color:black">
                             @*<th rowspan="2">Mã KH</th>*@
                             <th rowspan="2" style="width:300px">Khách Hàng</th>
@@ -699,7 +699,7 @@
                                         <td></td>
                                     }
                                     <td>@row3["Ten_TDV"]</td>
-                                    <td>@row3["Han_Muc_No"]</td>
+                                    @*<td>@row3["Han_Muc_No"]</td>*@
                                     <td>@row3["Ngay_Ct2"]</td>
                                     <td>@row3["So_Ct_Einv"]</td>
 
@@ -844,12 +844,21 @@
     <script src="~/Scripts/table2excel.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <script src="//cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+ 
+
     <script>
         document.getElementById("exportbutton").addEventListener('click', function () {
             var table2excel = new Table2Excel();
-            table2excel.export(document.querySelectorAll("#export"));
+
+            // Tạo tên file dựa trên thời gian
+            var currentDate = new Date();
+            var fileName = "CongNoChiTietETC_" + currentDate.getFullYear() + (currentDate.getMonth() + 1) + currentDate.getDate() + ".xlsx";
+
+            table2excel.export(document.querySelectorAll("#export"), fileName);
         });
+
     </script>
+
     <script>
           @*function exportExcel() {
     window.location.href = '@Url.Action("ExportCongNoETC", "CongNoChiTiet")';

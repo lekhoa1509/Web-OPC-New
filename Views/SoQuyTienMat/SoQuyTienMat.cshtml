@@ -1,6 +1,17 @@
 ﻿
-@{ ViewBag.Title = "PHÂN TÍCH BÁN HÀNG"; }
+
+
+@{ ViewBag.Title = "SỔ QUỸ TIỀN MẶT";
+    var fromDate = Request.Cookies["From_date"].Value;
+    var toDate = Request.Cookies["To_date"].Value;
+    var fromDateValue = DateTime.ParseExact(fromDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+    var toDateValue = DateTime.ParseExact(toDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+
+    var formattedFromDate = fromDateValue.ToString("dd/MM/yyyy");
+    var formattedToDate = toDateValue.ToString("dd/MM/yyyy");
+}
 @using System.Data;
+@using System.Globalization;
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,9 +20,7 @@
 
 
     <style>
-        a:hover {
-            background-color: lightskyblue;
-        }
+    
 
         * {
             font-family: "Times New Roman";
@@ -531,6 +540,53 @@
             .tab.selected-tab .closeTab {
                 pointer-events: auto;
             }
+
+        .data_table {
+            max-height: 100%;
+            overflow: auto;
+        }
+
+            .data_table thead {
+                position: sticky;
+                top: 0;
+                z-index: 100;
+            }
+
+      /*  .bold-row td:nth-child(3) {
+            font-weight: bold;
+        }*/
+
+        .bold-row td:nth-child(4) {
+            font-weight: bold;
+        }
+
+        .bold-row td:nth-child(5) {
+            font-weight: bold;
+        }
+
+        .bold-row td:nth-child(6) {
+            font-weight: bold;
+        }
+
+        .bold-row td:nth-child(7) {
+            font-weight: bold;
+        }
+
+        .bold-row td:nth-child(8) {
+            font-weight: bold;
+        }
+
+        .bold-row td:nth-child(9) {
+            font-weight: bold;
+        }
+        .num {
+            mso-number-format: "\#\,\#\#0\.00_ \;\[Red\]\-\#\,\#\#0\.00\ ";
+        }
+
+        .date {
+            mso-number-format: "Medium Date";
+        }
+      
     </style>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
@@ -542,7 +598,7 @@
 
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>PHÂN TÍCH BÁN HÀNG</title>
+    <title>SoQuyTienMat</title>
     <meta content="" name="description">
     <meta content="Author" name="MJ Maraz">
     <link href="~/assets/images/favicon.png" rel="icon">
@@ -559,7 +615,7 @@
 </head>
 <!-- =============== Design & Develop By = MJ MARAZ   ====================== -->
 
-<body  style="background-color: #e0e8ee">
+<body style="background-color: #e0e8ee ">
     <div class="loader" style="z-index:1"></div>
 
     <div class="sidebar">
@@ -568,9 +624,9 @@
         </div>
         <ul class="nav-links" style="justify-content: center; display:flex;margin-left:10px">
             <li>
-                <form id="dateForm" action="PhanTichBanHang" method="post" onsubmit="handleFormSubmit(event)">
+                <form id="dateForm" action="SoQuyTienMat" method="post" onsubmit="handleFormSubmit(event)">
                     <div id="locBC">
-                        <span id="spanText" class="text-loading">[usp_PhanTichBanHang_SAP]</span>
+                        <span id="spanText" class="text-loading">[usp_SoQuyTienMat_SAP]</span>
                         <a>Từ Ngày</a><br /><br />
                         <input class="tu_ngay" placeholder="Từ Ngày" id="tu_ngay" name="From_date" type="date" format="YYYY-MM-DD" value="@Request.QueryString["From_date"]" />
                         <script>$("#tu_ngay").datetimepicker({ timepicker: false, format: 'Y-m-d' });</script><br /><br />
@@ -578,77 +634,51 @@
                         <input class="den_ngay" id="den_ngay" placeholder=" Đến Ngày" name="To_date" type="DATE" format="YYYY-MM-DD" value="@Request.QueryString["To_date"]" /><br /><br />
                         <script>$("#den_ngay").datetimepicker({ timepicker: false, format: 'Y-m-d' });</script>
                     </div>
-                    <h6>Chọn Đối Tượng</h6>
-
-                    <input type="text" id="dropdownInput" list="dropdownList" placeholder="Tìm kiếm đối tượng">
-                    <datalist id="dropdownList">
-                        @foreach (var item in ViewBag.DataItems)
-                        {
-                            <option value="@item.Ma_Dt" data-ten="@item.Ten_Dt" data-maDt="@item.Ma_Dt" data-dvcs="@item.Dvcs" data-dvcs1="@item.Dvcs1">@item.Ten_Dt</option>
-                        }
-                    </datalist>
-                    <input type="hidden" name="Ma_Dt" id="selectedOption">
-                    <h̉̉̉̉̉̉6>Tìm TDV</h̉̉̉̉̉̉6>
-                    <input type="text" id="dropdownInputTDV" list="dropdownListTDV" placeholder="Tìm kiếm TDV">
-                    <datalist id="dropdownListTDV">
-                        @foreach (var item in ViewBag.DataTDV)
-                        {
-                            <option value="@item.Ma_CbNv" data-Ma_CbNv="@item.Ma_CbNv">@*@item.Ma_CbNv*@ @item.hoten</option>
-                        }
-                    </datalist>
-                    <input type="hidden" name="Ma_TDV" id="selectedOptionTDV">
-                    <h6>Tìm Vật Tư</h6>
-                    <input type="text" id="dropdownInputVT" list="dropdownListVT" placeholder="Tìm kiếm Vật Tư">
-                    <datalist id="dropdownListVT">
-                        @foreach (var item in ViewBag.DataVT)
-                        {
-                            <option value="@item.Ma_Vt" data-TenVt="@item.Ten_Vt"data-maVT="@item.Ma_Vt">@item.Ten_Vt</option>
-                        }
-                    </datalist>
-                    <input type="hidden" name="Ma_Vt" id="selectedOptionVT">
-                    <h6>Nhóm theo</h6>
+                    <h6>Chọn Tài Khoản</h6>
                     <div class="select-btn" style="width:100px;margin-top:10px">
                         <select name="Nhom" id="nhomtheoselect" onchange="saveSelectedValueToCookie()">
                             <option value="" style="background-color: #020024;color:white">Chọn giá trị</option>
-                            <option value="ma_vt" data-nhom="1">Theo mặt hàng</option>
-                            <option value="ma_dt" data-nhom="2">Theo đối tượng</option>
-                            <option value="so_ct" data-nhom="3">Theo chứng từ</option>
-                            <option value="Loai_Vt" data-nhom="4">Theo loại sản phẩm</option>
-                            <option value="ma_tdv" data-nhom="5">Theo TDV</option>
-                            <option value="So_Hop_Dong_Ex" data-nhom="6">Theo hợp đồng</option>
-                            <option value="Ma_LKH" data-nhom="7">Theo Loại KH</option>
-                        </select>
-                    </div>
-                    <br />
-                    <h6>Chi tiết</h6>
-                    <div class="select-btn" style="width:100px;margin-top:10px">
-                        <select name="Chitiet" id="chitietselect" onchange="saveSelectedValueToCookie2()">
-                            <option value="" style="background-color: #020024;color:white">Chọn giá trị</option>
-                            <option value="ma_vt" data-chitiet="1">Theo mặt hàng</option>
-                            <option value="ma_dt" data-chitiet="2">Theo đối tượng</option>
-                            <option value="so_ct" data-chitiet="3">Theo chứng từ</option>
-                            <option value="Loai_Vt" data-chitiet="4">Theo loại sản phẩm</option>
-                            <option value="ma_tdv" data-chitiet="5">Theo TDV</option>
-                            <option value="So_Hop_Dong_Ex" data-chitiet="6">Theo hợp đồng</option>
-                            <option value="Ma_LKH" data-chitiet="7">Theo Loại KH</option>
+                            <option value="1111">1111</option>
+                            <option value="1121">1121</option>
+                            <option value="1131">1131</option>
+
                         </select>
                     </div>
                     <div>
-                        <button class="submit" type="submit" id="runReportButton" onclick="runReport()">
+                        <button class="submit" type="submit" id="runReportButton" onclick="runReport();saveNgay()">
                             Chạy Báo Cáo
                         </button>
+
                     </div>
+
                 </form>
+              
+                <div style="display:flex">
+                    <button style="border-radius: 10px; margin-bottom: 10px;margin-top:10px; background-color: #aec9e0; color: #3483bd ">
+                        <a onclick="return ExcellentExport.excel(this, 'example', 'Sheet 1');" download="SoQuyTienMat.xls" style="color: #3483bd">Xuất Excel </a>
+                    </button>
+                    <button onclick="printPage()" style="border-radius: 10px; margin-left: 10px; margin-bottom: 10px;margin-top:10px; background-color: #aec9e0; color: #3483bd;padding:10px ">
+                        <i class="fa-solid fa-print">Print</i>
+                    </button>
+                </div>
+                @*<a download="somedata.xls"
+                   href="#"
+                   onclick="return ExcellentExport.excel(this, 'example', 'Sheet Name Here');">
+                    Export table to Excel
+                </a>*@
             </li>
         </ul>
     </div>
 
 
     <header class="header_part" style="background-color: #aec9e0; color: #3483bd ">
-        @if (Request.Cookies["UserName"].Value == "Admin-cnct" || Request.Cookies["UserName"].Value == "Admin-cntg" || Request.Cookies["UserName"].Value == "Admin-cnmd" || Request.Cookies["UserName"].Value == "Admin-cnhcm" || Request.Cookies["UserName"].Value == "Admin-cnvt"
-                     || Request.Cookies["UserName"].Value == "Admin-cnnt" || Request.Cookies["UserName"].Value == "Admin-cndn" || Request.Cookies["UserName"].Value == "Admin-cnna" || Request.Cookies["UserName"].Value == "Admin-cnhn" && Request.Cookies["UserName"].Value == "admin-cnct" || Request.Cookies["UserName"].Value == "admin-cntg" || Request.Cookies["UserName"].Value == "admin-cnmd" || Request.Cookies["UserName"].Value == "admin-cnhcm" || Request.Cookies["UserName"].Value == "admin-cnvt"
-                     || Request.Cookies["UserName"].Value == "admin-cnnt" || Request.Cookies["UserName"].Value == "admin-cndn" || Request.Cookies["UserName"].Value == "admin-cnna" || Request.Cookies["UserName"].Value == "admin-cnhn")
+        @if (Request.Cookies["UserName"].Value == "Admin-cnct" || Request.Cookies["UserName"].Value == "Admin-cntg" || Request.Cookies["UserName"].Value == "Admin-cnmd" || Request.Cookies["UserName"].Value == "Admin-cnh1" || Request.Cookies["UserName"].Value == "Admin-cnvt"
+                      || Request.Cookies["UserName"].Value == "Admin-cnnt" || Request.Cookies["UserName"].Value == "Admin - cndn" || Request.Cookies["UserName"].Value == "Admin - cnna" || Request.Cookies["UserName"].Value == "Admin - cnhn" && Request.Cookies["UserName"].Value == "admin-cnct" || Request.Cookies["UserName"].Value == "admin-cntg" || Request.Cookies["UserName"].Value == "admin-cnmd" || Request.Cookies["UserName"].Value == "admin-cnh1" || Request.Cookies["UserName"].Value == "admin-cnvt"
+                      || Request.Cookies["UserName"].Value == "admin-cnnt" || Request.Cookies["UserName"].Value == "admin - cndn" || Request.Cookies["UserName"].Value == "admin - cnna" || Request.Cookies["UserName"].Value == "admin - cnhn")
         {
+
+
+
             <a href="/Home/About1" style="cursor:pointer">
                 <img src="~/Images/opc.png" style="height:60px;width:60px;margin-left:10px">
             </a>
@@ -659,45 +689,67 @@
                 <img src="~/Images/opc.png" style="height:60px;width:60px;margin-left:10px">
             </a>
         }
-        <h4 style="color: #3483bd">PHÂN TÍCH BÁN HÀNG</h4>
+        <h4 style="color:#3483bd">SỔ QUỸ TIỀN MẶT</h4>
+        <h4 style="color:#3483bd">Từ @formattedFromDate đến @formattedToDate</h4>
+
     </header>
     <!-- =======  Data-Table  = Start  ========================== -->
+
     <div class="container">
+
+
         <div class="row">
             <div class="col-12">
-                <div class="data_table">
-                    <table id="example" class="table table-striped table-bordered">
-                        <thead class="table-dark">
+                <div class="search-container">
+
+                    <span>Search: <input type="Text" name="" id="myInput" placeholder="Tìm kiếm" onkeyup="searchFun()"></span>
+                    <div class="search"></div>
+                </div>
+                <div class="data_table" style="max-height:1500px">
+
+                    <table id="example" class="table table-striped table-bordered" data-excel-name="Sheet 1">
+                        <thead class="table-dark" id="head">
                             <tr>
-                                <th>Ngày Chứng Từ</th>
-                                <th>Số Chứng Từ</th>
-                                <th>Mã Đối Tượng</th>
-                                <th>Tên Đối Tượng</th>
-                                <th>Mã Vật Tư</th>
-                                <th>Tên Vật Tư</th>
-                                <th>ĐVT</th>
-                                <th>Số Lượng</th>
-                                <th>Giá</th>
-                                <th>Tiền TT</th>
-                                <th>Tiền</th>
-                                <th>Tổng Tiền</th>
-                                <th>Trạng Thái</th>
-                                <th>Loại Vật Tư</th>
-                                <th>VAT</th>
-                                <th>Discount</th>
-                                <th>Số Lượng HD</th>
-                                <th>DVT Hóa Đơn</th>
-                                <th>Hạn Dùng</th>
-                                <th>Số lô</th>
-                                <th>Sales Order ID</th>
-                                <th>Kho Xuất</th>
-                                <th>Ngày HDDT</th>
-                                <th>Số HDDT</th>
-                                <th>Số line ID</th>
-                                <th>Kênh</th>
+
+                                <th colspan="3">Chứng Từ</th>
+                                <th rowspan="2">Tên Khách Hàng</th>
+                                <th rowspan="2">Diễn giải</th>
+                                <th rowspan="2">TK đối ứng</th>
+                                <th colspan="2">Phát sinh</th>
+                                <th rowspan="2">Số dư</th>
+
+                            </tr>
+                            <tr>
+                                <th>Ngày</th>
+                                <th style="width:150px">Số</th>
+                                <th>Số trên SAP</th>
+                                <th>Thu</th>
+                                <th>Chi</th>
+
+
+
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach (DataRow row2 in Model.Tables[0].Rows)
+                            {
+                                <tr class="data-row">
+                                    <td>@row2["Ngay_Ct1"]</td>
+                                    <td data-format="string">@row2["So_NumBer"].ToString()</td>
+                                    <td>@row2["So_Ct"].ToString()</td>
+                                    <td style="text-align:left">@row2["Ten_Dt"]</td>
+                                    <td class="text" style="text-align:left">@row2["Dien_Giai"]</td>
+                                    <td>@row2["Tk_Du"]</td>
+                                    <td data-t="n" class="num" style="text-align:right"> @row2["Ps_No"]</td>
+                                    <td data-t="n" style="text-align:right"> @String.Format("{0:n0}", Convert.ToDecimal(row2["Ps_Co"]))</td>
+                                    <td data-t="n" style='text-align:right;'> @String.Format("{0:n0}", Convert.ToDecimal(row2["Du_Cuoi"]))</td>
+
+
+                                </tr>
+
+
+
+                            }
                         </tbody>
                     </table>
                 </div>
@@ -709,121 +761,113 @@
 
 
     <script src="~/assets/js/bootstrap.bundle.min.js"></script>
-    <script src="~/assets/js/jquery-3.6.0.min.js"></script>
-    <script src="~/assets/js/datatables.min.js"></script>
-    <script src="~/assets/js/pdfmake.min.js"></script>
+
+    @*<script src="~/assets/js/datatables.min.js"></script>*@
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <script src="https://unpkg.com/excellentexport@4.0.0/dist/excellentexport.min.js"></script>
+    <script src="~/Scripts/excellentexport.js"></script>
+    <script src="~/Scripts/table2excel.js"></script>
     <script src="~/assets/js/vfs_fonts.js"></script>
     <script src="~/assets/js/custom.js"></script>
+    @*<script>
+        document.getElementById("exportbutton").addEventListener('click', function () {
+            ExcellentExport.excel(this, 'example', 'Sheet 1');
+        });
+    </script>*@
+
     <script>
-        document.getElementById("dropdownInput").addEventListener("input", function () {
-            var inputValue = this.value;
-            var options = document.querySelectorAll("#dropdownList option");
+        function searchFun() {
+            var input, filter, table, tr, td, i, j, txtValue;
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("example");
+            tr = table.getElementsByClassName("data-row");
 
-            for (var i = 0; i < options.length; i++) {
-                if (options[i].getAttribute("value") === inputValue) {
-                    document.getElementById("selectedOption").value = inputValue;
-
-                    break;
+            for (i = 0; i < tr.length; i++) {
+                var match = false;
+                // Đối với mỗi hàng, lặp qua tất cả các cột (td)
+                for (j = 0; j < tr[i].getElementsByTagName("td").length; j++) {
+                    td = tr[i].getElementsByTagName("td")[j];
+                    if (td) {
+                        txtValue = td.textContent || td.innerText;
+                        // Nếu nội dung của cột có kết quả tìm kiếm, đặt match thành true và thoát khỏi vòng lặp
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            match = true;
+                            break;
+                        }
+                    }
+                }
+                // Kiểm tra thêm cho cột thứ 3 (j = 2)
+                if (!match) {
+                    td = tr[i].getElementsByTagName("td")[2]; // Cột thứ 3 (index 2)
+                    if (td) {
+                        txtValue = td.textContent || td.innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            match = true;
+                        }
+                    }
+                }
+                // Ẩn hoặc hiển thị hàng tùy thuộc vào kết quả tìm kiếm
+                if (match) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
                 }
             }
-        });
-
-
-
-        document.addEventListener("DOMContentLoaded", function () {
-            var runReportButton = document.getElementById("runReportButton");
-
-            if (runReportButton) {
-                runReportButton.addEventListener("click", function () {
-                    var dropdownInput = document.getElementById("dropdownInput");
-                    var selectedOption = document.querySelector("#dropdownList option[value='" + dropdownInput.value + "']");
-
-                    if (selectedOption) {
-                        var tenDt = selectedOption.getAttribute('data-maDt');
-                        document.cookie = 'Ma_Dt=' + tenDt;
-                    } else {
-                        var selected = "";
-                        document.cookie = 'Ma_Dt=' + selected;
-                    }
-                });
-            }
-        });
-
-
+        }
     </script>
 
+
+
     <script>
-        document.getElementById("dropdownInputVT").addEventListener("input", function () {
-            var inputValue = this.value;
-            var options = document.querySelectorAll("#dropdownList option");
+        $(document).ready(function () {
+            $('#example tbody tr').each(function () {
+                var dienGiaiValue = $(this).find('td:nth-child(5)').text(); // 3 là vị trí cột "Dien_Giai"
 
-            for (var i = 0; i < options.length; i++) {
-                if (options[i].getAttribute("value") === inputValue) {
-                    document.getElementById("selectedOption").value = inputValue;
-
-                    break;
+                if (dienGiaiValue === "DuDauKy") {
+                    $(this).addClass("bold-row");
                 }
-            }
+            });
         });
+        $(document).ready(function () {
+            $('#example tbody tr').each(function () {
+                var dienGiaiValue = $(this).find('td:nth-child(5)').text(); // 3 là vị trí cột "Dien_Giai"
 
-
-
-        document.addEventListener("DOMContentLoaded", function () {
-            var runReportButton = document.getElementById("runReportButton");
-
-            if (runReportButton) {
-                runReportButton.addEventListener("click", function () {
-                    var dropdownInput = document.getElementById("dropdownInputVT");
-                    var selectedOption = document.querySelector("#dropdownListVT option[value='" + dropdownInput.value + "']");
-
-                    if (selectedOption) {
-                        var tenDt = selectedOption.getAttribute('data-maVT');
-                        document.cookie = 'Ma_Vt=' + tenDt;
-                    } else {
-                        var selected = "";
-                        document.cookie = 'Ma_Vt=' + selected;
-                    }
-                });
-            }
+                if (dienGiaiValue === "TongPhatSinh") {
+                    $(this).addClass("bold-row");
+                }
+            });
         });
+        $(document).ready(function () {
+            $('#example tbody tr').each(function () {
+                var dienGiaiValue = $(this).find('td:nth-child(5)').text(); // 3 là vị trí cột "Dien_Giai"
 
-
+                if (dienGiaiValue === "DuCuoiKy") {
+                    $(this).addClass("bold-row");
+                }
+            });
+        });
     </script>
     <script>
-        document.getElementById("dropdownInputTDV").addEventListener("input", function () {
-            var inputValue = this.value;
-            var options = document.querySelectorAll("#dropdownListTDV option");
+        document.addEventListener('DOMContentLoaded', function () {
+            var selectedInfoFromCookie = getCookie1('Ma_TK');
+            if (selectedInfoFromCookie) {
+                var selectElement = document.getElementById('nhomtheoselect');
 
-            for (var i = 0; i < options.length; i++) {
-                if (options[i].getAttribute("value") === inputValue) {
-                    document.getElementById("selectedOptionTDV").value = inputValue;
+                // Đặt giá trị mặc định cho select dựa trên giá trị cookie
+                selectElement.value = selectedInfoFromCookie;
 
-                    break;
-                }
+                // Gọi hàm để lưu giá trị mới vào cookie nếu cần thiết
+                saveSelectedValueToCookie();
             }
         });
 
+        function saveSelectedValueToCookie() {
+            var selectedValue = $("#nhomtheoselect").val();
+            document.cookie = 'Ma_TK=' + selectedValue;
 
-
-        document.addEventListener("DOMContentLoaded", function () {
-            var runReportButton = document.getElementById("runReportButton");
-
-            if (runReportButton) {
-                runReportButton.addEventListener("click", function () {
-                    var dropdownInput = document.getElementById("dropdownInputTDV");
-                    var selectedOption = document.querySelector("#dropdownListTDV option[value='" + dropdownInput.value + "']");
-
-                    if (selectedOption) {
-                        var MaTDV = selectedOption.getAttribute('data-Ma_CbNv');
-                        document.cookie = 'Ma_TDV=' + MaTDV;
-                    } else {
-                        var selected = "";
-                        document.cookie = 'Ma_TDV=' + selected;
-                    }
-                });
-            }
-        });
-
+            // Gọi hàm để nhóm dữ liệu dựa trên giá trị đã chọn
 
     </script>
     <script>
@@ -869,6 +913,8 @@
             // Hiển thị thẻ span có id là "spanText"
             const spanElement = document.getElementById("spanText");
             spanElement.style.display = "block";
+            const hiddenElement = document.getElementById("head");
+            hiddenElement.style.visibility = "hidden";
         }
     </script>
     <script>
@@ -890,28 +936,11 @@
         });
     </script>
     <script>
-        function saveSelectedValueToCookie() {
-            var selectedValue = $("#nhomtheoselect").val();
-            document.cookie = 'SelectedNhom=' + selectedValue;
-
-            var select = document.getElementById("nhomtheoselect");
-            var selectedOption = select.options[select.selectedIndex];
-            var info = selectedOption.getAttribute("data-nhom");
-            document.cookie = 'SelectedInfo=' + info;
-            // Gọi hàm để nhóm dữ liệu dựa trên giá trị đã chọn
-
-        }
-
-        function saveSelectedValueToCookie2() {
-            var selectedValue = $("#chitietselect").val();
-            document.cookie = 'SelectedChiTiet=' + selectedValue;
-
-            var select = document.getElementById("chitietselect");
-            var selectedOption = select.options[select.selectedIndex];
-            var info = selectedOption.getAttribute("data-chitiet");
-            document.cookie = 'SelectedChitiet=' + info;
-            // Gọi hàm để nhóm dữ liệu dựa trên giá trị đã chọn
-
+        function saveNgay() {
+            var from_date = document.getElementById("tu_ngay").value;
+            var to_date = document.getElementById("den_ngay").value;
+            document.cookie = "From_date=" + from_date;
+            document.cookie = "To_date=" + to_date;
         }
         function handleFormSubmit(event) {
             event.preventDefault();
@@ -982,10 +1011,43 @@
                 displaySelectedDate();
             }
         });
+    </script>
+
+    <script>
+        // Hàm lưu trạng thái checkbox vào Local Storage
+        function saveCheckboxState() {
+            const checkboxes = document.querySelectorAll('input[name="myCheckbox"]');
+            const checkboxState = {};
+
+            checkboxes.forEach((checkbox, index) => {
+                checkboxState[index] = checkbox.checked;
+            });
+
+            localStorage.setItem('checkboxState', JSON.stringify(checkboxState));
+        }
+
+        // Lưu trạng thái khi người dùng bỏ chọn checkbox
+        // Lắng nghe sự kiện thay đổi của các checkbox
+        document.addEventListener('DOMContentLoaded', function () {
+            const checkboxes = document.querySelectorAll('input[name="myCheckbox"]');
+
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function () {
+                    localStorage.setItem(checkbox.value, checkbox.checked);
+                });
+            });
+        });
+
+    </script>
+    <script>
+        function printPage() {
+            // Mở cửa sổ in mới
+            var printWindow = window.open('', '_blank');
+            printWindow.location.href = "/SoQuyTienMat/SoQuyTienMat_In";
 
 
 
-
+        }
     </script>
 
 

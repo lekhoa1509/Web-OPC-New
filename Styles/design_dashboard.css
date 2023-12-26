@@ -345,7 +345,10 @@
                                     .menu-btn span {
                                         visibility: hidden;
                                     }
-
+                                    .home-section .main .home-content1 .overview-boxes .box{
+                                        margin-left: 200px;
+                                        width:200px;
+                                    }
                                     .main .container .row-1 {
                                         height: 500px;
                                         justify-content: center;
