@@ -580,13 +580,11 @@
                         <script>$("#den_ngay").datetimepicker({ timepicker: false, format: 'Y-m-d' });</script>
                     </div>
 
-                  
+
                     <div>
-                        <button class="submit" type="button" id="xemTungHD" onclick="handleXemTungHD('@Url.Action("BaoCaoDTTinhLuongCTV","BaoCaoBanHangCTV")');">
-                           Chạy Báo Cáo
-                        </button>
+                        <button class="submit" type="submit" id="runReportButton" onclick="runReport()"> Chạy Báo Cáo </button>
                     </div>
-                
+
                 </form>
 
             </li>
