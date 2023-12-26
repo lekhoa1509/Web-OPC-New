@@ -70,6 +70,62 @@ namespace web4.Controllers
 
             return dataItems;
         }
+
+
+        public List<TheoDoiGiaoHang> LoadHD()
+        {
+            string ma_dvcs = Request.Cookies["MA_DVCS"] != null ? Request.Cookies["MA_DVCS"].Value : "";
+            connectSQL();
+
+            List<TheoDoiGiaoHang> dataItems = new List<TheoDoiGiaoHang>();
+
+            using (SqlConnection connection = new SqlConnection(con.ConnectionString))
+            {
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand("[usp_DanhSachHoaDonGiaoHang_SAP]", connection))
+                {
+                    command.CommandTimeout = 950;
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.AddWithValue("@_Ma_Dvcs", "OPC_CT");
+                    command.Parameters.AddWithValue("@_Ma_CbNv", "101460");
+
+
+                    using (SqlDataAdapter sda = new SqlDataAdapter(command))
+                    {
+                        DataSet ds = new DataSet();
+                        sda.Fill(ds);
+
+                        // Kiểm tra xem DataSet có bảng dữ liệu hay không
+                        if (ds.Tables.Count > 0)
+                        {
+                            DataTable dt = ds.Tables[0];
+
+                            foreach (DataRow row in dt.Rows)
+                            {
+                                TheoDoiGiaoHang dataItem = new TheoDoiGiaoHang
+                                {
+                                    So_HD = row["so_ct"].ToString(),
+                                    Ngay_HD = Convert.ToDateTime(row["Ngay_Ct1"]),
+                                    
+                                    Ma_Dt = row["Ma_dt"].ToString(),
+                                    Ten_Dt = row["Ten_Dt"].ToString(),
+                                    Ma_NVGH = row["Ma_nvgh"].ToString(),
+                                    Tien_HD = float.Parse(row["tien"].ToString())
+
+
+                            };
+
+                                dataItems.Add(dataItem);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return dataItems;
+        }
         public ActionResult Index()
         {
             
@@ -77,8 +133,15 @@ namespace web4.Controllers
         }
         public ActionResult InsertGiaoHang()
         {
+           
+            return View();
+        }
+        public ActionResult InsetGiaoHangLoadHD()
+        {
             List<TheoDoiGiaoHang> dmDlistTDV = LoadDmTDV();
+            List<TheoDoiGiaoHang> dmListHD = LoadHD();
             ViewBag.DataTDV = dmDlistTDV;
+            ViewBag.DataHD = dmListHD;
             return View();
         }
     }

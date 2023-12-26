@@ -559,7 +559,7 @@
 </head>
 <!-- =============== Design & Develop By = MJ MARAZ   ====================== -->
 
-<body  style="background-color: #e0e8ee">
+<body style="background-color: #e0e8ee">
     <div class="loader" style="z-index:1"></div>
 
     <div class="sidebar">
@@ -602,11 +602,13 @@
                     <datalist id="dropdownListVT">
                         @foreach (var item in ViewBag.DataVT)
                         {
-                            <option value="@item.Ma_Vt" data-TenVt="@item.Ten_Vt"data-maVT="@item.Ma_Vt">@item.Ten_Vt</option>
+                            <option value="@item.Ma_Vt" data-TenVt="@item.Ten_Vt" data-maVT="@item.Ma_Vt">@item.Ten_Vt</option>
                         }
                     </datalist>
+
                     <input type="hidden" name="Ma_Vt" id="selectedOptionVT">
-                    <h6>Nhóm theo</h6>
+                    <hr />
+                    <h6>Nhóm theo <span style="color:red;font-weight:bold">*</span></h6>
                     <div class="select-btn" style="width:100px;margin-top:10px">
                         <select name="Nhom" id="nhomtheoselect" onchange="saveSelectedValueToCookie()">
                             <option value="" style="background-color: #020024;color:white">Chọn giá trị</option>
@@ -619,8 +621,8 @@
                             <option value="Ma_LKH" data-nhom="7">Theo Loại KH</option>
                         </select>
                     </div>
-                    <br />
-                    <h6>Chi tiết</h6>
+
+                    <h6>Chi tiết <span style="color:red;font-weight:bold">*</span></h6>
                     <div class="select-btn" style="width:100px;margin-top:10px">
                         <select name="Chitiet" id="chitietselect" onchange="saveSelectedValueToCookie2()">
                             <option value="" style="background-color: #020024;color:white">Chọn giá trị</option>
@@ -825,6 +827,27 @@
         });
 
 
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Mặc định giá trị của dropdown nhóm theo là "Theo TDV"
+            var nhomDropdown = document.getElementById("nhomtheoselect");
+            setDefaultOption(nhomDropdown, "ma_tdv");
+
+            // Mặc định giá trị của dropdown chi tiết là "Theo TDV"
+            var chitietDropdown = document.getElementById("chitietselect");
+            setDefaultOption(chitietDropdown, "ma_vt");
+        });
+
+        // Hàm để thiết lập giá trị mặc định cho dropdown
+        function setDefaultOption(dropdown, defaultValue) {
+            for (var i = 0; i < dropdown.options.length; i++) {
+                if (dropdown.options[i].value === defaultValue) {
+                    dropdown.options[i].selected = true;
+                    break;
+                }
+            }
+        }
     </script>
     <script>
         // Set the "Từ Ngày" input to the first day of the current month

@@ -712,7 +712,7 @@
                             <tr>
 
                                 <th colspan="3">Chứng Từ</th>
-                                <th rowspan="2">Tên Khách Hàng</th>
+                                <th rowspan="2">Tên Đối Tượng</th>
                                 <th rowspan="2">Diễn giải</th>
                                 <th rowspan="2">TK đối ứng</th>
                                 <th colspan="2">Phát sinh</th>
@@ -740,7 +740,7 @@
                                     <td style="text-align:left">@row2["Ten_Dt"]</td>
                                     <td class="text" style="text-align:left">@row2["Dien_Giai"]</td>
                                     <td>@row2["Tk_Du"]</td>
-                                    <td data-t="n" class="num" style="text-align:right"> @row2["Ps_No"]</td>
+                                    <td data-t="n" class="num" style="text-align:right"> @String.Format("{0:n0}", Convert.ToDecimal(row2["Ps_No"]))</td>
                                     <td data-t="n" style="text-align:right"> @String.Format("{0:n0}", Convert.ToDecimal(row2["Ps_Co"]))</td>
                                     <td data-t="n" style='text-align:right;'> @String.Format("{0:n0}", Convert.ToDecimal(row2["Du_Cuoi"]))</td>
 

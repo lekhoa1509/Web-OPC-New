@@ -14,7 +14,8 @@ namespace web4.Models
         public string Ten_NVGH { get; set; }
         public string Ly_do { get; set; }
         public string Dvcs { get; set; }
-
+        public string Ma_Dt { get; set; }
+        public string Ten_Dt { get; set; }
         public string So_HD { get; set; }
         public DateTime Ngay_HD { get; set; }
         public string NV_GiaoNhan { get; set; }
