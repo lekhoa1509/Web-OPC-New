@@ -90,11 +90,12 @@
         }
 
 
-        .data_table3{
-            border-radius:10px;
-            background-color:white;
-            padding:10px;
+        .data_table3 {
+            border-radius: 10px;
+            background-color: white;
+            padding: 10px;
         }
+
         canvas {
             width: 200px;
             height: 100px;
@@ -591,7 +592,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0/js/bootstrap-select.min.js"></script>
     <script type="text/javascript" src="Scripts/table2excel.js"></script>
-
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -601,11 +602,12 @@
     <link href="~/assets/images/favicon.png" rel="icon">
     <link href="~/assets/images/favicon.png" rel="apple-touch-icon">
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <!-- ========================================================= -->
     <link rel="stylesheet" href="~/Styles/design_dashboard.css">
+    
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
 
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous" />
     <link rel="stylesheet" href="~/assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="~/assets/css/datatables.min.css">
     <link rel="stylesheet" href="~/assets/css/style.css">
@@ -632,27 +634,7 @@
                         <input class="den_ngay" id="den_ngay" placeholder=" Đến Ngày" name="To_date" type="DATE" format="YYYY-MM-DD" value="@Request.QueryString["To_date"]" /><br /><br />
                         <script>$("#den_ngay").datetimepicker({ timepicker: false, format: 'Y-m-d' });</script>
                     </div>
-                    <h6>Chọn Đối Tượng:</h6>
 
-                    <input type="text" id="dropdownInput" list="dropdownList" placeholder="Tìm kiếm đối tượng">
-                    <datalist id="dropdownList">
-                        @foreach (var item in ViewBag.DataItems)
-                        {
-                            <option value="@item.Ma_Dt" data-ten="@item.Ma_Dt" data-diachi="@item.Dia_Chi" data-dvcs="@item.Dvcs" data-dvcs1="@item.Dvcs1">@item.Ten_Dt</option>
-                        }
-                    </datalist>
-                    <input type="hidden" name="Ma_Dt" id="selectedOption">
-                    <br /><br />
-                    <h6>Chọn TDV:</h6>
-                    <input type="text" id="dropdownInputTDV" list="dropdownListTDV" placeholder="Tìm kiếm TDV">
-                    <datalist id="dropdownListTDV">
-                        @foreach (var item in ViewBag.DataTDV)
-                        {
-                            <option value="@item.Ma_CbNv" data-Ma_CbNv="@item.Ma_CbNv">@*@item.Ma_CbNv*@ @item.hoten</option>
-
-                        }
-                    </datalist>
-                    <input type="hidden" name="Ma_TDV" id="selectedOptionTDV">
                     <div>
                         <button class="submit" type="submit" id="runReportButton" onclick="runReport();saveNgay()">
                             Chạy Báo Cáo
@@ -663,16 +645,24 @@
 
 
                 </form>
+                <button style="border-radius: 10px; margin-left: 10px; margin-bottom: 10px; margin-top: 10px; background-color: #aec9e0; color: #3483bd">
+                    <a onclick="return ExcellentExport.convert({ anchor: this, filename: 'BaoCaoKetQuaKinhDoanh', format: 'xlsx' }, [
+                { name: 'I', from: { table: 'example' } },
+                { name: 'II', from: { table: 'example2' } },
+                { name: 'III', from: { table: 'example3' } },
+                { name: 'IV', from: { table: 'example4' } },
 
+            ]);"download="BaoCaoKetQuaKinhDoanh.xlsx" style="color: #3483bd">Xuất Excel</a>
+                </button>
             </li>
         </ul>
     </div>
 
 
     <header class="header_part" style="background-color: #aec9e0; color: #3483bd ">
-        @if (Request.Cookies["UserName"].Value == "Admin-cnct" || Request.Cookies["UserName"].Value == "Admin-cntg" || Request.Cookies["UserName"].Value == "Admin-cnmd" || Request.Cookies["UserName"].Value == "Admin-cnh1" || Request.Cookies["UserName"].Value == "Admin-cnvt"
-                     || Request.Cookies["UserName"].Value == "Admin-cnnt" || Request.Cookies["UserName"].Value == "Admin - cndn" || Request.Cookies["UserName"].Value == "Admin - cnna" || Request.Cookies["UserName"].Value == "Admin - cnhn" && Request.Cookies["UserName"].Value == "admin-cnct" || Request.Cookies["UserName"].Value == "admin-cntg" || Request.Cookies["UserName"].Value == "admin-cnmd" || Request.Cookies["UserName"].Value == "admin-cnh1" || Request.Cookies["UserName"].Value == "admin-cnvt"
-                     || Request.Cookies["UserName"].Value == "admin-cnnt" || Request.Cookies["UserName"].Value == "admin - cndn" || Request.Cookies["UserName"].Value == "admin - cnna" || Request.Cookies["UserName"].Value == "admin - cnhn")
+        @if (Request.Cookies["UserName"].Value == "Admin-cnct" || Request.Cookies["UserName"].Value == "Admin-cntg" || Request.Cookies["UserName"].Value == "Admin-cnmd" || Request.Cookies["UserName"].Value == "Admin-cnhcm" || Request.Cookies["UserName"].Value == "Admin-cnvt"
+                     || Request.Cookies["UserName"].Value == "Admin-cnnt" || Request.Cookies["UserName"].Value == "Admin-cndn" || Request.Cookies["UserName"].Value == "Admin-cnna" || Request.Cookies["UserName"].Value == "Admin-cnhn" && Request.Cookies["UserName"].Value == "admin-cnct" || Request.Cookies["UserName"].Value == "admin-cntg" || Request.Cookies["UserName"].Value == "admin-cnmd" || Request.Cookies["UserName"].Value == "admin-cnhcm" || Request.Cookies["UserName"].Value == "admin-cnvt"
+                     || Request.Cookies["UserName"].Value == "admin-cnnt" || Request.Cookies["UserName"].Value == "admin-cndn" || Request.Cookies["UserName"].Value == "admin-cnna" || Request.Cookies["UserName"].Value == "admin-cnhn")
         {
 
 
@@ -698,8 +688,11 @@
         <div class="row">
             <div class="col-12">
                 <div class="data_table" style="height:max-content;width:1400px">
-                    <h6 style="text-align:left">I. KẾ HOẠCH - THỰC HIỆN GAM HÀNG</h6>
-                    <table id="example" class="table table-striped table-bordered" style="height:max-content">
+                    <div style="display:flex">
+                        <h6 style="text-align:left">I. KẾ HOẠCH - THỰC HIỆN GAM HÀNG</h6>
+
+                    </div>
+                    <table id="example" class="table table-striped table-bordered" style="height:max-content" data-excel-name="I.KẾ HOẠCH - THỰC HIỆN GAM HÀNG">
                         <thead class="table-dark">
                             <tr>
                                 <th>Tên DVCS  <span class="material-symbols-outlined expandable-icon" onclick="toggleRows(this)">arrow_drop_down</span></th>
@@ -727,13 +720,13 @@
 
                                 @*<tr class="table-dark expandable-content">
 
-                <th style="background-color: #f1f1f1; border-top: hidden; border-bottom: hidden; border-left: none "></th>
-                <th>Doanh Thu OPC</th>
-                <th>Khoán OPC</th>
-                <th>Tỷ lệ OPC</th>
-            </tr>*@
+                                        <th style="background-color: #f1f1f1; border-top: hidden; border-bottom: hidden; border-left: none "></th>
+                                        <th>Doanh Thu OPC</th>
+                                        <th>Khoán OPC</th>
+                                        <th>Tỷ lệ OPC</th>
+                                    </tr>*@
                                 <tr class="expandable-content">
-                                    <td style="font-weight:bold">OPC  <span class="material-symbols-outlined expandable-icon" onclick="toggleRowsOPC(this)">arrow_drop_down</span></td>
+                                    <td style="font-weight:bold">OPC  <span class="material-symbols-outlined expandable-icon noExl" onclick="toggleRowsOPC(this)">arrow_drop_down</span></td>
                                     <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Doanh_Thu_OPC"]))</td>
                                     <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Khoan_OPC"]))</td>
                                     <td style="text-align:right">@row2["TyLe_OPC"]%</td>
@@ -750,12 +743,12 @@
                                 {
                                     if (row["Gam_hang"].ToString() == "OPC")
                                     {
-                        <tr class="expandable-content_detail">
-                            <td style="text-align:left">@row["Ma_Vt"] - @row["Ten_Vt"]</td>
-                            <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row["So_Luong"]))</td>
-                            <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row["Tong_Tien"]))</td>
-                            <td style="text-align:right"></td>
-                        </tr>
+                                        <tr class="expandable-content_detail">
+                                            <td style="text-align:left">@row["Ma_Vt"] - @row["Ten_Vt"]</td>
+                                            <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row["So_Luong"]))</td>
+                                            <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row["Tong_Tien"]))</td>
+                                            <td style="text-align:right"></td>
+                                        </tr>
                                     }
 
                                 }
@@ -776,12 +769,12 @@
                                 {
                                     if (row["Gam_hang"].ToString() == "CON")
                                     {
-                        <tr class="expandable-content_detailCON">
-                            <td style="text-align:left">@row["Ma_Vt"] - @row["Ten_Vt"]</td>
-                            <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row["So_Luong"]))</td>
-                            <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row["Tong_Tien"]))</td>
-                            <td style="text-align:right"></td>
-                        </tr>
+                                        <tr class="expandable-content_detailCON">
+                                            <td style="text-align:left">@row["Ma_Vt"] - @row["Ten_Vt"]</td>
+                                            <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row["So_Luong"]))</td>
+                                            <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row["Tong_Tien"]))</td>
+                                            <td style="text-align:right"></td>
+                                        </tr>
                                     }
 
                                 }
@@ -802,12 +795,12 @@
                                 {
                                     if (row["Gam_hang"].ToString() == "SUI")
                                     {
-                        <tr class="expandable-content_detailSUI">
-                            <td style="text-align:left">@row["Ma_Vt"] - @row["Ten_Vt"]</td>
-                            <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row["So_Luong"]))</td>
-                            <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row["Tong_Tien"]))</td>
-                            <td style="text-align:right"></td>
-                        </tr>
+                                        <tr class="expandable-content_detailSUI">
+                                            <td style="text-align:left">@row["Ma_Vt"] - @row["Ten_Vt"]</td>
+                                            <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row["So_Luong"]))</td>
+                                            <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row["Tong_Tien"]))</td>
+                                            <td style="text-align:right"></td>
+                                        </tr>
                                     }
 
                                 }
@@ -828,12 +821,12 @@
                                 {
                                     if (row["Gam_hang"].ToString() == "PHIEN")
                                     {
-                        <tr class="expandable-content_detailPHIEN">
-                            <td style="text-align:left">@row["Ma_Vt"] - @row["Ten_Vt"]</td>
-                            <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row["So_Luong"]))</td>
-                            <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row["Tong_Tien"]))</td>
-                            <td style="text-align:right"></td>
-                        </tr>
+                                        <tr class="expandable-content_detailPHIEN">
+                                            <td style="text-align:left">@row["Ma_Vt"] - @row["Ten_Vt"]</td>
+                                            <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row["So_Luong"]))</td>
+                                            <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row["Tong_Tien"]))</td>
+                                            <td style="text-align:right"></td>
+                                        </tr>
                                     }
 
                                 }
@@ -855,12 +848,12 @@
                                 {
                                     if (row["Gam_hang"].ToString() == "TW25")
                                     {
-                        <tr class="expandable-content_detail25">
-                            <td style="text-align:left">@row["Ma_Vt"] - @row["Ten_Vt"]</td>
-                            <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row["So_Luong"]))</td>
-                            <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row["Tong_Tien"]))</td>
-                            <td style="text-align:right"></td>
-                        </tr>
+                                        <tr class="expandable-content_detail25">
+                                            <td style="text-align:left">@row["Ma_Vt"] - @row["Ten_Vt"]</td>
+                                            <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row["So_Luong"]))</td>
+                                            <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row["Tong_Tien"]))</td>
+                                            <td style="text-align:right"></td>
+                                        </tr>
                                     }
 
                                 }
@@ -875,8 +868,13 @@
                     <div style="display: flex; flex-direction: column; margin-top: 20px; width: 700px; height: max-content">
 
                         <div class="data_table" style="height:max-content;width:700px">
-                            <h6 style="text-align:left">II. THỰC HIỆN THEO LOẠI KHÁCH HÀNG</h6>
-                            <table id="example2" class="table table-striped table-bordered" style="height:max-content">
+                            <div style="display:flex">
+                                <h6 style="text-align:left">II. THỰC HIỆN THEO LOẠI KHÁCH HÀNG</h6>  @*<button id="exportbutton2" style="border-radius: 20px; margin-left: 10px; margin-bottom: 10px; background-color: #aec9e0; color: #3483bd ">
+                                        Xuất Excel
+                                    </button>*@
+                            </div>
+
+                            <table id="example2" class="table table-striped table-bordered" style="height:max-content" data-excel-name="II.THỰC HIỆN THEO LOẠI KH">
                                 <thead class="table-dark">
                                     <tr>
                                         @*<th>Id</th>*@
@@ -889,16 +887,21 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+
                                     @foreach (DataRow row2 in Model.Tables[1].Rows)
                                     {
                                         <tr>
                                             @*<td>@row2["Id"]</td>*@
                                             @*<td>@row2["Ma_Loai_KH"]</td>*@
-                                            <td><strong>OTC</strong> <span class="material-symbols-outlined expandable-icon" onclick="toggleRows2(this)">arrow_drop_down</span></td>
+                                            <td style="background-color:antiquewhite"><strong>OTC</strong> <span class="material-symbols-outlined expandable-icon" onclick="toggleRows2(this)">arrow_drop_down</span></td>
                                             <td style="text-align: right;color: #3483bd;font-weight:bold" id="tongdt-otc">@String.Format("{0:n0}", row2["TongDt_OTC"])</td>
                                             <td style="text-align: right; color: #3483bd; font-weight: bold" id="tongkhoan-otc">@String.Format("{0:n0}", row2["TongKhoan_OTC"])</td>
                                             <td style="color: #3483bd; font-weight: bold">@row2["TyLe_OTC"]%</td>
-                                            <td style="color: #3483bd; font-weight: bold ">100%</td>
+                                            @foreach (DataRow row5 in Model.Tables[7].Rows)
+                                            {
+                                                <td style="color: #3483bd; font-weight: bold ">@row5["Sum_Ty_Le_OTC"]%</td>
+                                            }
+
 
 
                                         </tr>
@@ -925,11 +928,14 @@
                                         <tr>
                                             @*<td>@row2["Id"]</td>*@
                                             @*<td>@row2["Ma_Loai_KH"]</td>*@
-                                            <td><strong>ETC</strong> <span class="material-symbols-outlined expandable-icon" onclick="toggleRows3(this)">arrow_drop_down</span></td>
+                                            <td style="background-color:antiquewhite"><strong>ETC</strong> <span class="material-symbols-outlined expandable-icon" onclick="toggleRows3(this)">arrow_drop_down</span></td>
                                             <td style="text-align: right; color: #3483bd;font-weight:bold" id="tongdt-etc">@String.Format("{0:n0}", row2["TongDt_ETC"])</td>
                                             <td style="text-align: right; color: #3483bd; font-weight: bold" id="tongkhoan-etc">@String.Format("{0:n0}", row2["TongKhoan_ETC"])</td>
                                             <td style=" color: #3483bd; font-weight: bold">@row2["TyLe_ETC"]%</td>
-                                            <td style="color: #3483bd; font-weight: bold">100%</td>
+                                            @foreach (DataRow row5 in Model.Tables[7].Rows)
+                                            {
+                                                <td style="color: #3483bd; font-weight: bold ">@row5["Sum_Ty_Le_ETC"]%</td>
+                                            }
 
 
                                         </tr>
@@ -957,7 +963,7 @@
                                         {
                                             <tr>
 
-                                                <td style="font-weight:bold ">@row2["Loai_KH"]</td>
+                                                <td style="font-weight:bold;background-color:antiquewhite ">@row2["Loai_KH"]</td>
                                                 <td style="text-align: right; color: #3483bd; font-weight: bold">@String.Format("{0:n0}", row2["Doanh_Thu"])</td>
                                                 <td style="color: #3483bd; text-align: right;font-weight:bold">@String.Format("{0:n0}", row2["Khoan"])</td>
                                                 <td style="color: #3483bd; font-weight: bold">@row2["Ty_Le"]%</td>
@@ -985,8 +991,13 @@
 
                         </div>@**@
                         <div class="data_table" style="height:max-content;width:700px;margin-top:20px">
-                            <h6 style="text-align:left">IV. THỰC HIỆN THEO ĐƠN VỊ</h6>
-                            <table id="example4" class="table table-striped table-bordered" style="height:max-content">
+                            <div style="display:flex">
+                                <h6 style="text-align:left">IV. THỰC HIỆN THEO ĐƠN VỊ</h6>  @*<button id="exportbutton4" style="border-radius: 20px; margin-left: 10px; margin-bottom: 10px; background-color: #aec9e0; color: #3483bd ">
+                                        Xuất Excel
+                                    </button>*@
+                            </div>
+
+                            <table id="example4" class="table table-striped table-bordered" style="height:max-content" data-excel-name="IV.THỰC HIỆN THEO ĐƠN VỊ">
                                 <thead class="table-dark">
                                     <tr>
                                         <th>Mã Loại KH</th>
@@ -1026,8 +1037,13 @@
 
                     </div>
                     <div class="data_table3" style="height:max-content;width:600px; margin-top:20px">
-                        <h6 style="text-align:left">III. THỰC HIỆN THEO TỈNH THÀNH</h6>
-                        <table id="example3" class="table table-striped table-bordered" style="height:max-content">
+                        <div style="display:flex">
+                            <h6 style="text-align:left">III. THỰC HIỆN THEO TỈNH THÀNH</h6> @*<button id="exportbutton3" style="border-radius: 20px; margin-left: 10px; margin-bottom: 10px; background-color: #aec9e0; color: #3483bd ">
+                                    Xuất Excel
+                                </button>*@
+                        </div>
+
+                        <table id="example3" class="table table-striped table-bordered" style="height:max-content" data-excel-name="III.THỰC HIỆN THEO TỈNH THÀNH">
                             <thead class="table-dark">
                                 <tr>
                                     <th>Tỉnh Thành</th>
@@ -1043,15 +1059,16 @@
                             <tbody>
                                 @foreach (DataRow row2 in Model.Tables[4].Rows)
                                 {
-                    <tr>
-                        <td>@row2["Tinh_Thanh"]</td>
-                        <td style="text-align:right">@string.Format("{0:n0}", row2["Doanh_Thu"])</td>
-                        <td style="text-align:right">@String.Format("{0:n0}", row2["Doanh_Thu_OTC"])</td>
-                        <td style="text-align:right">@String.Format("{0:n0}", row2["Doanh_Thu_ETC"])</td>
-                        <td>@row2["Ty_Le_Co_Cau"]%</td>
+                                    <tr>
+                                        <td style="text-align:left">@row2["Tinh_Thanh"]</td>
+                                        <td style="text-align:right">@string.Format("{0:n0}", row2["Doanh_Thu"])</td>
+                                        <td style="text-align:right">@String.Format("{0:n0}", row2["Doanh_Thu_OTC"])</td>
+                                        <td style="text-align:right">@String.Format("{0:n0}", row2["Doanh_Thu_ETC"])</td>
+                                        <td>@row2["Ty_Le_Co_Cau"]%</td>
 
 
-                    </tr>}
+                                    </tr>
+                                }
                             </tbody>
                             <tfoot>
                                 <tr id="tong-cong" style="background-color: burlywood;color:black;font-weight:bold">
@@ -1066,7 +1083,7 @@
 
                     </div>
                 </div>
-                
+
             </div>
         </div>
     </div>
@@ -1080,11 +1097,71 @@
     <script src="~/assets/js/pdfmake.min.js"></script>
     <script src="~/assets/js/vfs_fonts.js"></script>
     <script src="~/assets/js/custom.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha384-ezVEjEXRl53P2FiHM1zjzA2INHHi1Wo4tsLvq4BRyUEm3I+lmHy8PSo7fFt+5V" crossorigin="anonymous">
+    <script src="https://unpkg.com/excellentexport@4.0.0/dist/excellentexport.min.js"></script>
+    <script src="~/Scripts/excellentexport.js"></script>
+    <script src="~/Scripts/table2excel.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="//cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.3/xlsx.full.min.js"></script>
 
+    @*<script>
+            document.getElementById("exportbutton").addEventListener('click', function () {
+                var table2excel = new Table2Excel();
 
+                // Tạo tên file dựa trên thời gian
+                var currentDate = new Date();
+                var fileName = "BaoCaoKetQuaKinhDoanh_" + currentDate.getFullYear() + (currentDate.getMonth() + 1) + currentDate.getDate() + ".xlsx";
 
+                table2excel.export(document.querySelectorAll('table'), fileName);
+            });
 
+        </script>*@
+    <script>
+        function exportToExcel() {
+            return ExcellentExport.convert({ anchor: this, filename: 'BaoCaoKetQuaKinhDoanh', format: 'xls' }, [
+                { name: 'Sheet Name Here 1', from: { table: 'example1' } },
+                { name: 'Sheet Name Here 2', from: { table: 'example2' } }
+            ]);
+        }
+    </script>
+    @*<script>
+            document.getElementById("exportbutton2").addEventListener('click', function () {
+                var table2excel = new Table2Excel();
+
+                // Tạo tên file dựa trên thời gian
+                var currentDate = new Date();
+                var fileName = "ThucHienTheoLoaiKH_" + currentDate.getFullYear() + (currentDate.getMonth() + 1) + currentDate.getDate() + ".xlsx";
+
+                table2excel.export(document.querySelectorAll("#example2"), fileName);
+            });
+
+        </script>
+        <script>
+            document.getElementById("exportbutton3").addEventListener('click', function () {
+                var table2excel = new Table2Excel();
+
+                // Tạo tên file dựa trên thời gian
+                var currentDate = new Date();
+                var fileName = "ThucHienTheoTinhThanh_" + currentDate.getFullYear() + (currentDate.getMonth() + 1) + currentDate.getDate() + ".xlsx";
+
+                table2excel.export(document.querySelectorAll("#example3"), fileName);
+            });
+
+        </script>
+        <script>
+            document.getElementById("exportbutton4").addEventListener('click', function () {
+                var table2excel = new Table2Excel();
+
+                // Tạo tên file dựa trên thời gian
+                var currentDate = new Date();
+                var fileName = "ThucHienTheoDonVi_" + currentDate.getFullYear() + (currentDate.getMonth() + 1) + currentDate.getDate() + ".xlsx";
+
+                table2excel.export(document.querySelectorAll("#example4"), fileName);
+            });
+
+        </script>*@
     <script>
         function toggleRows(cell) {
             var rowIndex = cell.parentElement.parentElement.rowIndex; // Adjusted to get the index of the parent row
@@ -1239,28 +1316,55 @@
         };
 
     </script>
-    @*<script>
-        //dang lam dang do tai day
-        // Lấy tất cả các ô trong cột "Doanh Thu"
-        var doanhThuOTCCells = document.getElementById("tongdt-otc").innerText;
-        var doanhThuETCCells = document.getElementById("tongdt-etc").innerText;
-        var khoanOTCCells = document.getElementById("tongkhoan-otc").innerText
-        var khoanETCCells = document.getElementById("tongkhoan-etc").innerText
-        var tongDoanhThu = 0;
-        var tongKhoan = 0;
-        var TyLe = 0;
-        // Tính tổng cột "Doanh Thu"
-        tongDoanhThu = doanhThuOTCCells + doanhThuETCCells;
-        doanhThuCells.forEach(function (cell) {
-            tongKhoan+= parseInt(cell.innerText.replace(/[^0-9]/g, ''), 10);
-        });
-        TyLe = (tongDoanhThu / tongKhoan) * 100;
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Gọi hàm tính tỷ lệ cơ cấu
+            calculateAndSetPercentage();
 
-        // Hiển thị tổng cột "Doanh Thu"
-        document.getElementById("tong-doanh-thu-2").innerText = tongDoanhThu.toLocaleString();
-        //document.getElementById("tong-doanh-thu-otc-2").innerText = tongKhoan.toLocaleString();
-        //document.getElementById("tong-doanh-thu-etc-2").innerText = TyLe.toLocaleString();
-    </script>*@
+            function calculateAndSetPercentage() {
+                // Lấy tất cả các hàng của bảng OTC
+                var rowsOTC = document.querySelectorAll(".expandable-contentOTC");
+
+                // Khởi tạo biến để lưu tổng tỷ lệ cơ cấu
+                var totalPercentage = 0;
+
+                // Lặp qua từng hàng và tính tổng tỷ lệ cơ cấu
+                rowsOTC.forEach(function (row) {
+                    var percentage = parseFloat(row.querySelector("td:nth-child(5)").textContent);
+                    totalPercentage += isNaN(percentage) ? 0 : percentage;
+                });
+
+                // Gán tỷ lệ tính được cho hàng OTC tổng
+                var totalPercentageFormatted = totalPercentage.toFixed(2) + "%";
+                document.getElementById("tyle-otc-tong").textContent = totalPercentageFormatted;
+                console.log(totalPercentage);
+            }
+        });
+    </script>
+
+
+    @*<script>
+            //dang lam dang do tai day
+            // Lấy tất cả các ô trong cột "Doanh Thu"
+            var doanhThuOTCCells = document.getElementById("tongdt-otc").innerText;
+            var doanhThuETCCells = document.getElementById("tongdt-etc").innerText;
+            var khoanOTCCells = document.getElementById("tongkhoan-otc").innerText
+            var khoanETCCells = document.getElementById("tongkhoan-etc").innerText
+            var tongDoanhThu = 0;
+            var tongKhoan = 0;
+            var TyLe = 0;
+            // Tính tổng cột "Doanh Thu"
+            tongDoanhThu = doanhThuOTCCells + doanhThuETCCells;
+            doanhThuCells.forEach(function (cell) {
+                tongKhoan+= parseInt(cell.innerText.replace(/[^0-9]/g, ''), 10);
+            });
+            TyLe = (tongDoanhThu / tongKhoan) * 100;
+
+            // Hiển thị tổng cột "Doanh Thu"
+            document.getElementById("tong-doanh-thu-2").innerText = tongDoanhThu.toLocaleString();
+            //document.getElementById("tong-doanh-thu-otc-2").innerText = tongKhoan.toLocaleString();
+            //document.getElementById("tong-doanh-thu-etc-2").innerText = TyLe.toLocaleString();
+        </script>*@
     <script>
         // Lấy tất cả các ô trong cột "Doanh Thu"
         var doanhThuCells = document.querySelectorAll("#example3 tbody td:nth-child(2)");
@@ -1498,7 +1602,7 @@
             return null;
         }
     </script>
-     <script>
+    <script>
         document.getElementById("dropdownInputTDV").addEventListener("input", function () {
             var inputValue = this.value;
             var options = document.querySelectorAll("#dropdownListTDV option");

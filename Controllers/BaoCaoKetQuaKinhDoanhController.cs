@@ -31,21 +31,21 @@ namespace web4.Controllers
         }
         public ActionResult BaoCaoKetQuaKinhDoanh_Fill()
         {
-            List<MauInChungTu> dmDlist = LoadDmDt("");
-            List<BKHoaDonGiaoHang> dmDlistTDV = LoadDmTDV();
-            ViewBag.DataItems = dmDlist;
-            ViewBag.DataTDV = dmDlistTDV;
+            //List<MauInChungTu> dmDlist = LoadDmDt("");
+            //List<BKHoaDonGiaoHang> dmDlistTDV = LoadDmTDV();
+            //ViewBag.DataItems = dmDlist;
+            //ViewBag.DataTDV = dmDlistTDV;
             return View();
         }
         public ActionResult BaoCaoKetQuaKinhDoanh()
         {
-            List<MauInChungTu> dmDlist = LoadDmDt("");
-            List<BKHoaDonGiaoHang> dmDlistTDV = LoadDmTDV();
+            //List<MauInChungTu> dmDlist = LoadDmDt("");
+            //List<BKHoaDonGiaoHang> dmDlistTDV = LoadDmTDV();
             string ma_dvcs = Request.Cookies["MA_DVCS"].Value;
             var fromDate = Request.Cookies["From_date"].Value;
             var toDate = Request.Cookies["To_Date"].Value;
             var MaDt = Request.Cookies["Ma_Dt"] != null ? Request.Cookies["Ma_Dt"].Value : string.Empty;
-            var MaTDV = Request.Cookies["Ma_TDV"].Value;
+            //var MaTDV = Request.Cookies["Ma_TDV"].Value;
             DataSet ds = new DataSet();
             //if (ma_dvcs == "OPC_B1")
             //{
@@ -53,8 +53,8 @@ namespace web4.Controllers
             //    string first3Chars = ma_dvcsFirst3Chars.Substring(0, 3);
             //    ma_dvcs = first3Chars;
             //}
-            ViewBag.DataTDV = dmDlistTDV;
-            ViewBag.DataItems = dmDlist;
+            //ViewBag.DataTDV = dmDlistTDV;
+            //ViewBag.DataItems = dmDlist;
             connectSQL();
             //var SoCT = Request.Cookies["So_Ct"] != null ? Request.Cookies["So_Ct"].Value : "";
             //MauIn.So_Ct = Request.Cookies["SoCt"].Value;
@@ -78,7 +78,7 @@ namespace web4.Controllers
                     cmd.Parameters.AddWithValue("@_Tu_Ngay", fromDate);
                     cmd.Parameters.AddWithValue("@_Den_Ngay", toDate);
                     cmd.Parameters.AddWithValue("@_Ma_Dt", MaDt);
-                    cmd.Parameters.AddWithValue("@_Ma_CbNv", MaTDV);
+                    //cmd.Parameters.AddWithValue("@_Ma_CbNv", MaTDV);
                     cmd.Parameters.AddWithValue("@_Ma_DvCs", ma_dvcs);
                     sda.Fill(ds);
 
