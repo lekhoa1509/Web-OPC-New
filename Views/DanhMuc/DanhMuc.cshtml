@@ -1,5 +1,5 @@
 ﻿﻿@{ ViewBag.Title = "OPC Bao Cao | OPCPHARMA";
-    @model System.Data.DataSet
+    
 }
 @using System.Data;
 <!DOCTYPE html>
@@ -49,7 +49,7 @@
             color: #333;
         }
 
-        .tab {
+        /*.tab {
             float: left;
             height: 44px;
             margin: 0 8px -1px 0;
@@ -78,8 +78,8 @@
                 }
 
                 .tab.tabClosed {
-                    width: 0 !important; /* use important because we need to set the width of tabs in javascript in order to be able to animate them to 0 */
-                }
+                    width: 0 !important;*/ /* use important because we need to set the width of tabs in javascript in order to be able to animate them to 0 */
+        /*}
 
                     .tab.tabClosed a {
                         opacity: 0;
@@ -96,18 +96,54 @@
 
             .tab-control ul {
                 position: absolute;
-                bottom: 0px;
-                /* left:300px;*/
-            }
+                bottom: 0px;*/
+        /* left:300px;*/
+        /*}
 
                 .tab-control ul li {
                     text-align: center;
-                }
+                }*/
+        /* Thêm lớp selected-tab vào tab đã chọn */
+        /*.tab.selected-tab {
+            background-color: #3763a3;*/ /* Màu nền của tab */
+        /*}
+
+            .tab.selected-tab a {
+                color: white*/ /* Màu nền của tab */
+        /*}
+
+        .selected-tab {
+            background-color: #007bff;*/ /* Màu sắc của tab khi được chọn */
+        /*color: #fff;*/ /* Màu văn bản của tab khi được chọn */
+        /*}*/
+
+        /* Đảm bảo các tab khác không được chọn có màu sắc mặc định */
+        /*.tab:not(.selected-tab) {
+            background-color: #f8f9fa;*/ /* Màu sắc mặc định của tab */
+        /*color: #000;*/ /* Màu văn bản mặc định của tab */
+        /*}*/
+        div.fixed {
+            color: black;
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            width: 400px;
+            background-color: white;
+            border: 3px solid #11101d;
+        }
+
+        .sidebar .nav-links li ul {
+            background-color: #427cac;
+        }
+
+        #active {
+            background-color: #427cac;
+        }
     </style>
 </head>
-<body>
+<body style="background-color: #e0e8ee">
     <div class="loader" style="z-index:1"></div>
-    <div class="sidebar close">
+    <div class="sidebar close" style="background-color: #3f5161; color: #3483bd ">
         <div class="logo-details">
             <img src="~/Images/opc.png" style="height:50px;width:50px;margin-left:10px">
             <span class="logo_name" style="color: #da261f; font-family: 'Agency FB'; font-size: 40px;padding-left:10px">OPC</span>
@@ -175,7 +211,7 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                     <li class="liTitle"><a href="/MauInChungTu/ThongBaoNoQH_Fill">4.Thông Báo Nợ QH</a></li>
                     <li class="liTitle"><a href="/MauInChungTu/BangDoiChieuCongNo_Fill">5.Bảng Đối Chiếu Công Nợ</a></li>
                     @*<li><a href="#">Login Form</a></li>
-        <li><a href="#">Card Design</a></li>*@
+                        <li><a href="#">Card Design</a></li>*@
                 </ul>
             </li>
 
@@ -261,7 +297,7 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
             </li>
         </ul>
     </div>
-    <section class="home-section">
+    <section class="home-section" style="background-color: #e0e8ee">
         <nav>
             <div class="home-content">
                 <i class='bx bx-menu'></i>
@@ -317,16 +353,16 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                     <h3>Danh Mục Han Mức CTV</h3>
                 </div>
                 <div class="box-row-2">
-                    <a class="button" href="/CongTacVien/Index"><span>Xem</span></a>
+                    <a class="button" href="/CongTacVien/Index" target="_blank"><span>Xem</span></a>
                 </div>
             </div>
         </div>
     </section>
     @*<div class="tab-control">
-        <ul class="tabs" style="background-color: #1d1b31; bottom: 0; left: 0; right: 0;">
-            <li class="tab selected" style="padding-right:10px"><a href="#">Home</a></li>
-        </ul>
-    </div>*@
+            <ul class="tabs" style="background-color: #1d1b31; bottom: 0; left: 0; right: 0;">
+                <li class="tab selected" style="padding-right:10px"><a href="#">Home</a></li>
+            </ul>
+        </div>*@
     <script>
         function logout() {
             window.location.href = "/home/login"
@@ -387,13 +423,13 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
         });
     </script>
     <script>
-            function runReport() {
-                // Hiển thị thẻ span có id là "spanText"
-                showLoader();
-                const spanElement = document.getElementById("spanText");
-                spanElement.style.display = "block";
-            }
-        </script>
+        function runReport() {
+            // Hiển thị thẻ span có id là "spanText"
+            showLoader();
+            const spanElement = document.getElementById("spanText");
+            spanElement.style.display = "block";
+        }
+    </script>
     <script>
         window.onload = function () {
             var username = localStorage.getItem("username");
@@ -452,9 +488,9 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                     const newTab = document.createElement("li");
                     newTab.classList.add("tab", "selected");
                     newTab.innerHTML = `
-                                                <a href="${subMenuLinkHref}">${tabTitle}</a>
-                                                <a class="closeTab" href="">✕</a>
-                                            `;
+                                                            <a href="${subMenuLinkHref}">${tabTitle}</a>
+                                                            <a class="closeTab" href="">✕</a>
+                                                        `;
                     tabControlTabs.appendChild(newTab);
 
                     // Chuyển view tới thẻ li tương ứng
@@ -473,8 +509,8 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                 currentTab.classList.add("tab", "selected");
                 const tabInfo = JSON.parse(localStorage.getItem(currentTabTitleView1));
                 currentTab.innerHTML = `
-                                            <a href="${tabInfo.href}">${currentTabTitleView1}</a>
-                                            <a class="closeTab" href="">✕</a>
+                                                        <a href="${tabInfo.href}">${currentTabTitleView1}</a>
+                                                        <a class="closeTab" href="">✕</a>
 `;
                 tabControlTabs.appendChild(currentTab);
             }
@@ -542,9 +578,9 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                 const newTab = document.createElement("li");
                 newTab.classList.add("tab", "selected");
                 newTab.innerHTML = `
-                                        <a href="${tabHref}">${tabTitle}</a>
-                                        <a class="closeTab" href="">✕</a>
-                                        `;
+                                                    <a href="${tabHref}">${tabTitle}</a>
+                                                    <a class="closeTab" href="">✕</a>
+                                                    `;
                 tabControlTabs.appendChild(newTab);
 
                 // Sự kiện khi người dùng nhấp vào nút đóng tab
@@ -614,7 +650,7 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
             }
         });
 
-                                        // ...
+                                                    // ...
     </script>
 </body>
 </html>

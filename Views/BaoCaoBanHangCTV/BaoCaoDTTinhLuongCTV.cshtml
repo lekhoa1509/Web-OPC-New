@@ -635,7 +635,7 @@
                                 <th>Tên TDV</th>
                                 <th>Mã Loại KH</th>
                                 <th>Tên Tỉnh TP</th>
-                              
+                                <th>Mã ĐT</th>
                                 <th>Tên DT</th>
 
                             </tr>
@@ -656,11 +656,28 @@
                                 <td>@row["Kenh_BH"]</td>
                                 <td>@row["Tinh_Thanh"]</td>
 
-
+                                <td>@row["Ma_Dt"]</td>
                                 <td>@row["Ten_Dt"]</td>
                             </tr>
             }
                         </tbody>
+                        <tfoot>
+                            @foreach(DataRow row in Model.Tables[1].Rows)
+                            {
+                            <tr style="background-color: burlywood">
+                                <td colspan="5"><strong>Tổng cộng:</strong></td>
+                                <td style="text-align:right">@row["Tong_CN"]</td>
+                                <td></td>
+                                <td style="text-align:right">@row["Tong_Chi_phi"]</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                               
+                            </tr>
+                            }
+                        </tfoot>
                     </table>
                 </div>
             </div>
