@@ -46,7 +46,7 @@
             width: 20%;
         }
 
-        #SaveCtV {
+        #SaveHD {
             display: block;
             margin: 10px auto; /* Center the buttons and add some spacing */
             padding: 10px 20px; /* Adjust padding as needed */
@@ -58,15 +58,44 @@
             cursor: pointer;
             background-color: #218838; /* Darker green on hover */
         }
+        .loader-container {
+    position: fixed; /* Full screen */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.9); /* Semi-transparent white */
+    z-index: 9999; /* Make sure it's on top */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.spinner {
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #3498db;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 2s linear infinite;
+}
+
+@@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
     </style>
 </head>
 
 <body>
     <section>
+
+
         <h1 class="text-center text-capitalize">Theo dõi giao hàng</h1>
         <div class="container">
 
-            <form action="SaveCtV" method="post">
+            <form>
                 @*<form>*@
                 <div class="form-group mb-3">
                     <div class="row">
@@ -89,7 +118,7 @@
                     }
                 </datalist>
                 <input name="Ten_NVGH" id="selectedOption" readonly>
-                <button>Load Hóa đơn</button>
+                <button type="button" id="LoadHd">Load Hóa đơn</button>
 
                 @*<datalist id="dropdownList">
             @foreach (var item in ViewBag.DataItems)
@@ -104,9 +133,7 @@
                 <option value="@item.Ma_Dt" data-ten="@item.Ten_Dt" data-dvcs="@item.Dvcs">@item.Ten_Dt</option>
             }
         </datalist>*@
-                <div class="col">
-                    <p><strong>4. Lý Do</strong>&nbsp;<span class="text-danger">*</span></p><input class="form-control" type="text" required="" name="Ly_Do" id="Ly_Do">
-                </div>
+
                 <br />
                 <table id="example" class="table table-striped table-bordered">
                     <thead class="table-dark">
@@ -127,9 +154,10 @@
                         <tr>
                             <td>
                                 <input type="text" name="So_HD" id="So_HD" class="So_HD" list="dropdownListVT" placeholder="Tìm kiếm Hóa Đơn">
-                                
+                                <datalist id="dropdownListVT">
+                                </datalist>
                                 <div id="error-messages-1"></div>
-                            </td>    
+                            </td>
                             <td> <input name="Ngay_Hd" id="Ngay_Hd" class="Ngay_Hd" readonly></td>
                             <td> <input name="Ma_Dt" id="Ma_Dt" class="Ma_Dt" readonly></td>
                             <td> <input name="Ten_Dt" id="Ten_Dt" class="Ten_DT" readonly></td>
@@ -145,8 +173,12 @@
                     </tbody>
                 </table>
                 <button type="button" id="addRowBtn">Thêm dòng</button>
-                <button class="submit" type="submit" id="SaveCtV">Lưu</button>
+                <button class="submit" type="submit" id="SaveHD">Lưu</button>
             </form>
+
+        </div>
+        <div id="loader" class="loader-container" style="display: none;">
+            <div class="spinner"></div>
 
         </div>
     </section>
@@ -335,64 +367,7 @@
         });
 
     });
-        
-        function SaveCtV(data) {
-            return $.ajax({
-                contentType: 'application/json; charset=utf-8',
-                dataType: 'json',
-                type: 'POST',
-                url: "",
-                data: data,
-                success: function (result) {
-                    alert(result);
-                    window.location.href = '';
-
-                    //console.log(data);
-                },
-                error: function () {
-                    alert("Error!");
-
-                }
-            });
-        }
-        //Collect Multiple Order List For Pass To Controller
-        $("#SaveCtV").click(function (e) {
-            e.preventDefault();
-
-            var orderArr = [];
-            orderArr.length = 0;
-            var soct;
-            soct = $(this).find('input[name="So_Ct"]').val();
-
-           $("#example tbody tr").each(function () {
-        var maVt = $(this).find('input[name="Ma_vt"]').val();
-        var tenVt = $(this).find('input[name="Ten_Vt"]').val();
-        var hanMuc = $(this).find('input[name="Han_Muc"]').val();
-
-        orderArr.push({
-            Ma_vt: maVt,
-            Ten_Vt: tenVt,
-            Han_Muc: hanMuc
-        });
-
-           });
-            //var tenVt = $(this).find('input[name="Ten_Vt"]').val();
-            //var hanMuc = $(this).find('input[name="Han_Muc"]').val();
-            var data = JSON.stringify({
-                Ngay_Ct: $("#Ngay_Ct").val(),
-               So_Ct: $("#So_Ct").val(),
-                Dvcs: $("#Dvcs").val(),
-                Ma_Dt: $("#dropdownInput").val(),
-                Ten_Dt: $("#selectedOption").val(),
-                details: orderArr
-            });
-
-            $.when(SaveCtV(data)).then(function (response) {
-                console.log(response);
-            }).fail(function (err) {
-                console.log(err);
-            });
-        });
+     
         function checkDuplicateSoHD() {
             var inputs = document.querySelectorAll('.So_HD');
             var values = {};
@@ -417,7 +392,39 @@
                 }
             });
         }
+        function setCookie(name, value, days) {
+            var expires = "";
+            if (days) {
+                var date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + (value || "") + expires + "; path=/";
+        }
+
        
+        document.getElementById('LoadHd').addEventListener('click', function () {
+            document.getElementById('loader').style.display = 'flex'; // Show the loader
+
+            var ngayCt = document.getElementById('Ngay_Ct').value;
+            var soCt = document.getElementById('So_Ct').value;
+            var maNVGH = document.getElementById('dropdownInput').value;
+            var tenNVGH = document.getElementById('selectedOption').value;
+
+            // Set the cookie for Ma_NVGH
+            setCookie('Ma_NVGH', maNVGH, 7);
+            setCookie('Ten_NVGH', tenNVGH, 7);// The cookie will expire in 7 days
+
+            var queryParams = 'Ngay_Ct=' + encodeURIComponent(ngayCt) +
+                '&So_Ct=' + encodeURIComponent(soCt) +
+                '&Ma_NVGH=' + encodeURIComponent(maNVGH) +
+                '&Ten_NVGH=' + encodeURIComponent(tenNVGH);
+
+            // Redirect or submit form after a short delay
+            setTimeout(function () {
+                window.location.href = 'InsetGiaoHangLoadHD?' + queryParams;
+            }, 1000); // Adjust the time as needed
+        });
 
 
 

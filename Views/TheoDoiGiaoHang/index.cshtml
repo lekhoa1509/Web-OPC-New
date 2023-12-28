@@ -23,7 +23,7 @@
     </style>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Danh Sách Hạn Mức CTV</title>
+    <title>Danh Sách Theo Dõi Giao Hàng</title>
     <meta content="" name="description">
     <meta content="Author" name="MJ Maraz">
     <link href="~/assets/images/logo.png" rel="icon">
@@ -70,7 +70,7 @@
                 <img src="~/Images/opc.png" style="height:60px;width:60px;margin-left:10px">
             </a>
         }
-        <h4 style="color:#3483bd">Danh Sách Hạn Mức CTV</h4>
+        <h4 style="color:#3483bd">Danh Sách Theo Dõi Giao Hàng</h4>
     </header>
     <!-- =======  Data-Table  = Start  ========================== -->
     <div class="container">
@@ -84,12 +84,12 @@
                             <tr>
                                 <th>Ngày Chứng từ</th>
                                 <th>Số Chứng Từ</th>
-                                <th>Mã Đối Tượng</th>
-                                <th>Tên Đối Tượng</th>
+                                <th>Mã NVGH</th>
+                                <th>Tên NVGH</th>
                                 <th>Mã Đvcs</th>
                                 <th></th>
                                 <th></th>
-                                <th hidden>CTVid</th>
+                                <th hidden>STT</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -98,12 +98,12 @@
                                 <tr>
                                     <td style="text-align:right">@row2["Ngay_Ct"]</td>
                                     <td style="text-align:right">@row2["So_CT"]</td>
-                                    <td style="text-align:right">@row2["Ma_DT"]</td>
-                                    <td>@row2["Ten_Dt"]</td>
+                                    <td style="text-align:right">@row2["NV_GiaoHang"]</td>
+                                    <td>@row2["Ten_NVGiaoHang"]</td>
                                     <td>@row2["Ma_dvcs"]</td>
                                     <td><a href="#" class="editBtn">Chỉnh Sửa</a></td>
-                                    <td><a href="#" class="Coppy">Thêm Bản Sao Mới</a></td>
-                                    <td hidden class="ctvid">@row2["CTVId"]</td>
+                                    <td><a href="#" class="Coppy">In</a></td>
+                                    <td hidden class="ctvid">@row2["Stt"]</td>
                                 </tr>
                             }
 
@@ -139,22 +139,20 @@
                 var newWindow = window.open('', '_blank');
 
                 //window.location.href = '/congtacvien/InputCTV';
-                newWindow.location.href = '/congtacvien/InputCTV';
+                newWindow.location.href = '/TheoDoiGiaoHang/InsertGiaoHang';
             });
         });
 
         $('.editBtn').click(function () {
             var ctvId = $(this).closest('tr').find('.ctvid').text();
-            document.cookie = "stt=" + ctvId + ";path=/;expires=Fri, 31 Dec 9999 23:59:59 GMT";
-
             var newWindow = window.open('', '_blank');
-            newWindow.location.href = '/congtacvien/EditCTV?CTVId=' + ctvId;
+            newWindow.location.href = '/congtacvien/EditCTV?Stt=' + ctvId;
         });
 
         $('.Coppy').click(function () {
             var ctvId = $(this).closest('tr').find('.ctvid').text();
             var newWindow = window.open('', '_blank');
-            newWindow.location.href = '/congtacvien/CoppyCTV?CTVId=' + ctvId;
+            newWindow.location.href = '/TheoDoiGiaoHang/MauInGiaoHang?Stt=' + ctvId;
         });
     </script>
    

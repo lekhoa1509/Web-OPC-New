@@ -343,6 +343,12 @@
     <Compile Include="Models\B30CTVDetail.cs">
       <DependentUpon>Detail.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\B30G.cs">
+      <DependentUpon>TheoDoiGiaoHang.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\B30GDetail.cs">
+      <DependentUpon>TheoDoiGiaoHang.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\BKHoaDonGiaoHang.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\Chart.cs" />
@@ -364,7 +370,22 @@
     </Compile>
     <Compile Include="Models\MauInChungTu.cs" />
     <Compile Include="Models\StudentMarkDetails.cs" />
+    <Compile Include="Models\TheoDoiGiaoHang.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TheoDoiGiaoHang.Context.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TheoDoiGiaoHang.cs" />
+    <Compile Include="Models\TheoDoiGiaoHang.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TheoDoiGiaoHang.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TheoDoiGiaoHang1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TheoDoiGiaoHang.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TheoDoiHDThau.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -802,6 +823,16 @@
       <DependentUpon>Detail.edmx</DependentUpon>
       <LastGenOutput>Detail.cs</LastGenOutput>
     </Content>
+    <Content Include="Models\TheoDoiGiaoHang.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>TheoDoiGiaoHang.edmx</DependentUpon>
+      <LastGenOutput>TheoDoiGiaoHang.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\TheoDoiGiaoHang.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>TheoDoiGiaoHang.edmx</DependentUpon>
+      <LastGenOutput>TheoDoiGiaoHang1.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\ej\web\office-365\icons\ejicons.woff" />
@@ -854,6 +885,13 @@
     </EntityDeploy>
     <Content Include="Models\Detail.edmx.diagram">
       <DependentUpon>Detail.edmx</DependentUpon>
+    </Content>
+    <EntityDeploy Include="Models\TheoDoiGiaoHang.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>TheoDoiGiaoHang.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\TheoDoiGiaoHang.edmx.diagram">
+      <DependentUpon>TheoDoiGiaoHang.edmx</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\khoa.pubxml" />
     <None Include="Properties\Settings.settings">
@@ -1168,6 +1206,8 @@
     <Content Include="Views\TheoDoiGiaoHang\InsetGiaoHangLoadHD.cshtml" />
     <Content Include="Views\BaoCaoBanHangCTV\BaoCaoDTTinhLuongCTV_Fill_CongTy.cshtml" />
     <Content Include="Views\BaoCaoBanHangCTV\BaoCaoDTTinhLuongCTV_CongTy.cshtml" />
+    <Content Include="Views\TheoDoiGiaoHang\index.cshtml" />
+    <Content Include="Views\TheoDoiGiaoHang\MauInGiaoHang.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

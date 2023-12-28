@@ -175,5 +175,23 @@ namespace web4.Properties {
                 return ((string)(this["CTVid"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Ten_NVGH {
+            get {
+                return ((string)(this["Ten_NVGH"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string STT {
+            get {
+                return ((string)(this["STT"]));
+            }
+        }
     }
 }

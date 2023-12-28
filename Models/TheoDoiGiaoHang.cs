@@ -8,7 +8,7 @@ namespace web4.Models
     public class TheoDoiGiaoHang
     {
         public string So_Ct { get; set; }
-
+        public List<B30GDetail> Details { get; set; }
         public DateTime Ngay_Ct { get; set; }
         public string Ma_NVGH { get; set; }
         public string Ten_NVGH { get; set; }
@@ -22,8 +22,9 @@ namespace web4.Models
         public int Giao_HD { get; set; }
         public float Tien_HD { get; set; }
         public string Noi_Dung { get; set; }
+        public string Stt { get; set; }
         public int Da_Giao_hang { get; set; }
-
+     
 
     }
 }
