@@ -249,7 +249,7 @@ namespace web4.Controllers
                     cmd.Parameters.AddWithValue("@_ma_dvcs", Acc.Ma_DvCs_1);
                     cmd.Parameters.AddWithValue("@_Ma_Dt", Ma_Dt);
                     cmd.Parameters.AddWithValue("@_Ma_CbNv", Ma_TDV);
-                    //cmd.Parameters.AddWithValue("@_Ma_Vt", Ma_Vt);
+                    cmd.Parameters.AddWithValue("@_Ma_Vt", Ma_Vt);
                     sda.Fill(ds);
 
                 }
