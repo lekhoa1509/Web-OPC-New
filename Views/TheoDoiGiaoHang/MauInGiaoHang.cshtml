@@ -177,24 +177,6 @@
             </div>
         </div>
     </div>
-    <script>
-        function calculateTotal() {
-            var total = 0;
-            var cells = document.querySelectorAll('.tien-hd');
-
-            for (var i = 0; i < cells.length; i++) {
-                // Convert the cell text to a number and add it to the total
-                var value = cells[i].innerText.replace(/,/g, ''); // Remove commas if the numbers are formatted with commas
-                total += parseFloat(value);
-            }
-
-            // Update the total in the footer
-            document.getElementById('tong-cong').innerText = total.toLocaleString(); // toLocaleString adds commas for thousands, etc.
-        }
-
-        // Calculate the total when the page loads
-        window.onload = calculateTotal;
-    </script>
-
+    
 </body>
 </html>
