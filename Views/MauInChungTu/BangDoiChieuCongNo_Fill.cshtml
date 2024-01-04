@@ -448,18 +448,18 @@
                         <a>Số</a><br /><br />
                         <input type="text" name="So" placeholder="Số" /><br /><br />
                         <a>Đối Tượng</a><br /><br />
-                        @*<input type="text" id="dropdownInput" list="dropdownList" placeholder="Tìm kiếm danh mục">
-                        <datalist id="multipleSelect">
+                        <input type="text" id="dropdownInput" list="dropdownList" placeholder="Tìm kiếm danh mục">
+                        <datalist id="dropdownList">
                             @{ var l = ViewBag.DataItems;
                                 foreach (var item in l)
                                 {
-                                    <option value="@item.Ma_Dt" data-ten="@item.Ten_Dt" data-diachi="@item.Dia_Chi" data-dvcs="@item.Dvcs" data-dvcs1="@item.Dvcs1">@item.Ten_Dt</option>
+                                    <option value="@item.Ma_Dt" data-madt="@item.Ma_Dt"data-ten="@item.Ten_Dt" data-diachi="@item.Dia_Chi" data-dvcs="@item.Dvcs" data-dvcs1="@item.Dvcs1">@item.Ten_Dt</option>
                                 }
                             }
                         </datalist>
-                        <input type="hidden" name="Ma_Dt" id="selectedOption">*@
+                        <input type="hidden" name="Ma_Dt" id="selectedOption">
 
-                        <select id="multipleSelect" multiple name="native-select" placeholder="Chọn Đối Tượng" data-search="true" data-silent-initial-value-set="true" noOptionsText="Không tìm thấy" onChange="handleSelectChange(event)">
+                        @*<select id="multipleSelect" multiple name="native-select" placeholder="Chọn Đối Tượng" data-search="true" data-silent-initial-value-set="true" noOptionsText="Không tìm thấy" onChange="handleSelectChange(event)">
                             @{ var l = ViewBag.DataItems;
                                 foreach (var item in l)
                                 {
@@ -468,7 +468,7 @@
                             }
 
 
-                        </select>
+                        </select>*@
                         <div>
                             <button class="submit" type="submit" id="runReportButton" onclick="runReport()"> Chạy Báo Cáo </button>
                         </div>
@@ -688,12 +688,14 @@
                     if (selectedOption) {
                         var tenDt = selectedOption.getAttribute('data-ten');
                         var selectedDiaChi = selectedOption.getAttribute('data-diachi');
+                        var selectedMaDt = selectedOption.getAttribute('data-madt');
                         var selectedDvcs = selectedOption.getAttribute('data-Dvcs');
                         var selectedDvcs1 = selectedOption.getAttribute('data-dvcs1');
                         document.cookie = 'Ten_Dt=' + tenDt;
                         document.cookie = 'Dia_Chi=' + selectedDiaChi;
                         document.cookie = 'Dvcs=' + selectedDvcs;
                         document.cookie = 'Dvcs1=' + selectedDvcs1;
+                        document.cookie = 'MaDT=' + selectedMaDt;
                     }
                 });
             }

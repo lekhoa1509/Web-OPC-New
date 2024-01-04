@@ -396,7 +396,7 @@ namespace web4.Controllers
             string ma_dvcs = Request.Cookies["Ma_dvcs"].Value;
             DataSet ds = new DataSet();
             connectSQL();
-            var Ma_Dt = Request.Cookies["Ma_Dt"].Value;
+            var Ma_Dt = Request.Cookies["MaDT"].Value;
             if (ma_dvcs == "OPC_B1")
             {
                 string ma_dvcsFirst3Chars = ma_dvcs == "OPC_B1" ? ma_dvcs.Substring(0, 3) : ma_dvcs;
