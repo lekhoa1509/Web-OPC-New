@@ -492,9 +492,9 @@
         <div class="row">
 
             <div class="col-12">
-                <form action="BaoCaoBanHangTDV_Nt_Fill">
-                    <button id="cnntButton" class="button-nt" style=" justify-content: right; align-items:center;display:block;">CNNT</button>
-                </form>
+              
+                    <button id="cnntButton"  type="button" class="button-nt" style=" justify-content: right;  align-items:center;display:block;">CNNT</button>
+             
                 <div class="data_table">
                     <table id="example" class="table table-striped table-bordered">
                         <thead class="table-dark">
@@ -689,7 +689,11 @@
             }
         });
 
-
+        $('.button-nt').click(function () {
+            var ctvId = $(this).closest('tr').find('.ctvid').text();
+            var newWindow = window.open('', '_blank');
+            newWindow.location.href = '/BaoCaoBanHangTDV/BaoCaoBanHangTDV_Nt_Fill';
+        });
 
 
     </script>
