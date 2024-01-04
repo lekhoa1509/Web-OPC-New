@@ -92,18 +92,18 @@
                 <button>Load Hóa đơn</button>
 
                 @*<datalist id="dropdownList">
-            @foreach (var item in ViewBag.DataItems)
-            {
-                <option value="@item.Ma_Dt" data-ten="@item.Ten_Dt" data-dvcs="@item.Dvcs">@item.Ten_Dt</option>
-            }
-        </datalist>*@
+                        @foreach (var item in ViewBag.DataItems)
+                        {
+                            <option value="@item.Ma_Dt" data-ten="@item.Ten_Dt" data-dvcs="@item.Dvcs">@item.Ten_Dt</option>
+                        }
+                    </datalist>*@
 
                 @*<datalist id="dropdownList">
-            @foreach (var item in ViewBag.DataItems)
-            {
-                <option value="@item.Ma_Dt" data-ten="@item.Ten_Dt" data-dvcs="@item.Dvcs">@item.Ten_Dt</option>
-            }
-        </datalist>*@
+                        @foreach (var item in ViewBag.DataItems)
+                        {
+                            <option value="@item.Ma_Dt" data-ten="@item.Ten_Dt" data-dvcs="@item.Dvcs">@item.Ten_Dt</option>
+                        }
+                    </datalist>*@
                 <div class="col">
                     <p><strong>4. Lý Do</strong>&nbsp;<span class="text-danger">*</span></p><input class="form-control" type="text" required="" name="Ly_Do" id="Ly_Do">
                 </div>
@@ -127,9 +127,14 @@
                         <tr>
                             <td>
                                 <input type="text" name="So_HD" id="So_HD" class="So_HD" list="dropdownListVT" placeholder="Tìm kiếm Hóa Đơn">
-                                
+                                <datalist id="dropdownListVT">
+                                    @foreach (var item in ViewBag.DataHD)
+                                    {
+                                        <option value="@item.So_HD" data-ten="@item.Ten_Dt" data-NgayHD="@item.Ngay_HD.ToString("dd/MM/yyyy")" data-MaDt="@item.Ma_Dt" data-NvGN="@item.Ma_NVGH" data-tien="@item.Tien_HD">@item.Ten_Dt</option>
+                                    }
+                                </datalist>
                                 <div id="error-messages-1"></div>
-                            </td>    
+                            </td>
                             <td> <input name="Ngay_Hd" id="Ngay_Hd" class="Ngay_Hd" readonly></td>
                             <td> <input name="Ma_Dt" id="Ma_Dt" class="Ma_Dt" readonly></td>
                             <td> <input name="Ten_Dt" id="Ten_Dt" class="Ten_DT" readonly></td>
@@ -264,7 +269,7 @@
                 var dropdownListVT = $('#dropdownListVT');
                 dropdownListVT.empty();
 
-                var dataItems2 = @Html.Raw(Json.Encode(ViewBag.DataHD));    
+                var dataItems2 = @Html.Raw(Json.Encode(ViewBag.DataHD));
                 dataItems2.forEach(function (item) {
                     var readableDate = convertNetDate(item.Ngay_HD); // Convert the date
 
@@ -335,7 +340,7 @@
         });
 
     });
-        
+
         function SaveCtV(data) {
             return $.ajax({
                 contentType: 'application/json; charset=utf-8',
@@ -417,12 +422,12 @@
                 }
             });
         }
-       
+
 
 
 
     </script>
-    
+
 
 
 

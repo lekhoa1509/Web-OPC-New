@@ -1171,6 +1171,10 @@
     <Content Include="Views\CongTacVien\EditCTV.cshtml" />
     <Content Include="Views\CongTacVien\CoppyCTV.cshtml" />
     <Content Include="Views\DashBoard\Index.cshtml" />
+    <Content Include="Views\TheoDoiGiaoHang\InsertGiaoHang.cshtml" />
+    <Content Include="Views\TheoDoiGiaoHang\InsetGiaoHangLoadHD.cshtml" />
+    <Content Include="Views\BaoCaoBanHangCTV\BaoCaoDTTinhLuongCTV_Fill_CongTy.cshtml" />
+    <Content Include="Views\BaoCaoBanHangCTV\BaoCaoDTTinhLuongCTV_CongTy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

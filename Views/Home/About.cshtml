@@ -522,10 +522,19 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                                 </tr>
                                 <tr style="height:30px">
                                     <td style="text-align: left">
-                                        <li style=" list-style-type: none;" class="liTitle">
-                                            <a href="" onclick="runReport('@Url.Action("BaoCaoDTTinhLuongCTV_Fill", "BaoCaoBanHangCTV")'
+                                        @if (string.Equals(ViewBag.UserName, "OPCTCKT001", StringComparison.OrdinalIgnoreCase)) {
+
+                                            <li style=" list-style-type: none;" class="liTitle">
+                                                <a href="" onclick="runReport('@Url.Action("BaoCaoDTTinhLuongCTV_Fill_CongTy", "BaoCaoBanHangCTV")'
                                                       )">9.Báo Cáo Doanh Thu Tính Lương CTV</a>
-                                        </li>
+                                            </li>}
+                                     else
+                                         {
+                                    <li style=" list-style-type: none;" class="liTitle">
+                                        <a href="" onclick="runReport('@Url.Action("BaoCaoDTTinhLuongCTV_Fill", "BaoCaoBanHangCTV")'
+                                                      )">9.Báo Cáo Doanh Thu Tính Lương CTV</a>
+                                    </li> }
+                                        
                                     </td>
                                 </tr>
                                 @*<tr style="height:30px">
