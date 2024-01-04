@@ -1119,7 +1119,6 @@
     <Content Include="Views\BaoCaoBanHangTDV\BaoCaoBanHangTDV.cshtml" />
     <Content Include="Views\BaoCaoBanHangTDV\BaoCaoBanHangTDV_Fill.cshtml" />
     <Content Include="Views\BaoCaoBanHangTDV\BaoCaoBanHangTDV_Nt.cshtml" />
-    <Content Include="Views\BaoCaoBanHangTDV\BaoCaoBanHangTDV_Nt_Fill.cshtml" />
     <Content Include="Views\BaoCaoTienVeCN\BaoCaoTienVeCN.cshtml" />
     <Content Include="Views\BaoCaoTienVeCN\BaoCaoTienVeCN_Fill.cshtml" />
     <Content Include="Views\BaoCaoTienVeCN\BaoCaoTienVeTDV.cshtml" />
@@ -1217,6 +1216,7 @@
     <Content Include="Views\TheoDoiGiaoHang\MauInGiaoHang.cshtml" />
     <Content Include="Views\TheoDoiGiaoHang\UpdateGiaoHang.cshtml" />
     <Content Include="Views\TheoDoiGiaoHang\UpdateGiaoHangLoadHD.cshtml" />
+    <Content Include="Views\BaoCaoBanHangTDV\BaoCaoBanHangTDV_Nt_Fill.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
