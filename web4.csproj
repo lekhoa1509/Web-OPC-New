@@ -1215,6 +1215,8 @@
     <Content Include="Views\BaoCaoBanHangCTV\BaoCaoDTTinhLuongCTV_CongTy.cshtml" />
     <Content Include="Views\TheoDoiGiaoHang\index.cshtml" />
     <Content Include="Views\TheoDoiGiaoHang\MauInGiaoHang.cshtml" />
+    <Content Include="Views\TheoDoiGiaoHang\UpdateGiaoHang.cshtml" />
+    <Content Include="Views\TheoDoiGiaoHang\UpdateGiaoHangLoadHD.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
