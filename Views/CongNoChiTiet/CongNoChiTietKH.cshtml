@@ -627,7 +627,7 @@
     </div>
 
 
-    <header class="header_part"style="background-color: #aec9e0; color: #3483bd ">
+    <header class="header_part" style="background-color: #aec9e0; color: #3483bd ">
         @if (Request.Cookies["UserName"].Value == "Admin-cnct" || Request.Cookies["UserName"].Value == "Admin-cntg" || Request.Cookies["UserName"].Value == "Admin-cnmd" || Request.Cookies["UserName"].Value == "Admin-cnh1" || Request.Cookies["UserName"].Value == "Admin-cnvt"
                       || Request.Cookies["UserName"].Value == "Admin-cnnt" || Request.Cookies["UserName"].Value == "Admin - cndn" || Request.Cookies["UserName"].Value == "Admin - cnna" || Request.Cookies["UserName"].Value == "Admin - cnhn")
         {
@@ -660,17 +660,17 @@
                             <tr>
                                 <th rowspan="2">Mã KH</th>
                                 <th colspan="2">Hóa Đơn</th>
-                                <th rowspan="2"style="width:100px">Tên Khách Hàng</th>
-                                <th rowspan="2"style="width:100px">NV theo dõi công nợ</th>
+                                <th rowspan="2" style="width:100px">Tên Khách Hàng</th>
+                                <th rowspan="2" style="width:100px">NV theo dõi công nợ</th>
                                 <th rowspan="2">Hạn mức nợ</th>
-                                <th rowspan="2"style="width:100px">Thời hạn CKTT</th>
+                                <th rowspan="2" style="width:100px">Thời hạn CKTT</th>
                                 <th rowspan="2">Mã LKH</th>
-                                <th rowspan="2"style="width:100px">Tên LKH</th>
-                                <th rowspan="2"style="width:100px">Số Hợp Đồng</th>
+                                <th rowspan="2" style="width:100px">Tên LKH</th>
+                                <th rowspan="2" style="width:100px">Số Hợp Đồng</th>
                                 <th rowspan="2">Tổng tiền</th>
 
                                 <th rowspan="2">Ngày đến hạn TT</th>
-                                <th rowspan="2"style="width:100px">Số Ngày nợ quá hạn TT</th>
+                                <th rowspan="2" style="width:100px">Số Ngày nợ quá hạn TT</th>
                                 <th colspan="4">Số tiền nợ quá hạn</th>
                             </tr>
                             <tr>
@@ -687,50 +687,62 @@
                         <tbody>
                             @foreach (DataRow row2 in Model.Tables[0].Rows)
                             {
-                            <tr>
-                                <td>@row2["Ma_Dt"]</td>
-                                <td>@row2["So_Ct_Einv"]</td>
-                                <td>@row2["Ngay_Ct2"]</td>
-                                <td style="text-align:left">@row2["Ten_Dt"]</td>
-                                <td>@row2["Ten_TDV"]</td>
-                                <td>@row2["Han_Muc_No"]</td>
-                                <td>@row2["Han_CKTT"]</td>
-                                <td>@row2["Ma_LKH"]</td>
-                                <td>@row2["Ten_LKH"]</td>
-                                <td>@row2["So_Hop_Dong"]</td>
-                                <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Cong_No"])).Replace(".",",")</td>
+                                <tr>
+                                    <td>@row2["Ma_Dt"]</td>
+                                    <td>@row2["So_Ct_Einv"]</td>
+                                    <td>@row2["Ngay_Ct2"]</td>
+                                    <td style="text-align:left">@row2["Ten_Dt"]</td>
+                                    <td>@row2["Ten_TDV"]</td>
+                                    <td>@row2["Han_Muc_No"]</td>
+                                    <td>@row2["Han_CKTT"]</td>
+                                    <td>@row2["Ma_LKH"]</td>
+                                    <td>@row2["Ten_LKH"]</td>
+                                    <td>@row2["So_Hop_Dong"]</td>
+                                    <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Cong_No"])).Replace(".", ",")</td>
 
 
 
 
 
-                                <td>@row2["Ngay_Den_Han2"]</td>
-                                <td>@row2["So_Ngay_QH"]</td>
+                                    <td>@row2["Ngay_Den_Han2"]</td>
+                                    <td>@row2["So_Ngay_QH"]</td>
 
-                                <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["So_Tien_QH_1"])).Replace(".", ",")</td>
-                                <td style="text-align:right"> @String.Format("{0:n0}", Convert.ToDecimal(row2["So_Tien_QH_2"])).Replace(".", ",")</td>
-                                <td style="text-align:right"> @String.Format("{0:n0}", Convert.ToDecimal(row2["So_Tien_QH_3"])).Replace(".", ",")</td>
-                                <td style="text-align:right"> @String.Format("{0:n0}", Convert.ToDecimal(row2["So_Tien_QH_4"])).Replace(".", ",")</td>
+                                    <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["So_Tien_QH_1"])).Replace(".", ",")</td>
+                                    <td style="text-align:right"> @String.Format("{0:n0}", Convert.ToDecimal(row2["So_Tien_QH_2"])).Replace(".", ",")</td>
+                                    <td style="text-align:right"> @String.Format("{0:n0}", Convert.ToDecimal(row2["So_Tien_QH_3"])).Replace(".", ",")</td>
+                                    <td style="text-align:right"> @String.Format("{0:n0}", Convert.ToDecimal(row2["So_Tien_QH_4"])).Replace(".", ",")</td>
 
-                            </tr>
+                                </tr>
 
 
 
                             }
                         </tbody>
                         <tfoot>
-                            @foreach(DataRow row in Model.Tables[1].Rows)
-                            {
-                            <tr style="background-color: burlywood">
-                                <td colspan="10"><strong>Tổng cộng:</strong></td>
-                                <td style="text-align:right">@row["Tong_CN"]</td>
+                            <tr id="total-row" style="background-color: burlywood">
+                                <td colspan="10"><strong>Tổng trang:</strong></td>
+                                <td class="total-tien" style="text-align:right"></td>
                                 <td></td>
                                 <td></td>
-                                <td style="text-align:right">@row["Total_1"]</td>
-                                <td style="text-align:right">@row["Total_2"]</td>
-                                <td style="text-align:right">@row["Total_3"]</td>
-                                <td style="text-align:right">@row["Total_4"]</td>
+                                <td class="total-tien-q1" style="text-align:right"></td>
+                                <td class="total-tien-q2" style="text-align:right"></td>
+                                <td class="total-tien-q3" style="text-align:right"></td>
+                                <td class="total-tien-q4" style="text-align:right"></td>
+
+
                             </tr>
+                            @foreach (DataRow row in Model.Tables[1].Rows)
+                            {
+                                <tr style="background-color: burlywood">
+                                    <td colspan="10"><strong>Tổng cộng:</strong></td>
+                                    <td style="text-align:right">@row["Tong_CN"]</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td style="text-align:right">@row["Total_1"]</td>
+                                    <td style="text-align:right">@row["Total_2"]</td>
+                                    <td style="text-align:right">@row["Total_3"]</td>
+                                    <td style="text-align:right">@row["Total_4"]</td>
+                                </tr>
                             }
                         </tfoot>
                     </table>
@@ -762,47 +774,134 @@
             });
         </script>*@
     @*<script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Khởi tạo DataTables
-            var table = $('#example').DataTable();
+            document.addEventListener('DOMContentLoaded', function () {
+                // Khởi tạo DataTables
+                var table = $('#example').DataTable();
 
-            // Gọi hàm calculateTotal khi trang được tải và khi có sự kiện thay đổi trên trang
-            calculateTotal();
-
-            // Thêm sự kiện cho việc thay đổi trang
-            table.on('draw.dt', function () {
+                // Gọi hàm calculateTotal khi trang được tải và khi có sự kiện thay đổi trên trang
                 calculateTotal();
+
+                // Thêm sự kiện cho việc thay đổi trang
+                table.on('draw.dt', function () {
+                    calculateTotal();
+                });
             });
-        });
 
-        // Hàm tính toán tổng
-        function calculateTotal() {
-            // Lấy DataTables
-            var table = $('#example').DataTable();
+            // Hàm tính toán tổng
+            function calculateTotal() {
+                // Lấy DataTables
+                var table = $('#example').DataTable();
 
-            // Tính tổng của cột "Cong_No"
-            var totalCongNo = table.column(10, { page: 'all', search: 'applied' }).data().sum();
+                // Tính tổng của cột "Cong_No"
+                var totalCongNo = table.column(10, { page: 'all', search: 'applied' }).data().sum();
 
-            // Gán tổng của cột "Cong_No" vào ô của hàng tfoot "Tổng trang"
-            document.querySelector('#total-row .total-tien').textContent = formatCurrency(totalCongNo);
+                // Gán tổng của cột "Cong_No" vào ô của hàng tfoot "Tổng trang"
+                document.querySelector('#total-row .total-tien').textContent = formatCurrency(totalCongNo);
 
-            // Gán tổng của cột "Cong_No" vào ô của hàng tfoot "Tổng cộng(Tất cả)"
-            document.querySelector('#total-row-tong-cong .total-tienTT').textContent = formatCurrency(totalCongNo);
-        }
+                // Gán tổng của cột "Cong_No" vào ô của hàng tfoot "Tổng cộng(Tất cả)"
+                document.querySelector('#total-row-tong-cong .total-tienTT').textContent = formatCurrency(totalCongNo);
+            }
 
-        // Hàm định dạng số tiền thành chuỗi có dấu phẩy
-        function formatCurrency(amount) {
-            return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        }
-    </script>*@
+            // Hàm định dạng số tiền thành chuỗi có dấu phẩy
+            function formatCurrency(amount) {
+                return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            }
+        </script>*@
 
     @*<script>
+            document.addEventListener('DOMContentLoaded', function () {
+                // Khởi tạo DataTables
+                $('#example').DataTable();
+
+                // Gọi hàm calculateTotal khi trang được tải và khi có sự kiện thay đổi trên trang
+                calculateTotal();
+
+                // Thêm sự kiện cho việc thay đổi trang
+                $('#example').on('draw.dt', function () {
+                    calculateTotal();
+                });
+            });
+
+            // Hàm tính toán tổng
+            function calculateTotal() {
+                // Lấy tất cả các ô chứa giá trị cột "Tiền TT"
+                var tienTTCells = document.querySelectorAll('#example tbody td:nth-child(11)');
+
+                // Biến để tính tổng Tiền TT
+                var totalTienTT = 0;
+
+                // Lặp qua từng ô và tính tổng
+                tienTTCells.forEach(function (cell) {
+                    var valueWithoutCommas = cell.textContent.replace(/,/g, ''); // Loại bỏ dấu phẩy
+                    totalTienTT += parseFloat(valueWithoutCommas) || 0; // Cộng thêm 0 nếu giá trị không hợp lệ
+                });
+
+                // Gán tổng Tiền TT vào ô của hàng tfoot "Tổng trang"
+                document.querySelector('#total-row .total-tien').textContent = formatCurrency(totalTienTT);
+
+                // Gán tổng Tiền TT vào ô của hàng tfoot "Tổng cộng(Tất cả)"
+                document.querySelector('#total-row-tong-cong .total-tienTT').textContent = formatCurrency(totalTienTT);
+            }
+
+            // Hàm định dạng số tiền thành chuỗi có dấu phẩy
+            function formatCurrency(amount) {
+                return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            }
+        </script>*@
+    <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Khởi tạo DataTables
-            $('#example').DataTable();
+            function calculateTotal() {
+                // Lấy tất cả các ô chứa giá trị cột "Tiền TT"
+                var tienTTCells = document.querySelectorAll('#example tbody td:nth-child(11)');
+                var tienQ1 = document.querySelectorAll('#example tbody td:nth-child(14)');
+                var tienQ2 = document.querySelectorAll('#example tbody td:nth-child(15)');
+                var tienQ3 = document.querySelectorAll('#example tbody td:nth-child(16)');
+                var tienQ4 = document.querySelectorAll('#example tbody td:nth-child(17)');
+                // Biến để tính tổng Tiền TT
+                var totalTienTT = 0;
+                var totalTienQ1 = 0;
+                var totalTienQ2 = 0;
+                var totalTienQ3 = 0;
+                var totalTienQ4 = 0;
+                // Lặp qua từng ô và tính tổng
+                tienTTCells.forEach(function (cell) {
+                    var valueWithoutCommas = cell.textContent.replace(/,/g, ''); // Loại bỏ dấu phẩy
+                    totalTienTT += parseFloat(valueWithoutCommas);
+                });
+                tienQ1.forEach(function (cell) {
+                    var valueWithoutCommas = cell.textContent.replace(/,/g, ''); 
+                    totalTienQ1 += parseFloat(valueWithoutCommas);
+                });
+                tienQ2.forEach(function (cell) {
+                    var valueWithoutCommas = cell.textContent.replace(/,/g, '');
+                    totalTienQ2 += parseFloat(valueWithoutCommas);
+                });
+                tienQ3.forEach(function (cell) {
+                    var valueWithoutCommas = cell.textContent.replace(/,/g, '');
+                    totalTienQ3 += parseFloat(valueWithoutCommas);
+                });
+                tienQ4.forEach(function (cell) {
+                    var valueWithoutCommas = cell.textContent.replace(/,/g, '');
+                    totalTienQ4 += parseFloat(valueWithoutCommas);
+                });
+                // Gán tổng Tiền TT vào ô của hàng tfoot "Tổng trang"
+                document.querySelector('#total-row .total-tien').textContent = formatCurrency(totalTienTT);
+                document.querySelector('#total-row .total-tien-q1').textContent = formatCurrency(totalTienQ1);
+                document.querySelector('#total-row .total-tien-q2').textContent = formatCurrency(totalTienQ2);
+                document.querySelector('#total-row .total-tien-q3').textContent = formatCurrency(totalTienQ3);
+                document.querySelector('#total-row .total-tien-q4').textContent = formatCurrency(totalTienQ4);
+
+                // Gán tổng Tiền TT vào ô của hàng tfoot "Tổng cộng(Tất cả)"
+                /* document.querySelector('#total-row-tong-cong .total-tienTT').textContent = formatCurrency(totalTienTT);*/
+            }
 
             // Gọi hàm calculateTotal khi trang được tải và khi có sự kiện thay đổi trên trang
             calculateTotal();
+
+            // Hàm định dạng số tiền thành chuỗi có dấu phẩy
+            function formatCurrency(amount) {
+                return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            }
 
             // Thêm sự kiện cho việc thay đổi trang
             $('#example').on('draw.dt', function () {
@@ -810,33 +909,7 @@
             });
         });
 
-        // Hàm tính toán tổng
-        function calculateTotal() {
-            // Lấy tất cả các ô chứa giá trị cột "Tiền TT"
-            var tienTTCells = document.querySelectorAll('#example tbody td:nth-child(11)');
-
-            // Biến để tính tổng Tiền TT
-            var totalTienTT = 0;
-
-            // Lặp qua từng ô và tính tổng
-            tienTTCells.forEach(function (cell) {
-                var valueWithoutCommas = cell.textContent.replace(/,/g, ''); // Loại bỏ dấu phẩy
-                totalTienTT += parseFloat(valueWithoutCommas) || 0; // Cộng thêm 0 nếu giá trị không hợp lệ
-            });
-
-            // Gán tổng Tiền TT vào ô của hàng tfoot "Tổng trang"
-            document.querySelector('#total-row .total-tien').textContent = formatCurrency(totalTienTT);
-
-            // Gán tổng Tiền TT vào ô của hàng tfoot "Tổng cộng(Tất cả)"
-            document.querySelector('#total-row-tong-cong .total-tienTT').textContent = formatCurrency(totalTienTT);
-        }
-
-        // Hàm định dạng số tiền thành chuỗi có dấu phẩy
-        function formatCurrency(amount) {
-            return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        }
-    </script>*@
-
+    </script>
     <script>
         function saveNgay() {
             var from_date = document.getElementById("tu_ngay").value;
@@ -881,66 +954,8 @@
 
 
     </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Lấy tất cả các ô chứa giá trị cột "Tiền TT"
-            var tienTTCells = document.querySelectorAll('#example tbody td:nth-child(10)');
 
-            // Biến để tính tổng
-            var totalTienTT = 0;
-
-            // Lặp qua từng ô và tính tổng
-            tienTTCells.forEach(function (cell) {
-                var valueWithoutCommas = cell.textContent.replace(/,/g, ''); // Loại bỏ dấu phẩy
-                totalTienTT += parseFloat(valueWithoutCommas);
-            });
-
-            // Gán tổng vào ô của hàng tfoot
-            document.querySelector('#total-row-tong-cong .total-tienTT').textContent = formatCurrency(totalTienTT);
-        });
-
-        // Hàm định dạng số tiền thành chuỗi có dấu phẩy
-        function formatCurrency(amount) {
-            return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        }
-    </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            function calculateTotal() {
-                // Lấy tất cả các ô chứa giá trị cột "Tiền TT"
-                var tienTTCells = document.querySelectorAll('#example tbody td:nth-child(10)');
-
-                // Biến để tính tổng Tiền TT
-                var totalTienTT = 0;
-
-                // Lặp qua từng ô và tính tổng
-                tienTTCells.forEach(function (cell) {
-                    var valueWithoutCommas = cell.textContent.replace(/,/g, ''); // Loại bỏ dấu phẩy
-                    totalTienTT += parseFloat(valueWithoutCommas);
-                });
-
-                // Gán tổng Tiền TT vào ô của hàng tfoot "Tổng trang"
-                document.querySelector('#total-row .total-tien').textContent = formatCurrency(totalTienTT);
-
-                // Gán tổng Tiền TT vào ô của hàng tfoot "Tổng cộng(Tất cả)"
-                /* document.querySelector('#total-row-tong-cong .total-tienTT').textContent = formatCurrency(totalTienTT);*/
-            }
-
-            // Gọi hàm calculateTotal khi trang được tải và khi có sự kiện thay đổi trên trang
-            calculateTotal();
-
-            // Hàm định dạng số tiền thành chuỗi có dấu phẩy
-            function formatCurrency(amount) {
-                return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-            }
-
-            // Thêm sự kiện cho việc thay đổi trang
-            $('#example').on('draw.dt', function () {
-                calculateTotal();
-            });
-        });
-
-    </script>
+ 
 
 
     <script>

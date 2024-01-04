@@ -439,7 +439,7 @@
                         <datalist id="dropdownList">
                             @foreach (var item in ViewBag.DataItems)
                             {
-                                <option value="@item.Ma_Dt" data-ten="@item.Ten_Dt" data-diachi="@item.Dia_Chi" data-dvcs="@item.Dvcs" data-dvcs1="@item.Dvcs1">@item.Ten_Dt</option>
+                                <option value="@item.Ma_Dt" data-madt="@item.Ma_Dt"data-ten="@item.Ten_Dt" data-diachi="@item.Dia_Chi" data-dvcs="@item.Dvcs" data-dvcs1="@item.Dvcs1">@item.Ten_Dt</option>
                             }
                         </datalist>
                         <input type="hidden" name="Ma_Dt" id="selectedOption">
@@ -636,12 +636,15 @@
                     if (selectedOption) {
                         var tenDt = selectedOption.text.toString();
                         var selectedDiaChi = selectedOption.getAttribute('data-diachi');
+                        var selectedMaDt = selectedOption.getAttribute('data-madt');
                         var selectedDvcs = selectedOption.getAttribute('data-Dvcs');
                         var selectedDvcs1 = selectedOption.getAttribute('data-dvcs1');
                         document.cookie = 'Ten_Dt= ' + encodeURIComponent(tenDt);
                         document.cookie = 'Dia_Chi=' + selectedDiaChi;
                         document.cookie = 'Dvcs=' + selectedDvcs;
                         document.cookie = 'Dvcs1=' + selectedDvcs1;
+                        document.cookie = 'Ma_DT=' + selectedMaDt;
+
                     }
                 });
             }

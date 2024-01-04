@@ -55,25 +55,25 @@
 
         .text-center {
             text-align: center;
-           
         }
 
         .signature {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-start; /* Đảm bảo các phần tử căn đều ở đỉnh */
             margin-top: 30px;
         }
 
             .signature div {
-                display: inline-block;
-                width: 30%;
-                vertical-align: top;
+                flex: 1; /* Đảm bảo các div có kích thước bằng nhau */
+                margin: 0 10px; /* Cung cấp một chút không gian giữa các chữ ký */
             }
 
-            .signature p {
-                border-top: 1px solid #000;
-                margin-top: 50px;
-                padding-top: 2px;
-                text-align: center;
-            }
+        .signature-line {
+            border-top: 1px solid black;
+            padding-top: 2px; /* Cung cấp không gian cho dòng viền phía trên */
+            margin-top: 50px; /* Khoảng cách từ chữ ký đến dòng viền */
+        }
     </style>
 </head>
 <body>
@@ -81,7 +81,7 @@
     <div class="container">
         <div class="title">PHIẾU THEO DÕI HÓA ĐƠN GIAO HÀNG</div>
         <div class="subtitle">
-           
+
             <div>
                 Số:  @foreach (DataRow row2 in Model.Tables[0].Rows)
                 {
@@ -124,26 +124,29 @@
             </tr>
             @foreach (DataRow row2 in Model.Tables[2].Rows)
             {
-        <tr>
-            <td>@row2["So_tt"]</td>
-            <td>@row2["Ten_Dt"]</td>
-            <td>@row2["So_Hd"]</td>
-            <td>@row2["Ngay_HD"]</td>
-            <td class="text-right">@row2["Tien_Hd"]</td>
-            <td></td>
-            <td></td>
-            <td class="text-right"></td>
-            <td></td>
-            <td></td>
-        </tr>
+                <tr>
+                    <td>@row2["So_tt"]</td>
+                    <td>@row2["Ten_Dt"]</td>
+                    <td>@row2["So_Hd"]</td>
+                    <td>@row2["Ngay_HD"]</td>
+                    <td class="text-right" name="tien-hd">@row2["Tien_Hd"]</td>
+                    <td></td>
+                    <td></td>
+                    <td class="text-right"></td>
+                    <td></td>
+                    <td></td>
+                </tr>
             }
             <!-- Repeat rows as needed -->
-            <tfoot>
+        <tfoot>
+            @foreach (DataRow row2 in Model.Tables[3].Rows)
+            {
                 <tr>
                     <td colspan="4">Tổng Cộng</td>
-                    <td id="tong-cong">1243</td>
+                    <td id="tong-cong">@row2["Tong_Cong"]</td>
                     <td colspan="5"></td>
                 </tr>
+            }
             </tfoot>
         </table>
 
@@ -157,7 +160,7 @@
 
         <div class="signature">
             <div>
-                <p class="text-center" >Kế toán công ty</p>
+                <p class="text-center">Kế toán công ty</p>
                 <p class="text-center signature-line">(Ký và ghi rõ họ tên)</p>
             </div>
             <div>
@@ -175,27 +178,23 @@
         </div>
     </div>
     <script>
-  // Hàm tính toán tổng cộng
-  function tinhTong() {
-    var tong = 0;
-    // Lấy tất cả các ô trong cột số tiền
-    var cells = document.querySelectorAll('table tr td:nth-child(8)');
+        function calculateTotal() {
+            var total = 0;
+            var cells = document.querySelectorAll('.tien-hd');
 
-    for (var i = 0; i < cells.length; i++) {
-      // Bỏ qua các dấu chấm và chuyển đổi thành số
-      var number = parseInt(cells[i].innerText.replace(/\./g, ''));
-      tong += number;
-    }
+            for (var i = 0; i < cells.length; i++) {
+                // Convert the cell text to a number and add it to the total
+                var value = cells[i].innerText.replace(/,/g, ''); // Remove commas if the numbers are formatted with commas
+                total += parseFloat(value);
+            }
 
-    // Định dạng lại số thành chuỗi có dấu chấm phân cách hàng nghìn
-    var formattedNumber = tong.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            // Update the total in the footer
+            document.getElementById('tong-cong').innerText = total.toLocaleString(); // toLocaleString adds commas for thousands, etc.
+        }
 
-    // Hiển thị tổng cộng
-    document.getElementById('tong-cong').innerText = formattedNumber;
-  }
-
-  // Gọi hàm khi trang web tải xong
-  window.onload = tinhTong;
+        // Calculate the total when the page loads
+        window.onload = calculateTotal;
     </script>
+
 </body>
 </html>

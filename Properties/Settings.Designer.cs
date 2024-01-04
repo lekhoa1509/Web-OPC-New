@@ -193,5 +193,14 @@ namespace web4.Properties {
                 return ((string)(this["STT"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string NV_GiaoHang {
+            get {
+                return ((string)(this["NV_GiaoHang"]));
+            }
+        }
     }
 }

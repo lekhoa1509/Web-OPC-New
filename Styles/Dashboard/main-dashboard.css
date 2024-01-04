@@ -1,0 +1,349 @@
+﻿* {
+    font-family: 'Times New Roman',sans-serif;
+    box-sizing: border-box;
+}
+body {
+   
+}
+.section{
+    width:100%;
+    height:100%;
+    background-color:green;
+}
+ /*.main-container.header{
+    background-color:blue;
+    height:70px;
+    top:0;
+    right:0;
+  
+   width:100%;*/
+/*    display:flex;
+   flex-wrap: wrap;*/
+
+/*}*/
+.main-container .header{
+    height:70px;
+    left:0;
+    top:0;
+    width:100%;
+
+}
+.left-sidebar{
+   
+    top:0;
+  float:left;
+    font-family: Tahoma,sans-serif;
+    height:100vh;
+
+    z-index:1000;
+  
+}
+.main-container{
+ 
+    height:100vh;
+    width:100%;
+  
+}
+
+.main-container .header .header-left{
+
+    width:50%;
+    float:left;
+   height:100%;
+   padding-top:15px;
+   padding-left:10px;
+   display:flex;
+}
+    .main-container .header .header-right{
+        background-color: blue;
+        width:50%;
+        float:right;
+        height:100%;
+    }
+.header-left i {
+    font-size: 40px;
+    color: #3483bd;
+    cursor:pointer;
+}
+.header-left span {
+    color: #3483bd;
+    font-size: 30px;
+    font-family: 'Inter',sans-serif;
+    font-weight: bold;
+    padding-top:5px;
+
+}
+.logo-content{
+  
+}
+.logo-details {
+    background-color:lightcoral;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    overflow: hidden;
+   
+}
+
+
+    .logo-content.hide {
+      display:none;
+    }
+.logo-image {
+    height: 70px;
+    width: 70px;
+    margin-left: 10px;
+}
+.logo_name {
+    color: #da261f;
+    font-family: 'Agency FB';
+    font-size: 60px;
+    padding-left: 15px;
+   
+    
+}
+#sidebar {
+    border-top: 1px solid black;
+    height: 100%;
+    width: 100%;
+    background-color: #3f5161;
+    /*    padding-top: 20px;*/
+    color: white;
+    overflow-y: scroll;
+}
+
+    #sidebar a {
+    
+        padding: 15px 20px;
+        text-decoration: none;
+        font-size: 18px;
+        color: white;
+        display: block;
+        border-left: 4px solid transparent;
+        border-radius: 10px; 
+    }
+
+        #sidebar a:hover {
+            border-left-color: cyan;
+            background-color: #427cac;
+        }
+
+.dropdown-btn, .submenu-btn {
+    padding: 15px 20px;
+    font-size: 18px;
+    background-color: #3f5161;
+    color: white;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    outline: none;
+    display:flex;
+}
+.dropdown-btn {
+    border-radius:10px;
+    display: flex;
+    border-left: 4px solid transparent;
+}
+.dropdown-btn:hover {
+    border-left-color: cyan;
+}
+.dropdown-container, .submenu-container {
+    display: none;
+
+    padding-left: 20px;
+    border-radius:5px;
+}
+.submenu-container {
+    background-color: #3f5161;
+
+}
+.submenu-btn:hover{
+    border-left-color:cyan;
+}
+.submenu-btn {
+    border-radius: 5px;
+    border-left: 4px solid transparent;
+    border-radius: 10px;
+}
+.submenu-content a {
+    padding: 15px 20px;
+    text-decoration: none;
+    display: block;
+    color: white;
+   
+}
+
+    .submenu-content a:hover {
+        background-color: #427cac;
+    }
+.sub-menu{
+    background-color:blue;
+}
+button:hover {
+    background-color: #427cac;
+}
+.sidebar-title{
+    display:flex;
+}
+.sidebar-title div{
+  margin-left:20px;
+  font-size:20px;
+
+}
+.dropdown-btn  .icon-arrow{
+margin-left:60px;
+font-size:20px;
+}
+.dropdown-btn .icon-arrow-2 {
+    margin-left: 48px;
+    font-size: 20px;
+}   
+.subicon-arrow{
+margin-left:10px;
+}
+.active {
+    display: none;
+
+
+    /* hoặc bất kỳ thuộc tính hiển thị nào bạn muốn áp dụng khi sidebar bị đóng */
+}
+.main-container.active {
+    width: 100%;
+    left:0;
+    background-color:yellow;
+}
+
+    /*Responsive*/
+    @media (min-width:1301px) and (max-width:1400px) {
+        /* .header{
+        width: calc(100%-250px);
+    }*/
+    }
+/*@media screen and (max-width: 1400px){
+    .left-sidebar{
+        width:250px;
+    }
+}*/
+body {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    background-color: white;
+}
+
+
+nav {
+    display: flex;
+  
+    flex-wrap: wrap;
+    align-items: start;
+    position: fixed;
+
+    height: 100%;
+    min-height: 350px;
+    color: white;
+    background-color:yellow;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 10px;
+    transition: ease-in 0.2s;
+    z-index: 100;
+}
+
+    nav.hide {
+        width: 0;
+    }
+
+    nav span {
+        width: 100%;
+        background-color: #aec9e0;
+        padding-top: 10px;
+        font-size: 28px;
+        font-weight: 800;
+        overflow: hidden;
+
+    }
+.left-sidebar .nav-links {
+    max-height: 100%; /* Đảm bảo phần nội dung không vượt quá chiều cao của màn hình */
+    overflow-y: auto;
+}
+.sidebar-menu {
+    background-color:pink;
+    height:100%;
+    position:fixed;
+    width: 200px;
+    list-style: none;
+    overflow: hidden;
+    overflow-y:scroll;
+}
+
+    .sidebar-menu .item {
+      
+    
+       height:40px;
+       
+   
+    }
+        .sidebar-menu .item a{
+            display:flex;
+        }
+        /* .sidebar-menu li a:hover {
+                color: rgb(45, 209, 67);
+                border: 1px solid white;
+            }
+
+            .sidebar-menu li a i {
+                margin: 0 18px;
+                width: 20px;
+            }*/
+        #toggle-btn {
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            top: 18px;
+            right: -39px;
+            width: 40px;
+            height: 40px;
+            font-size: 18px;
+            background-color: #3483bd;
+            border-radius: 0 7px 7px 0;
+            border: none;
+            cursor: pointer;
+            color: white;
+            transition: linear 0.2s;
+        }
+
+    #toggle-btn:hover {
+        background: rgba(52, 138, 189, 0.653);
+        color: white;
+    }
+
+section {
+    display: flex;
+ 
+    align-items: flex-start;
+    position: absolute;
+    top: 0;
+    left: 270px;
+    height: 100vh;
+    width: calc(100% - 270px);
+    z-index:1;
+    transition: ease-in 0.3s;
+}
+
+    section.expand {
+        width: 100%;
+        left: 0;
+    }
+
+    section h1 {
+        color: rgb(0, 0, 0);
+        font-size: 32px;
+        text-align: center;
+    }
+
+        section h1.dark-mode {
+            color: white;
+        }
+

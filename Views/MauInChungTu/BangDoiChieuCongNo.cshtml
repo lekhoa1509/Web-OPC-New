@@ -523,7 +523,12 @@
             <br />
             <div style="justify-content:start;display:flex;margin-left:30px">
                 <div style="text-align:left">
-                    <h5 style="color:black;text-align:left">Tên khách hàng:   @ten_dt</h5>
+                    <h5 style="color:black;text-align:left">
+                        Tên khách hàng:   @foreach (DataRow row in Model.Tables[0].Rows)
+                        {
+                            @row["Ten_Dt"];
+                        }
+                    </h5>
                     <h5 style="color:black;text-align:left">Địa Chỉ khách hàng:   @Dia_Chi</h5>
                     <h5 style="margin-top: 5px; color: black; text-align: left">
                         <span style="color:black;font-weight:bold">
@@ -791,8 +796,8 @@
                             </tr>
                             <th style="width:150px;font-size:16px">SỐ</th>
                             <th style="width: 150px; font-size: 16px">NGÀY</th>
-                            <th  style="font-size: 16px; width: 150px">SỐ TIỀN HD</th>
-                            <th  style="font-size: 16px; width: 150px">GHI CHÚ</th>
+                            <th style="font-size: 16px; width: 150px">SỐ TIỀN HD</th>
+                            <th style="font-size: 16px; width: 150px">GHI CHÚ</th>
 
                             <tbody>
 
@@ -948,7 +953,8 @@
 
         </form>
     </div>
-    <button id="exportbutton">Xuất Excel</button>
+    @*<button id="exportbutton">Xuất Excel</button>*@
+    <button id="export-button" onclick="exportExcel()">Xuất Excel</button>
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -959,31 +965,31 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
 
-    <script>
-        document.getElementById("exportbutton").addEventListener('click', function () {
-            // Tạo workbook
-            var wb = XLSX.utils.book_new();
+    @*<script>
+            document.getElementById("exportbutton").addEventListener('click', function () {
+                // Tạo workbook
+                var wb = XLSX.utils.book_new();
 
-            // Lấy nội dung của bảng 1
-            var table1Content = document.getElementById("export").outerHTML;
-            var ws1 = XLSX.read(table1Content, { type: 'string' });
+                // Lấy nội dung của bảng 1
+                var table1Content = document.getElementById("export").outerHTML;
+                var ws1 = XLSX.read(table1Content, { type: 'string' });
 
-            // Lấy nội dung của bảng 2
-            var table2Content = document.getElementById("export2").outerHTML;
-            var ws2 = XLSX.read(table2Content, { type: 'string' });
+                // Lấy nội dung của bảng 2
+                var table2Content = document.getElementById("export2").outerHTML;
+                var ws2 = XLSX.read(table2Content, { type: 'string' });
 
-            // Thêm sheet vào workbook
-            XLSX.utils.book_append_sheet(wb, ws1.Sheets[ws1.SheetNames[0]], 'Sheet1');
-            XLSX.utils.book_append_sheet(wb, ws2.Sheets[ws2.SheetNames[0]], 'Sheet2');
+                // Thêm sheet vào workbook
+                XLSX.utils.book_append_sheet(wb, ws1.Sheets[ws1.SheetNames[0]], 'Sheet1');
+                XLSX.utils.book_append_sheet(wb, ws2.Sheets[ws2.SheetNames[0]], 'Sheet2');
 
-            // Tạo tên file dựa trên thời gian
-            var currentDate = new Date();
-            var fileName = "BangDoiChieuCongNo_" + currentDate.getFullYear() + (currentDate.getMonth() + 1) + currentDate.getDate() + ".xlsx";
+                // Tạo tên file dựa trên thời gian
+                var currentDate = new Date();
+                var fileName = "BangDoiChieuCongNo_" + currentDate.getFullYear() + (currentDate.getMonth() + 1) + currentDate.getDate() + ".xlsx";
 
-            // Lưu workbook thành file
-            XLSX.writeFile(wb, fileName);
-        });
-    </script>
+                // Lưu workbook thành file
+                XLSX.writeFile(wb, fileName);
+            });
+        </script>*@
 
 
 

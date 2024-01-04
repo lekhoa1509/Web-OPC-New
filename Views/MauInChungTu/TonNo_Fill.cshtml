@@ -1,4 +1,4 @@
-﻿﻿﻿﻿
+﻿﻿﻿﻿﻿
 @{ ViewBag.Title = "Sổ Tồn Nợ Phải Thu";
     var ma_TDV = Request.Cookies["Ma_TDV"].Value;
     var Ten_TDV = Request.Cookies["Ten_TDV"].Value;
@@ -14,6 +14,7 @@
     Response.Cookies.Add(ngayDaChinhSuaCookie);
 }
 @using System.Data;
+@using System.Diagnostics;
 @using System.Globalization
 <!DOCTYPE html>
 <html>
@@ -591,7 +592,7 @@
                         @{
                             int stt = 1;
                             string currentDT = null;
-                            int totalCongNo = 0;
+                            decimal totalCongNo = 0;
                             bool firstTenDt = true;
 
                             foreach (DataRow row3 in Model.Tables[0].Rows)
@@ -603,8 +604,7 @@
                                     {
                                         <tr style="padding:5px">
                                             <td colspan="7" style="text-align:center;color:black;font-weight:bold;padding:5px">Tổng cộng:</td>
-                                            <td style="text-align:right;color:black;font-weight:bold;padding:5px">@string.Format("{0:n0}", totalCongNo.ToString("N0").Replace(",", "."))</td>
-
+                                            <td style="text-align:right;color:black;font-weight:bold;padding:5px">@totalCongNo.ToString("N0").Replace(",", ".")</td>
                                         </tr>
                                         totalCongNo = 0;
                                     }
@@ -628,34 +628,31 @@
                                     <td>@row3["Ngay_Den_Han1"]</td>
                                     <td></td>
                                     <td>@row3["Ghi_Chu"]</td>
-                                    <td style="text-align:right">@string.Format("{0:#,###}", row3["Cong_No"]).Replace(",", ".")</td>
+                                    <td style="text-align:right;padding-right:5px">@string.Format("{0:#,###}", row3["Cong_No"]).Replace(",",".")</td>
                                 </tr>
+
                                 stt++;
                                 var congnofirst = string.Format("{0:#,###}", row3["Cong_No"]);
-                                string congNoString = congnofirst.Replace(",", ""); // Gỡ bỏ dấu phẩy
+                                string congNoString = congnofirst.Replace(".", ""); // Gỡ bỏ dấu phẩy
 
-                                int congNo;
-                                if (int.TryParse(congNoString, out congNo))
-                                {
-                                    totalCongNo += congNo;
-                                }
+                                Debug.WriteLine("CongNo: " + congNoString);
 
-                                string totalCongNoString = totalCongNo.ToString("N0", CultureInfo.InvariantCulture);
+                                decimal congNo= Convert.ToDecimal(row3["Cong_No"]);
+                                totalCongNo += congNo;
+                                //if (int.TryParse(congNoString, out congNo))
+                                //{
+                                //    totalCongNo += congNo;
+                                //}
 
-
-
-
-
-
-
+                                Debug.WriteLine("Total: " + totalCongNo);
                             }
+
                             //Thêm hàng cuối cùng
                             if (currentDT != null)
                             {
                                 <tr style="padding:5px">
                                     <td colspan="7" style="text-align:center;color:black;font-weight:bold">Tổng cộng:</td>
                                     <td style="text-align:right;font-weight:bold;color:black">@totalCongNo.ToString("N0").Replace(",", ".")</td>
-
                                 </tr>
                             }
 
@@ -664,11 +661,10 @@
                                 <td colspan="7" style="color:black;font-weight:bold">TỔNG CÔNG NỢ:</td>
                                 @foreach (DataRow row2 in Model.Tables[1].Rows)
                                 {
-                                    <td style="text-align:right;font-weight:bold;color:black">@string.Format("{0:n0}", row2["Tong_CN"])</td>
-
+                                    <td style="text-align:right;font-weight:bold;color:black">@string.Format("{0:n0}", row2["Tong_CN"]).Replace(",",".")</td>
                                 }
-
                             </tr>
+
                         }
                     </tbody>
                 </table>

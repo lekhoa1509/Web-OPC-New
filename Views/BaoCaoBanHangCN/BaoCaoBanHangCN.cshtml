@@ -508,6 +508,7 @@
                                 <th rowspan="1"></th>
                                 <th rowspan="1"></th>
                                 <th rowspan="1"></th>
+                                <th rowspan="1"></th>
                             </tr>
                             <tr>
                                 <!--DT OTC-->
@@ -542,6 +543,7 @@
                                 <th>Khoán Phiến</th>
                                 <th>Tổng Khoán</th>*@
                                 <th>Doanh Thu Nội Bộ</th>
+                                <th>Doanh Thu Xuất Khẩu</th>
                                 <th>Doanh Thu Khác</th>
                                 <th>Tổng Doanh Thu</th>
                             </tr>
@@ -590,6 +592,7 @@
 
                                     <!--Doanh Thu Khác-->
                                     <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Doanh_Thu_KH_NoiBo"])).Replace(".", ",")</td>
+                                    <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Doanh_Thu_Xuat_Khau"])).Replace(".", ",")</td>
                                     <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Doanh_Thu_Khac"])).Replace(".", ",")</td>
                                     <!--Tổng Thực Hiện-->
                                     <td class="num" style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Tong_Thuc_Hien"])).Replace(".", ",")</td>
@@ -629,6 +632,7 @@
                                 <td class="num" style="text-align:right"><span id="khoan-phien-etc"></span></td>
                                 <td class="num" style="text-align:right"><span id="tongkhoan-etc"></span></td>*@
                                 <td class="num" style="text-align:right"><span id="doanhthu-noibo"></span></td>
+                                <td class="num" style="text-align:right"><span id="doanhthu-xuatkhau"></span></td>
                                 <td class="num" style="text-align:right"><span id="doanhthukhac"></span></td>
                                 <td class="num" style="text-align:right"><span id="tongdoanhthu"></span></td>
                             </tr>

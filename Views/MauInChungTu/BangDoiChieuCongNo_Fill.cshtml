@@ -1,4 +1,4 @@
-﻿
+﻿﻿
 
 @{ ViewBag.Title = "Bảng Đối Chiếu Doanh Thu Công Nợ";
     string ten_dt = Request.Cookies["ten_dt"] != null ? HttpUtility.UrlDecode(Request.Cookies["ten_dt"].Value) : "";
@@ -14,6 +14,9 @@
     <title>Phiếu Xác Nhận Thanh Toán</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@2.0.1/dist/css/multi-select-tag.css">
+    <script src="~/Scripts/multi-select-tag.js"></script>
+    <link rel="stylesheet" type="text/css" href="~/Styles/virtual-select.min.css" />
     <style>
         * {
             font-family: 'Times New Roman';
@@ -407,6 +410,15 @@
             width: 70px;
             height: 40px;
         }
+        #multipleSelect {
+           /* max-width:100%;
+            width:400px;  */  /* overflow-x: auto;*/ /* Kích thước của dropdown vượt quá khả năng hiển thị sẽ xuất hiện thanh cuộn ngang */
+            white-space: nowrap; /* Ngăn chặn việc xuống dòng trong các mục dropdown */
+        }
+        .vscomp-dropbox {
+            width: max-content;
+          
+        }
     </style>
 </head>
 <body style="background-color: #e0e8ee ">
@@ -446,8 +458,17 @@
                             }
                         </datalist>
                         <input type="hidden" name="Ma_Dt" id="selectedOption">
+                        @***@
+                        @*<select id="multipleSelect" multiple name="native-select" placeholder="Chọn Đối Tượng" data-search="true" data-silent-initial-value-set="true" noOptionsText="Không tìm thấy" onChange="handleSelectChange(event)">
+                            @{ var l = ViewBag.DataItems;
+                                foreach (var item in l)
+                                {
+                                    <option value="@item.Ma_Dt" data-ten="@item.Ten_Dt" data-diachi="@item.Dia_Chi" data-dvcs="@item.Dvcs" data-dvcs1="@item.Dvcs1">@item.Ma_Dt @item.Ten_Dt</option>
+                                }
+                            }
 
 
+                        </select>*@
                         <div>
                             <button class="submit" type="submit" id="runReportButton" onclick="runReport()"> Chạy Báo Cáo </button>
                         </div>
@@ -509,11 +530,11 @@
 
 
                 <!--<div style="margin-left:-250px;text-align:left">
-            <h5>Đơn vị xuất hàng: Kho thành phẩm Cửa hàng Quận 10</h5>
-            <h5 style="margin-left:-5px">Địa chỉ: 134/1 Tô Hiến Thành, P15, Quận 10, TP.HCM</h5>-->
+                <h5>Đơn vị xuất hàng: Kho thành phẩm Cửa hàng Quận 10</h5>
+                <h5 style="margin-left:-5px">Địa chỉ: 134/1 Tô Hiến Thành, P15, Quận 10, TP.HCM</h5>-->
                 @*<h5 style="margin-left: 40px">Đơn vị nhận hàng:@Request.Cookies["Ten_dt"].Value</h5>*@
                 <!--<h5 style="margin-left: -120px">Diễn giải: Xuất hàng giao cho khách</h5>
-            </div>-->
+                </div>-->
 
 
                 <div style="margin-top:10px">
@@ -540,16 +561,16 @@
                         <tbody>
 
                             @*@foreach (DataRow row3 in Model.Tables[1].Rows)
-                            {
-                                <tr class="table2-data hidden-row" data-soct="@row3["So_Ct"]">
+                                {
+                                    <tr class="table2-data hidden-row" data-soct="@row3["So_Ct"]">
 
 
-                                    <td>@row3["so_Line_Id"]</td>
-                                    <td>@row3["Ten_vt"]</td>
-                                    <td>@row3["Dvt"]</td>
-                                    <td>@row3["so_luong"]</td>
-                                </tr>
-                            }*@
+                                        <td>@row3["so_Line_Id"]</td>
+                                        <td>@row3["Ten_vt"]</td>
+                                        <td>@row3["Dvt"]</td>
+                                        <td>@row3["so_luong"]</td>
+                                    </tr>
+                                }*@
                         </tbody>
                         <tfoot>
                             <tr>
@@ -594,17 +615,27 @@
         </div>
     </div>
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@2.0.1/dist/js/multi-select-tag.js"></script>
+    <script type="text/javascript" src="~/Scripts/virtual-select.min.js"></script>
+    <script type="text/javascript">
+      VirtualSelect.init({
+          ele: 'select',
+ 
+  
+});
+
+    </script>
     <script>
-        // Function to delete a cookie by name
-        function deleteCookie(name) {
-            document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        function handleSelectChange(event) {
+            var selectedOption = event.target.options[event.target.selectedIndex];
+       /*     var selectedValue = event.target.value;*/
+            var tenDt = selectedOption.getAttribute('data-ten');
+
+            // Gửi giá trị lên cookie với tên là "Ma_Dt" và "Ten_Dt"
+          /*  document.cookie = "Ma_Dt=" + selectedValue;*/
+            document.cookie = "Ten_Dt=" + tenDt;
         }
 
-        // Function to be executed when the page is fully loaded
-        document.addEventListener("DOMContentLoaded", function () {
-            // Call the deleteCookie function to remove the 'Ten_Dt' cookie
-            deleteCookie('Ten_Dt');
-        });
     </script>
     <script>
         // Function to delete a cookie by name
@@ -619,18 +650,30 @@
         });
     </script>
     <script>
-        document.getElementById("dropdownInput").addEventListener("input", function () {
-            var inputValue = this.value;
-            var options = document.querySelectorAll("#dropdownList option");
+        // Function to delete a cookie by name
+        function deleteCookie(name) {
+            document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        }
 
-            for (var i = 0; i < options.length; i++) {
-                if (options[i].getAttribute("value") === inputValue) {
-                    document.getElementById("selectedOption").value = inputValue;
-
-                    break;
-                }
-            }
+        // Function to be executed when the page is fully loaded
+        document.addEventListener("DOMContentLoaded", function () {
+            // Call the deleteCookie function to remove the 'Ten_Dt' cookie
+            deleteCookie('Ten_Dt');
         });
+    </script>
+    <script>
+        //document.getElementById("dropdownInput").addEventListener("input", function () {
+        //    var inputValue = this.value;
+        //    var options = document.querySelectorAll("#dropdownList option");
+
+        //    for (var i = 0; i < options.length; i++) {
+        //        if (options[i].getAttribute("value") === inputValue) {
+        //            document.getElementById("selectedOption").value = inputValue;
+
+        //            break;
+        //        }
+        //    }
+        //});
 
 
 
@@ -660,7 +703,12 @@
     </script>
     <script>
         function runReport() {
+            var selectedValue = document.querySelector('#multipleSelect').value;
+          
 
+            // Gửi giá trị lên cookie với tên là "Ma_Dt"
+            document.cookie = "Ma_Dt=" + selectedValue;
+                
             const uncheckedCheckboxIndexes = [];
             const checkboxes = document.querySelectorAll('input[name="myCheckbox"]');
 
@@ -716,5 +764,5 @@
 
 </body>
 
-</html >
+</html>
 
