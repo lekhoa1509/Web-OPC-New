@@ -584,47 +584,47 @@
                     <div class="select-btn" style="width:100px;margin-top:10px">
                         <select name="Nhom" id="nhomtheoselect" onchange="saveSelectedValueToCookie()">
                             <option value="" style="background-color: #020024;color:white">Chọn giá trị</option>
-                            <option value="1111">1111</option>
-                            <option value="1121">1121</option>
-                            <option value="1131">1131</option>
+                            <option value="1111" data-tenTK="Tiền Mặt Việt Nam">1111 - Tiền Mặt Việt Nam</option>
+                            <option value="1121" data-tenTK="Tiền Gửi Ngân Hàng VNĐ">1121 - Tiền Gửi Ngân Hàng VNĐ</option>
+                            <option value="1131" data-tenTK="Tiền Đang Chuyển (VND)">1131 - Tiền Đang Chuyển (VND)</option>
 
                         </select>
                     </div>
                     @*<h6>Chọn Đối Tượng:</h6>
 
-        <input type="text" id="dropdownInput" list="dropdownList" placeholder="Tìm kiếm đối tượng">
-        <datalist id="dropdownList">
-            @foreach (var item in ViewBag.DataItems)
-            {
-                <option value="@item.Ma_Dt" data-ten="@item.Ten_Dt" data-maDt="@item.Ma_Dt" data-dvcs="@item.Dvcs" data-dvcs1="@item.Dvcs1">@item.Ten_Dt</option>
-            }
-        </datalist>
-        <input type="hidden" name="Ma_Dt" id="selectedOption"><br />
-        <br />
-        <a>Tìm TDV:</a>
-        <input type="text" id="dropdownInputTDV" list="dropdownListTDV" placeholder="Tìm kiếm TDV">
-        <datalist id="dropdownListTDV">
-            @foreach (var item in ViewBag.DataTDV)
-            {
-                <option value="@item.Ma_CbNv" data-Ma_CbNv="@item.Ma_CbNv">@item.Ma_CbNv @item.hoten</option>
-            }
-        </datalist>
-        <input type="hidden" name="Ma_TDV" id="selectedOptionTDV">*@
+                        <input type="text" id="dropdownInput" list="dropdownList" placeholder="Tìm kiếm đối tượng">
+                        <datalist id="dropdownList">
+                            @foreach (var item in ViewBag.DataItems)
+                            {
+                                <option value="@item.Ma_Dt" data-ten="@item.Ten_Dt" data-maDt="@item.Ma_Dt" data-dvcs="@item.Dvcs" data-dvcs1="@item.Dvcs1">@item.Ten_Dt</option>
+                            }
+                        </datalist>
+                        <input type="hidden" name="Ma_Dt" id="selectedOption"><br />
+                        <br />
+                        <a>Tìm TDV:</a>
+                        <input type="text" id="dropdownInputTDV" list="dropdownListTDV" placeholder="Tìm kiếm TDV">
+                        <datalist id="dropdownListTDV">
+                            @foreach (var item in ViewBag.DataTDV)
+                            {
+                                <option value="@item.Ma_CbNv" data-Ma_CbNv="@item.Ma_CbNv">@item.Ma_CbNv @item.hoten</option>
+                            }
+                        </datalist>
+                        <input type="hidden" name="Ma_TDV" id="selectedOptionTDV">*@
 
 
                     @*<div class="select-btn" style="width:100px;margin-top:10px">
-            <select id="dropdownMaTDV" class="select2" style="width: 200px" name="Ma_TDV" onchange="saveSelectedTDVValueToCookie()">
-                <option value="">Chọn mã TDV</option>
-                @if (ViewBag.DataTDV != null)
-                {
-                    foreach (var item in ViewBag.DataTDV)
-                    {
-                        <option value="@item.Ma_CbNv" data-hoten="@item.Ma_CbNv">@item.Ma_CbNv @item.hoten</option>
-                    }
-                }
-            </select>
+                            <select id="dropdownMaTDV" class="select2" style="width: 200px" name="Ma_TDV" onchange="saveSelectedTDVValueToCookie()">
+                                <option value="">Chọn mã TDV</option>
+                                @if (ViewBag.DataTDV != null)
+                                {
+                                    foreach (var item in ViewBag.DataTDV)
+                                    {
+                                        <option value="@item.Ma_CbNv" data-hoten="@item.Ma_CbNv">@item.Ma_CbNv @item.hoten</option>
+                                    }
+                                }
+                            </select>
 
-        </div>*@
+                        </div>*@
                     <div>
                         <button class="submit" type="submit" id="runReportButton" onclick="runReport();saveNgay()">
                             Chạy Báo Cáo
@@ -659,7 +659,7 @@
     </header>
     <!-- =======  Data-Table  = Start  ========================== -->
 
-    <div class="container">
+    <div class="container" style="margin-left:250px">
 
 
         <div class="row">
@@ -668,21 +668,21 @@
                     <table id="example" class="table table-striped table-bordered">
                         <thead class="table-dark">
                             <tr>
-                           
+
                                 <th colspan="2">Chứng Từ</th>
                                 <th rowspan="2">Tên Khách Hàng</th>
                                 <th rowspan="2">Diễn giải</th>
                                 <th rowspan="2">TK đối ứng</th>
                                 <th colspan="2">Phát sinh</th>
                                 <th rowspan="2">Số dư</th>
-                               
+
                             </tr>
                             <tr>
                                 <th>Ngày</th>
                                 <th>Số</th>
                                 <th>Thu</th>
                                 <th>Chi</th>
-                              
+
 
 
                             </tr>
@@ -719,7 +719,7 @@
 
                 // Đặt giá trị mặc định cho select dựa trên giá trị cookie
                 selectElement.value = selectedInfoFromCookie;
-
+            
                 // Gọi hàm để lưu giá trị mới vào cookie nếu cần thiết
                 saveSelectedValueToCookie();
             }
@@ -728,10 +728,10 @@
         function saveSelectedValueToCookie() {
             var selectedValue = $("#nhomtheoselect").val();
             document.cookie = 'Ma_TK=' + selectedValue;
-
+         
             // Gọi hàm để nhóm dữ liệu dựa trên giá trị đã chọn
         }
-     
+
 
     </script>
     @*<script>
@@ -994,7 +994,26 @@
         });
 
     </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var runReportButton = document.getElementById("runReportButton");
 
+            if (runReportButton) {
+                runReportButton.addEventListener("click", function () {
+                    var dropdownInput = document.getElementById("dropdownInputVT");
+                    var selectedOption = document.querySelector("#dropdownListVT option[value='" + dropdownInput.value + "']");
+
+                    if (selectedOption) {
+                        var tenDt = selectedOption.getAttribute('data-TenVt');
+                        document.cookie = 'Ten_Vt=' + tenDt;
+                    } else {
+                        var selected = "";
+                        document.cookie = 'Ten_Vt=' + selected;
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 
 </html>

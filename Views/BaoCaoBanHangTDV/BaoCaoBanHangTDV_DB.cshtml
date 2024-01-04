@@ -412,6 +412,7 @@
             .tab.selected-tab .closeTab {
                 pointer-events: auto;
             }
+
         .expandable-icon {
             cursor: pointer;
             transition: transform 0.3s;
@@ -444,6 +445,7 @@
         .expandable-content_detail25 {
             display: none;
         }
+
         .data_table {
             max-height: 100%; /* Đặt chiều cao tối đa của container để có thanh cuộn */
             overflow: auto;
@@ -454,76 +456,94 @@
                 top: 0;
                 z-index: 100;
             }
+
         tr td:nth-child(2) {
             background-color: cornflowerblue;
             color: black; /* Màu nền bạn muốn đặt */
         }
+
         tr td:nth-child(3) {
-            background-color: lawngreen;
-            color: black; /* Màu nền bạn muốn đặt */
-        }
-        tr td:nth-child(4) {
-            background-color: lightpink;
-            color: black; /* Màu nền bạn muốn đặt */
-        }
-        tr td:nth-child(5) {
             background-color: cornflowerblue;
             color: black; /* Màu nền bạn muốn đặt */
         }
+
+        tr td:nth-child(4) {
+            background-color: cornflowerblue;
+            color: black; /* Màu nền bạn muốn đặt */
+        }
+
+        tr td:nth-child(5) {
+            background-color: lawngreen;
+            color: black; /* Màu nền bạn muốn đặt */
+        }
+
         tr td:nth-child(6) {
             background-color: lawngreen;
             color: black; /* Màu nền bạn muốn đặt */
         }
+
         tr td:nth-child(7) {
-            background-color: lightpink;
-            color: black; /* Màu nền bạn muốn đặt */
-        }
-        tr td:nth-child(8) {
-            background-color: cornflowerblue;
-            color: black; /* Màu nền bạn muốn đặt */
-        }
-        tr td:nth-child(9) {
             background-color: lawngreen;
             color: black; /* Màu nền bạn muốn đặt */
         }
+
+        tr td:nth-child(8) {
+            background-color: lightpink;
+            color: black; /* Màu nền bạn muốn đặt */
+        }
+
+        tr td:nth-child(9) {
+            background-color: lightpink;
+            color: black; /* Màu nền bạn muốn đặt */
+        }
+
         tr td:nth-child(10) {
             background-color: lightpink;
             color: black; /* Màu nền bạn muốn đặt */
         }
+
         tr td:nth-child(11) {
-            background-color: cornflowerblue;
+            background-color: orange;
             color: black; /* Màu nền bạn muốn đặt */
         }
+
         tr td:nth-child(12) {
-            background-color: lawngreen;
+            background-color: orange;
             color: black; /* Màu nền bạn muốn đặt */
         }
+
         tr td:nth-child(13) {
-            background-color: lightpink;
+            background-color: orange;
             color: black; /* Màu nền bạn muốn đặt */
         }
+
         tr td:nth-child(14) {
-            background-color: cornflowerblue;
+            background-color: gold;
             color: black; /* Màu nền bạn muốn đặt */
         }
+
         tr td:nth-child(15) {
-            background-color: lawngreen;
+            background-color: gold;
             color: black; /* Màu nền bạn muốn đặt */
         }
+
         tr td:nth-child(16) {
-            background-color: lightpink;
+            background-color: gold;
             color: black; /* Màu nền bạn muốn đặt */
         }
+
         tr td:nth-child(17) {
-            background-color: lawngreen;
+            background-color: aquamarine;
             color: black; /* Màu nền bạn muốn đặt */
         }
+
         tr td:nth-child(18) {
-            background-color: cornflowerblue;
+            background-color: aquamarine;
             color: black; /* Màu nền bạn muốn đặt */
         }
+
         tr td:nth-child(19) {
-            background-color: lightpink;
+            background-color: aquamarine;
             color: black; /* Màu nền bạn muốn đặt */
         }
     </style>
@@ -548,7 +568,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <!-- ========================================================= -->
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
 
     <link rel="stylesheet" href="~/assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="~/assets/css/datatables.min.css">
@@ -591,6 +612,9 @@
                         <button class="submit" type="submit" onclick="runReport()"> Chạy Báo Cáo </button>
                     </div>
                 </form>
+                <button  style="border-radius: 10px; margin-left: 10px; margin-bottom: 10px; margin-top: 10px; background-color: #aec9e0; color: #3483bd"onclick="exportToExcel()">Xuất Excel</button>
+
+
             </li>
         </ul>
     </div>
@@ -671,23 +695,23 @@
                             <tr>
                                 <th style="width:330px">Chi Nhánh</th>
                                 <th style="background-color: cornflowerblue">OPC </th>
-                                <th style="background-color:lawngreen">Khoán OPC</th>
-                                <th style="background-color:lightpink">Tỷ lệ OPC</th>
-                                <th style="background-color: cornflowerblue">CỒN</th>
+                                <th style="background-color: cornflowerblue">Khoán OPC</th>
+                                <th style="background-color: cornflowerblue">Tỷ lệ OPC</th>
+                                <th style="background-color: lawngreen">CỒN</th>
                                 <th style="background-color:lawngreen">Khoán Cồn</th>
-                                <th style="background-color:lightpink">Tỷ lệ Cồn</th>
-                                <th style="background-color: cornflowerblue">SỦI</th>
-                                <th style="background-color:lawngreen">Khoán Sủi</th>
+                                <th style="background-color: lawngreen">Tỷ lệ Cồn</th>
+                                <th style="background-color: lightpink">SỦI</th>
+                                <th style="background-color: lightpink">Khoán Sủi</th>
                                 <th style="background-color:lightpink">Tỷ lệ Sủi</th>
-                                <th style="background-color: cornflowerblue">PHIẾN</th>
-                                <th style="background-color:lawngreen">Khoán Phiến</th>
-                                <th style="background-color:lightpink">Tỷ lệ Phiến</th>
-                                <th style="background-color: cornflowerblue">TW25</th>
-                                <th style="background-color:lawngreen">Khoán TW25</th>
-                              <th style="background-color:lightpink">Tỷ lệ 25</th>
-                                <th style="background-color:lawngreen">TỔNG KHOÁN</th>
-                                <th style="background-color: cornflowerblue">TỔNG THỰC HIỆN</th>
-                                <th style="background-color:lightpink">Tỷ lệ TH</th>
+                                <th style="background-color: orange">PHIẾN</th>
+                                <th style="background-color: orange ">Khoán Phiến</th>
+                                <th style="background-color: orange ">Tỷ lệ Phiến</th>
+                                <th style="background-color: gold">TW25</th>
+                                <th style="background-color: gold ">Khoán TW25</th>
+                                <th style="background-color: gold">Tỷ lệ 25</th>
+                                <th style="background-color:aquamarine">TỔNG KHOÁN</th>
+                                <th style="background-color: aquamarine">TỔNG THỰC HIỆN</th>
+                                <th style="background-color: aquamarine">Tỷ lệ TH</th>
                             </tr>
                         </thead>
 
@@ -700,7 +724,7 @@
                                 object sumKhoan_OPCObj = row2["Sum_Khoan_OPC"];
                                 decimal sumKhoan_OPC = sumKhoan_OPCObj != DBNull.Value ? Convert.ToDecimal(sumKhoan_OPCObj) : 0;
 
-                                if (sumKhoan_OPC !=0)
+                                if (sumKhoan_OPC != 0)
                                 {
                                     tyleOPC = Math.Round(Convert.ToDecimal(row2["Sum_OPC"]) / sumKhoan_OPC * 100, 2);
                                 }
@@ -755,8 +779,8 @@
                                 object sumKhoanPhienObj = row2["Sum_Khoan_PHIEN"];
 
                                 decimal sumKhoanPhien = sumKhoanPhienObj != DBNull.Value ? Convert.ToDecimal(sumKhoanPhienObj) : 0;  // Tránh chia cho 0
-                                decimal Phien = Convert.ToDecimal(row2["Sum_Phien"])!= 0 ? Convert.ToDecimal(row2["Sum_Phien"]):0;
-                                if (Phien != 0 && sumKhoanPhien !=0)
+                                decimal Phien = Convert.ToDecimal(row2["Sum_Phien"]) != 0 ? Convert.ToDecimal(row2["Sum_Phien"]) : 0;
+                                if (Phien != 0 && sumKhoanPhien != 0)
                                 {
                                     tylePhien = Math.Round(Phien / sumKhoanPhien * 100, 2);
                                 }
@@ -766,50 +790,50 @@
                                 }
 
 
-                            <tr>
-                                <th style="text-align:left">@ten <span class="material-symbols-outlined expandable-icon" onclick="toggleRows(this)">arrow_drop_down</span></th>
-                                <td class="num" style="text-align:right;font-weight:bold">@String.Format("{0:n0}", row2["Sum_OPC"])</td>
-                                <td class="num" style="text-align:right;font-weight:bold">@String.Format("{0:n0}", row2["Sum_Khoan_OPC"])</td>
-                                <td style="text-align:right;font-weight:bold">@tyleOPC%</td>
-                                <td class="num" style="text-align: right; font-weight: bold">@String.Format("{0:n0}", row2["Sum_Con"])</td>
-                                <td class="num" style="text-align: right; font-weight: bold">@String.Format("{0:n0}", row2["Sum_Khoan_CON"])</td>
-                                <td style="text-align:right;font-weight:bold">@tyleCon%</td>
-                                <td class="num" style="text-align: right; font-weight: bold">@String.Format("{0:n0}", row2["Sum_Sui"])</td>
-                                <td class="num" style="text-align: right; font-weight: bold">@String.Format("{0:n0}", row2["Sum_Khoan_SUI"])</td>
-                                <td style="text-align:right;font-weight:bold">@tyleSui%</td>
-                                <td class="num" style="text-align: right; font-weight: bold">@String.Format("{0:n0}", row2["Sum_Phien"])</td>
-                                <td class="num" style="text-align: right; font-weight: bold">@String.Format("{0:n0}", row2["Sum_Khoan_PHIEN"])</td>
-                                <td style="text-align:right;font-weight:bold">@tylePhien%</td>
-                                <td class="num" style="text-align: right; font-weight: bold">@String.Format("{0:n0}", row2["Sum_25"])</td>
-                                <td class="num" style="text-align: right; font-weight: bold">@String.Format("{0:n0}", row2["Sum_Khoan_TW25"])</td>
+                                <tr>
+                                    <th style="text-align:left">@ten <i class="fa-solid fa-caret-down" onclick="toggleRows(this)"style="cursor:pointer"></i></th>
+                                    <td class="num" style="text-align:right;font-weight:lighter">@String.Format("{0:n0}", row2["Sum_OPC"])</td>
+                                    <td class="num" style="text-align: right; font-weight: lighter">@String.Format("{0:n0}", row2["Sum_Khoan_OPC"])</td>
+                                    <td style="text-align: right; font-weight: lighter">@tyleOPC%</td>
+                                    <td class="num" style="text-align: right; font-weight: lighter">@String.Format("{0:n0}", row2["Sum_Con"])</td>
+                                    <td class="num" style="text-align: right; font-weight: lighter">@String.Format("{0:n0}", row2["Sum_Khoan_CON"])</td>
+                                    <td style="text-align: right; font-weight: lighter">@tyleCon%</td>
+                                    <td class="num" style="text-align: right; font-weight: lighter">@String.Format("{0:n0}", row2["Sum_Sui"])</td>
+                                    <td class="num" style="text-align: right; font-weight: lighter">@String.Format("{0:n0}", row2["Sum_Khoan_SUI"])</td>
+                                    <td style="text-align: right; font-weight: lighter">@tyleSui%</td>
+                                    <td class="num" style="text-align: right; font-weight: lighter">@String.Format("{0:n0}", row2["Sum_Phien"])</td>
+                                    <td class="num" style="text-align: right; font-weight: lighter">@String.Format("{0:n0}", row2["Sum_Khoan_PHIEN"])</td>
+                                    <td style="text-align: right; font-weight: lighter">@tylePhien%</td>
+                                    <td class="num" style="text-align: right; font-weight: lighter">@String.Format("{0:n0}", row2["Sum_25"])</td>
+                                    <td class="num" style="text-align: right; font-weight: lighter">@String.Format("{0:n0}", row2["Sum_Khoan_TW25"])</td>
 
-                                <td style="text-align:right;font-weight:bold">@tyle25%</td>
-                                <td class="num" style="text-align: right; font-weight: bold">@String.Format("{0:n0}", row2["Sum_Khoan"])</td>
-                                @*<td class="num" style="text-align:right">@String.Format("{0:n0}", row2["Sum_SPCL_OPC"]) - @String.Format("{0:n0}", row2["Sum_SPPT_OPC"])</td>*@
-                                <td class="num" style="text-align: right; font-weight: bold">@String.Format("{0:n0}", row2["Total_DoanhThu"])</td>
-                                <td style="text-align:right;font-weight:bold">@tyleTH%</td>
-                            </tr>
-                            <tr style="background-color:blanchedalmond" class="expandable-content">
-                                <th>Mã TDV - Tên TDV</th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                            </tr>
+                                    <td style="text-align: right; font-weight: lighter">@tyle25%</td>
+                                    <td class="num" style="text-align: right; font-weight: lighter">@String.Format("{0:n0}", row2["Sum_Khoan"])</td>
+                                    @*<td class="num" style="text-align:right">@String.Format("{0:n0}", row2["Sum_SPCL_OPC"]) - @String.Format("{0:n0}", row2["Sum_SPPT_OPC"])</td>*@
+                                    <td class="num" style="text-align: right; font-weight: lighter">@String.Format("{0:n0}", row2["Total_DoanhThu"])</td>
+                                    <td style="text-align: right; font-weight: lighter">@tyleTH%</td>
+                                </tr>
+                                <tr style="background-color:blanchedalmond" class="expandable-content">
+                                    <th>Mã TDV - Tên TDV</th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
                                 foreach (DataRow row in Model.Tables[0].Rows)
                                 {
                                     decimal sumOPC_KH = 0;
@@ -821,11 +845,11 @@
                                     decimal sumsppt = 0;
                                     decimal sumcombo = 0;
                                     decimal total = 0;
-                                    decimal khoanOPC=0;
-                                    decimal khoanCon =0;
-                                    decimal khoanSui =0;
-                                    decimal khoanPhien =0;
-                                    decimal khoanTW25 =0;
+                                    decimal khoanOPC = 0;
+                                    decimal khoanCon = 0;
+                                    decimal khoanSui = 0;
+                                    decimal khoanPhien = 0;
+                                    decimal khoanTW25 = 0;
                                     decimal spcl = 0;
                                     decimal sppt = 0;
                                     decimal sum3gam = 0;
@@ -886,7 +910,7 @@
 
 
                                         // Check if the denominator (khoanCon) is not zero before performing the division
-                                        if (khoanOPC!=0)
+                                        if (khoanOPC != 0)
                                         {
                                             TyLe_OPC = Math.Round(sumOPC_KH / khoanOPC * 100, 2);
                                         }
@@ -936,27 +960,27 @@
 
                                     }
 
-                        <tr class="expandable-content" style="color:black;font-weight:bold">
-                            <td style="text-align:left">@row["ma_TDV"] - @row["Ten_TDV"] <span class="material-symbols-outlined expandable-icon" onclick="toggleRowsOPC(this)">arrow_drop_down</span></td>
-                            <td style="text-align: right; color: black" class="sum-opc-kh">@sumOPC_KH.ToString("N0")</td>
-                            <td style="text-align: right; color: black">@khoanOPC.ToString("N0")</td>
-                            <td style="text-align: right; color: black">@TyLe_OPC%</td>
-                            <td class="num" style="text-align: right; color: black">@sumcon_KH.ToString("N0")</td>
-                            <td style="text-align: right; color: black">@khoanCon.ToString("N0")</td>
-                            <td style="text-align: right; color: black">@TyLe_Con%</td>
-                            <td class="num" style="text-align: right; color: black">@sumsui_KH.ToString("N0")</td>
-                            <td style="text-align: right; color: black">@khoanSui.ToString("N0")</td>
-                            <td style="text-align: right; color: black">@TyLe_Sui%</td>
-                            <td class="num" style="text-align: right; color: black">@sumphien_KH.ToString("N0")</td>
-                            <td style="text-align: right; color: black">@khoanPhien.ToString("N0")</td>
-                            <td style="text-align: right; color: black">@TyLe_Phien%</td>
-                            <td class="num" style="text-align: right; color: black">@sum25_KH.ToString("N0")</td>
-                            <td style="text-align: right; color: black">@khoanTW25.ToString("N0")</td>
-                            <td style="text-align: right; color: black ">@TyLe_TW25%</td>
-                            <td style="text-align: right; color: black">@sumKhoan1.ToString("N0")</td>
-                            <td class="num" style="text-align: right; color: black">@total.ToString("N0")</td>
-                            <td style="text-align: right; font-weight: bold; color: black">@TyLe_TH_TDV%</td>
-                        </tr>
+                                    <tr class="expandable-content" style="color: black; font-weight: lighter">
+                                        <td style="text-align:left">@row["ma_TDV"] - @row["Ten_TDV"] <i class="fa-solid fa-caret-down"onclick="toggleRowsOPC(this)"style="cursor:pointer"></i></td>
+                                        <td style="text-align: right; color: black" class="sum-opc-kh">@sumOPC_KH.ToString("N0")</td>
+                                        <td style="text-align: right; color: black">@khoanOPC.ToString("N0")</td>
+                                        <td style="text-align: right; color: black">@TyLe_OPC%</td>
+                                        <td class="num" style="text-align: right; color: black">@sumcon_KH.ToString("N0")</td>
+                                        <td style="text-align: right; color: black">@khoanCon.ToString("N0")</td>
+                                        <td style="text-align: right; color: black">@TyLe_Con%</td>
+                                        <td class="num" style="text-align: right; color: black">@sumsui_KH.ToString("N0")</td>
+                                        <td style="text-align: right; color: black">@khoanSui.ToString("N0")</td>
+                                        <td style="text-align: right; color: black">@TyLe_Sui%</td>
+                                        <td class="num" style="text-align: right; color: black">@sumphien_KH.ToString("N0")</td>
+                                        <td style="text-align: right; color: black">@khoanPhien.ToString("N0")</td>
+                                        <td style="text-align: right; color: black">@TyLe_Phien%</td>
+                                        <td class="num" style="text-align: right; color: black">@sum25_KH.ToString("N0")</td>
+                                        <td style="text-align: right; color: black">@khoanTW25.ToString("N0")</td>
+                                        <td style="text-align: right; color: black ">@TyLe_TW25%</td>
+                                        <td style="text-align: right; color: black">@sumKhoan1.ToString("N0")</td>
+                                        <td class="num" style="text-align: right; color: black">@total.ToString("N0")</td>
+                                        <td style="text-align: right; font-weight: lighter; color: black">@TyLe_TH_TDV%</td>
+                                    </tr>
                                     if (row["ma_TDV"].ToString() == row["ma_TDV"].ToString())
                                     {
                                         <tr class="expandable-content_detail">
@@ -998,12 +1022,12 @@
                                             <td></td>
                                             <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row["Doanh_Thu_Phien_ETC"]))</td>
                                             <td></td>
-                                             <td></td>
-                                           <td></td>
+                                            <td></td>
+                                            <td></td>
                                             <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row["Tong_Thuc_Hien_ETC"]))</td>
                                             <td></td>
                                         </tr>
-                                       
+
                                     }
 
                                 }
@@ -1011,7 +1035,7 @@
 
 
                         </tbody>
-                       
+
                     </table>
                 </div>
             </div>
@@ -1027,6 +1051,60 @@
     @*<script src="~/assets/js/pdfmake.min.js"></script>*@
     <script src="~/assets/js/vfs_fonts.js"></script>
     <script src="~/assets/js/custom.js"></script>
+    <script src="~/Scripts/excellentexport.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="//cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.3/xlsx.full.min.js"></script>
+    @*<script>
+            function exportToExcel() {
+                return ExcellentExport.convert({
+                    anchor: this,
+                    filename: 'BaoCaoKetQuaKinhDoanh',
+                    format: 'xls',
+                    beforeSave: function (excelData, createSheetFunc) {
+                        // Modify the content before saving
+                        excelData[0].content.forEach(function (row) {
+                            row.forEach(function (cell) {
+                                // Check if the cell contains an element with the specified class and remove it
+                                if (cell.html.indexOf('material-symbols-outlined') !== -1) {
+                                    cell.html = cell.html.replace(/<span class="material-symbols-outlined[^>]*>.*?<\/span>/g, '');
+                                }
+                            });
+                        });
+                    }
+                }, [
+                    { name: 'Sheet Name Here 1', from: { table: 'example1' } },
+                    { name: 'Sheet Name Here 2', from: { table: 'example2' } }
+                ]);
+            }
+        </script>*@
+    <script>
+        function exportToExcel() {
+            // Lấy danh sách cột cần xuất từ bảng gốc
+            var columnsToExport = ['Tên', 'Số điện thoại'];
+
+            // Tạo bảng tạm thời chỉ chứa cột Tên và Số điện thoại
+            var temporaryTable = $('#example').clone();
+
+            // Lặp qua các cột không nằm trong danh sách cần xuất và ẩn chúng
+            temporaryTable.find('thead th, tbody td').each(function () {
+                var columnHeader = $(this).text();
+                if (!columnsToExport.includes(columnHeader)) {
+                    $(this).hide();
+                }
+            });
+
+            // Xuất Excel từ bảng tạm thời
+            temporaryTable.table2excel({
+                exclude: ".hidden",
+                name: "Sheet 1",
+                filename: "BaoCaoBanHangTDV"
+            });
+        }
+    </script>
+
     <script>
         function toggleRows(cell) {
             var rowIndex = cell.parentElement.parentElement.rowIndex; // Adjusted to get the index of the parent row

@@ -716,6 +716,27 @@
     <script src="~/assets/js/pdfmake.min.js"></script>
     <script src="~/assets/js/vfs_fonts.js"></script>
     <script src="~/assets/js/custom.js"></script>
+     @*<script>
+            document.addEventListener("DOMContentLoaded", function () {
+                // Mặc định giá trị của dropdown nhóm theo là "Theo TDV"
+                var nhomDropdown = document.getElementById("nhomtheoselect");
+                setDefaultOption(nhomDropdown, "ma_tdv");
+
+                // Mặc định giá trị của dropdown chi tiết là "Theo TDV"
+                var chitietDropdown = document.getElementById("chitietselect");
+                setDefaultOption(chitietDropdown, "ma_vt");
+            });
+
+            // Hàm để thiết lập giá trị mặc định cho dropdown
+            function setDefaultOption(dropdown, defaultValue) {
+                for (var i = 0; i < dropdown.options.length; i++) {
+                    if (dropdown.options[i].value === defaultValue) {
+                        dropdown.options[i].selected = true;
+                        break;
+                    }
+                }
+            }
+        </script>*@
     <script>
         document.getElementById("dropdownInput").addEventListener("input", function () {
             var inputValue = this.value;
@@ -828,27 +849,27 @@
 
 
     </script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            // Mặc định giá trị của dropdown nhóm theo là "Theo TDV"
-            var nhomDropdown = document.getElementById("nhomtheoselect");
-            setDefaultOption(nhomDropdown, "ma_tdv");
+    @*<script>
+            document.addEventListener("DOMContentLoaded", function () {
+                // Mặc định giá trị của dropdown nhóm theo là "Theo TDV"
+                var nhomDropdown = document.getElementById("nhomtheoselect");
+                setDefaultOption(nhomDropdown, "ma_tdv");
 
-            // Mặc định giá trị của dropdown chi tiết là "Theo TDV"
-            var chitietDropdown = document.getElementById("chitietselect");
-            setDefaultOption(chitietDropdown, "ma_vt");
-        });
+                // Mặc định giá trị của dropdown chi tiết là "Theo TDV"
+                var chitietDropdown = document.getElementById("chitietselect");
+                setDefaultOption(chitietDropdown, "ma_vt");
+            });
 
-        // Hàm để thiết lập giá trị mặc định cho dropdown
-        function setDefaultOption(dropdown, defaultValue) {
-            for (var i = 0; i < dropdown.options.length; i++) {
-                if (dropdown.options[i].value === defaultValue) {
-                    dropdown.options[i].selected = true;
-                    break;
+            // Hàm để thiết lập giá trị mặc định cho dropdown
+            function setDefaultOption(dropdown, defaultValue) {
+                for (var i = 0; i < dropdown.options.length; i++) {
+                    if (dropdown.options[i].value === defaultValue) {
+                        dropdown.options[i].selected = true;
+                        break;
+                    }
                 }
             }
-        }
-    </script>
+        </script>*@
     <script>
         // Set the "Từ Ngày" input to the first day of the current month
         function setFirstDayOfCurrentMonth() {

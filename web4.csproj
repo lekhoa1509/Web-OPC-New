@@ -317,6 +317,7 @@
     <Compile Include="Controllers\BaoCaoKetQuaKinhDoanhController.cs" />
     <Compile Include="Controllers\CongNoChiTietController.cs" />
     <Compile Include="Controllers\CongTacVienController.cs" />
+    <Compile Include="Controllers\DashBoardController.cs" />
     <Compile Include="Controllers\PhanTichBanHangController.cs" />
     <Compile Include="Controllers\PhieuKeToanController.cs" />
     <Compile Include="Controllers\SoChiTietPhaiThuController.cs" />
@@ -1016,9 +1017,12 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\jsrender.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\multi-select-tag.js" />
     <Content Include="Scripts\table2excel.js" />
+    <Content Include="Scripts\virtual-select.min.js" />
     <Content Include="Styles\core.css" />
     <Content Include="Styles\dashboard.css" />
+    <Content Include="Styles\Dashboard\responsive.css" />
     <Content Include="Styles\default.css" />
     <Content Include="Styles\design_dashboard.css" />
     <Content Include="Styles\DT_TDV.css" />
@@ -1029,6 +1033,7 @@
     <Content Include="Styles\jquery-ui.css" />
     <Content Include="Styles\loader.css" />
     <Content Include="Styles\login.css" />
+    <Content Include="Styles\Dashboard\main-dashboard.css" />
     <Content Include="Styles\main.css" />
     <Content Include="Styles\mainbaocao.css" />
     <Content Include="Styles\mainRp.css" />
@@ -1037,6 +1042,7 @@
     <Content Include="Styles\style2.css" />
     <Content Include="Styles\style3.css" />
     <Content Include="Styles\style4.css" />
+    <Content Include="Styles\virtual-select.min.css" />
     <Content Include="Views\Home\DoiMatKhau.cshtml" />
     <Content Include="Views\Home\Error.cshtml" />
     <Content Include="Views\Home\Index.cshtml">
@@ -1164,6 +1170,7 @@
     <Content Include="Views\BaoCaoBanHangTDV\BaoCaoBanHangTDV_DB.cshtml" />
     <Content Include="Views\CongTacVien\EditCTV.cshtml" />
     <Content Include="Views\CongTacVien\CoppyCTV.cshtml" />
+    <Content Include="Views\DashBoard\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

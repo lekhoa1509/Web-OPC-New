@@ -1,0 +1,27 @@
+﻿@media screen and (min-width:300px) and (max-width: 400px){
+   
+    .left-sidebar{
+        width:40%;
+    }
+        .left-sidebar.expand {
+            transition: transform 0.3s ease;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+            background-color: rgba(0, 0, 0, 0.5); /* Một lớp mờ để tạo hiệu ứng nền khi sidebar mở ra */
+        }
+        .left-sidebar.expand {
+            transform: translateX(0);
+        }
+        .left-sidebar.hide {
+            transform: translateX(-100%);
+        }
+}
+@media screen and (min-width:514px) {
+    section {
+        background-color: yellow;
+    }
+}
