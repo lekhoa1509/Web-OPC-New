@@ -79,6 +79,14 @@
     height: 50px;
     animation: spin 2s linear infinite;
 }
+        #Ly_do {
+            height: 100px;
+            width: 100%;
+            border-radius: 5px;
+            padding: 5px;
+            margin-bottom: 5px;
+            display: inline-block; /* Adjust this value as needed */
+        }
 
 @@keyframes spin {
     0% { transform: rotate(0deg); }
@@ -133,7 +141,10 @@
                 <option value="@item.Ma_Dt" data-ten="@item.Ten_Dt" data-dvcs="@item.Dvcs">@item.Ten_Dt</option>
             }
         </datalist>*@
-
+                <div class="form-group mb-3">
+                    <p><strong>4. Nội Dung&nbsp;</strong></p>
+                </div>
+                <input type="text" id="Ly_do" list="" placeholder="Nội Dung" name="Ly_do">
                 <br />
                 <table id="example" class="table table-striped table-bordered">
                     <thead class="table-dark">
@@ -410,6 +421,10 @@
             var soCt = document.getElementById('So_Ct').value;
             var maNVGH = document.getElementById('dropdownInput').value;
             var tenNVGH = document.getElementById('selectedOption').value;
+            var ghichu = document.getElementById('Ly_do').value;
+          
+
+
 
             // Set the cookie for Ma_NVGH
             setCookie('Ma_NVGH', maNVGH, 7);
@@ -418,9 +433,8 @@
             var queryParams = 'Ngay_Ct=' + encodeURIComponent(ngayCt) +
                 '&So_Ct=' + encodeURIComponent(soCt) +
                 '&Ma_NVGH=' + encodeURIComponent(maNVGH) +
-                '&Ten_NVGH=' + encodeURIComponent(tenNVGH);
-
-            // Redirect or submit form after a short delay
+                '&Ly_Do=' + encodeURIComponent(ghichu) +
+                '&Ten_NVGH=' + encodeURIComponent(tenNVGH);            // Redirect or submit form after a short delay
             setTimeout(function () {
                 window.location.href = 'InsetGiaoHangLoadHD?' + queryParams;
             }, 1000); // Adjust the time as needed

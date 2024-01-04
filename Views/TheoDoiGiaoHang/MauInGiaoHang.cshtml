@@ -138,15 +138,15 @@
                 </tr>
             }
             <!-- Repeat rows as needed -->
-        <tfoot>
-            @foreach (DataRow row2 in Model.Tables[3].Rows)
-            {
-                <tr>
-                    <td colspan="4">Tổng Cộng</td>
-                    <td id="tong-cong">@row2["Tong_Cong"]</td>
-                    <td colspan="5"></td>
-                </tr>
-            }
+            <tfoot>
+                @foreach (DataRow row2 in Model.Tables[3].Rows)
+                {
+                    <tr>
+                        <td colspan="4">Tổng Cộng</td>
+                        <td id="tong-cong">@row2["Tong_Cong"]</td>
+                        <td colspan="5"></td>
+                    </tr>
+                }
             </tfoot>
         </table>
 
@@ -176,24 +176,13 @@
                 <p class="text-center signature-line">(Ký và ghi rõ họ tên)</p>
             </div>
         </div>
+        <button id="exportToExcel">Xuất ra Excel</button>
+
     </div>
     <script>
-        function calculateTotal() {
-            var total = 0;
-            var cells = document.querySelectorAll('.tien-hd');
-
-            for (var i = 0; i < cells.length; i++) {
-                // Convert the cell text to a number and add it to the total
-                var value = cells[i].innerText.replace(/,/g, ''); // Remove commas if the numbers are formatted with commas
-                total += parseFloat(value);
-            }
-
-            // Update the total in the footer
-            document.getElementById('tong-cong').innerText = total.toLocaleString(); // toLocaleString adds commas for thousands, etc.
-        }
-
-        // Calculate the total when the page loads
-        window.onload = calculateTotal;
+document.getElementById("exportToExcel").addEventListener("click", function() {
+    window.location.href = '/YourController/ExportToExcel'; // Đường dẫn đến action trong controller của bạn
+});
     </script>
 
 </body>
