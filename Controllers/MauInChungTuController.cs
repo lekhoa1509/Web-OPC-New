@@ -204,7 +204,7 @@ namespace web4.Controllers
             //var fromDate = Request.Cookies["From_date"].Value;
             //var toDate = Request.Cookies["To_Date"].Value;
 
-            var MaDt = Request.Cookies["Ma_DT"] != null ? Request.Cookies["Ma_DT"].Value : string.Empty;
+            var MaDt = Request.Cookies["Ma_DT"].Value;
 
             using (SqlCommand cmd = new SqlCommand(Pname, con))
             {
@@ -396,7 +396,7 @@ namespace web4.Controllers
             string ma_dvcs = Request.Cookies["Ma_dvcs"].Value;
             DataSet ds = new DataSet();
             connectSQL();
-
+            var Ma_Dt = Request.Cookies["Ma_Dt"].Value;
             if (ma_dvcs == "OPC_B1")
             {
                 string ma_dvcsFirst3Chars = ma_dvcs == "OPC_B1" ? ma_dvcs.Substring(0, 3) : ma_dvcs;
@@ -425,7 +425,7 @@ namespace web4.Controllers
 
                     cmd.Parameters.AddWithValue("@_Tu_Ngay", MauIn.From_date);
                     cmd.Parameters.AddWithValue("@_Den_Ngay", MauIn.To_date);
-                    cmd.Parameters.AddWithValue("@_Ma_dt", MauIn.Ma_Dt);
+                    cmd.Parameters.AddWithValue("@_Ma_dt",Ma_Dt);
                     cmd.Parameters.AddWithValue("@_ma_dvcs", ma_dvcs);
                     cmd.Parameters.AddWithValue("@_Ngay_TT", MauIn.Ngay_TT);
                     cmd.Parameters.AddWithValue("@_Ngay_Ky", MauIn.Ngay_Ky);
@@ -1658,7 +1658,7 @@ namespace web4.Controllers
 
                 cmd.Connection = con;
                 cmd.CommandType = CommandType.StoredProcedure;
-
+                var MaDT = Request.Cookies["Ma_DT"].Value;
                 //MauIn.From_date = Request.Cookies["From_date"].Value;
                 //MauIn.To_date = Request.Cookies["To_Date"].Value;
                 con.Open();
@@ -1669,7 +1669,7 @@ namespace web4.Controllers
 
                     cmd.Parameters.AddWithValue("@_Tu_Ngay", MauIn.From_date);
                     cmd.Parameters.AddWithValue("@_Den_Ngay", MauIn.To_date);
-                    cmd.Parameters.AddWithValue("@_Ma_dt", MauIn.Ma_Dt);
+                    cmd.Parameters.AddWithValue("@_Ma_dt", MaDT);
                     cmd.Parameters.AddWithValue("@_ma_dvcs", ma_dvcs);
                     cmd.Parameters.AddWithValue("@_Ngay_TT", MauIn.Ngay_TT);
                     cmd.Parameters.AddWithValue("@_Ngay_Ky", MauIn.Ngay_Ky);

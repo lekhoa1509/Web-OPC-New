@@ -499,7 +499,7 @@
                     </h5>
                     <h5 style="line-height: 1.5; text-align: left">II. Doanh thu mua hàng và thanh toán trong kì đối chiếu này: </h5>
                     <h5 style="line-height: 1.5; text-align: left">
-                        1.Doanh thu khách hàng mua trong kỳ:         @foreach (DataRow row3 in Model.Tables[5].Rows)
+                        1. Doanh thu khách hàng mua trong kỳ:         @foreach (DataRow row3 in Model.Tables[5].Rows)
                         {
                             @row3["Tien_HD"]
                             var TienHD = row3["Tien_HD"].ToString();
@@ -511,7 +511,7 @@
                         } đồng.
                     </h5>
                     <h5 style="line-height: 1.5; text-align: left ">
-                        2.Khách hàng đã thanh toán/trả hàng/bù trừ trong kỳ:    @foreach (DataRow row3 in Model.Tables[6].Rows)
+                        2. Khách hàng đã thanh toán/trả hàng/bù trừ trong kỳ:    @foreach (DataRow row3 in Model.Tables[6].Rows)
                         {
                             @row3["TC_CKTT_TienTT"]
                             var TienTT = row3["TC_CKTT_TienTT"].ToString();
@@ -524,7 +524,7 @@
                     </h5>
 
                     <h5 style="line-height: 2.5;text-align:left ">
-                        III.Số tiền khách hàng chưa thanh toán, tính đến cuối ngày:   @foreach (DataRow row3 in Model.Tables[3].Rows)
+                        III. Số tiền khách hàng chưa thanh toán, tính đến cuối ngày:   @foreach (DataRow row3 in Model.Tables[3].Rows)
                         {
                             @row3["Den_Ngay"]
                             var DenNgay = row3["Den_Ngay"].ToString();
@@ -613,7 +613,7 @@
                                 <td style="text-align: center; font-size: 14px">@row3["So_Ct"]</td>
                                 <td style="text-align: center; font-size: 14px">@row3["Ngay_Ct1"]</td>
 
-                                <td style="text-align: center; font-size: 14px;text-align:right">@row3["Ton_No1"]</td>
+                                <td style="text-align: center; font-size: 14px;text-align:right;padding-right:5px">@row3["Ton_No1"]</td>
                                 <td style="text-align: center; font-size: 14px"></td>
                                 <td style="text-align: center; font-size: 14px">@row3["Ghi_Chu"]</td>
 
@@ -622,7 +622,7 @@
                         }
                         <tr>
                             <td colspan="3" style="font-weight:bold;color:black;text-align:center;font-size:15px">Tổng cộng</td>
-                            <td style="font-weight:bold;color:black;text-align:right;font-size:15px">
+                            <td style="font-weight:bold;color:black;text-align:right;font-size:15px;padding-right:5px">
                                 @foreach (DataRow row3 in Model.Tables[7].Rows)
                                 {
                                     @row3["Ton_no"]
@@ -854,26 +854,41 @@
 
         // Function to update the content of the <h5> tag
         function updateQuarterYear() {
-            // Get the value of the 'From_date' cookie
-            var fromDateCookie = getCookieValue('To_date');
+            // Get the value of the 'From_date' and 'To_date' cookies
+            var fromDateCookie = getCookieValue('From_date');
+            var toDateCookie = getCookieValue('To_date');
 
-            // If the cookie is present, extract the month and proceed
-            if (fromDateCookie) {
+            // If the cookies are present, extract the months and proceed
+            if (fromDateCookie && toDateCookie) {
                 var fromDateObj = new Date(fromDateCookie);
-                var month = fromDateObj.getMonth() + 1; // Adding 1 since getMonth() returns 0-based index
+                var toDateObj = new Date(toDateCookie);
 
-                // Determine the quarter based on the month
-                var quarter = Math.floor((month + 2) / 3); // Calculate the quarter (1-4)
+                var fromMonth = fromDateObj.getMonth() + 1; // Adding 1 since getMonth() returns 0-based index
+                var toMonth = toDateObj.getMonth() + 1; // Adding 1 since getMonth() returns 0-based index
 
-                // Get the year from the 'From_date' cookie
-                var year = fromDateObj.getFullYear();
+                // Determine the quarter and year for both 'From_date' and 'To_date'
+                var fromQuarter = Math.floor((fromMonth + 2) / 3); // Calculate the quarter for 'From_date'
+                var toQuarter = Math.floor((toMonth + 2) / 3); // Calculate the quarter for 'To_date'
 
-                // Set the content of the <h5> tag
+                var fromYear = fromDateObj.getFullYear();
+                var toYear = toDateObj.getFullYear();
+
                 var h5Element = $('#quarterYear'); // Using jQuery to select the <h5> element
-                h5Element.text('Tháng ' + month + ' năm ' + year);
+
+                if (fromMonth === toMonth && fromQuarter === toQuarter) {
+                    // Display quarter and year if the months are exactly 2 apart and in the same quarter
+                    h5Element.text('Tháng ' + fromMonth + ' năm ' + fromYear);
+
+                } else if (Math.abs(toMonth - fromMonth) === 2) {
+                    // Display quarter and year if the months are exactly 2 apart
+                    h5Element.text('Quý ' + fromQuarter + ' năm ' + fromYear);
+                } else {
+                    // Display range of months and years if the difference is neither 0 nor 2
+                    h5Element.text('Từ tháng ' + fromMonth + ' năm ' + fromYear + ' đến tháng ' + toMonth + ' năm ' + toYear);
+                }
             } else {
-                // Handle the case where the 'From_date' cookie is not present
-                console.error("The 'From_date' cookie is not set.");
+                // Handle the case where either 'From_date' or 'To_date' cookie is not present
+                console.error("The 'From_date' or 'To_date' cookie is not set.");
             }
         }
 
@@ -883,6 +898,8 @@
             updateQuarterYear();
         });
     </script>
+
+
     @*<script>
             document.addEventListener("DOMContentLoaded", function () {
                 var tableData = []; // Mảng lưu dữ liệu
@@ -1084,7 +1101,15 @@
                 }
             }
         });</script>
+    <script>
 
+        document.addEventListener('keydown', function (event) {
+            if (event.ctrlKey && event.key === 'p') {
+                // Người dùng nhấn Ctrl+P, ẩn nút xuất Excel
+                document.getElementById('exportbutton').style.display = 'none';
+            }
+        });
+    </script>
 </body>
 
 </html>

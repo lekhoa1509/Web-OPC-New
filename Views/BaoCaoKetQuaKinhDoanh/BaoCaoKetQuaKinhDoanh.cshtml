@@ -604,9 +604,11 @@
     <!-- Google Fonts -->
     <!-- ========================================================= -->
     <link rel="stylesheet" href="~/Styles/design_dashboard.css">
-    
-    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
 
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous" />
     <link rel="stylesheet" href="~/assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="~/assets/css/datatables.min.css">
@@ -645,16 +647,20 @@
 
 
                 </form>
-                <button style="border-radius: 10px; margin-left: 10px; margin-bottom: 10px; margin-top: 10px; background-color: #aec9e0; color: #3483bd">
-                    <a onclick="return ExcellentExport.convert({ anchor: this, filename: 'BaoCaoKetQuaKinhDoanh', format: 'xlsx' }, [
-                { name: 'I', from: { table: 'example' } },
-                { name: 'II', from: { table: 'example2' } },
-                { name: 'III', from: { table: 'example3' } },
-                { name: 'IV', from: { table: 'example4' } },
+                <button id="excel-btn" style="border-radius: 10px; margin-left: 10px; margin-bottom: 10px; margin-top: 10px; background-color: #aec9e0; color: #3483bd">
+                    @*<a onclick="return ExcellentExport.convert({ anchor: this, filename: 'BaoCaoKetQuaKinhDoanh', format: 'xlsx' }, [
+                            { name: 'I', from: { table: 'example' } },
+                            { name: 'II', from: { table: 'example2' } },
+                            { name: 'III', from: { table: 'example3' } },
+                            { name: 'IV', from: { table: 'example4' } },
 
-            ]);"download="BaoCaoKetQuaKinhDoanh.xlsx" style="color: #3483bd">Xuất Excel</a>
+                        ]);" download="BaoCaoKetQuaKinhDoanh.xlsx" style="color: #3483bd">Xuất Excel</a>*@Xuất Excel
                 </button>
             </li>
+
+
+
+
         </ul>
     </div>
 
@@ -695,10 +701,10 @@
                     <table id="example" class="table table-striped table-bordered" style="height:max-content" data-excel-name="I.KẾ HOẠCH - THỰC HIỆN GAM HÀNG">
                         <thead class="table-dark">
                             <tr>
-                                <th>Tên DVCS  <span class="material-symbols-outlined expandable-icon" onclick="toggleRows(this)">arrow_drop_down</span></th>
+                                <th>Tên DVCS  <span class="material-symbols-outlined expandable-icon" onclick="toggleRows(this)"><i class="fa-solid fa-caret-down"></i></span></th>
 
-                                <th>Tổng thực hiện</th>
-                                <th>Tổng Khoán</th>
+                                <th data-type="number">Tổng thực hiện</th>
+                                <th data-type="number">Tổng Khoán</th>
                                 <th>Tỷ lệ</th>
 
                             </tr>
@@ -711,9 +717,9 @@
                             {
                                 <tr>
                                     <th>@row2["Ten_Dvcs"]</th>
-                                    <td style="text-align: right; color: #3483bd;font-weight:bold">@String.Format("{0:n0}", Convert.ToDecimal(row2["Tong_Thuc_Hien"]))</td>
-                                    <td style="text-align: right; color: #3483bd; font-weight: bold">@String.Format("{0:n0}", Convert.ToDecimal(row2["Tong_Khoan"]))</td>
-                                    <td style="text-align: right; color: #3483bd; font-weight: bold">@row2["Ty_Le"]%</td>
+                                    <td style='text-align: right; color: #3483bd;font-weight:bold;mso-number-format:" #,##0.00"'>@String.Format("{0:n0}", Convert.ToDecimal(row2["Tong_Thuc_Hien"]))</td>
+                                    <td style='text-align: right; color: #3483bd;font-weight:bold;mso-number-format:" #,##0.00"'>@String.Format("{0:n0}", Convert.ToDecimal(row2["Tong_Khoan"]))</td>
+                                    <td style='text-align: right; color: #3483bd;font-weight:bold;mso-number-format:" #,##0.00"'>@row2["Ty_Le"]%</td>
                                 </tr>
 
 
@@ -726,10 +732,10 @@
                                         <th>Tỷ lệ OPC</th>
                                     </tr>*@
                                 <tr class="expandable-content">
-                                    <td style="font-weight:bold">OPC  <span class="material-symbols-outlined expandable-icon noExl" onclick="toggleRowsOPC(this)">arrow_drop_down</span></td>
-                                    <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Doanh_Thu_OPC"]))</td>
-                                    <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Khoan_OPC"]))</td>
-                                    <td style="text-align:right">@row2["TyLe_OPC"]%</td>
+                                    <td style="font-weight:bold">OPC  <span class="material-symbols-outlined expandable-icon noExl" onclick="toggleRowsOPC(this)"><i class="fa-solid fa-caret-down"></i></span></td>
+                                    <td style='text-align:right;mso-number-format:" #,##0.00"'>@String.Format("{0:n0}", Convert.ToDecimal(row2["Doanh_Thu_OPC"]))</td>
+                                    <td style='text-align:right;mso-number-format:" #,##0.00"'>@String.Format("{0:n0}", Convert.ToDecimal(row2["Khoan_OPC"]))</td>
+                                    <td style='text-align:right;mso-number-format:" #,##0.00"'>@row2["TyLe_OPC"]%</td>
                                 </tr>
 
                                 <tr class="expandable-content_detail" style="background-color:antiquewhite">
@@ -737,7 +743,7 @@
                                     <th style="background-color: antiquewhite; border-top: hidden; border-bottom: hidden; border-left: none ">Mã Vật Tư- Tên Vật Tư</th>
                                     <th>Số Lượng</th>
                                     <th>Tổng Tiền</th>
-                                    <th>Tỷ lệ</th>
+                                    <th>Tỷ trọng</th>
                                 </tr>
                                 foreach (DataRow row in Model.Tables[6].Rows)
                                 {
@@ -745,25 +751,25 @@
                                     {
                                         <tr class="expandable-content_detail">
                                             <td style="text-align:left">@row["Ma_Vt"] - @row["Ten_Vt"]</td>
-                                            <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row["So_Luong"]))</td>
-                                            <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row["Tong_Tien"]))</td>
-                                            <td style="text-align:right"></td>
+                                            <td style='text-align:right;mso-number-format:" #,##0.00"'>@String.Format("{0:n0}", Convert.ToDecimal(row["So_Luong"]))</td>
+                                            <td style='text-align:right;mso-number-format:" #,##0.00"'>@String.Format("{0:n0}", Convert.ToDecimal(row["Tong_Tien"]))</td>
+                                            <td style='text-align:right;mso-number-format:" #,##0.00"'>@row["Ty_Trong"]%</td>
                                         </tr>
                                     }
 
                                 }
                                 <tr class="expandable-content">
-                                    <td class="here" style="font-weight:bold">CỒN <span class="material-symbols-outlined expandable-icon" onclick="toggleRowsCON(this)">arrow_drop_down</span></td>
-                                    <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Doanh_Thu_Con"]))</td>
-                                    <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Khoan_Con"]))</td>
-                                    <td style="text-align:right">@row2["TyLe_Con"]%</td>
+                                    <td class="here" style="font-weight:bold">CỒN <span class="material-symbols-outlined expandable-icon" onclick="toggleRowsCON(this)"><i class="fa-solid fa-caret-down"></i></span></td>
+                                    <td style='text-align:right;mso-number-format:" #,##0.00"'>@String.Format("{0:n0}", Convert.ToDecimal(row2["Doanh_Thu_Con"]))</td>
+                                    <td style='text-align:right;mso-number-format:" #,##0.00"'>@String.Format("{0:n0}", Convert.ToDecimal(row2["Khoan_Con"]))</td>
+                                    <td sstyle='text-align:right;mso-number-format:" #,##0.00"'>@row2["TyLe_Con"]%</td>
                                 </tr>
                                 <tr class="expandable-content_detailCON" style="background-color:antiquewhite">
 
                                     <th style="background-color: antiquewhite; border-top: hidden; border-bottom: hidden; border-left: none ">Mã Vật Tư- Tên Vật Tư</th>
                                     <th>Số Lượng</th>
                                     <th>Tổng Tiền</th>
-                                    <th>Tỷ lệ</th>
+                                    <th>Tỷ Trọng</th>
                                 </tr>
                                 foreach (DataRow row in Model.Tables[6].Rows)
                                 {
@@ -771,25 +777,25 @@
                                     {
                                         <tr class="expandable-content_detailCON">
                                             <td style="text-align:left">@row["Ma_Vt"] - @row["Ten_Vt"]</td>
-                                            <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row["So_Luong"]))</td>
-                                            <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row["Tong_Tien"]))</td>
-                                            <td style="text-align:right"></td>
+                                            <td style='text-align:right;mso-number-format:" #,##0.00"'>@String.Format("{0:n0}", Convert.ToDecimal(row["So_Luong"]))</td>
+                                            <td style='text-align:right;mso-number-format:" #,##0.00"'>@String.Format("{0:n0}", Convert.ToDecimal(row["Tong_Tien"]))</td>
+                                            <td style='text-align:right;mso-number-format:" #,##0.00"'>@row["Ty_Trong"]%</td>
                                         </tr>
                                     }
 
                                 }
                                 <tr class="expandable-content">
-                                    <td style="font-weight:bold"><div style="margin-left:8px" onclick="toggleRowsSUI(this)">SỦI  <span class="material-symbols-outlined expandable-icon">arrow_drop_down</span></div></td>
-                                    <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Doanh_Thu_Sui"]))</td>
-                                    <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Khoan_Sui"]))</td>
-                                    <td style="text-align:right">@row2["TyLe_Sui"]%</td>
+                                    <td style="font-weight:bold"><div style="margin-left:8px" onclick="toggleRowsSUI(this)">SỦI  <span class="material-symbols-outlined expandable-icon"><i class="fa-solid fa-caret-down"></i></span></div></td>
+                                    <td style='text-align:right;mso-number-format:" #,##0.00"'>@String.Format("{0:n0}", Convert.ToDecimal(row2["Doanh_Thu_Sui"]))</td>
+                                    <td style='text-align:right;mso-number-format:" #,##0.00"'>@String.Format("{0:n0}", Convert.ToDecimal(row2["Khoan_Sui"]))</td>
+                                    <td style='text-align:right;mso-number-format:" #,##0.00"'>@row2["TyLe_Sui"]%</td>
                                 </tr>
                                 <tr class="expandable-content_detailSUI" style="background-color:antiquewhite">
 
                                     <th style="background-color: antiquewhite; border-top: hidden; border-bottom: hidden; border-left: none ">Mã Vật Tư- Tên Vật Tư</th>
                                     <th>Số Lượng</th>
                                     <th>Tổng Tiền</th>
-                                    <th>Tỷ lệ</th>
+                                    <th>Tỷ Trọng</th>
                                 </tr>
                                 foreach (DataRow row in Model.Tables[6].Rows)
                                 {
@@ -797,25 +803,25 @@
                                     {
                                         <tr class="expandable-content_detailSUI">
                                             <td style="text-align:left">@row["Ma_Vt"] - @row["Ten_Vt"]</td>
-                                            <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row["So_Luong"]))</td>
-                                            <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row["Tong_Tien"]))</td>
-                                            <td style="text-align:right"></td>
+                                            <td style='text-align:right;mso-number-format:" #,##0.00"'>@String.Format("{0:n0}", Convert.ToDecimal(row["So_Luong"]))</td>
+                                            <td style='text-align:right;mso-number-format:" #,##0.00"'>@String.Format("{0:n0}", Convert.ToDecimal(row["Tong_Tien"]))</td>
+                                            <td style='text-align:right;mso-number-format:" #,##0.00"'>@row["Ty_Trong"]%</td>
                                         </tr>
                                     }
 
                                 }
                                 <tr class="expandable-content">
-                                    <td style="font-weight:bold"><div style="margin-right:5px" onclick="toggleRowsPHIEN(this)">PHIẾN<span class="material-symbols-outlined expandable-icon">arrow_drop_down</span></div></td>
-                                    <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Doanh_Thu_Phien"]))</td>
-                                    <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Khoan_Phien"]))</td>
-                                    <td style="text-align:right">@row2["TyLe_Phien"]%</td>
+                                    <td style="font-weight:bold"><div style="margin-right:5px" onclick="toggleRowsPHIEN(this)">PHIẾN<span class="material-symbols-outlined expandable-icon"><i class="fa-solid fa-caret-down"></i></span></div></td>
+                                    <td style='text-align:right;mso-number-format:" #,##0.00"'>@String.Format("{0:n0}", Convert.ToDecimal(row2["Doanh_Thu_Phien"]))</td>
+                                    <td style='text-align:right;mso-number-format:" #,##0.00"'>@String.Format("{0:n0}", Convert.ToDecimal(row2["Khoan_Phien"]))</td>
+                                    <td style='text-align:right;mso-number-format:" #,##0.00"'>@row2["TyLe_Phien"]%</td>
                                 </tr>
                                 <tr class="expandable-content_detailPHIEN" style="background-color:antiquewhite">
 
                                     <th style="background-color: antiquewhite; border-top: hidden; border-bottom: hidden; border-left: none ">Mã Vật Tư- Tên Vật Tư</th>
                                     <th>Số Lượng</th>
                                     <th>Tổng Tiền</th>
-                                    <th>Tỷ lệ</th>
+                                    <th>Tỷ Trọng</th>
                                 </tr>
                                 foreach (DataRow row in Model.Tables[6].Rows)
                                 {
@@ -823,18 +829,18 @@
                                     {
                                         <tr class="expandable-content_detailPHIEN">
                                             <td style="text-align:left">@row["Ma_Vt"] - @row["Ten_Vt"]</td>
-                                            <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row["So_Luong"]))</td>
-                                            <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row["Tong_Tien"]))</td>
-                                            <td style="text-align:right"></td>
+                                            <td style='text-align:right;mso-number-format:" #,##0.00"'>@String.Format("{0:n0}", Convert.ToDecimal(row["So_Luong"]))</td>
+                                            <td style='text-align:right;mso-number-format:" #,##0.00"'>@String.Format("{0:n0}", Convert.ToDecimal(row["Tong_Tien"]))</td>
+                                            <td style='text-align:right;mso-number-format:" #,##0.00"'>@row["Ty_Trong"]%</td>
                                         </tr>
                                     }
 
                                 }
                                 <tr class="expandable-content">
-                                    <td style="font-weight:bold">TW25<span class="material-symbols-outlined expandable-icon" onclick="toggleRows25(this)">arrow_drop_down</span></td>
-                                    <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Doanh_Thu_25"]))</td>
-                                    <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Khoan_25"]))</td>
-                                    <td style="text-align:right">@row2["TyLe_25"]%</td>
+                                    <td style="font-weight:bold">TW25<span class="material-symbols-outlined expandable-icon" onclick="toggleRows25(this)"><i class="fa-solid fa-caret-down"></i></span></td>
+                                    <td style='text-align:right;mso-number-format:" #,##0.00"'>@String.Format("{0:n0}", Convert.ToDecimal(row2["Doanh_Thu_25"]))</td>
+                                    <td style='text-align:right;mso-number-format:" #,##0.00"'>@String.Format("{0:n0}", Convert.ToDecimal(row2["Khoan_25"]))</td>
+                                    <td style='text-align:right;mso-number-format:" #,##0.00"'>@row2["TyLe_25"]%</td>
 
                                 </tr>
                                 <tr class="expandable-content_detail25" style="background-color:antiquewhite">
@@ -842,7 +848,7 @@
                                     <th style="background-color: antiquewhite; border-top: hidden; border-bottom: hidden; border-left: none ">Mã Vật Tư- Tên Vật Tư</th>
                                     <th>Số Lượng</th>
                                     <th>Tổng Tiền</th>
-                                    <th>Tỷ lệ</th>
+                                    <th>Tỷ Trọng</th>
                                 </tr>
                                 foreach (DataRow row in Model.Tables[6].Rows)
                                 {
@@ -850,9 +856,9 @@
                                     {
                                         <tr class="expandable-content_detail25">
                                             <td style="text-align:left">@row["Ma_Vt"] - @row["Ten_Vt"]</td>
-                                            <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row["So_Luong"]))</td>
-                                            <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row["Tong_Tien"]))</td>
-                                            <td style="text-align:right"></td>
+                                            <td style='text-align:right;mso-number-format:" #,##0.00"'>@String.Format("{0:n0}", Convert.ToDecimal(row["So_Luong"]))</td>
+                                            <td style='text-align:right;mso-number-format:" #,##0.00"'>@String.Format("{0:n0}", Convert.ToDecimal(row["Tong_Tien"]))</td>
+                                            <td style='text-align:right;mso-number-format:" #,##0.00"'>@row["Ty_Trong"]%</td>
                                         </tr>
                                     }
 
@@ -869,7 +875,7 @@
 
                         <div class="data_table" style="height:max-content;width:700px">
                             <div style="display:flex">
-                                <h6 style="text-align:left">II. THỰC HIỆN THEO LOẠI KHÁCH HÀNG</h6>  @*<button id="exportbutton2" style="border-radius: 20px; margin-left: 10px; margin-bottom: 10px; background-color: #aec9e0; color: #3483bd ">
+                                <h6 style="text-align:left">II. THỰC HIỆN THEO KÊNH BÁN HÀNG</h6>  @*<button id="exportbutton2" style="border-radius: 20px; margin-left: 10px; margin-bottom: 10px; background-color: #aec9e0; color: #3483bd ">
                                         Xuất Excel
                                     </button>*@
                             </div>
@@ -893,9 +899,9 @@
                                         <tr>
                                             @*<td>@row2["Id"]</td>*@
                                             @*<td>@row2["Ma_Loai_KH"]</td>*@
-                                            <td style="background-color:antiquewhite"><strong>OTC</strong> <span class="material-symbols-outlined expandable-icon" onclick="toggleRows2(this)">arrow_drop_down</span></td>
-                                            <td style="text-align: right;color: #3483bd;font-weight:bold" id="tongdt-otc">@String.Format("{0:n0}", row2["TongDt_OTC"])</td>
-                                            <td style="text-align: right; color: #3483bd; font-weight: bold" id="tongkhoan-otc">@String.Format("{0:n0}", row2["TongKhoan_OTC"])</td>
+                                            <td style="background-color:antiquewhite"><strong>OTC</strong> <span class="material-symbols-outlined expandable-icon" onclick="toggleRows2(this)"><i class="fa-solid fa-caret-down"></i></span></td>
+                                            <td style='text-align: right;color: #3483bd;font-weight:bold;mso-number-format:" #,##0.00"' id="tongdt-otc">@String.Format("{0:n0}", row2["TongDt_OTC"])</td>
+                                            <td style='text-align: right; color: #3483bd; font-weight: bold;mso-number-format:" #,##0.00"' id="tongkhoan-otc">@String.Format("{0:n0}", row2["TongKhoan_OTC"])</td>
                                             <td style="color: #3483bd; font-weight: bold">@row2["TyLe_OTC"]%</td>
                                             @foreach (DataRow row5 in Model.Tables[7].Rows)
                                             {
@@ -914,8 +920,8 @@
                                                 @*<td>@row2["Id"]</td>*@
                                                 @*<td>@row2["Ma_Loai_KH"]</td>*@
                                                 <td style="color: black;font-weight:bold ">@row2["Loai_KH"]</td>
-                                                <td style="text-align:right">@String.Format("{0:n0}", row2["Doanh_Thu"])</td>
-                                                <td style="text-align:right">@String.Format("{0:n0}", row2["Khoan"])</td>
+                                                <td style='text-align:right;mso-number-format:" #,##0.00"'>@String.Format("{0:n0}", row2["Doanh_Thu"])</td>
+                                                <td style='text-align:right;mso-number-format:" #,##0.00"'>@String.Format("{0:n0}", row2["Khoan"])</td>
                                                 <td>@row2["Ty_Le"]%</td>
                                                 <td>@row2["Ty_Le_Co_Cau"]%</td>
 
@@ -928,9 +934,9 @@
                                         <tr>
                                             @*<td>@row2["Id"]</td>*@
                                             @*<td>@row2["Ma_Loai_KH"]</td>*@
-                                            <td style="background-color:antiquewhite"><strong>ETC</strong> <span class="material-symbols-outlined expandable-icon" onclick="toggleRows3(this)">arrow_drop_down</span></td>
-                                            <td style="text-align: right; color: #3483bd;font-weight:bold" id="tongdt-etc">@String.Format("{0:n0}", row2["TongDt_ETC"])</td>
-                                            <td style="text-align: right; color: #3483bd; font-weight: bold" id="tongkhoan-etc">@String.Format("{0:n0}", row2["TongKhoan_ETC"])</td>
+                                            <td style="background-color:antiquewhite"><strong>ETC</strong> <span class="material-symbols-outlined expandable-icon" onclick="toggleRows3(this)"><i class="fa-solid fa-caret-down"></i></span></td>
+                                            <td style='text-align: right; color: #3483bd;font-weight:bold;mso-number-format:" #,##0.00"' id="tongdt-etc">@String.Format("{0:n0}", row2["TongDt_ETC"])</td>
+                                            <td style='text-align: right; color: #3483bd;font-weight:bold;mso-number-format:" #,##0.00"' id="tongkhoan-etc">@String.Format("{0:n0}", row2["TongKhoan_ETC"])</td>
                                             <td style=" color: #3483bd; font-weight: bold">@row2["TyLe_ETC"]%</td>
                                             @foreach (DataRow row5 in Model.Tables[7].Rows)
                                             {
@@ -948,8 +954,8 @@
                                                 @*<td>@row2["Id"]</td>*@
                                                 @*<td>@row2["Ma_Loai_KH"]</td>*@
                                                 <td style="color: black;font-weight:bold ">@row2["Loai_KH"]</td>
-                                                <td style="text-align:right">@String.Format("{0:n0}", row2["Doanh_Thu"])</td>
-                                                <td style="text-align:right">@String.Format("{0:n0}", row2["Khoan"])</td>
+                                                <td style='text-align:right;mso-number-format:" #,##0.00"'>@String.Format("{0:n0}", row2["Doanh_Thu"])</td>
+                                                <td style='text-align:right;mso-number-format:" #,##0.00"'>@String.Format("{0:n0}", row2["Khoan"])</td>
                                                 <td>@row2["Ty_Le"]%</td>
                                                 <td>@row2["Ty_Le_Co_Cau"]%</td>
 
@@ -964,8 +970,8 @@
                                             <tr>
 
                                                 <td style="font-weight:bold;background-color:antiquewhite ">@row2["Loai_KH"]</td>
-                                                <td style="text-align: right; color: #3483bd; font-weight: bold">@String.Format("{0:n0}", row2["Doanh_Thu"])</td>
-                                                <td style="color: #3483bd; text-align: right;font-weight:bold">@String.Format("{0:n0}", row2["Khoan"])</td>
+                                                <td style='text-align: right; color: #3483bd; font-weight: bold;mso-number-format:" #,##0.00"'>@String.Format("{0:n0}", row2["Doanh_Thu"])</td>
+                                                <td style='text-align: right; color: #3483bd; font-weight: bold;mso-number-format:" #,##0.00"'>@String.Format("{0:n0}", row2["Khoan"])</td>
                                                 <td style="color: #3483bd; font-weight: bold">@row2["Ty_Le"]%</td>
                                                 <td style="color: #3483bd; font-weight: bold ">@row2["Ty_Le_Co_Cau"]%</td>
 
@@ -980,9 +986,9 @@
                                     {
                                         <tr id="tong-cong" style="background-color: burlywood;color:black;font-weight:bold">
                                             <td><strong>Tổng cộng</strong></td>
-                                            <td style="text-align: right; font-weight:bold">@String.Format("{0:n0}", Convert.ToDecimal(row2["Tong_Thuc_Hien"]))</td>
-                                            <td style="text-align: right; font-weight: bold">@String.Format("{0:n0}", Convert.ToDecimal(row2["Tong_Khoan"]))</td>
-                                            <td style="text-align: right;  font-weight: bold">@row2["Ty_Le"]%</td>
+                                            <td style='text-align: right; font-weight:bold;mso-number-format:" #,##0.00"'>@String.Format("{0:n0}", Convert.ToDecimal(row2["Tong_Thuc_Hien"]))</td>
+                                            <td style='text-align: right; font-weight:bold;mso-number-format:" #,##0.00"'>@String.Format("{0:n0}", Convert.ToDecimal(row2["Tong_Khoan"]))</td>
+                                            <td style='text-align: right; font-weight:bold;mso-number-format:" #,##0.00"'>@row2["Ty_Le"]%</td>
                                             <td>100%</td>
                                         </tr>
                                     }
@@ -1015,7 +1021,7 @@
                                         <tr>
                                             <td>@row2["Ma_LKH"]</td>
                                             <td style="text-align:left">@row2["Ten_LKH"]</td>
-                                            <td style="text-align:right">@String.Format("{0:n0}", row2["Doanh_Thu"])</td>
+                                            <td style='text-align:right;mso-number-format:" #,##0.00"'>@String.Format("{0:n0}", row2["Doanh_Thu"])</td>
                                             <td style="text-align:right">@row2["Ty_Le_Co_Cau"]%</td>
 
 
@@ -1061,9 +1067,9 @@
                                 {
                                     <tr>
                                         <td style="text-align:left">@row2["Tinh_Thanh"]</td>
-                                        <td style="text-align:right">@string.Format("{0:n0}", row2["Doanh_Thu"])</td>
-                                        <td style="text-align:right">@String.Format("{0:n0}", row2["Doanh_Thu_OTC"])</td>
-                                        <td style="text-align:right">@String.Format("{0:n0}", row2["Doanh_Thu_ETC"])</td>
+                                        <td style='text-align:right;mso-number-format:" #,##0.00"'>@string.Format("{0:n0}", row2["Doanh_Thu"])</td>
+                                        <td style='text-align:right;mso-number-format:" #,##0.00"'>@String.Format("{0:n0}", row2["Doanh_Thu_OTC"])</td>
+                                        <td style='text-align:right;mso-number-format:" #,##0.00"'>@String.Format("{0:n0}", row2["Doanh_Thu_ETC"])</td>
                                         <td>@row2["Ty_Le_Co_Cau"]%</td>
 
 
@@ -1119,13 +1125,85 @@
 
         </script>*@
     <script>
-        function exportToExcel() {
-            return ExcellentExport.convert({ anchor: this, filename: 'BaoCaoKetQuaKinhDoanh', format: 'xls' }, [
-                { name: 'Sheet Name Here 1', from: { table: 'example1' } },
-                { name: 'Sheet Name Here 2', from: { table: 'example2' } }
-            ]);
+  
+            $("#excel-btn").click(function () {
+            var table1Content = $("#example").html();
+            var table2Content = $("#example3").html();
+
+            var sheets = [
+            {name: "Sheet1", html: table1Content },
+            {name: "Sheet2", html: table2Content }
+            ];
+
+            exportTablesToExcel(sheets, "MultipleSheetsFile.xls");
+        });
+
+            function exportTablesToExcel(sheets, fileName) {
+            var blob = new Blob([createWorkbook(sheets)], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+
+            var link = document.createElement("a");
+            link.href = window.URL.createObjectURL(blob);
+            link.download = fileName;
+            link.click();
         }
+
+            function createWorkbook(sheets) {
+            var xmlHeader = '<?xml version="1.0"?>\n<?mso-application progid="Excel.Sheet"?>\n';
+            var workbookStart = '<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"\n' +
+            ' xmlns:o="urn:schemas-microsoft-com:office:office"\n' +
+            ' xmlns:x="urn:schemas-microsoft-com:office:excel"\n' +
+            ' xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"\n' +
+                ' xmlns:html="http://www.w3.org/TR/REC-html40">\n';
+            var workbookEnd = '</Workbook>';
+
+        var sheetsXml = sheets.map(function (sheet) {
+            return '<Worksheet ss:Name="' + sheet.name + '"><Table>' + sheet.html + '</Table></Worksheet>';
+        }).join('');
+
+        return xmlHeader + workbookStart + sheetsXml + workbookEnd;
+        }
+
+
     </script>
+
+    @*<script>
+            $("#excel-btn").click(function () {
+
+                $("#example").table2excel({
+
+                    // exclude CSS class
+
+                    exclude: ".noExl",
+
+                    name: "Worksheet Name",
+
+                    filename: "BaoCaoKetQuaKinhDoanh",//do not include extension
+
+                    fileext: ".xls", // file extension
+                    sheetName: "I"
+                });
+
+            });
+
+        </script>*@
+    @*<script>
+
+                function exportToExcel() {
+                // Xóa các thẻ span có class là "material-symbols-outlined"
+                var spans = document.querySelectorAll('.material-symbols-outlined');
+                spans.forEach(function (span) {
+                    span.parentNode.removeChild(span);
+                });
+
+                // Tiếp tục với mã xuất Excel
+                return ExcellentExport.convert({anchor: this, filename: 'BaoCaoKetQuaKinhDoanh', format: 'xls' }, [
+                {name: 'Sheet Name Here 1', from: {table: 'example1' } },
+                {name: 'Sheet Name Here 2', from: {table: 'example2' } }
+                ]);
+            }
+
+
+        </script>*@
     @*<script>
             document.getElementById("exportbutton2").addEventListener('click', function () {
                 var table2excel = new Table2Excel();

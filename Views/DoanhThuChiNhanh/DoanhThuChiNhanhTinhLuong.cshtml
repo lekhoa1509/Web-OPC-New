@@ -462,6 +462,72 @@
             .tab.selected-tab .closeTab {
                 pointer-events: auto;
             }
+        tr td:nth-child(2){
+            background-color: cornflowerblue;
+            color: black; /* Màu nền bạn muốn đặt */
+        }
+     
+        tr td:nth-child(3) {
+            background-color: cornflowerblue;
+            color: black; /* Màu nền bạn muốn đặt */
+        }
+
+        tr td:nth-child(4) {
+            background-color: cornflowerblue;
+            color: black; /* Màu nền bạn muốn đặt */
+        }
+
+        tr td:nth-child(5) {
+            background-color: cornflowerblue;
+            color: black; /* Màu nền bạn muốn đặt */
+        }
+
+        tr td:nth-child(6) {
+            background-color: lawngreen;
+            color: black; /* Màu nền bạn muốn đặt */
+        }
+        tr td:nth-child(7) {
+            background-color: lawngreen;
+            color: black; /* Màu nền bạn muốn đặt */
+        }
+
+        tr td:nth-child(8) {
+            background-color: lightpink;
+            color: black; /* Màu nền bạn muốn đặt */
+        }
+
+        tr td:nth-child(9) {
+            background-color: lightpink;
+            color: black; /* Màu nền bạn muốn đặt */
+        }
+        tr td:nth-child(10) {
+            background-color: orange;
+            color: black; /* Màu nền bạn muốn đặt */
+        }
+        tr td:nth-child(11) {
+            background-color: orange;
+            color: black; /* Màu nền bạn muốn đặt */
+        }
+        tr td:nth-child(12) {
+            background-color: gold;
+            color: black; /* Màu nền bạn muốn đặt */
+        }
+        tr td:nth-child(13) {
+            background-color: gold;
+            color: black; /* Màu nền bạn muốn đặt */
+        }
+        tr td:nth-child(14) {
+            background-color: aquamarine;
+            color: black; /* Màu nền bạn muốn đặt */
+        }
+        tr td:nth-child(16) {
+            background-color: aquamarine;
+            color: black; /* Màu nền bạn muốn đặt */
+        }
+        tr td:nth-child(15) {
+            background-color: aquamarine;
+            color: black; /* Màu nền bạn muốn đặt */
+        }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
@@ -649,23 +715,23 @@
                         <thead class="table-dark">
                             <tr>
                                 <th>Tên Đơn Vị</th>
-                                <th>Doanh Thu SP Chủ Lực OTC</th>
+                                <th style="background-color:cornflowerblue">Doanh Thu SP Chủ Lực OTC</th>
                                 @*<th>Doanh Thu SP Chủ Lực ETC</th>*@
-                                <th>Doanh Thu SP Phát Triển OTC</th>
+                                <th style="background-color:cornflowerblue">Doanh Thu SP Phát Triển OTC</th>
                                 @*<th>Doanh Thu SP Phát Triển ETC</th>*@
-                                <th>Doanh Thu OTC OPC</th>
-                                <th>Doanh Thu ETC OPC</th>
-                                <th>Doanh Thu OTC Cồn</th>
-                                <th>Doanh Thu ETC Cồn</th>
-                                <th>Doanh Thu OTC Sủi</th>
-                                <th>Doanh Thu ETC Sủi</th>
-                                <th>Doanh Thu OTC Phiến</th>
-                                <th>Doanh Thu ETC Phiến</th>
-                                <th>Doanh Thu OTC 25</th>
-                                <th>Doanh Thu ETC 25</th>
-                                <th>Doanh Thu Combo</th>
-                                <th>Doanh Thu Khác</th>
-                                <th>Tổng Thực Hiện</th>
+                                <th style="background-color:cornflowerblue">Doanh Thu OTC OPC</th>
+                                <th style="background-color:cornflowerblue">Doanh Thu ETC OPC</th>
+                                <th style="background-color: lawngreen">Doanh Thu OTC Cồn</th>
+                                <th style="background-color:lawngreen">Doanh Thu ETC Cồn</th>
+                                <th style="background-color: lightpink ">Doanh Thu OTC Sủi</th>
+                                <th style="background-color: lightpink">Doanh Thu ETC Sủi</th>
+                                <th style="background-color: orange">Doanh Thu OTC Phiến</th>
+                                <th style="background-color: orange">Doanh Thu ETC Phiến</th>
+                                <th style="background-color: gold">Doanh Thu OTC 25</th>
+                                <th style="background-color:gold">Doanh Thu ETC 25</th>
+                                <th style="background-color: aquamarine">Doanh Thu Combo</th>
+                                <th style="background-color: aquamarine">Doanh Thu Khác</th>
+                                <th style="background-color:aquamarine">Tổng Thực Hiện</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -698,7 +764,7 @@
 
                         </tbody>
                         <tfoot>
-                            <tr id="total-row" style="background-color: burlywood">
+                            <tr id="total-row" style="background-color: burlywood;font-weight:bold">
                                 <td><strong>Tổng cộng</strong></td>
                                 <td class="total-dtcl-otc" style="text-align:right"></td>
                                 <td class="total-dtpt-otc" style="text-align:right"></td>
