@@ -647,7 +647,7 @@
 
 
                 </form>
-                <button id="excel-btn" style="border-radius: 10px; margin-left: 10px; margin-bottom: 10px; margin-top: 10px; background-color: #aec9e0; color: #3483bd">
+                <button id="excel-btn" onclick="exportTables()" style="border-radius: 10px; margin-left: 10px; margin-bottom: 10px; margin-top: 10px; background-color: #aec9e0; color: #3483bd">
                     @*<a onclick="return ExcellentExport.convert({ anchor: this, filename: 'BaoCaoKetQuaKinhDoanh', format: 'xlsx' }, [
                             { name: 'I', from: { table: 'example' } },
                             { name: 'II', from: { table: 'example2' } },
@@ -1103,7 +1103,7 @@
     <script src="~/assets/js/pdfmake.min.js"></script>
     <script src="~/assets/js/vfs_fonts.js"></script>
     <script src="~/assets/js/custom.js"></script>
-    <script src="https://unpkg.com/excellentexport@4.0.0/dist/excellentexport.min.js"></script>
+    <script src="https://unpkg.com/excellentexport@3.9.5/dist/excellentexport.min.js"></script>
     <script src="~/Scripts/excellentexport.js"></script>
     <script src="~/Scripts/table2excel.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
@@ -1124,47 +1124,75 @@
             });
 
         </script>*@
-    <script>
-  
-            $("#excel-btn").click(function () {
-            var table1Content = $("#example").html();
-            var table2Content = $("#example3").html();
+    @*<script>
+            function exportTables() {
+                // Create a new workbook
+                var wb = XLSX.utils.book_new();
 
-            var sheets = [
-            {name: "Sheet1", html: table1Content },
-            {name: "Sheet2", html: table2Content }
+                // Define the tables to be exported
+                var tables = [
+                    {
+                        name: "Table 1",
+                        element: document.getElementById("example")
+                    },
+                    {
+                        name: "Table 2",
+                        element: document.getElementById("example3")
+                    }
+                    // Add more tables as needed
+                ];
+
+                // Loop through each table and add to the workbook
+                tables.forEach(function (table) {
+                    // Convert the table to a worksheet
+                    var ws = XLSX.utils.table_to_sheet(table.element);
+
+                    // Add the worksheet to the workbook with a sheet name
+                    XLSX.utils.book_append_sheet(wb, ws, table.name);
+                });
+
+                // Save the workbook as an Excel file
+                XLSX.writeFile(wb, 'exported_tables.xlsx');
+            }
+        </script>*@
+
+    <script>
+        function exportTables() {
+            // Define the tables to be exported
+            var tables = [
+                {
+                    name: "Table 1",
+                    selector: "#example"
+                },
+                {
+                    name: "Table 2",
+                    selector: "#example3"
+                }
+                // Add more tables as needed
             ];
 
-            exportTablesToExcel(sheets, "MultipleSheetsFile.xls");
-        });
+            // Initialize the HTML content for the combined tables
+            var combinedHtml = "";
 
-            function exportTablesToExcel(sheets, fileName) {
-            var blob = new Blob([createWorkbook(sheets)], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+            // Loop through each table, wrap in a bordered frame, and concatenate the HTML content
+            tables.forEach(function (table) {
+                combinedHtml += '<div style="border: 1px solid #000; padding: 10px;">' +
+                    $(table.selector).clone().wrap('<div>').parent().html() +
+                    '</div>';
+            });
 
-            var link = document.createElement("a");
+            // Create a blob with the combined HTML content
+            var blob = new Blob([combinedHtml], { type: 'application/vnd.ms-excel' });
+
+            // Trigger the download
+            var link = document.createElement('a');
             link.href = window.URL.createObjectURL(blob);
-            link.download = fileName;
+            link.download = 'exported_tables.xls';
             link.click();
         }
-
-            function createWorkbook(sheets) {
-            var xmlHeader = '<?xml version="1.0"?>\n<?mso-application progid="Excel.Sheet"?>\n';
-            var workbookStart = '<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"\n' +
-            ' xmlns:o="urn:schemas-microsoft-com:office:office"\n' +
-            ' xmlns:x="urn:schemas-microsoft-com:office:excel"\n' +
-            ' xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"\n' +
-                ' xmlns:html="http://www.w3.org/TR/REC-html40">\n';
-            var workbookEnd = '</Workbook>';
-
-        var sheetsXml = sheets.map(function (sheet) {
-            return '<Worksheet ss:Name="' + sheet.name + '"><Table>' + sheet.html + '</Table></Worksheet>';
-        }).join('');
-
-        return xmlHeader + workbookStart + sheetsXml + workbookEnd;
-        }
-
-
     </script>
+
+
 
     @*<script>
             $("#excel-btn").click(function () {

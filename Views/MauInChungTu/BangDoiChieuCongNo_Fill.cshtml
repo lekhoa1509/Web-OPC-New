@@ -448,8 +448,8 @@
                         <a>Số</a><br /><br />
                         <input type="text" name="So" placeholder="Số" /><br /><br />
                         <a>Đối Tượng</a><br /><br />
-                        <input type="text" id="dropdownInput" list="dropdownList" placeholder="Tìm kiếm danh mục">
-                        <datalist id="dropdownList">
+                        @*<input type="text" id="dropdownInput" list="dropdownList" placeholder="Tìm kiếm danh mục">
+                        <datalist id="multipleSelect">
                             @{ var l = ViewBag.DataItems;
                                 foreach (var item in l)
                                 {
@@ -457,9 +457,9 @@
                                 }
                             }
                         </datalist>
-                        <input type="hidden" name="Ma_Dt" id="selectedOption">
-                        @***@
-                        @*<select id="multipleSelect" multiple name="native-select" placeholder="Chọn Đối Tượng" data-search="true" data-silent-initial-value-set="true" noOptionsText="Không tìm thấy" onChange="handleSelectChange(event)">
+                        <input type="hidden" name="Ma_Dt" id="selectedOption">*@
+
+                        <select id="multipleSelect" multiple name="native-select" placeholder="Chọn Đối Tượng" data-search="true" data-silent-initial-value-set="true" noOptionsText="Không tìm thấy" onChange="handleSelectChange(event)">
                             @{ var l = ViewBag.DataItems;
                                 foreach (var item in l)
                                 {
@@ -468,7 +468,7 @@
                             }
 
 
-                        </select>*@
+                        </select>
                         <div>
                             <button class="submit" type="submit" id="runReportButton" onclick="runReport()"> Chạy Báo Cáo </button>
                         </div>
@@ -704,7 +704,12 @@
     <script>
         function runReport() {
             var selectedValue = document.querySelector('#multipleSelect').value;
-          
+            var fromDate = document.getElementById('tu_ngay').value;
+            var toDate = document.getElementById('den_ngay').value;
+
+            // Save values in cookies
+            document.cookie = 'From_date=' + fromDate + '; path=/';
+            document.cookie = 'To_date=' + toDate + '; path=/';
 
             // Gửi giá trị lên cookie với tên là "Ma_Dt"
             document.cookie = "Ma_Dt=" + selectedValue;
