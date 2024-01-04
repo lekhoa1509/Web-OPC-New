@@ -448,27 +448,27 @@
                         <a>Số</a><br /><br />
                         <input type="text" name="So" placeholder="Số" /><br /><br />
                         <a>Đối Tượng</a><br /><br />
-                        @*<input type="text" id="dropdownInput" list="dropdownList" placeholder="Tìm kiếm danh mục">
-                            <select id="dropdownList">
-                                @{ var i = ViewBag.DataItems;
-                                    foreach (var item in i)
-                                    {
-                                        <option value="@item.Ma_Dt" data-ten="@item.Ten_Dt" data-diachi="@item.Dia_Chi" data-dvcs="@item.Dvcs" data-dvcs1="@item.Dvcs1">@item.Ten_Dt</option>
-                                    }
-                                }
-                            </select>
-                            <input type="hidden" name="Ma_Dt" id="selectedOption">*@
-
-                        <select id="multipleSelect" multiple name="native-select" placeholder="Chọn Đối Tượng" data-search="true" data-silent-initial-value-set="true" noOptionsText="Không tìm thấy" onChange="handleSelectChange(event)">
+                        <input type="text" id="dropdownInput" list="dropdownList" placeholder="Tìm kiếm danh mục">
+                        <datalist id="dropdownList">
                             @{ var l = ViewBag.DataItems;
                                 foreach (var item in l)
                                 {
-                                    <option value="@item.Ma_Dt"   data-ten="@item.Ten_Dt" data-diachi="@item.Dia_Chi" data-dvcs="@item.Dvcs" data-dvcs1="@item.Dvcs1">@item.Ma_Dt @item.Ten_Dt</option>
+                                    <option value="@item.Ma_Dt" data-ten="@item.Ten_Dt" data-diachi="@item.Dia_Chi" data-dvcs="@item.Dvcs" data-dvcs1="@item.Dvcs1">@item.Ten_Dt</option>
+                                }
+                            }
+                        </datalist>
+                        <input type="hidden" name="Ma_Dt" id="selectedOption">
+                        @***@
+                        @*<select id="multipleSelect" multiple name="native-select" placeholder="Chọn Đối Tượng" data-search="true" data-silent-initial-value-set="true" noOptionsText="Không tìm thấy" onChange="handleSelectChange(event)">
+                            @{ var l = ViewBag.DataItems;
+                                foreach (var item in l)
+                                {
+                                    <option value="@item.Ma_Dt" data-ten="@item.Ten_Dt" data-diachi="@item.Dia_Chi" data-dvcs="@item.Dvcs" data-dvcs1="@item.Dvcs1">@item.Ma_Dt @item.Ten_Dt</option>
                                 }
                             }
 
 
-                        </select>
+                        </select>*@
                         <div>
                             <button class="submit" type="submit" id="runReportButton" onclick="runReport()"> Chạy Báo Cáo </button>
                         </div>
