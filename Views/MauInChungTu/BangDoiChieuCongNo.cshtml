@@ -956,7 +956,7 @@
         }
 
     </script>
-    @*<script>
+    <script>
             document.addEventListener("DOMContentLoaded", function () {
                 var tableData = []; // Mảng lưu dữ liệu
 
@@ -1014,8 +1014,8 @@
                 // Xuất mảng tableData lên console
                 console.log(tableData);
             });
-        </script>*@
-    @*<script>
+        </script>
+    <script>
             document.addEventListener("DOMContentLoaded", function () {
                 var tableData2 = []; // Mảng lưu dữ liệu
 
@@ -1044,8 +1044,8 @@
                 var retrievedData = Cookies.get("tableData2Cookie");
                 console.log("Dữ liệu từ cookie:", retrievedData);
             });
-        </script>*@
-    @*<script>
+        </script>
+    <script>
             // Đợi cho tài liệu HTML được tải hoàn thành
             document.addEventListener("DOMContentLoaded", function () {
                 // Lấy thẻ tbody của bảng
@@ -1072,7 +1072,7 @@
                 // Xuất mảng tableData lên console
                 console.log(tableData2);
             });
-        </script>*@
+        </script>
     <script>
         // Function to get the value of a cookie by name
         function getCookieValue(cookieName) {
@@ -1114,20 +1114,28 @@
                 if (fromMonth === toMonth && fromQuarter === toQuarter) {
                     // Display quarter and year if the months are exactly 2 apart and in the same quarter
                     h5Element.text('Tháng ' + fromMonth + ' năm ' + fromYear);
+                    var displayText = 'Tháng ' + fromMonth + ' năm ' + fromYear;
+                    setCookie("Time", displayText);
 
                 } else if (Math.abs(toMonth - fromMonth) === 2) {
                     // Display quarter and year if the months are exactly 2 apart
                     h5Element.text('Quý ' + fromQuarter + ' năm ' + fromYear);
+                    var displayText = 'Quý ' + fromQuarter + ' năm ' + fromYear;
+                    setCookie("Time", displayText);
                 } else {
+                    var displayText = 'Từ tháng ' + fromMonth + ' năm ' + fromYear + ' đến tháng ' + toMonth + ' năm ' + toYear;
                     // Display range of months and years if the difference is neither 0 nor 2
                     h5Element.text('Từ tháng ' + fromMonth + ' năm ' + fromYear + ' đến tháng ' + toMonth + ' năm ' + toYear);
+                    setCookie("Time", displayText);
                 }
             } else {
                 // Handle the case where either 'From_date' or 'To_date' cookie is not present
                 console.error("The 'From_date' or 'To_date' cookie is not set.");
             }
         }
-
+        function setCookie(name, value) {
+            document.cookie = name + "=" + value + "; path=/";
+        }
         // Function to be executed when the page is fully loaded
         $(document).ready(function () {
             // Call the updateQuarterYear function when the page loads

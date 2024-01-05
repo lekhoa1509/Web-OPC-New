@@ -705,6 +705,7 @@ namespace web4.Controllers
                     string CN = Request.Cookies["CN"] != null ? HttpUtility.UrlDecode(Request.Cookies["CN"].Value) : "";
                     string TK = Request.Cookies["TK"] != null ? HttpUtility.UrlDecode(Request.Cookies["TK"].Value) : "";
                     string LH = Request.Cookies["LH"] != null ? HttpUtility.UrlDecode(Request.Cookies["LH"].Value) : "";
+                    string Time = Request.Cookies["Time"] != null ? HttpUtility.UrlDecode(Request.Cookies["Time"].Value) : "";
 
                     string TienTT = Request.Cookies["Tien_TT"] != null ? HttpUtility.UrlDecode(Request.Cookies["Tien_TT"].Value) : "";
                     string CKTT = Request.Cookies["CKTT"] != null ? HttpUtility.UrlDecode(Request.Cookies["CKTT"].Value) : "";
@@ -736,7 +737,7 @@ namespace web4.Controllers
                     worksheet.Cells["E4"].Value = "BẢNG ĐỐI CHIẾU DOANH THU CÔNG NỢ";
                     worksheet.Cells["E4"].Style.Font.Bold = true;
                     worksheet.Cells["E4"].Style.Font.Size = 16;
-                    worksheet.Cells["E5"].Value = $"Từ ngày {TuNgay} tháng {TuThang} đến ngày {DenNgay} tháng {DenThang} năm {Nam}";
+                    worksheet.Cells["E5"].Value = $"{Time}";
                     worksheet.Cells["E5"].Style.Indent = 4;
                     worksheet.Cells["A7"].Value = $"Tên khách hàng: {ten_kh}";
                     worksheet.Cells["A7"].Style.Font.Bold = true;
@@ -826,25 +827,25 @@ namespace web4.Controllers
                     if (combinedData != null && combinedData.Any())
                     {
                         // Lặp qua từng hàng dữ liệu trong tableData và ghi vào tệp Excel
-                        for (int row = 0; row < combinedData.Count-1; row++)
+                        for (int row = 0; row < combinedData.Count - 1; row++)
                         {
                             var rowData = combinedData[row];
                             for (int col = 0; col < rowData.Count; col++)
                             {
-                                if(col == 4 &&col ==7 &&col==9)
+                                if (col == 4 && col == 7 && col == 9)
                                 {
-                                    worksheet.Cells[startRow - 1 + row, startColumn + col].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                                    worksheet.Cells[startRow - 1 + row, startColumn + col].Value = rowData[col];
-                                    worksheet.Cells[startRow - 1 + row, startColumn + col].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+                                    worksheet.Cells[startRow  +1 + row, startColumn + col].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                                    worksheet.Cells[startRow  +1+ row, startColumn + col].Value = rowData[col];
+                                    worksheet.Cells[startRow  +1+ row, startColumn + col].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
                                 }
                                 else
                                 {
-                                    worksheet.Cells[startRow - 1 + row, startColumn + col].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                                    worksheet.Cells[startRow - 1 + row, startColumn + col].Value = rowData[col];
-                                    worksheet.Cells[startRow - 1 + row, startColumn + col].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+                                    worksheet.Cells[startRow  +1+ row, startColumn + col].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                                    worksheet.Cells[startRow  +1+ row, startColumn + col].Value = rowData[col];
+                                    worksheet.Cells[startRow  +1+ row, startColumn + col].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
                                 }
 
-                               
+
                             }
                         }
                     }
@@ -852,32 +853,32 @@ namespace web4.Controllers
                     {
                         worksheet.Cells[startRow, startColumn].Value = "Không có dữ liệu bảng từ cookie.";
                     }
-                    var TC = worksheet.Cells[startRow - 2 + combinedData.Count, startColumn, startRow - 2 + combinedData.Count, startColumn + 2];
+                    var TC = worksheet.Cells[startRow  + combinedData.Count, startColumn, startRow + combinedData.Count, startColumn + 2];
                     TC.Merge = true;
                     TC.Value = "Tổng cộng: ";
                     TC.Style.Font.Bold = true;
                     TC.Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
                     TC.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // Đặt canh giữa ngang
                     TC.Style.VerticalAlignment = ExcelVerticalAlignment.Center; // Đặt canh giữa dọc
-                    worksheet.Cells[startRow - 2 + combinedData.Count, startColumn + 3].Value = $"{TienHD}"; // Ví dụ: Ghi giá trị tổng vào cột thứ 4
-                    worksheet.Cells[startRow - 2 + combinedData.Count, startColumn + 3].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
-                    worksheet.Cells[startRow - 2 + combinedData.Count, startColumn + 3].Style.Font.Bold = true;
-                    worksheet.Cells[startRow - 2 + combinedData.Count, startColumn + 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                    worksheet.Cells[startRow - 2 + combinedData.Count, startColumn + 4].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
-                    worksheet.Cells[startRow - 2 + combinedData.Count, startColumn + 5].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
-                    worksheet.Cells[startRow - 2 + combinedData.Count, startColumn + 6].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
-                    worksheet.Cells[startRow - 2 + combinedData.Count, startColumn + 6].Value = $"{TienTT}";
-                    worksheet.Cells[startRow - 2 + combinedData.Count, startColumn + 7].Value = $"{CKTT}";
-                    worksheet.Cells[startRow - 2 + combinedData.Count, startColumn + 8].Value = $"{TCCK}";
-                    worksheet.Cells[startRow - 2 + combinedData.Count, startColumn + 6].Style.Font.Bold = true;
-                    worksheet.Cells[startRow - 2 + combinedData.Count, startColumn + 7].Style.Font.Bold = true;
-                    worksheet.Cells[startRow - 2 + combinedData.Count, startColumn + 8].Style.Font.Bold = true;
-                    worksheet.Cells[startRow - 2 + combinedData.Count, startColumn + 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                    worksheet.Cells[startRow - 2 + combinedData.Count, startColumn + 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                    worksheet.Cells[startRow - 2 + combinedData.Count, startColumn + 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                    worksheet.Cells[startRow - 2 + combinedData.Count, startColumn + 7].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
-                    worksheet.Cells[startRow - 2 + combinedData.Count, startColumn + 8].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
-                    worksheet.Cells[startRow - 2 + combinedData.Count, startColumn + 9].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+                    worksheet.Cells[startRow  + combinedData.Count, startColumn + 3].Value = $"{TienHD}"; // Ví dụ: Ghi giá trị tổng vào cột thứ 4
+                    worksheet.Cells[startRow  + combinedData.Count, startColumn + 3].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+                    worksheet.Cells[startRow + combinedData.Count, startColumn + 3].Style.Font.Bold = true;
+                    worksheet.Cells[startRow + combinedData.Count, startColumn + 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                    worksheet.Cells[startRow  + combinedData.Count, startColumn + 4].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+                    worksheet.Cells[startRow  + combinedData.Count, startColumn + 5].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+                    worksheet.Cells[startRow  + combinedData.Count, startColumn + 6].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+                    worksheet.Cells[startRow  + combinedData.Count, startColumn + 6].Value = $"{TienTT}";
+                    worksheet.Cells[startRow  + combinedData.Count, startColumn + 7].Value = $"{CKTT}";
+                    worksheet.Cells[startRow + combinedData.Count, startColumn + 8].Value = $"{TCCK}";
+                    worksheet.Cells[startRow  + combinedData.Count, startColumn + 6].Style.Font.Bold = true;
+                    worksheet.Cells[startRow  + combinedData.Count, startColumn + 7].Style.Font.Bold = true;
+                    worksheet.Cells[startRow  + combinedData.Count, startColumn + 8].Style.Font.Bold = true;
+                    worksheet.Cells[startRow  + combinedData.Count, startColumn + 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                    worksheet.Cells[startRow  + combinedData.Count, startColumn + 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                    worksheet.Cells[startRow  + combinedData.Count, startColumn + 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                    worksheet.Cells[startRow  + combinedData.Count, startColumn + 7].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+                    worksheet.Cells[startRow  + combinedData.Count, startColumn + 8].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+                    worksheet.Cells[startRow  + combinedData.Count, startColumn + 9].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
 
                     var endII = startRow + combinedData.Count;
                     var nextII = endII + 1;
@@ -945,25 +946,30 @@ namespace web4.Controllers
                     GHICHU.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                     GHICHU.Style.Font.Bold = true;
                     GHICHU.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                    //// Bỏ gộp ô trước khi xóa
+                    //worksheet.Cells["A21:B22"].Merge = false;
+
+                    //// Xóa ô hoặc thực hiện các thao tác khác
+                    //worksheet.Cells["A21:B22"].Clear();
 
                     if (combinedDataHD != null && combinedDataHD.Any())
                     {
                         // Lặp qua từng hàng dữ liệu trong tableData và ghi vào tệp Excel
-                        for (int row = 0; row < combinedDataHD.Count-1; row++)
+                        for (int row = 0; row < combinedDataHD.Count - 1; row++)
                         {
                             var rowData = combinedDataHD[row];
                             for (int col = 0; col < rowData.Count; col++)
                             {
-                                //var GOP = worksheet.Cells[startRowIII + 1 + row, startColumn + col, startRowIII + 1 + row, startColumn + col+ 1];
+                                //var GOP = worksheet.Cells[startRowIII + 3 + row, startColumn + col, startRowIII + 3 + row, startColumn + col + 1];
                                 //GOP.Merge = true;
                                 //GOP.Value = rowData[col];
                                 //GOP.Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
-                                var cell = worksheet.Cells[startRowIII + 1 + row, startColumn + col * 2];
+                                var cell = worksheet.Cells[startRowIII + 3 + row, startColumn + col * 2];
                                 cell.Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
                                 cell.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                                 cell.Value = rowData[col];
 
-                                var mergeCell = worksheet.Cells[startRowIII + 1 + row, startColumn + col * 2, startRowIII + 1 + row, startColumn + col * 2 + 1];
+                                var mergeCell = worksheet.Cells[startRowIII + 3 + row, startColumn + col * 2, startRowIII + 3 + row, startColumn + col * 2 + 1];
                                 mergeCell.Merge = true;
                                 mergeCell.Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
                             }
@@ -973,7 +979,7 @@ namespace web4.Controllers
                     {
                         worksheet.Cells[startRowIII, startColumn].Value = "Không có dữ liệu bảng từ cookie.";
                     }
-                    var TC2 = worksheet.Cells[startRowIII  + combinedDataHD.Count, startColumn, startRowIII  + combinedDataHD.Count, startColumn + 5];
+                    var TC2 = worksheet.Cells[startRowIII  +2+ combinedDataHD.Count, startColumn, startRowIII+2  + combinedDataHD.Count, startColumn + 5];
                     TC2.Merge = true;
                     TC2.Value = "Tổng cộng: ";
                     TC2.Style.Font.Bold = true;
@@ -981,19 +987,19 @@ namespace web4.Controllers
                     TC2.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // Đặt canh giữa ngang
                     TC2.Style.VerticalAlignment = ExcelVerticalAlignment.Center; // Đặt canh giữa dọc
 
-                    var TONNO2 = worksheet.Cells[startRowIII  + combinedDataHD.Count, startColumn + 6,startRowIII + combinedDataHD.Count, startColumn + 7];
+                    var TONNO2 = worksheet.Cells[startRowIII +2 + combinedDataHD.Count, startColumn + 6,startRowIII +2+ combinedDataHD.Count, startColumn + 7];
                     TONNO2.Merge = true;
                     TONNO2.Value = $"{TonNo2}";
                     //worksheet.Cells[startRowIII + 1 + combinedDataHD.Count, startColumn + 6].Value = $"{TonNo2}";
                     TONNO2.Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                     TONNO2.Style.Font.Bold = true;
                     TONNO2.Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
-                    worksheet.Cells[startRowIII  + combinedDataHD.Count, startColumn + 5].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+                    worksheet.Cells[startRowIII +2 + combinedDataHD.Count, startColumn + 5].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
 
-                    var lastCell = worksheet.Cells[startRowIII  + combinedDataHD.Count, startColumn + 8, startRowIII  + combinedDataHD.Count, startColumn + 9];
+                    var lastCell = worksheet.Cells[startRowIII+2  + combinedDataHD.Count, startColumn + 8, startRowIII +2 + combinedDataHD.Count, startColumn + 9];
                     lastCell.Merge = true;
                     lastCell.Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
-                    var endRowIII = startRowIII + 1 + combinedDataHD.Count + 1;
+                    var endRowIII = startRowIII + 2 + combinedDataHD.Count + 1;
                     worksheet.Cells[endRowIII, startColumn].Value = $"Xin vui lòng xác nhận và gửi lại cho {Dvcs} trước ngày {NgayTT}";
                     worksheet.Cells[endRowIII, startColumn].Style.Font.Bold = true;
                     worksheet.Cells[endRowIII + 1, startColumn].Value = $"Nơi nhận: {ChiNhanh}";
@@ -1921,6 +1927,7 @@ namespace web4.Controllers
                     worksheet.Cells[end + 10, startColumn ].Value = "(Ký, đóng dấu, ghi rõ họ tên)";
                     worksheet.Cells[end + 10, startColumn ].Style.Font.Bold = true;
                     worksheet.Cells[end + 10, startColumn].Style.Indent = 5;
+                    
 
                     package.Save();
                     byte[] fileBytes = package.GetAsByteArray();
