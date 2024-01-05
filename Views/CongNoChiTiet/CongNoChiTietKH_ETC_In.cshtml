@@ -623,7 +623,7 @@
             <div>
                 <table id="export" border="1" border-collapse="collapse" style="width:1000px">
                     <thead style="display: table-header-group">
-                       
+
                         <tr style="color:black">
                             @*<th rowspan="2">Mã KH</th>*@
                             <th rowspan="2" style="width:300px">Khách Hàng</th>
@@ -670,13 +670,13 @@
                                             <td></td>
                                             <td></td>
                                             <td></td>
-                                            <td style="text-align:right;color:black;font-weight:bold;padding:5px">@string.Format("{0:n0}", totalCongNo.ToString("N0").Replace(",", "."))</td>
+                                            <td style='text-align:right;color:black;font-weight:bold;padding:5px;mso-number-format:" #,##0.00"'>@string.Format("{0:n0}", totalCongNo.ToString("N0"))</td>
                                             <td></td>
                                             <td></td>
-                                            <td style="text-align:right;font-weight:bold;color:black">@string.Format("{0:n0}", total1.ToString("N0").Replace(",", "."))</td>
-                                            <td style="text-align:right;font-weight:bold;color:black">@string.Format("{0:n0}", total2.ToString("N0").Replace(",", "."))</td>
-                                            <td style="text-align:right;font-weight:bold;color:black">@string.Format("{0:n0}", total3.ToString("N0").Replace(",", "."))</td>
-                                            <td style="text-align:right;font-weight:bold;color:black">@string.Format("{0:n0}", total4.ToString("N0").Replace(",", "."))</td>
+                                            <td style='text-align:right;font-weight:bold;color:black;mso-number-format:" #,##0.00"'>@string.Format("{0:n0}", total1.ToString("N0"))</td>
+                                            <td style='text-align:right;font-weight:bold;color:black;mso-number-format:" #,##0.00"'>@string.Format("{0:n0}", total2.ToString("N0"))</td>
+                                            <td style='text-align:right;font-weight:bold;color:black;mso-number-format:" #,##0.00"'>@string.Format("{0:n0}", total3.ToString("N0"))</td>
+                                            <td style='text-align:right;font-weight:bold;color:black;mso-number-format:" #,##0.00"'>@string.Format("{0:n0}", total4.ToString("N0"))</td>
                                         </tr>
                                         totalCongNo = 0;
                                         total1 = 0;
@@ -704,13 +704,13 @@
                                     <td>@row3["So_Ct_Einv"]</td>
 
 
-                                    <td style="text-align:right">@string.Format("{0:#,###}", row3["Cong_No"]).Replace(",", ".")</td>
+                                    <td style='text-align:right;padding-right:5px;mso-number-format:" #,##0.00"'>@string.Format("{0:#,###}", row3["Cong_No"])</td>
                                     <td>@row3["Ngay_Den_Han2"]</td>
                                     <td style="text-align:right">@row3["So_Ngay_QH"]</td>
-                                    <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row3["So_Tien_QH_1"])).Replace(".", ",")</td>
-                                    <td style="text-align:right"> @String.Format("{0:n0}", Convert.ToDecimal(row3["So_Tien_QH_2"])).Replace(".", ",")</td>
-                                    <td style="text-align:right"> @String.Format("{0:n0}", Convert.ToDecimal(row3["So_Tien_QH_3"])).Replace(".", ",")</td>
-                                    <td style="text-align:right"> @String.Format("{0:n0}", Convert.ToDecimal(row3["So_Tien_QH_4"])).Replace(".", ",")</td>
+                                    <td style='text-align: right; padding-right: 5px; mso-number-format: " #,##0.00"'>@String.Format("{0:n0}", Convert.ToDecimal(row3["So_Tien_QH_1"]))</td>
+                                    <td style='text-align: right; padding-right: 5px; mso-number-format: " #,##0.00"'> @String.Format("{0:n0}", Convert.ToDecimal(row3["So_Tien_QH_2"]))</td>
+                                    <td style='text-align: right; padding-right: 5px; mso-number-format: " #,##0.00"'> @String.Format("{0:n0}", Convert.ToDecimal(row3["So_Tien_QH_3"]))</td>
+                                    <td style='text-align: right; padding-right: 5px; mso-number-format: " #,##0.00"'> @String.Format("{0:n0}", Convert.ToDecimal(row3["So_Tien_QH_4"]))</td>
                                 </tr>
                                 stt++;
                                 var congnofirst = string.Format("{0:#,###}", row3["Cong_No"]);
@@ -746,10 +746,10 @@
                                 //    total4 += result4;
                                 //}
                                 totalCongNo += Convert.ToInt32(row3["Cong_No"]);
-                                total1 +=Convert.ToInt32(row3["So_Tien_QH_1"]);
-                                total2 +=Convert.ToInt32(row3["So_Tien_QH_2"]);
-                                total3 +=Convert.ToInt32(row3["So_Tien_QH_3"]);
-                                total4 +=Convert.ToInt32(row3["So_Tien_QH_4"]);
+                                total1 += Convert.ToInt32(row3["So_Tien_QH_1"]);
+                                total2 += Convert.ToInt32(row3["So_Tien_QH_2"]);
+                                total3 += Convert.ToInt32(row3["So_Tien_QH_3"]);
+                                total4 += Convert.ToInt32(row3["So_Tien_QH_4"]);
                                 string totalCongNoString = totalCongNo.ToString("N0", CultureInfo.InvariantCulture);
                                 string total1string = total1.ToString("N0", CultureInfo.InvariantCulture);
                                 string total2string = total2.ToString("N0", CultureInfo.InvariantCulture);
@@ -769,13 +769,13 @@
 
                                     <td></td>
                                     <td></td>
-                                    <td style="text-align:right;font-weight:bold;color:black">@totalCongNo.ToString("N0").Replace(",", ".")</td>
+                                    <td style='text-align:right;font-weight:bold;color:black;mso-number-format:" #,##0.00"'>@totalCongNo.ToString("N0")</td>
                                     <td></td>
                                     <td></td>
-                                    <td style="text-align:right;font-weight:bold;color:black">@total1.ToString("N0").Replace(",", ".")</td>
-                                    <td style="text-align:right;font-weight:bold;color:black">@total2.ToString("N0").Replace(",", ".")</td>
-                                    <td style="text-align:right;font-weight:bold;color:black">@total3.ToString("N0").Replace(",", ".")</td>
-                                    <td style="text-align:right;font-weight:bold;color:black">@total4.ToString("N0").Replace(",", ".")</td>
+                                    <td style='text-align:right;font-weight:bold;color:black;mso-number-format:" #,##0.00"'>@total1.ToString("N0")</td>
+                                    <td style='text-align:right;font-weight:bold;color:black;mso-number-format:" #,##0.00"'>@total2.ToString("N0")</td>
+                                    <td style='text-align:right;font-weight:bold;color:black;mso-number-format:" #,##0.00"'>@total3.ToString("N0")</td>
+                                    <td style='text-align:right;font-weight:bold;color:black;mso-number-format:" #,##0.00"'>@total4.ToString("N0")</td>
                                 </tr>
                             }
 
@@ -788,13 +788,13 @@
                                 <td></td>
                                 @foreach (DataRow row2 in Model.Tables[1].Rows)
                                 {
-                                    <td style="text-align:right;font-weight:bold;color:black">@string.Format("{0:n0}", row2["Tong_CN"])</td>
+                                    <td style='text-align:right;font-weight:bold;color:black;mso-number-format:" #,##0.00"'>@string.Format("{0:n0}", row2["Tong_CN"]).Replace(",", ".")</td>
                                     <td></td>
                                     <td></td>
-                                    <td style="text-align:right;font-weight:bold;color:black">@string.Format("{0:n0}", row2["Total_1"]).Replace(",", ".")</td>
-                                    <td style="text-align:right;font-weight:bold;color:black">@string.Format("{0:n0}", row2["Total_2"]).Replace(",", ".")</td>
-                                    <td style="text-align:right;font-weight:bold;color:black">@string.Format("{0:n0}", row2["Total_3"]).Replace(",", ".")</td>
-                                    <td style="text-align:right;font-weight:bold;color:black">@string.Format("{0:n0}", row2["Total_4"]).Replace(",", ".")</td>
+                                    <td style='text-align:right;font-weight:bold;color:black;mso-number-format:" #,##0.00"'> @string.Format("{0:n0}", row2["Total_1"]).Replace(",", ".")</td>
+                                    <td style='text-align:right;font-weight:bold;color:black;mso-number-format:" #,##0.00"'>@string.Format("{0:n0}", row2["Total_2"]).Replace(",", ".")</td>
+                                    <td style='text-align:right;font-weight:bold;color:black;mso-number-format:" #,##0.00"'>@string.Format("{0:n0}", row2["Total_3"]).Replace(",", ".")</td>
+                                    <td style='text-align:right;font-weight:bold;color:black;mso-number-format:" #,##0.00"'>@string.Format("{0:n0}", row2["Total_4"]).Replace(",", ".")</td>
                                 }
 
                             </tr>
@@ -839,7 +839,7 @@
 
         </form>
     </div>
-    <button id="exportbutton">Xuất Excel</button>
+    <button @*id="exportbutton"*@onclick="exportToExcel()">Xuất Excel</button>
     <input type="file" id="file-input" style="display: none">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
@@ -849,21 +849,56 @@
     <script src="~/Scripts/table2excel.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <script src="//cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
- 
 
+
+    @*<script>
+            document.getElementById("exportbutton").addEventListener('click', function () {
+                var table2excel = new Table2Excel();
+
+                // Tạo tên file dựa trên thời gian
+                var currentDate = new Date();
+                var fileName = "CongNoChiTietETC_" + currentDate.getFullYear() + (currentDate.getMonth() + 1) + currentDate.getDate() + ".xlsx";
+
+                table2excel.export(document.querySelectorAll("#export"), fileName);
+            });
+
+        </script>*@
     <script>
-        document.getElementById("exportbutton").addEventListener('click', function () {
-            var table2excel = new Table2Excel();
+        function exportToExcel() {
+            // Lấy danh sách cột cần xuất từ bảng gốc
+            var columnsToExport = ['Mã Đối Tượng', 'Tên Đối Tượng', 'ĐVT', 'Số Lượng', 'Kênh BH', 'Mã TDV', 'Tên TDV', 'Tổng tiền'];
 
-            // Tạo tên file dựa trên thời gian
-            var currentDate = new Date();
-            var fileName = "CongNoChiTietETC_" + currentDate.getFullYear() + (currentDate.getMonth() + 1) + currentDate.getDate() + ".xlsx";
+            // Tạo bảng tạm thời chỉ chứa cột cần xuất
+            var temporaryTable = $('#export').clone();
+            temporaryTable.find('thead th[rowspan]').each(function () {
+                var rowspanValue = $(this).attr('rowspan');
+                $(this).removeAttr('rowspan');
+                var columnIndex = $(this).index();
+                var nextRow = $(this).parent().next();
+                for (var i = 1; i < rowspanValue; i++) {
+                    nextRow.children().eq(columnIndex).remove();
+                }
+            });
+            // Lặp qua các cột không nằm trong danh sách cần xuất và ẩn chúng
+            temporaryTable.find('thead th, tbody td').each(function () {
+                var columnHeader = $(this).text();
+                if (!columnsToExport.includes(columnHeader)) {
+                    $(this).hide();
+                }
+            });
 
-            table2excel.export(document.querySelectorAll("#export"), fileName);
-        });
+            // Format cells with numeric data (assuming 'Tổng tiền' is a numeric column)
+            temporaryTable.find('tbody td:contains("₫")').attr('data-type', 'number'); // This assumes that the 'Tổng tiền' column contains "₫" symbol
+
+            // Xuất Excel từ bảng tạm thời
+            temporaryTable.table2excel({
+                exclude: ".hidden",
+                name: "Sheet 1",
+                filename: "CongNoChiTietETC"
+            });
+        }
 
     </script>
-
     <script>
           @*function exportExcel() {
     window.location.href = '@Url.Action("ExportCongNoETC", "CongNoChiTiet")';

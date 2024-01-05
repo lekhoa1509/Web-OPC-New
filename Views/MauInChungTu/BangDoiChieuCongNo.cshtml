@@ -426,7 +426,9 @@
         tfoot {
             page-break-before: avoid;
         }
-
+        thead {
+            display: table-header-group;
+        }
     </style>
 </head>
 <body>
@@ -456,7 +458,7 @@
                     </div>
 
                 </div>
-                <div style="text-align:center">
+                <div style="text-align:center;margin-right:40px">
                     <h5>Cộng Hòa Xã Hội Chủ Nghĩa Việt Nam</h5>
                     <h5>Độc lập - Tự do - Hạnh Phúc</h5>
                     <br />
@@ -531,15 +533,15 @@
 
             <div style="margin-top:10px">
                 <table id="export" border="1" border-collapse="collapse" style="width:800px;color:black">
+                    <thead>
+                        <tr style="font-size:13px;font-weight:bold;color:black">
+                            <th style="width:80px;font-size:15px" rowspan="2">STT</th>
+                            <th colspan="3" style="font-size:15px">KHÁCH HÀNG MUA</th>
+                            <th colspan="5" style="font-size:15px">KHÁCH HÀNG THANH TOÁN/TRẢ HÀNG/BÙ TRỪ</th>
 
-                    <tr style="font-size:13px;font-weight:bold;color:black">
-                        <th style="width:80px;font-size:15px" rowspan="2">STT</th>
-                        <th colspan="3" style="font-size:15px">KHÁCH HÀNG MUA</th>
-                        <th colspan="5" style="font-size:15px">KHÁCH HÀNG THANH TOÁN/TRẢ HÀNG/BÙ TRỪ</th>
 
 
-
-                    </tr>
+                        </tr>
                     <th style="width:150px;font-size:16px">SỐ</th>
                     <th style="width: 150px; font-size: 16px">NGÀY</th>
                     <th style="width: 150px; font-size: 16px">SỐ TIỀN</th>
@@ -551,7 +553,7 @@
                     <th style="width: 150px; font-size: 16px">TỔNG TIỀN</th>
                     <th style=" width: 150px; font-size: 16px">GHI CHÚ</th>
 
-
+                    </thead>
                     <tbody>
 
                         @foreach (DataRow row3 in Model.Tables[1].Rows)
@@ -628,60 +630,60 @@
                     </tr>
 
                     @*<tfoot>
-                            <tr>
-                                <td colspan="3" style="font-weight:bold;color:black;text-align:center;font-size:15px">Tổng cộng</td>
-                                <td style="font-weight:bold;color:black;text-align:right;font-size:15px">
-                                    @foreach (DataRow row3 in Model.Tables[5].Rows)
-                                    {
-                                        @row3["Tien_HD"]
-                                        var TienHD = row3["Tien_HD"].ToString();
-                                        HttpCookie TienHDCookie = new HttpCookie("TienHD");
-                                        TienHDCookie.Value = TienHD;
-                                        Response.Cookies.Add(TienHDCookie);
+            <tr>
+                <td colspan="3" style="font-weight:bold;color:black;text-align:center;font-size:15px">Tổng cộng</td>
+                <td style="font-weight:bold;color:black;text-align:right;font-size:15px">
+                    @foreach (DataRow row3 in Model.Tables[5].Rows)
+                    {
+                        @row3["Tien_HD"]
+                        var TienHD = row3["Tien_HD"].ToString();
+                        HttpCookie TienHDCookie = new HttpCookie("TienHD");
+                        TienHDCookie.Value = TienHD;
+                        Response.Cookies.Add(TienHDCookie);
 
 
-                                    }
-                                </td>
-                                <td style="font-weight:bold;color:black;text-align:center;font-size:15px"></td>
-                                <td style="font-weight:bold;color:black;text-align:center;font-size:15px"></td>
-                                <td style="font-weight:bold;color:black;text-align:center;font-size:15px">
-                                    @foreach (DataRow row3 in Model.Tables[6].Rows)
-                                    {
-                                        @row3["Tien_TT"]
-                                        var TienTT = row3["Tien_TT"].ToString();
-                                        HttpCookie TienTTCookie = new HttpCookie("Tien_TT");
-                                        TienTTCookie.Value = TienTT;
-                                        Response.Cookies.Add(TienTTCookie);
+                    }
+                </td>
+                <td style="font-weight:bold;color:black;text-align:center;font-size:15px"></td>
+                <td style="font-weight:bold;color:black;text-align:center;font-size:15px"></td>
+                <td style="font-weight:bold;color:black;text-align:center;font-size:15px">
+                    @foreach (DataRow row3 in Model.Tables[6].Rows)
+                    {
+                        @row3["Tien_TT"]
+                        var TienTT = row3["Tien_TT"].ToString();
+                        HttpCookie TienTTCookie = new HttpCookie("Tien_TT");
+                        TienTTCookie.Value = TienTT;
+                        Response.Cookies.Add(TienTTCookie);
 
 
-                                    }
-                                </td>
-                                <td style="font-weight:bold;color:black;text-align:center;font-size:15px">
-                                    @foreach (DataRow row3 in Model.Tables[6].Rows)
-                                    {
-                                        @row3["CKTT"]
-                                        var CKTT = row3["CKTT"].ToString();
-                                        HttpCookie CKTTCookie = new HttpCookie("CKTT");
-                                        CKTTCookie.Value = CKTT;
-                                        Response.Cookies.Add(CKTTCookie);
+                    }
+                </td>
+                <td style="font-weight:bold;color:black;text-align:center;font-size:15px">
+                    @foreach (DataRow row3 in Model.Tables[6].Rows)
+                    {
+                        @row3["CKTT"]
+                        var CKTT = row3["CKTT"].ToString();
+                        HttpCookie CKTTCookie = new HttpCookie("CKTT");
+                        CKTTCookie.Value = CKTT;
+                        Response.Cookies.Add(CKTTCookie);
 
 
-                                    }
-                                </td>
-                                <td style="font-weight:bold;color:black;text-align:center;font-size:15px">
-                                    @foreach (DataRow row3 in Model.Tables[6].Rows)
-                                    {
-                                        @row3["TC_CKTT_TienTT"]
-                                        var TCCK = row3["TC_CKTT_TienTT"].ToString();
-                                        HttpCookie TCCKCookie = new HttpCookie("TC_CKTT_TienTT");
-                                        TCCKCookie.Value = TCCK;
-                                        Response.Cookies.Add(TCCKCookie);
+                    }
+                </td>
+                <td style="font-weight:bold;color:black;text-align:center;font-size:15px">
+                    @foreach (DataRow row3 in Model.Tables[6].Rows)
+                    {
+                        @row3["TC_CKTT_TienTT"]
+                        var TCCK = row3["TC_CKTT_TienTT"].ToString();
+                        HttpCookie TCCKCookie = new HttpCookie("TC_CKTT_TienTT");
+                        TCCKCookie.Value = TCCK;
+                        Response.Cookies.Add(TCCKCookie);
 
 
-                                    }
-                                </td>
-                            </tr>
-                        </tfoot>*@
+                    }
+                </td>
+            </tr>
+        </tfoot>*@
 
                 </table>
                 <br />
@@ -734,20 +736,20 @@
                 <div class="paraphrap">
                     <div style="margin-top:10px">
                         <table id="export2" border="1" border-collapse="collapse" style="width: 800px; color: black; page-break-before: auto; ">
-
-                            <tr style="font-size:13px;font-weight:bold;color:black">
-                                <th style="padding:10px;width:80px;font-size:15px" rowspan="2">STT</th>
-                                <th colspan="4" style="font-size:15px">HÓA ĐƠN</th>
-
-
+                            <thead>
+                                <tr style="font-size:13px;font-weight:bold;color:black;">
+                                    <th style="padding:10px;width:80px;font-size:15px" rowspan="2">STT</th>
+                                    <th colspan="4" style="font-size:15px">HÓA ĐƠN</th>
 
 
-                            </tr>
+
+
+                                </tr>
                             <th style="width:150px;font-size:16px">SỐ</th>
                             <th style="width: 150px; font-size: 16px">NGÀY</th>
                             <th style="font-size: 16px; width: 150px">SỐ TIỀN HD</th>
                             <th style="font-size: 16px; width: 150px">GHI CHÚ</th>
-
+                            </thead>
                             <tbody>
 
                                 @foreach (DataRow row3 in Model.Tables[2].Rows)
@@ -781,22 +783,22 @@
                             </tr>
 
                             @*<tfoot style="">
-                                    <tr>
-                                        <td colspan="3" style="font-weight:bold;color:black;text-align:center;font-size:15px">TỔNG CỘNG</td>
-                                        <td style="font-weight:bold;color:black;text-align:right;font-size:15px">
-                                            @foreach (DataRow row3 in Model.Tables[7].Rows)
-                                            {
-                                                @row3["Ton_no"]
-                                                var TonNo2 = row3["Ton_no"].ToString();
-                                                HttpCookie TonNo2Cookie = new HttpCookie("TonNo2");
-                                                TonNo2Cookie.Value = TonNo2;
-                                                Response.Cookies.Add(TonNo2Cookie);
+            <tr>
+                <td colspan="3" style="font-weight:bold;color:black;text-align:center;font-size:15px">TỔNG CỘNG</td>
+                <td style="font-weight:bold;color:black;text-align:right;font-size:15px">
+                    @foreach (DataRow row3 in Model.Tables[7].Rows)
+                    {
+                        @row3["Ton_no"]
+                        var TonNo2 = row3["Ton_no"].ToString();
+                        HttpCookie TonNo2Cookie = new HttpCookie("TonNo2");
+                        TonNo2Cookie.Value = TonNo2;
+                        Response.Cookies.Add(TonNo2Cookie);
 
 
-                                            }
-                                        </td>
-                                    </tr>
-                                </tfoot>*@
+                    }
+                </td>
+            </tr>
+        </tfoot>*@
                         </table>
                     </div>
                     <div>
@@ -836,16 +838,7 @@
                                     Response.Cookies.Add(DiaChi2Cookie);
                                 }
                             </h5>
-                            <h5 style="text-align: left; margin-left: 30px; margin-bottom: 10px">
-                                Khi cần đối chiếu số liệu liên hệ:&nbsp; @foreach (DataRow row3 in Model.Tables[4].Rows)
-                                {
-                                    @row3["LH"]
-                                    var LH = row3["LH"].ToString();
-                                    HttpCookie LHCookie = new HttpCookie("LH");
-                                    LHCookie.Value = LH;
-                                    Response.Cookies.Add(LHCookie);
-                                }
-                            </h5>
+                           
                         </div>
 
                         <div style="word-wrap: break-word; color: black; margin-left: 30px;">
@@ -859,7 +852,17 @@
                                     Response.Cookies.Add(TKCookie);
                                 }
                             </h5>
-                            <br />
+                            <h5 style="text-align: left; margin-bottom: 10px">
+                                Khi cần đối chiếu số liệu liên hệ:&nbsp; @foreach (DataRow row3 in Model.Tables[4].Rows)
+                                {
+                                    @row3["LH"]
+                                    var LH = row3["LH"].ToString();
+                                    HttpCookie LHCookie = new HttpCookie("LH");
+                                    LHCookie.Value = LH;
+                                    Response.Cookies.Add(LHCookie);
+                                }
+                            </h5>
+                      
 
 
 
@@ -894,7 +897,7 @@
                         </h5>
                     </div>
                     <br />
-                    <h5 style="text-align: left; margin-left: 30px">ĐẠI DIỆN KHÁCH HÀNG&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ĐẠI DIỆN CHI NHÁNH</h5>
+                    <h5 style="text-align: left; margin-left: 70px">ĐẠI DIỆN KHÁCH HÀNG&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ĐẠI DIỆN CHI NHÁNH</h5>
 
                 </div>
             </div>
