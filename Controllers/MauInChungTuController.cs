@@ -2508,7 +2508,14 @@ namespace web4.Controllers
             ViewBag.DataItems = dmDlist;
             return View();
         }
-
+        public ActionResult PhieuXacNhanTTTCK_Fill()
+        {
+            return View();
+        }
+        public ActionResult PhieuXacNhanTTTCK()
+        {
+            return View();
+        }
     }
 
 }
