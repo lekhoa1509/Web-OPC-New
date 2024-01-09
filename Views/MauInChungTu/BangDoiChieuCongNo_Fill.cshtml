@@ -705,29 +705,14 @@
     </script>
     <script>
         function runReport() {
-            var selectedValue = document.querySelector('#multipleSelect').value;
+            // Get values from date inputs
             var fromDate = document.getElementById('tu_ngay').value;
             var toDate = document.getElementById('den_ngay').value;
 
-            // Save values in cookies
+            // Save values in cookies 
             document.cookie = 'From_date=' + fromDate + '; path=/';
             document.cookie = 'To_date=' + toDate + '; path=/';
 
-            // Gửi giá trị lên cookie với tên là "Ma_Dt"
-            document.cookie = "Ma_Dt=" + selectedValue;
-                
-            const uncheckedCheckboxIndexes = [];
-            const checkboxes = document.querySelectorAll('input[name="myCheckbox"]');
-
-            checkboxes.forEach((checkbox, index) => {
-                if (!checkbox.checked) {
-                    uncheckedCheckboxIndexes.push(index);
-                }
-            });
-
-            // Lưu trạng thái vào Local Storage
-            localStorage.setItem('uncheckedCheckboxIndexes', JSON.stringify(uncheckedCheckboxIndexes));
-            // Hiển thị thẻ span có id là "spanText"
             const spanElement = document.getElementById("spanText");
             spanElement.style.display = "block";
         }

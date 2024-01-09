@@ -700,7 +700,7 @@
                     </div>
                     <table id="example" class="table table-striped table-bordered" style="height:max-content" data-excel-name="I.KẾ HOẠCH - THỰC HIỆN GAM HÀNG">
                         <thead class="table-dark">
-                            <tr>
+                            <tr style="background-color: khaki">
                                 <th>Tên DVCS  <span class="material-symbols-outlined expandable-icon" onclick="toggleRows(this)"><i class="fa-solid fa-caret-down"></i></span></th>
 
                                 <th data-type="number">Tổng thực hiện</th>
@@ -762,7 +762,7 @@
                                     <td class="here" style="font-weight:bold">CỒN <span class="material-symbols-outlined expandable-icon" onclick="toggleRowsCON(this)"><i class="fa-solid fa-caret-down"></i></span></td>
                                     <td style='text-align:right;mso-number-format:" #,##0.00"'>@String.Format("{0:n0}", Convert.ToDecimal(row2["Doanh_Thu_Con"]))</td>
                                     <td style='text-align:right;mso-number-format:" #,##0.00"'>@String.Format("{0:n0}", Convert.ToDecimal(row2["Khoan_Con"]))</td>
-                                    <td sstyle='text-align:right;mso-number-format:" #,##0.00"'>@row2["TyLe_Con"]%</td>
+                                    <td style='text-align:right;mso-number-format:" #,##0.00"'>@row2["TyLe_Con"]%</td>
                                 </tr>
                                 <tr class="expandable-content_detailCON" style="background-color:antiquewhite">
 
@@ -882,7 +882,7 @@
 
                             <table id="example2" class="table table-striped table-bordered" style="height:max-content" data-excel-name="II.THỰC HIỆN THEO LOẠI KH">
                                 <thead class="table-dark">
-                                    <tr>
+                                    <tr style="background-color: khaki">
                                         @*<th>Id</th>*@
                                         @*<th>Mã Loại KH</th>*@
                                         <th>Loại KH </th>
@@ -1005,7 +1005,7 @@
 
                             <table id="example4" class="table table-striped table-bordered" style="height:max-content" data-excel-name="IV.THỰC HIỆN THEO ĐƠN VỊ">
                                 <thead class="table-dark">
-                                    <tr>
+                                    <tr style="background-color: khaki">
                                         <th>Mã Loại KH</th>
                                         <th>Tên Loại KH</th>
                                         <th>Doanh Thu</th>
@@ -1022,7 +1022,7 @@
                                             <td>@row2["Ma_LKH"]</td>
                                             <td style="text-align:left">@row2["Ten_LKH"]</td>
                                             <td style='text-align:right;mso-number-format:" #,##0.00"'>@String.Format("{0:n0}", row2["Doanh_Thu"])</td>
-                                            <td style="text-align:right">@row2["Ty_Le_Co_Cau"]%</td>
+                                            <td style="text-align:center">@row2["Ty_Le_Co_Cau"]%</td>
 
 
                                         </tr>
@@ -1033,7 +1033,7 @@
                                         <td colspan="2"><strong>Tổng cộng</strong></td>
 
                                         <td id="tong-doanh-thu_2" style="text-align:right"></td>
-                                        <td>100%</td>
+                                        <td style="text-align:center">100%</td>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -1051,7 +1051,7 @@
 
                         <table id="example3" class="table table-striped table-bordered" style="height:max-content" data-excel-name="III.THỰC HIỆN THEO TỈNH THÀNH">
                             <thead class="table-dark">
-                                <tr>
+                                <tr style="background-color: khaki">
                                     <th>Tỉnh Thành</th>
                                     <th>Doanh Thu</th>
                                     <th>Doanh Thu OTC</th>
@@ -1166,19 +1166,31 @@
                 },
                 {
                     name: "Table 2",
+                    selector: "#example2"
+                },
+                {
+                    name: "Table 3",
                     selector: "#example3"
-                }
+                },
+                {
+                    name: "Table 4",
+                    selector: "#example4"
+                },
                 // Add more tables as needed
             ];
 
             // Initialize the HTML content for the combined tables
             var combinedHtml = "";
 
-            // Loop through each table, wrap in a bordered frame, and concatenate the HTML content
-            tables.forEach(function (table) {
-                combinedHtml += '<div style="border: 1px solid #000; padding: 10px;">' +
-                    $(table.selector).clone().wrap('<div>').parent().html() +
-                    '</div>';
+            // Loop through each table and concatenate the HTML content
+            tables.forEach(function (table, index) {
+                // Append the HTML content of each table
+                combinedHtml += $(table.selector).clone().wrap('<div>').parent().html();
+
+                // Add <br> tag between tables (except for the last table)
+                if (index < tables.length - 1) {
+                    combinedHtml += '<br>';
+                }
             });
 
             // Create a blob with the combined HTML content
@@ -1187,10 +1199,13 @@
             // Trigger the download
             var link = document.createElement('a');
             link.href = window.URL.createObjectURL(blob);
-            link.download = 'exported_tables.xls';
+            link.download = 'BaoCaoKetQuaKinhDoanh.xls';
             link.click();
         }
     </script>
+
+
+
 
 
 

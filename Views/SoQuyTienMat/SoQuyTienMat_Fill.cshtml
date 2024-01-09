@@ -533,6 +533,22 @@
             .tab.selected-tab .closeTab {
                 pointer-events: auto;
             }
+        .select-btn2 {
+            position: relative;
+        }
+
+        #nhomtheoselect2 {
+            display: none; /* Ẩn dropdown ban đầu */
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            z-index: 1;
+            white-space: nowrap; /* Ngăn ngừa text quá dài bị xuống dòng */
+            overflow-x: auto; /* Hiển thị thanh cuộn khi nội dung quá dài */
+            max-height: 200px; /* Đặt chiều cao tối đa của dropdown */
+            box-sizing: border-box;
+        }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
@@ -568,7 +584,7 @@
         <div class="logo-details">
 
         </div>
-        <ul class="nav-links" style="justify-content: center; display:flex;margin-left:10px">
+        <ul class="nav-links" style="justify-content: center; display: flex; margin-left: 10px; width: 300px">
             <li>
                 <form id="dateForm" action="SoQuyTienMat" method="post" onsubmit="handleFormSubmit(event)">
                     <div id="locBC">
@@ -587,6 +603,36 @@
                             <option value="1111" data-tenTK="Tiền Mặt Việt Nam">1111 - Tiền Mặt Việt Nam</option>
                             <option value="1121" data-tenTK="Tiền Gửi Ngân Hàng VNĐ">1121 - Tiền Gửi Ngân Hàng VNĐ</option>
                             <option value="1131" data-tenTK="Tiền Đang Chuyển (VND)">1131 - Tiền Đang Chuyển (VND)</option>
+
+                        </select>
+                    </div>
+                    <h6>Chọn Ngân Hàng</h6>
+
+                    <div class="select-btn2" style="width:250px;margin-top:10px">
+                        <input type="text" id="searchInput" oninput="filterDropdown()" placeholder="Tìm kiếm...">
+                        <select name="Nhom" id="nhomtheoselect2" size="5" onchange="saveSelectedValueToCookie2()">
+
+                            <option value="001-033554-001">(OPC)Ngân hàng TNHH MTC HSBC</option>
+                            <option value="007.137.1023892">(OPC)Ngân hàng TMCP Ngoại Thương Việt Nam</option>
+                            <option value="1012756827_VCB">(OPC_TG)Ngân hàng TMCP Ngoại Thương Việt Nam</option>
+                            <option value="1037931581">(OPC_VT)Ngân Hàng TMCP Công Thương Việt Nam</option>
+                            <option value="1037931581_VCB">(OPC_VT)Ngân Hàng TMCP Ngoại Thương Việt Nam</option>
+                            <option value="111002637244_VIETIN">(OPC_HN)Ngân hàng TMCP Công Thương Việt Nam</option>
+                            <option value="111101409003">(OPC_HN)Ngân hàng thương mại Cổ phần Quân đội</option>
+                            <option value="116000030030">(OPC_NT)Ngân hàng TMCP Công thương Việt Nam</option>
+                            <option value="118002874433">(OPC)Ngân hàng TMCP Công thương Việt Nam</option>
+                            <option value="118002929530">(OPC_MD)Ngân hàng TMCP Công thương Việt Nam</option>
+                            <option value="12343939">(OPC)Ngân hàng Việt Á - Chi Nhánh Sài Gòn</option>
+                            <option value="151703359">(OPC)Ngân hàng TMCP Á Châu (ACB)</option>
+                            <option value="1605201011620">(OPC)Ngân hàng Nông nghiệp và Phát Triển VN</option>
+                            <option value="1605201013995">(OPC_TP)Ngân hàng Nông nghiệp và Phát Triển VN</option>
+                            <option value="1605311200009">(OPC)Ngân hàng Nông nghiệp và Phát Triển VN</option>
+                            <option value="1890201002962">(OPC_CT)Ngân hàng Nông nghiệp và Phát Triển VN</option>
+                            <option value="2000201348722">(OPC_DN)Ngân hàng Nông nghiệp và Phát Triển VN</option>
+                            <option value="31110000772712">(OPC)Ngân hàng TMCP Đầu tư và Phát Triển VN</option>
+                            <option value="31110370007977">(OPC)Ngân hàng TMCP Đầu tư và Phát Triển VN</option>
+
+                           
 
                         </select>
                     </div>
@@ -712,6 +758,50 @@
         });
     </script>
     <script>
+        function filterDropdown() {
+            var input, filter, select, option, i, txtValue;
+            input = document.getElementById("searchInput");
+            filter = input.value.toUpperCase();
+            select = document.getElementById("nhomtheoselect2");
+            option = select.getElementsByTagName("option");
+
+            for (i = 0; i < option.length; i++) {
+                txtValue = option[i].textContent || option[i].innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    option[i].style.display = "";
+                } else {
+                    option[i].style.display = "none";
+                }
+            }
+
+            // Tự động mở rộng dropdown
+            select.size = Math.min(5, select.options.length);
+            select.style.display = (filter !== "") ? "block" : "none";
+        }
+        function saveSelectedValueToCookie2() {
+            var selectedValue = $("#nhomtheoselect2").val();
+            document.cookie = 'Ma_NH=' + selectedValue;
+            var select = document.getElementById("nhomtheoselect2");
+            var input = document.getElementById("searchInput");
+            var selectedValue = select.value;
+
+            // Cập nhật giá trị của ô input
+            input.value = selectedValue;
+            select.style.display = "none";
+            // Thực hiện các bước khác theo yêu cầu của bạn.
+            console.log("Đã chọn giá trị: " + selectedValue);
+            // Gọi hàm để nhóm dữ liệu dựa trên giá trị đã chọn
+
+        }
+        //function saveSelectedValueToCookie() {
+        //    var select = document.getElementById("nhomtheoselect");
+        //    var selectedValue = select.value;
+
+        //    // Thêm mã lưu giá trị vào cookie hoặc thực hiện các bước khác theo yêu cầu của bạn.
+        //    console.log("Giá trị đã chọn: " + selectedValue);
+        //}
+    </script>
+    <script>
         document.addEventListener('DOMContentLoaded', function () {
             var selectedInfoFromCookie = getCookie1('Ma_TK');
             if (selectedInfoFromCookie) {
@@ -719,7 +809,7 @@
 
                 // Đặt giá trị mặc định cho select dựa trên giá trị cookie
                 selectElement.value = selectedInfoFromCookie;
-            
+
                 // Gọi hàm để lưu giá trị mới vào cookie nếu cần thiết
                 saveSelectedValueToCookie();
             }
@@ -728,7 +818,7 @@
         function saveSelectedValueToCookie() {
             var selectedValue = $("#nhomtheoselect").val();
             document.cookie = 'Ma_TK=' + selectedValue;
-         
+
             // Gọi hàm để nhóm dữ liệu dựa trên giá trị đã chọn
         }
 
