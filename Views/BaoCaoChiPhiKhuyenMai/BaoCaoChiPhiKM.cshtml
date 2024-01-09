@@ -701,12 +701,12 @@
                     <table id="example" class="table table-striped table-bordered" style="height:max-content">
                         <thead class="table-dark">
                             <tr>
-                                <th style="width:300px">Chi Nhánh</th>
-                                <th style="width:300px">OPC</th>
-                                <th style="width:300px">HD2</th>
-                                <th style="width:300px">OPCBD</th>
-                                <th style="width:300px">TD</th>
-                                <th style="width:300px">TW25</th>
+                                <th style="width:180px">Chi Nhánh</th>
+                                <th style="width:180px">KM TP OPC</th>
+                                <th style="width:180px">KM TP HD2</th>
+                                <th style="width:180px">KM HH OPCBD</th>
+                                <th style="width:180px">KM Hàng TD</th>
+                                <th style="width:180px">KM HH TW25</th>
 
                             </tr>
                         </thead>
@@ -727,7 +727,7 @@
                                 if (row1["Ma_Dvcs"].ToString() == "OPC")
                                 {
 
-                                    <tr class="expandable-content" style="background-color:aquamarine">
+                                    <tr class="expandable-content" style="background-color:white">
                                         <td>Công Ty <i class="fa-solid fa-caret-down" onclick="toggleRowsOPC(this)" style="cursor:pointer"></i></td>
                                         <td class="num" style="text-align:right;font-weight:lighter">@String.Format("{0:n0}", Convert.ToDecimal(row1["KM_TP_OPC"]))</td>
                                         <td class="num" style="text-align:right;font-weight:lighter">@String.Format("{0:n0}", Convert.ToDecimal(row1["KM_TP_HD2"]))</td>
@@ -748,7 +748,7 @@
                                     {
                                         if (OPC["Ma_Dvcs"].ToString() == "OPC")
                                         {
-                                            <tr class="expandable-content_detail" style="background-color:aquamarine">
+                                            <tr class="expandable-content_detail" style="background-color:white">
                                                 <td>@OPC["Ma_KM"]</td>
                                                 <td>@OPC["Sale_Order"]</td>
                                                 <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(OPC["Gia_Tri_6322"]))</td>
@@ -762,7 +762,7 @@
                                 if (row1["Ma_Dvcs"].ToString() == "OPC_CT")
                                 {
 
-                                    <tr class="expandable-content" style="background-color: #8db7d5">
+                                    <tr class="expandable-content" style="background-color: lightgray">
                                         <td>Cần Thơ <i class="fa-solid fa-caret-down" onclick="toggleRowsCT(this)" style="cursor:pointer"></i></td>
                                         <td class="num" style="text-align:right;font-weight:lighter">@String.Format("{0:n0}", Convert.ToDecimal(row1["KM_TP_OPC"]))</td>
                                         <td class="num" style="text-align:right;font-weight:lighter">@String.Format("{0:n0}", Convert.ToDecimal(row1["KM_TP_HD2"]))</td>
@@ -784,7 +784,7 @@
                                     {
                                         if (CT["Ma_Dvcs"].ToString() == "OPC_CT")
                                         {
-                                            <tr class="expandable-content_detailCT" style="background-color: #8db7d5">
+                                            <tr class="expandable-content_detailCT" style="background-color: lightgray">
                                                 <td>@CT["Ma_KM"]</td>
                                                 <td>@CT["Sale_Order"]</td>
                                                 <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(CT["Gia_Tri_6322"]))</td>
@@ -798,7 +798,7 @@
                                 if (row1["Ma_Dvcs"].ToString() == "OPC_DN")
                                 {
 
-                                    <tr class="expandable-content" style="background-color: #d5908d">
+                                    <tr class="expandable-content" style="background-color: white">
                                         <td>Đà Nẵng <i class="fa-solid fa-caret-down" onclick="toggleRowsDN(this)" style="cursor:pointer"></i></td>
                                         <td class="num" style="text-align:right;font-weight:lighter">@String.Format("{0:n0}", Convert.ToDecimal(row1["KM_TP_OPC"]))</td>
                                         <td class="num" style="text-align:right;font-weight:lighter">@String.Format("{0:n0}", Convert.ToDecimal(row1["KM_TP_HD2"]))</td>
@@ -819,7 +819,7 @@
                                     {
                                         if (DN["Ma_Dvcs"].ToString() == "OPC_DN")
                                         {
-                                            <tr class="expandable-content_detailDN" style="background-color: #d5908d">
+                                            <tr class="expandable-content_detailDN" style="background-color: white">
                                                 <td>@DN["Ma_KM"]</td>
                                                 <td>@DN["Sale_Order"]</td>
                                                 <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(DN["Gia_Tri_6322"]))</td>
@@ -833,7 +833,7 @@
                                 if (row1["Ma_Dvcs"].ToString() == "OPC_NA")
                                 {
 
-                                    <tr class="expandable-content" style="background-color: #ddc9e6">
+                                    <tr class="expandable-content" style="background-color:lightgray">
                                         <td>Nghệ An <i class="fa-solid fa-caret-down" onclick="toggleRowsNA(this)" style="cursor:pointer"></i></td>
                                         <td class="num" style="text-align:right;font-weight:lighter">@String.Format("{0:n0}", Convert.ToDecimal(row1["KM_TP_OPC"]))</td>
                                         <td class="num" style="text-align:right;font-weight:lighter">@String.Format("{0:n0}", Convert.ToDecimal(row1["KM_TP_HD2"]))</td>
@@ -855,7 +855,7 @@
                                         if (NA["Ma_Dvcs"].ToString() == "OPC_NA")
                                         {
 
-                                            <tr class="expandable-content_detailNA" style="background-color: #ddc9e6">
+                                            <tr class="expandable-content_detailNA" style="background-color: lightgray">
                                                 <td>@NA["Ma_KM"]</td>
                                                 <td>@NA["Sale_Order"]</td>
                                                 <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(NA["Gia_Tri_6322"]))</td>
@@ -870,7 +870,7 @@
                                 if (row1["Ma_Dvcs"].ToString() == "OPC_TG")
                                 {
 
-                                    <tr class="expandable-content" style="background-color: #fb74c6">
+                                    <tr class="expandable-content" style="background-color: lightgray">
                                         <td>Tiền Giang <i class="fa-solid fa-caret-down" onclick="toggleRowsTG(this)" style="cursor:pointer"></i></td>
                                         <td class="num" style="text-align:right;font-weight:lighter">@String.Format("{0:n0}", Convert.ToDecimal(row1["KM_TP_OPC"]))</td>
                                         <td class="num" style="text-align:right;font-weight:lighter">@String.Format("{0:n0}", Convert.ToDecimal(row1["KM_TP_HD2"]))</td>
@@ -892,7 +892,7 @@
                                         if (TG["Ma_Dvcs"].ToString() == "OPC_TG")
                                         {
 
-                                            <tr class="expandable-content_detailTG" style="background-color: #fb74c6">
+                                            <tr class="expandable-content_detailTG" style="background-color: lightgray">
                                                 <td>@TG["Ma_KM"]</td>
                                                 <td>@TG["Sale_Order"]</td>
                                                 <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(TG["Gia_Tri_6322"]))</td>
@@ -907,7 +907,7 @@
                                 if (row1["Ma_Dvcs"].ToString() == "OPC_MD")
                                 {
 
-                                    <tr class="expandable-content" style="background-color: #fbb34d">
+                                    <tr class="expandable-content" style="background-color: white">
                                         <td>Miền Đông <i class="fa-solid fa-caret-down" onclick="toggleRowsMD(this)" style="cursor:pointer"></i></td>
                                         <td class="num" style="text-align:right;font-weight:lighter">@String.Format("{0:n0}", Convert.ToDecimal(row1["KM_TP_OPC"]))</td>
                                         <td class="num" style="text-align:right;font-weight:lighter">@String.Format("{0:n0}", Convert.ToDecimal(row1["KM_TP_HD2"]))</td>
@@ -929,7 +929,7 @@
                                         if (MD["Ma_Dvcs"].ToString() == "OPC_MD")
                                         {
 
-                                            <tr class="expandable-content_detailMD" style="background-color: #fbb34d">
+                                            <tr class="expandable-content_detailMD" style="background-color: white">
                                                 <td>@MD["Ma_KM"]</td>
                                                 <td>@MD["Sale_Order"]</td>
                                                 <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(MD["Gia_Tri_6322"]))</td>
@@ -944,7 +944,7 @@
                                 if (row1["Ma_Dvcs"].ToString() == "OPC_TP")
                                 {
 
-                                    <tr class="expandable-content" style="background-color: #7f7cc9">
+                                    <tr class="expandable-content" style="background-color: white">
                                         <td>Hồ Chí Minh <i class="fa-solid fa-caret-down" onclick="toggleRowsTP(this)" style="cursor:pointer"></i></td>
                                         <td class="num" style="text-align:right;font-weight:lighter">@String.Format("{0:n0}", Convert.ToDecimal(row1["KM_TP_OPC"]))</td>
                                         <td class="num" style="text-align:right;font-weight:lighter">@String.Format("{0:n0}", Convert.ToDecimal(row1["KM_TP_HD2"]))</td>
@@ -966,7 +966,7 @@
                                         if (TP["Ma_Dvcs"].ToString() == "OPC_TP")
                                         {
 
-                                            <tr class="expandable-content_detailTP" style="background-color: #7f7cc9">
+                                            <tr class="expandable-content_detailTP" style="background-color: white">
                                                 <td>@TP["Ma_KM"]</td>
                                                 <td>@TP["Sale_Order"]</td>
                                                 <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(TP["Gia_Tri_6322"]))</td>
@@ -981,7 +981,7 @@
                                 if (row1["Ma_Dvcs"].ToString() == "OPC_VT")
                                 {
 
-                                    <tr class="expandable-content" style="background-color: #36a39f">
+                                    <tr class="expandable-content" style="background-color: lightgray">
                                         <td>Vũng Tàu <i class="fa-solid fa-caret-down" onclick="toggleRowsVT(this)" style="cursor:pointer"></i></td>
                                         <td class="num" style="text-align:right;font-weight:lighter">@String.Format("{0:n0}", Convert.ToDecimal(row1["KM_TP_OPC"]))</td>
                                         <td class="num" style="text-align:right;font-weight:lighter">@String.Format("{0:n0}", Convert.ToDecimal(row1["KM_TP_HD2"]))</td>
@@ -1003,7 +1003,7 @@
                                         if (VT["Ma_Dvcs"].ToString() == "OPC_VT")
                                         {
 
-                                            <tr class="expandable-content_detailVT" style="background-color: #36a39f">
+                                            <tr class="expandable-content_detailVT" style="background-color: lightgray">
                                                 <td>@VT["Ma_KM"]</td>
                                                 <td>@VT["Sale_Order"]</td>
                                                 <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(VT["Gia_Tri_6322"]))</td>
@@ -1018,7 +1018,7 @@
                                 if (row1["Ma_Dvcs"].ToString() == "OPC_NT")
                                 {
 
-                                    <tr class="expandable-content" style="background-color: #78d273 ">
+                                    <tr class="expandable-content" style="background-color: white ">
                                         <td>Nha Trang <i class="fa-solid fa-caret-down" onclick="toggleRowsNT(this)" style="cursor:pointer"></i></td>
                                         <td class="num" style="text-align:right;font-weight:lighter">@String.Format("{0:n0}", Convert.ToDecimal(row1["KM_TP_OPC"]))</td>
                                         <td class="num" style="text-align:right;font-weight:lighter">@String.Format("{0:n0}", Convert.ToDecimal(row1["KM_TP_HD2"]))</td>
@@ -1040,7 +1040,7 @@
                                         if (NT["Ma_Dvcs"].ToString() == "OPC_NT")
                                         {
 
-                                            <tr class="expandable-content_detailNT" style="background-color: #78d273">
+                                            <tr class="expandable-content_detailNT" style="background-color: white">
                                                 <td>@NT["Ma_KM"]</td>
                                                 <td>@NT["Sale_Order"]</td>
                                                 <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(NT["Gia_Tri_6322"]))</td>
@@ -1055,7 +1055,7 @@
                                 if (row1["Ma_Dvcs"].ToString() == "OPC_HN")
                                 {
 
-                                    <tr class="expandable-content" style="background-color: #ecfb4d">
+                                    <tr class="expandable-content" style="background-color: lightgray">
                                         <td>Hà Nội <i class="fa-solid fa-caret-down" onclick="toggleRowsHN(this)" style="cursor:pointer"></i></td>
                                         <td class="num" style="text-align:right;font-weight:lighter">@String.Format("{0:n0}", Convert.ToDecimal(row1["KM_TP_OPC"]))</td>
                                         <td class="num" style="text-align:right;font-weight:lighter">@String.Format("{0:n0}", Convert.ToDecimal(row1["KM_TP_HD2"]))</td>
@@ -1077,7 +1077,7 @@
                                         if (HN["Ma_Dvcs"].ToString() == "OPC_HN")
                                         {
 
-                                            <tr class="expandable-content_detailHN" style="background-color: #ecfb4d">
+                                            <tr class="expandable-content_detailHN" style="background-color: lightgray">
                                                 <td>@HN["Ma_KM"]</td>
                                                 <td>@HN["Sale_Order"]</td>
                                                 <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(HN["Gia_Tri_6322"]))</td>
