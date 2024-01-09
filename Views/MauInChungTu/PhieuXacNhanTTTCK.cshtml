@@ -430,7 +430,7 @@
             <div>
                 <h3 style="font-size: 25px; color: black; font-weight: bold">XÁC NHẬN THANH TOÁN</h3>
 
-                <h5>Từ @Request.Cookies["fromIn"].Value đến @Request.Cookies["toIn"].Value</h5>
+                <h5>Từ  đến </h5>
 
             </div>
             <div style="width:600px">
@@ -439,12 +439,12 @@
             </div>
             <br />
             <div class="flex-container" style="width:600px">
-                <h5 style="display: inline-block; color: black; font-weight: bold; text-align: left;">Khách hàng: <span style="font-size: 15px;">@Request.Cookies["Ten_Dt"].Value</span></h5>
+                <h5 style="display: inline-block; color: black; font-weight: bold; text-align: left;">Khách hàng: <span style="font-size: 15px;"></span></h5>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <h5 style="display: inline-block; color: black; font-weight: bold"></h5>
             </div>
             <div style="color:black;font-weight:bold; font-size:15px;width:600px">
-                <h5 style="text-align: left;">Địa chỉ: @Request.Cookies["Dia_Chi"].Value</h5>
+                <h5 style="text-align: left;">Địa chỉ: </h5>
             </div>
 
             <br />
@@ -468,33 +468,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (DataRow row3 in Model.Tables[0].Rows)
-                        {
-                            <tr data-soct="@row3["So_Ct"]">
-                                <td style="padding:10px">@row3["So_Ct"]</td>
-                                <td style="padding:10px">
-                                    @row3["Ngay_Ct1"]
-                                </td>
-                                <td style="padding:10px">
-                                    @row3["Han_Thanh_Toan"]
-                                </td>
-                                <td style="padding:10px;text-align:right">@row3["Tong_Tien"]</td>
-                                <td style="padding:10px;text-align:right">@row3["CKTT"]</td>
-                                <td style="padding:10px;text-align:right">@row3["Tien_TT"]</td>
-
-
-                            </tr>
-
-                        }
-                        @foreach (DataRow row3 in Model.Tables[1].Rows)
-                        {
-
-
-                        <td style="padding:10px;color:black;font-weight:bold" colspan="3">Tổng Cộng</td>
-                        <td style="padding:10px;text-align:right;color:black;font-weight:bold">@row3["Tong_Tien"]</td>
-                        <td style="padding:10px;text-align:right;color:black;font-weight:bold">@row3["CKTT"]</td>
-                        <td style="padding:10px;text-align:right;color:black;font-weight:bold">@row3["Tong_TienTT"]</td>
-                    }
+                      
                         </tbody>
 
                     </table>
@@ -503,7 +477,7 @@
                         <h5 style="word-wrap: break-word;font-size:15px;text-align:left;">Khách hàng đã thanh toán số tiền:............................, nhận chiết khấu thanh toán số tiền:............................</h5>
                     </div><br />
                     <div style="text-align:right;margin-right:30px">
-                        <h4 class="branch">@extractedText, ngày @Request.Cookies["ngay"].Value tháng @Request.Cookies["thang"].Value năm @Request.Cookies["nam"].Value</h4>
+                        <h4 class="branch">@extractedText, ngày  tháng  năm </h4>
 
                     </div>
                     @*<h4 style="margin-left:auto">P. KHCU &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Thủ kho&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Xưởng sản xuất</h4>*@
