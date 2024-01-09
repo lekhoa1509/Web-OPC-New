@@ -138,15 +138,15 @@
                 </tr>
             }
             <!-- Repeat rows as needed -->
-        <tfoot>
-            @foreach (DataRow row2 in Model.Tables[3].Rows)
-            {
-                <tr>
-                    <td colspan="4">Tổng Cộng</td>
-                    <td id="tong-cong">@row2["Tong_Cong"]</td>
-                    <td colspan="5"></td>
-                </tr>
-            }
+            <tfoot>
+                @foreach (DataRow row2 in Model.Tables[3].Rows)
+                {
+                    <tr>
+                        <td colspan="4">Tổng Cộng</td>
+                        <td id="tong-cong">@row2["Tong_Cong"]</td>
+                        <td colspan="5"></td>
+                    </tr>
+                }
             </tfoot>
         </table>
 
@@ -176,7 +176,14 @@
                 <p class="text-center signature-line">(Ký và ghi rõ họ tên)</p>
             </div>
         </div>
+        <button id="exportToExcel">Xuất ra Excel</button>
+
     </div>
-    
+    <script>
+document.getElementById("exportToExcel").addEventListener("click", function() {
+    window.location.href = '/YourController/ExportToExcel'; // Đường dẫn đến action trong controller của bạn
+});
+    </script>
+
 </body>
 </html>

@@ -58,6 +58,14 @@
             cursor: pointer;
             background-color: #218838; /* Darker green on hover */
         }
+        #Ly_do {
+            height: 100px;
+            width: 100%;
+            border-radius: 5px;
+            padding: 5px;
+            margin-bottom: 5px;
+            display: inline-block; /* Adjust this value as needed */
+        }
     </style>
 </head>
 
@@ -104,7 +112,10 @@
                 <option value="@item.Ma_Dt" data-ten="@item.Ten_Dt" data-dvcs="@item.Dvcs">@item.Ten_Dt</option>
             }
         </datalist>*@
-
+                <div class="form-group mb-3">
+                    <p><strong>4. Nội Dung&nbsp;</strong></p>
+                </div>
+                <input type="text" id="Ly_do" list="" placeholder="Nội Dung" name="Ly_do">
                 <br />
                 <table id="example" class="table table-striped table-bordered">
                     <thead class="table-dark">
@@ -400,6 +411,7 @@
                 So_Ct: $("#So_Ct").val(),
                 NV_GiaoHang: $("#dropdownInput").val(),
                 Ten_NVGiaoHang: $("#selectedOption").val(),
+                Ly_Do: $("#Ly_do").val(),
                 details: orderArr
             });
 
@@ -476,6 +488,8 @@
             document.getElementById('So_Ct').value = getParameterByName('So_Ct');
             document.getElementById('dropdownInput').value = getParameterByName('Ma_NVGH');
             document.getElementById('selectedOption').value = getParameterByName('Ten_NVGH');
+            document.getElementById('Ly_do').value = getParameterByName('Ly_Do');
+
         });
     </script>
 

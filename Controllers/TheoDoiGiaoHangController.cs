@@ -1,7 +1,9 @@
-﻿using System;
+﻿using OfficeOpenXml;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -241,8 +243,10 @@ namespace web4.Controllers
                             command.Parameters.AddWithValue("@_so_Ct", TDGH.So_Ct);
                             command.Parameters.AddWithValue("@_NV_GiaoHang", TDGH.Ma_NVGH);
                             command.Parameters.AddWithValue("@_Ten_NVGiaoHang", TDGH.Ten_NVGH);
+
                             command.Parameters.AddWithValue("@_Dvcs", TDGH.Dvcs);
-                           
+                            command.Parameters.AddWithValue("@_Ly_Do", TDGH.Ly_do);
+
                             // Pass details as a TVP parameter
                             var detailsParam = command.Parameters.AddWithValue("@_Details", detailsTable);
                             detailsParam.SqlDbType = SqlDbType.Structured;
@@ -418,6 +422,45 @@ namespace web4.Controllers
                 
             }
             return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+
+        public ActionResult ExportToExcel()
+        {
+            // Đường dẫn đến file mẫu Excel
+            var templatePath = Server.MapPath("~/PathToYourTemplate/template.xlsx");
+            FileInfo fileInfo = new FileInfo(templatePath);
+
+            using (var package = new ExcelPackage(fileInfo))
+            {
+                // Chỉ định worksheet
+                var worksheet = package.Workbook.Worksheets["Sheet1"]; // Hoặc tên sheet mẫu của bạn
+
+                // Lấy dữ liệu từ database
+                var dataItems = LoadHD();
+
+                // Bắt đầu điền dữ liệu từ hàng nào đó, giả sử hàng thứ 10
+                int row = 10;
+                foreach (var item in dataItems)
+                {
+                    worksheet.Cells[row, 1].Value = item.So_HD;
+                    worksheet.Cells[row, 2].Value = item.Ngay_HD.ToString("dd/MM/yyyy");
+                    worksheet.Cells[row, 3].Value = item.Ten_Dt;
+                    worksheet.Cells[row, 4].Value = item.Tien_HD;
+                    // Điền tiếp các cột khác nếu cần
+                    row++;
+                }
+
+                // Tự động điều chỉnh kích thước các cột
+                worksheet.Cells[worksheet.Dimension.Address].AutoFitColumns();
+
+                // Lưu vào luồng và trả về file để tải về
+                var stream = new MemoryStream();
+                package.SaveAs(stream);
+                stream.Position = 0;
+
+                return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "TheoDoiGiaoHang.xlsx");
+            }
         }
     }
 }
