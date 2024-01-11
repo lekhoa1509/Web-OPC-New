@@ -773,7 +773,7 @@
 
         </form>
     </div>
-    <button id="exportbutton">Xuất Excel</button>
+    <button onclick="exportExcel()">Xuất Excel</button>
     <script src="~/Scripts/table2excel.js"></script>
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
@@ -878,20 +878,28 @@
                 if (fromMonth === toMonth && fromQuarter === toQuarter) {
                     // Display quarter and year if the months are exactly 2 apart and in the same quarter
                     h5Element.text('Tháng ' + fromMonth + ' năm ' + fromYear);
+                    var displayText = 'Tháng ' + fromMonth + ' năm ' + fromYear;
+                    setCookie("Time", displayText);
 
                 } else if (Math.abs(toMonth - fromMonth) === 2) {
                     // Display quarter and year if the months are exactly 2 apart
                     h5Element.text('Quý ' + fromQuarter + ' năm ' + fromYear);
+                    var displayText = 'Quý ' + fromQuarter + ' năm ' + fromYear;
+                    setCookie("Time", displayText);
                 } else {
+                    var displayText = 'Từ tháng ' + fromMonth + ' năm ' + fromYear + ' đến tháng ' + toMonth + ' năm ' + toYear;
                     // Display range of months and years if the difference is neither 0 nor 2
                     h5Element.text('Từ tháng ' + fromMonth + ' năm ' + fromYear + ' đến tháng ' + toMonth + ' năm ' + toYear);
+                    setCookie("Time", displayText);
                 }
             } else {
                 // Handle the case where either 'From_date' or 'To_date' cookie is not present
                 console.error("The 'From_date' or 'To_date' cookie is not set.");
             }
         }
-
+        function setCookie(name, value) {
+            document.cookie = name + "=" + value + "; path=/";
+        }
         // Function to be executed when the page is fully loaded
         $(document).ready(function () {
             // Call the updateQuarterYear function when the page loads

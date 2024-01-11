@@ -101,8 +101,88 @@
                 <div class="user-txt">@Request.Cookies["UserName"].Value</div>
             </div>
         </div>
+        <div class="main-content">
+            <div class="box">
+                <div class="box-row">
+                    <div class="box-1">
+                        <div>
+                            <h5 class="text">TỔNG DOANH THU</h5>
+                            <h5 class="num">20,000,000</h5>
+                        </div>
+                    </div>
+                    <div class="box-2">
+                        <div>
+                            <h5 class="text">DOANH THU THÁNG HIỆN TẠI</h5>
+                            <h5 class="num" >20,000,000</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-row">
+                    <div class="box-3">
+                        <div>
+                            <h5 class="text">TỔNG DOANH THU</h5>
+                            <h5 class="num">20,000,000</h5>
+                        </div>
+                    </div>
+                    <div class="box-4">
+                        <div>
+                            <h5 class="text">TỔNG DOANH THU</h5>
+                            <h5 class="num">20,000,000</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row-chart">
+                <div class="chart-1"> <canvas id="gaugeChart"></canvas></div>
+                <div class="chart-2"> <canvas id="gaugeChart2"></canvas></div>
+                <div class="chart-3"> <canvas id="gaugeChart3"></canvas></div>
+
+            </div>
+            <div class="row-table">
+                <div class="table">
+                   <table>
+                       <thead>
+                           <tr>
+                               <td>STT</td>
+                               <td>Số HĐ</td>
+                               <td>Ngày HĐ</td>
+                               <td>Mã Vật Tư</td>
+                               <td>Tên Vật Tư</td>
+                               <td>Giá</td>
+                           </tr>
+                       </thead>
+                       <tbody>
+                           <tr>
+                               <td>1</td>
+                               <td>0001</td>
+                               <td>1/1/2024</td>
+                               <td>1003663</td>
+                               <td>Kim Tiền Thảo</td>
+                               <td>10000000</td>
+                           </tr>
+                           <tr>
+                               <td>2</td>
+                               <td>0002</td>
+                               <td>2/1/2024</td>
+                               <td>1003664</td>
+                               <td>Kim Tiền Thảo</td>
+                               <td>10000000</td>
+                           </tr>
+                       </tbody>
+                       <tfoot>
+                           <tr>
+                               <td colspan="5">Tổng cộng</td>
+                               <td>10000000</td>
+                           </tr>
+                       </tfoot>
+                   </table>
+                </div>
+                <div class="line-chart"></div>
+            </div>
+        </div>
     </section>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
         function logout() {
@@ -161,6 +241,275 @@
             };
         });
     </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var data = {
+                value: 200,
+                max: 300,
+                label: "Tỷ lệ"
+            };
+
+            var config = {
+                type: 'doughnut',
+                data: {
+                    labels: [data.label],
+                    datasets: [{
+                        data: [data.value, data.max - data.value],
+                        backgroundColor: ['rgba(54, 162, 235, 0.8)', 'rgba(0, 0, 0, 0.1)'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutoutPercentage: 85,
+                    rotation: -90,
+                    circumference: 180,
+                    tooltips: {
+                        enabled: false
+                    },
+                    legend: {
+                        display: false
+                    },
+                    animation: {
+                        animateRotate: true,
+                        animateScale: false
+                    },
+                    title: {
+                        display: true,
+                        text: data.label,
+                        fontSize: 16,
+                        position: 'top', // Đặt vị trí của tiêu đề
+                        padding: 10
+                    },
+                    plugins: {
+                        datalabels: {
+                            display: true,
+                            color: '#000000', // Màu chữ
+                            formatter: function (value, context) {
+                                return value + '%';
+                            },
+                            anchor: 'end',
+                            align: 'end'
+                        }
+                    }
+                },
+                // Thêm một hàm callback để vẽ nhãn tùy chỉnh cho 0 và 100%
+                plugins: [{
+                    beforeDraw: function (chart) {
+                        var ctx = chart.ctx;
+                        var fontSize = 16;
+                        var fontStyle = 'bold';
+                        var fontFamily = 'Arial';
+                        ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
+                        ctx.fillStyle = '#000000'; // Màu chữ
+
+                        var percentLabels = ['0%', '300%'];
+                        var centerX = (chart.chartArea.left + chart.chartArea.right) / 2;
+                        var centerY = (chart.chartArea.top + chart.chartArea.bottom) / 2;
+
+                        percentLabels.forEach(function (label, index) {
+                            var xOffset = (index === 0) ? -ctx.measureText(label).width - 90 : 90;
+                            var yOffset = (index === 0) ? 90 : 90;
+                            ctx.fillText(label, centerX + xOffset, centerY + yOffset);
+                        });
+                        var valueLabel = data.value.toString();
+                        var valueFontSize = 24; // Kích thước font cho số 200
+                        ctx.font = Chart.helpers.fontString(valueFontSize, fontStyle, fontFamily);
+                        var valueXOffset = (-ctx.measureText(valueLabel).width / 2) - 10;
+                        var valueYOffset = 10 + (valueFontSize + 20 / 2);
+                        ctx.fillText(valueLabel + "%", centerX + valueXOffset, centerY + valueYOffset);
+                    }
+                }]
+            };
+            var chartCanvas = document.getElementById('gaugeChart');
+            chartCanvas.style.width = '300px'; // Đặt chiều rộng của canvas
+            chartCanvas.style.height = '200px';
+            var chartCtx = document.getElementById('gaugeChart').getContext('2d');
+            var gaugeChart = new Chart(chartCtx, config);
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var data = {
+                value: 150,
+                max: 300,
+                label: "Tỷ lệ"
+            };
+
+            var config = {
+                type: 'doughnut',
+                data: {
+                    labels: [data.label],
+                    datasets: [{
+                        data: [data.value, data.max - data.value],
+                        backgroundColor: ['rgba(236, 237, 6, 100)', 'rgba(0, 0, 0, 0.1)'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutoutPercentage: 85,
+                    rotation: -90,
+                    circumference: 180,
+                    tooltips: {
+                        enabled: false
+                    },
+                    legend: {
+                        display: false
+                    },
+                    animation: {
+                        animateRotate: true,
+                        animateScale: false
+                    },
+                    title: {
+                        display: true,
+                        text: data.label,
+                        fontSize: 16,
+                        position: 'top', // Đặt vị trí của tiêu đề
+                        padding: 10
+                    },
+                    plugins: {
+                        datalabels: {
+                            display: true,
+                            color: '#000000', // Màu chữ
+                            formatter: function (value, context) {
+                                return value + '%';
+                            },
+                            anchor: 'end',
+                            align: 'end'
+                        }
+                    }
+                },
+                // Thêm một hàm callback để vẽ nhãn tùy chỉnh cho 0 và 100%
+                plugins: [{
+                    beforeDraw: function (chart) {
+                        var ctx = chart.ctx;
+                        var fontSize = 16;
+                        var fontStyle = 'bold';
+                        var fontFamily = 'Arial';
+                        ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
+                        ctx.fillStyle = '#000000'; // Màu chữ
+
+                        var percentLabels = ['0%', '300%'];
+                        var centerX = (chart.chartArea.left + chart.chartArea.right) / 2;
+                        var centerY = (chart.chartArea.top + chart.chartArea.bottom) / 2;
+
+                        percentLabels.forEach(function (label, index) {
+                            var xOffset = (index === 0) ? -ctx.measureText(label).width - 90 : 90;
+                            var yOffset = (index === 0) ? 90 : 90;
+                            ctx.fillText(label, centerX + xOffset, centerY + yOffset);
+                        });
+                        var valueLabel = data.value.toString();
+                        var valueFontSize = 24; // Kích thước font cho số 200
+                        ctx.font = Chart.helpers.fontString(valueFontSize, fontStyle, fontFamily);
+                        var valueXOffset = (-ctx.measureText(valueLabel).width / 2) - 10;
+                        var valueYOffset = 10 + (valueFontSize + 20 / 2);
+                        ctx.fillText(valueLabel + "%", centerX + valueXOffset, centerY + valueYOffset);
+                    }
+                }]
+            };
+            var chartCanvas = document.getElementById('gaugeChart2');
+            chartCanvas.style.width = '300px'; // Đặt chiều rộng của canvas
+            chartCanvas.style.height = '200px';
+            var chartCtx = document.getElementById('gaugeChart2').getContext('2d');
+            var gaugeChart = new Chart(chartCtx, config);
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var data = {
+                value: 90,
+                max: 300,
+                label: "Tỷ lệ"
+            };
+
+            var config = {
+                type: 'doughnut',
+                data: {
+                    labels: [data.label],
+                    datasets: [{
+                        data: [data.value, data.max - data.value],
+                        backgroundColor: ['rgba(255, 167, 112, 100)', 'rgba(0, 0, 0, 0.1)'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutoutPercentage: 85,
+                    rotation: -90,
+                    circumference: 180,
+                    tooltips: {
+                        enabled: false
+                    },
+                    legend: {
+                        display: false
+                    },
+                    animation: {
+                        animateRotate: true,
+                        animateScale: false
+                    },
+                    title: {
+                        display: true,
+                        text: data.label,
+                        fontSize: 16,
+                        position: 'top', // Đặt vị trí của tiêu đề
+                        padding: 10
+                    },
+                    plugins: {
+                        datalabels: {
+                            display: true,
+                            color: '#000000', // Màu chữ
+                            formatter: function (value, context) {
+                                return value + '%';
+                            },
+                            anchor: 'end',
+                            align: 'end'
+                        }
+                    }
+                },
+                // Thêm một hàm callback để vẽ nhãn tùy chỉnh cho 0 và 100%
+                plugins: [{
+                    beforeDraw: function (chart) {
+                        var ctx = chart.ctx;
+                        var fontSize = 16;
+                        var fontStyle = 'bold';
+                        var fontFamily = 'Arial';
+                        ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
+                        ctx.fillStyle = '#000000'; // Màu chữ
+
+                        var percentLabels = ['0%', '300%'];
+                        var centerX = (chart.chartArea.left + chart.chartArea.right) / 2;
+                        var centerY = (chart.chartArea.top + chart.chartArea.bottom) / 2;
+
+                        percentLabels.forEach(function (label, index) {
+                            var xOffset = (index === 0) ? -ctx.measureText(label).width - 90 : 90;//chieu rong value
+                            var yOffset = (index === 0) ? 90 : 90;//chieu cao value
+                            ctx.fillText(label, centerX + xOffset, centerY + yOffset);
+                        });
+                        var valueLabel = data.value.toString();
+                        var valueFontSize = 24; // Kích thước font cho số 200
+                        ctx.font = Chart.helpers.fontString(valueFontSize, fontStyle, fontFamily);
+                        var valueXOffset = (-ctx.measureText(valueLabel).width / 2) - 10;
+                        var valueYOffset = 10 + (valueFontSize + 20 / 2);
+                        ctx.fillText(valueLabel + "%", centerX + valueXOffset, centerY + valueYOffset);
+                    }
+                }]
+            };
+            var chartCanvas = document.getElementById('gaugeChart3');
+            chartCanvas.style.width = '300px'; // Đặt chiều rộng của canvas
+            chartCanvas.style.height = '200px';
+            var chartCtx = document.getElementById('gaugeChart3').getContext('2d');
+            var gaugeChart = new Chart(chartCtx, config);
+        });
+    </script>
+
+
+
+
+
 
 </body>
 </html>

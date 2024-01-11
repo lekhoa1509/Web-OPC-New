@@ -1742,6 +1742,7 @@ namespace web4.Controllers
                     string ThangKy = Request.Cookies["ThangKy"] != null ? HttpUtility.UrlDecode(Request.Cookies["ThangKy"].Value) : "";
                     string NamKy = Request.Cookies["NamKy"] != null ? HttpUtility.UrlDecode(Request.Cookies["NamKy"].Value) : "";
                     string So =  Request.Cookies["so"] != null ? HttpUtility.UrlDecode(Request.Cookies["so"].Value) : "";
+                    string Time = Request.Cookies["Time"] != null ? HttpUtility.UrlDecode(Request.Cookies["Time"].Value) : "";
                     // Đặt font chữ "Arial" cho toàn bộ tệp Excel
                     worksheet.Cells.Style.Font.Name = "Times New Roman";
                     ExcelPicture picture = worksheet.Drawings.AddPicture("MyPicture", new FileInfo(imagePath));
@@ -1768,7 +1769,7 @@ namespace web4.Controllers
                   
 
                     //worksheet.Cells["F4"].Value = $"hàng chưa thanh toán cho chúng tôi tính đến ngày {denngay} là: {tongno}";
-                    worksheet.Cells["F5"].Value = $"Quý 3 năm {Nam}";
+                    worksheet.Cells["F5"].Value = $"{Time}";
                    
                     worksheet.Cells["A6"].Value = $"Tên khách hàng: {ten_dt}";
                     worksheet.Cells["A7"].Value = $"I.Số dư nợ trước ngày {TruocNgay}/ {TruocThang}/ {TruocNam} mang sang: {NoDauKy} đồng.";
