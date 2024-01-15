@@ -816,6 +816,14 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                                 <tr style="height:30px">
                                     <td style="text-align: left">
                                         <li style=" list-style-type: none;" class="liTitle">
+                                            <a href="" onclick="runReport('@Url.Action("PhieuXacNhanTTCK_Fill", "MauInChungTu")'
+                                                      )">3.Phiếu Xác Nhận Thanh Toán CKKM</a>
+                                        </li>
+                                    </td>
+                                </tr>
+                                <tr style="height:30px">
+                                    <td style="text-align: left">
+                                        <li style=" list-style-type: none;" class="liTitle">
                                             <a href="" onclick="runReport('@Url.Action("PhieuXuatKho_SO", "MauInChungTu")'
                                                       )">3.Phiếu Xuất Kho</a>
                                         </li>
@@ -823,21 +831,21 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                                 </tr>
 
                                 @*<tr style="height:30px">
-                                        <td style="text-align: left">
-                                            <li style=" list-style-type: none;" class="liTitle">
-                                                <a href="" onclick="runReport('@Url.Action("BangDoiChieuCongNo_Fill", "MauInChungTu")'
-                                                          )">5.Bảng Đối Chiếu Doanh Thu - Công Nợ</a>
-                                            </li>
-                                        </td>
-                                    </tr>
-                                    <tr style="height:30px">
-                                        <td style="text-align: left">
-                                            <li style=" list-style-type: none;" class="liTitle">
-                                                <a href="" onclick="runReport('@Url.Action("BangDoiChieuDTCN_Fill", "MauInChungTu")'
-                                                          )">6.Bảng Đối Chiếu Công Nợ</a>
-                                            </li>
-                                        </td>
-                                    </tr>*@
+            <td style="text-align: left">
+                <li style=" list-style-type: none;" class="liTitle">
+                    <a href="" onclick="runReport('@Url.Action("BangDoiChieuCongNo_Fill", "MauInChungTu")'
+                              )">5.Bảng Đối Chiếu Doanh Thu - Công Nợ</a>
+                </li>
+            </td>
+        </tr>
+        <tr style="height:30px">
+            <td style="text-align: left">
+                <li style=" list-style-type: none;" class="liTitle">
+                    <a href="" onclick="runReport('@Url.Action("BangDoiChieuDTCN_Fill", "MauInChungTu")'
+                              )">6.Bảng Đối Chiếu Công Nợ</a>
+                </li>
+            </td>
+        </tr>*@
                                 <tr style="height:30px">
                                     <td style="text-align: left">
                                         <li style=" list-style-type: none;" class="liTitle">

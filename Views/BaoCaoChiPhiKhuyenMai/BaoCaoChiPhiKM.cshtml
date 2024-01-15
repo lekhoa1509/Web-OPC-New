@@ -643,10 +643,10 @@
                     <div id="locBC">
                         <span id="spanText" class="text-loading">[usp_BaoCaoChiPhiKhuyenMai_SAP]</span>
                         <a>Từ Ngày</a><br /><br />
-                        <input class="tu_ngay" placeholder="Từ Ngày" id="tu_ngay" name="From_date" type="date" format="YYYY-MM-DD" value="@Request.QueryString["From_date"]" />
+                        <input class="tu_ngay" placeholder="Từ Ngày" id="tu_ngay" name="From_date" type="date" format="YYYY-MM-DD" value="@Request.Cookies["From_date"].Value" />
                         <script>$("#tu_ngay").datetimepicker({ timepicker: false, format: 'Y-m-d' });</script><br /><br />
                         <a>Đến Ngày</a><br /><br />
-                        <input class="den_ngay" id="den_ngay" placeholder=" Đến Ngày" name="To_date" type="DATE" format="YYYY-MM-DD" value="@Request.QueryString["To_date"]" /><br /><br />
+                        <input class="den_ngay" id="den_ngay" placeholder=" Đến Ngày" name="To_date" type="DATE" format="YYYY-MM-DD" value="@Request.Cookies["To_date"].Value" /><br /><br />
                         <script>$("#den_ngay").datetimepicker({ timepicker: false, format: 'Y-m-d' });</script>
                     </div>
 
@@ -654,6 +654,8 @@
                         <button class="submit" type="submit" onclick="runReport()"> Chạy Báo Cáo </button>
                     </div>
                 </form>
+                <button style="border-radius: 10px; margin-left: 10px; margin-bottom: 10px; margin-top: 10px; background-color: #aec9e0; color: #3483bd" onclick="exportToExcel()">Xuất Excel</button>
+
             </li>
         </ul>
     </div>
@@ -1104,7 +1106,11 @@
 
     <script src="~/assets/js/bootstrap.bundle.min.js"></script>
     <script src="~/assets/js/jquery-3.6.0.min.js"></script>
-
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="//cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.3/xlsx.full.min.js"></script>
     <script src="~/assets/js/pdfmake.min.js"></script>
     <script src="~/assets/js/vfs_fonts.js"></script>
     <script src="~/assets/js/custom.js"></script>
@@ -1113,7 +1119,34 @@
         crossorigin="anonymous"></script>*@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
 
+    <script>
+        function exportToExcel() {
+            // Lấy danh sách cột cần xuất từ bảng gốc
+            var columnsToExport = ['Mã Đối Tượng', 'Tên Đối Tượng', 'ĐVT', 'Số Lượng', 'Kênh BH', 'Mã TDV', 'Tên TDV', 'Tổng tiền'];
 
+            // Tạo bảng tạm thời chỉ chứa cột cần xuất
+            var temporaryTable = $('#example').clone();
+
+            // Lặp qua các cột không nằm trong danh sách cần xuất và ẩn chúng
+            temporaryTable.find('thead th, tbody td').each(function () {
+                var columnHeader = $(this).text();
+                if (!columnsToExport.includes(columnHeader)) {
+                    $(this).hide();
+                }
+            });
+
+            // Format cells with numeric data (assuming 'Tổng tiền' is a numeric column)
+            temporaryTable.find('tbody td:contains("₫")').attr('data-type', 'number'); // This assumes that the 'Tổng tiền' column contains "₫" symbol
+
+            // Xuất Excel từ bảng tạm thời
+            temporaryTable.table2excel({
+                exclude: ".hidden",
+                name: "Sheet 1",
+                filename: "BaoCaoChiPhiKM"
+            });
+        }
+
+    </script>
     <script>
         function runReport() {
             const uncheckedCheckboxIndexes = [];
@@ -1205,7 +1238,7 @@
             const loader = document.querySelector(".loader");
             loader.classList.add("loader-hidden");
             applyCheckboxAndColumnState();
-           
+
         }
         document.getElementById("dateForm").addEventListener("submit", (event) => {
             event.preventDefault();
@@ -1438,115 +1471,115 @@
                 }
             }
         }
-        //function toggleRowsSUI(cell) {
-        //    var rowIndex = cell.parentElement.parentElement.rowIndex; // Adjusted to get the index of the parent row
-        //    var table = document.getElementById('example');
-        //    var rows = table.rows;
+                //function toggleRowsSUI(cell) {
+                //    var rowIndex = cell.parentElement.parentElement.rowIndex; // Adjusted to get the index of the parent row
+                //    var table = document.getElementById('example');
+                //    var rows = table.rows;
 
-        //    for (var i = rowIndex + 1; i < rows.length; i++) {
-        //        var row = rows[i];
-        //        if (row.classList.contains('expandable-content_detailSUI')) {
-        //            row.style.display = (row.style.display === 'none' || row.style.display === '') ? 'table-row' : 'none';
-        //        } else if (row.classList.contains('table-dark')) {
-        //            break;
-        //        }
-        //    }
-        //}
-        //function toggleRowsPHIEN(cell) {
-        //    var rowIndex = cell.parentElement.parentElement.rowIndex; // Adjusted to get the index of the parent row
-        //    var table = document.getElementById('example');
-        //    var rows = table.rows;
+                //    for (var i = rowIndex + 1; i < rows.length; i++) {
+                //        var row = rows[i];
+                //        if (row.classList.contains('expandable-content_detailSUI')) {
+                //            row.style.display = (row.style.display === 'none' || row.style.display === '') ? 'table-row' : 'none';
+                //        } else if (row.classList.contains('table-dark')) {
+                //            break;
+                //        }
+                //    }
+                //}
+                //function toggleRowsPHIEN(cell) {
+                //    var rowIndex = cell.parentElement.parentElement.rowIndex; // Adjusted to get the index of the parent row
+                //    var table = document.getElementById('example');
+                //    var rows = table.rows;
 
-        //    for (var i = rowIndex + 1; i < rows.length; i++) {
-        //        var row = rows[i];
-        //        if (row.classList.contains('expandable-content_detailPHIEN')) {
-        //            row.style.display = (row.style.display === 'none' || row.style.display === '') ? 'table-row' : 'none';
-        //        } else if (row.classList.contains('table-dark')) {
-        //            break;
-        //        }
-        //    }
-        //}
-        //function toggleRows25(cell) {
-        //    var rowIndex = cell.parentElement.parentElement.rowIndex; // Adjusted to get the index of the parent row
-        //    var table = document.getElementById('example');
-        //    var rows = table.rows;
+                //    for (var i = rowIndex + 1; i < rows.length; i++) {
+                //        var row = rows[i];
+                //        if (row.classList.contains('expandable-content_detailPHIEN')) {
+                //            row.style.display = (row.style.display === 'none' || row.style.display === '') ? 'table-row' : 'none';
+                //        } else if (row.classList.contains('table-dark')) {
+                //            break;
+                //        }
+                //    }
+                //}
+                //function toggleRows25(cell) {
+                //    var rowIndex = cell.parentElement.parentElement.rowIndex; // Adjusted to get the index of the parent row
+                //    var table = document.getElementById('example');
+                //    var rows = table.rows;
 
-        //    for (var i = rowIndex + 1; i < rows.length; i++) {
-        //        var row = rows[i];
-        //        if (row.classList.contains('expandable-content_detail25')) {
-        //            row.style.display = (row.style.display === 'none' || row.style.display === '') ? 'table-row' : 'none';
-        //        } else if (row.classList.contains('table-dark')) {
-        //            break;
-        //        }
-        //    }
-        //}
-        //window.onload = function () {
-        //    // Ẩn các dòng con có class "expandable-contentOTC"
-        //    var table2 = document.getElementById('example');
-        //    var rows2 = table2.getElementsByClassName('expandable-content_detail');
+                //    for (var i = rowIndex + 1; i < rows.length; i++) {
+                //        var row = rows[i];
+                //        if (row.classList.contains('expandable-content_detail25')) {
+                //            row.style.display = (row.style.display === 'none' || row.style.display === '') ? 'table-row' : 'none';
+                //        } else if (row.classList.contains('table-dark')) {
+                //            break;
+                //        }
+                //    }
+                //}
+                //window.onload = function () {
+                //    // Ẩn các dòng con có class "expandable-contentOTC"
+                //    var table2 = document.getElementById('example');
+                //    var rows2 = table2.getElementsByClassName('expandable-content_detail');
 
-        //    for (var j = 0; j < rows2.length; j++) {
-        //        rows2[j].style.display = 'none';
-        //    }
+                //    for (var j = 0; j < rows2.length; j++) {
+                //        rows2[j].style.display = 'none';
+                //    }
 
-        //    // Ẩn các dòng con có class "expandable-contentETC"
-        //    //var rows3 = table2.getElementsByClassName('expandable-contentETC');
+                //    // Ẩn các dòng con có class "expandable-contentETC"
+                //    //var rows3 = table2.getElementsByClassName('expandable-contentETC');
 
-        //    //for (var k = 0; k < rows3.length; k++) {
-        //    //    rows3[k].style.display = 'none';
-        //    //}
-        //};
+                //    //for (var k = 0; k < rows3.length; k++) {
+                //    //    rows3[k].style.display = 'none';
+                //    //}
+                //};
     </script>
     @*<script>
-        function toggleRows2(cell) {
-            var rowIndex = cell.parentElement.parentElement.rowIndex; // Adjusted to get the index of the parent row
-            var table = document.getElementById('example2');
-            var rows = table.rows;
+            function toggleRows2(cell) {
+                var rowIndex = cell.parentElement.parentElement.rowIndex; // Adjusted to get the index of the parent row
+                var table = document.getElementById('example2');
+                var rows = table.rows;
 
-            for (var i = rowIndex + 1; i < rows.length; i++) {
-                var row = rows[i];
-                if (row.classList.contains('expandable-contentOTC')) {
-                    row.style.display = (row.style.display === 'none' || row.style.display === '') ? 'table-row' : 'none';
-                } else if (row.classList.contains('table-dark')) {
-                    break;
+                for (var i = rowIndex + 1; i < rows.length; i++) {
+                    var row = rows[i];
+                    if (row.classList.contains('expandable-contentOTC')) {
+                        row.style.display = (row.style.display === 'none' || row.style.display === '') ? 'table-row' : 'none';
+                    } else if (row.classList.contains('table-dark')) {
+                        break;
+                    }
                 }
             }
-        }
-    </script>
-    <script>
-        function toggleRows3(cell) {
-            var rowIndex = cell.parentElement.parentElement.rowIndex; // Adjusted to get the index of the parent row
-            var table = document.getElementById('example2');
-            var rows = table.rows;
+        </script>
+        <script>
+            function toggleRows3(cell) {
+                var rowIndex = cell.parentElement.parentElement.rowIndex; // Adjusted to get the index of the parent row
+                var table = document.getElementById('example2');
+                var rows = table.rows;
 
-            for (var i = rowIndex + 1; i < rows.length; i++) {
-                var row = rows[i];
-                if (row.classList.contains('expandable-contentETC')) {
-                    row.style.display = (row.style.display === 'none' || row.style.display === '') ? 'table-row' : 'none';
-                } else if (row.classList.contains('table-dark')) {
-                    break;
+                for (var i = rowIndex + 1; i < rows.length; i++) {
+                    var row = rows[i];
+                    if (row.classList.contains('expandable-contentETC')) {
+                        row.style.display = (row.style.display === 'none' || row.style.display === '') ? 'table-row' : 'none';
+                    } else if (row.classList.contains('table-dark')) {
+                        break;
+                    }
                 }
             }
-        }
-        // Thêm vào sau đoạn script toggleRows2
-        window.onload = function () {
-            // Ẩn các dòng con có class "expandable-contentOTC"
-            var table2 = document.getElementById('example2');
-            var rows2 = table2.getElementsByClassName('expandable-contentOTC');
+            // Thêm vào sau đoạn script toggleRows2
+            window.onload = function () {
+                // Ẩn các dòng con có class "expandable-contentOTC"
+                var table2 = document.getElementById('example2');
+                var rows2 = table2.getElementsByClassName('expandable-contentOTC');
 
-            for (var j = 0; j < rows2.length; j++) {
-                rows2[j].style.display = 'none';
-            }
+                for (var j = 0; j < rows2.length; j++) {
+                    rows2[j].style.display = 'none';
+                }
 
-            // Ẩn các dòng con có class "expandable-contentETC"
-            var rows3 = table2.getElementsByClassName('expandable-contentETC');
+                // Ẩn các dòng con có class "expandable-contentETC"
+                var rows3 = table2.getElementsByClassName('expandable-contentETC');
 
-            for (var k = 0; k < rows3.length; k++) {
-                rows3[k].style.display = 'none';
-            }
-        };
+                for (var k = 0; k < rows3.length; k++) {
+                    rows3[k].style.display = 'none';
+                }
+            };
 
-    </script>*@
+        </script>*@
 </body>
 
 </html> 

@@ -20,6 +20,11 @@
 
         .left-sidebar {
             width: 250px;
+            z-index:1000;
+            position:fixed;
+        }
+        .main-container{
+        
         }
 
             .left-sidebar.expand {
@@ -50,8 +55,64 @@
             font-weight: bold;
         }
         .row-chart {
+            padding-bottom:20px;
+            display:flex;
             justify-content: center;
             flex-direction: column;
+        }
+        .chart-1{
+            width:85%;
+            margin-bottom:20px;
+        }
+        .chart-2 {
+            width: 85%;
+            margin-bottom: 20px;
+        }
+        .chart-3 {
+            width: 85%;
+           
+        }
+        .text-chart{
+            font-size:15px;
+            color:red;
+        }
+        .left-chart {
+            width: 100%;
+        }
+        .right-chart {
+            width: 100%;
+            height:100%;
+        }
+        .row-table{
+            width:100%;
+        }
+        .row-chart-2{
+            height:max-content;
+            display:flex;
+            flex-direction:column;
+        }
+        table{
+            width:300px;
+            border:1px solid black;
+            border-radius:10px;
+        }
+        .table{
+            width:100%;
+            height:400px;
+            overflow:auto;
+        }
+        th, td {
+    
+    text-align: left;
+}
+        #container{
+            width:100%;
+            height:300px;
+        }
+        .row-chart{
+          justify-content:center;
+          align-items:center;
+          align-items:center
         }
     }
 
@@ -69,8 +130,31 @@
             font-weight: bold;
         }
         .row-chart {
+            display:flex;
             justify-content: center;
             flex-direction: column;
+        }
+        .chart-1{
+            width:80%;
+        }
+        .chart-2 {
+            width: 85%;
+            margin-bottom: 20px;
+        }
+
+        .chart-3 {
+            width: 85%;
+        }
+            .row-chart-2 {
+            height: max-content;
+            display: flex;
+            flex-direction: column;
+        }
+        .left-chart{
+            width:100%;
+        }
+        .row-chart-2{
+            display:flex;
         }
     }
 @media screen and (min-width:514px) {
@@ -83,6 +167,21 @@
     .left-sidebar {
         width: 270px;
     }
+    .main-content .box .box-1 {
+        height: 80px;
+    }
+
+    .main-content .box .box-2 {
+        height: 80px;
+    }
+
+    .main-content .box .box-3 {
+        height: 80px;
+    }
+
+    .main-content .box .box-4 {
+        height: 80px;
+    }
     .text {
         font-size: 18px;
     }
@@ -94,19 +193,78 @@
     .row-chart {
         justify-content: center;
         flex-direction: column;
+       display:flex;
+        align-items:center
     }
+    .chart-1{
+        width:80%;
+        margin-bottom:20px;
+        height:max-content;
+    }
+    .chart-2 {
+        width: 80%;
+        margin-bottom: 20px;
+        height: max-content;
+    }
+    .chart-3 {
+        width: 80%;
+        
+        height: max-content;
+    }
+
 }
 @media screen and (min-width:600px) and (max-width: 700px) {
     .left-sidebar {
         width: 270px;
     }
+    .text {
+        font-size: 18px;
+    }
 
+    .num {
+        font-size: 20px;
+        font-weight: bold;
+    }
     .main-content .box {
         flex-direction: column;
     }
+        .main-content .box .box-1 {
+            height: 80px;
+        }
+
+        .main-content .box .box-2 {
+            height: 80px;
+        }
+
+        .main-content .box .box-3 {
+            height: 80px;
+        }
+
+        .main-content .box .box-4 {
+            height: 80px;
+        }
     .row-chart {
         justify-content: center;
         flex-direction: column;
+        display: flex;
+        align-items: center
+    }
+
+    .chart-1 {
+        width: 80%;
+        margin-bottom: 20px;
+        height: max-content;
+    }
+
+    .chart-2 {
+        width: 80%;
+        margin-bottom: 20px;
+        height: max-content;
+    }
+
+    .chart-3 {
+        width: 80%;
+        height: max-content;
     }
 }
 @media screen and (min-width:700px) and (max-width: 800px) {
@@ -143,8 +301,30 @@
     .row-chart {
         justify-content: center;
         flex-direction: column;
+        display: flex;
+        align-items: center
     }
 
+    .chart-1 {
+        width: 90%;
+        margin-bottom: 20px;
+        height: max-content;
+    }
+
+    .chart-2 {
+        width: 90%;
+        margin-bottom: 20px;
+        height: max-content;
+    }
+
+    .chart-3 {
+        width: 90%;
+        height: max-content;
+    }
+   /* #gaugeChart1{
+        width:400px;
+        height:100%;
+    }*/
 }
 @media screen and (min-width:800px) and (max-width: 900px) {
     .left-sidebar {
@@ -182,9 +362,25 @@
     }
     .row-chart {
         display: flex;
-        justify-content: space-around;
+        flex-direction:column;
+        justify-content:center;
+    }
+    .chart-1 {
+        width: 90%;
+        margin-bottom: 20px;
+        height: max-content;
     }
 
+    .chart-2 {
+        width: 90%;
+        margin-bottom: 20px;
+        height: max-content;
+    }
+
+    .chart-3 {
+        width: 90%;
+        height: max-content;
+    }
 }
 @media screen and (min-width:900px) and (max-width: 1000px) {
     .left-sidebar {
@@ -222,7 +418,24 @@
     }
     .row-chart {
         display: flex;
+        flex-direction:column;
         justify-content: space-around;
+    }
+    .chart-1 {
+        width: 90%;
+        margin-bottom: 20px;
+        height: max-content;
+    }
+
+    .chart-2 {
+        width: 90%;
+        margin-bottom: 20px;
+        height: max-content;
+    }
+
+    .chart-3 {
+        width: 90%;
+        height: max-content;
     }
 }
 @media screen and (min-width:1000px) and (max-width: 1100px) {
@@ -267,6 +480,26 @@
         display: flex;
         justify-content: space-around;
     }
+    .chart-1 {
+        width: 30%;
+        margin-bottom: 20px;
+        height: max-content;
+    }
+
+    .chart-2 {
+        width: 30%;
+        margin-bottom: 20px;
+        height: max-content;
+    }
+
+    .chart-3 {
+        width: 30%;
+        height: max-content;
+    }
+    .row-chart-2 {
+        display: flex;
+        width: 100%;
+    }
 }
 @media screen and (min-width:1100px) and (max-width: 1200px) {
     .left-sidebar {
@@ -289,7 +522,7 @@
         width: 45%;
     }
 
-    .main-content .box .box-2 {
+    .main-content .box .box-2 { 
         width: 45%;
     }
 
@@ -312,6 +545,35 @@
         display: flex;
         justify-content: space-around;
     }
+    .row-chart-2 .left-chart {
+        width: 70%;
+    }
+
+    .row-chart-2 .right-chart {
+        width: 30%;
+    }
+
+    .row-chart-2 {
+        display: flex;
+        width: 100%;
+    }
+    .chart-1 {
+        width: 30%;
+        /*  margin-bottom: 20px;*/
+        height: max-content;
+    }
+
+    .chart-2 {
+        width: 30%;
+        /* margin-bottom: 20px;*/
+        height: max-content;
+    }
+
+    .chart-3 {
+        width: 30%;
+        height: max-content;
+    }
+
 }
 @media screen and (min-width:1200px) and (max-width: 1300px) {
     .left-sidebar {
@@ -353,10 +615,51 @@
     .num {
         font-size: 25px;
     }
+    .chart-1 {
+        width: 30%;
+        /*  margin-bottom: 20px;*/
+        height: max-content;
+    }
+
+    .chart-2 {
+        width: 30%;
+        /* margin-bottom: 20px;*/
+        height: max-content;
+    }
+
+    .chart-3 {
+        width: 30%;
+        height: max-content;
+    }
+
     .row-chart {
         display: flex;
         justify-content: space-around;
     }
+    .row-chart-2 .left-chart {
+        width: 70%;
+    }
+
+    .row-chart-2 .right-chart {
+        width: 30%;
+    }
+
+    .row-chart-2 {
+        display: flex;
+        width: 100%;
+    }
+}
+@media screen and (max-width:1300px){
+   /* .mobile-menu-overlay{
+        display:block;
+        opacity:0;
+        visibility:hidden;
+    }
+    .mobile-menu-overlay.show {
+   
+        opacity: .6;
+        visibility: visible;
+    }*/
 }
 @media screen and (min-width:1300px) and (max-width: 1400px) {
     .left-sidebar {
@@ -398,9 +701,38 @@
     .num {
         font-size: 25px;
     }
+    .chart-1 {
+        width: 30%;
+        /*  margin-bottom: 20px;*/
+        height: max-content;
+    }
+
+    .chart-2 {
+        width: 30%;
+        /* margin-bottom: 20px;*/
+        height: max-content;
+    }
+
+    .chart-3 {
+        width: 30%;
+        height: max-content;
+    }
+
     .row-chart {
         display: flex;
         justify-content: space-around;
+    }
+    .row-chart-2 .left-chart {
+        width: 70%;
+    }
+
+    .row-chart-2 .right-chart {
+        width: 30%;
+    }
+
+    .row-chart-2 {
+        display: flex;
+        width: 100%;
     }
 }
 @media screen and (min-width:1400px) and (max-width: 1500px) {
@@ -443,9 +775,35 @@
     .num {
         font-size: 25px;
     }
+    .chart-1 {
+        width: 30%;
+      /*  margin-bottom: 20px;*/
+        height: max-content;
+    }
+
+    .chart-2 {
+        width: 30%;
+       /* margin-bottom: 20px;*/
+        height: max-content;
+    }
+
+    .chart-3 {
+        width: 30%;
+        height: max-content;
+    }
     .row-chart {
         display: flex;
         justify-content: space-around;
+    }
+       .row-chart-2 .left-chart{
+        width:70%;
+    }
+    .row-chart-2 .right-chart {
+        width: 30%;
+    }
+    .row-chart-2{
+      display:flex;
+      width:100%;
     }
 }
 @media screen and (min-width:1500px) and (max-width: 1600px) {
@@ -488,9 +846,39 @@
     .num {
         font-size: 25px;
     }
+
     .row-chart {
+        width:100%;
         display: flex;
-        justify-content: space-around;
+        justify-content: space-between;
+    }
+    .chart-1 {
+        width: 30%;
+        /*  margin-bottom: 20px;*/
+        height: max-content;
+    }
+
+    .chart-2 {
+        width: 30%;
+        /* margin-bottom: 20px;*/
+        height: max-content;
+    }
+
+    .chart-3 {
+        width: 30%;
+        height: max-content;
+    }
+    .row-chart-2 .left-chart {
+        width: 70%;
+    }
+
+    .row-chart-2 .right-chart {
+        width: 30%;
+    }
+
+    .row-chart-2 {
+        display: flex;
+        width: 100%;
     }
 }
 @media screen and (min-width:1600px) and (max-width: 1700px) {
@@ -534,8 +922,37 @@
         font-size: 25px;
     }
     .row-chart {
+     
         display: flex;
-        justify-content: space-around;
+        justify-content: space-between;
+    }
+    .chart-1 {
+        width: 30%;
+        /*  margin-bottom: 20px;*/
+        height: max-content;
+    }
+
+    .chart-2 {
+        width: 30%;
+        /* margin-bottom: 20px;*/
+        height: max-content;
+    }
+
+    .chart-3 {
+        width: 30%;
+        height: max-content;
+    }
+    .row-chart-2 .left-chart {
+        width: 70%;
+    }
+
+    .row-chart-2 .right-chart {
+        width: 30%;
+    }
+
+    .row-chart-2 {
+        display: flex;
+        width: 100%;
     }
 }
 @media screen and (min-width:1700px) and (max-width: 1800px) {
@@ -582,6 +999,34 @@
         display: flex;
         justify-content: space-around;
     }
+    .chart-1 {
+        width: 30%;
+        /*  margin-bottom: 20px;*/
+        height: max-content;
+    }
+
+    .chart-2 {
+        width: 30%;
+        /* margin-bottom: 20px;*/
+        height: max-content;
+    }
+
+    .chart-3 {
+        width: 30%;
+        height: max-content;
+    }
+    .row-chart-2 .left-chart {
+        width: 70%;
+    }
+
+    .row-chart-2 .right-chart {
+        width: 30%;
+    }
+
+    .row-chart-2 {
+        display: flex;
+        width: 100%;
+    }
 }
 @media screen and (min-width:1800px) and (max-width: 1900px) {
     .left-sidebar {
@@ -627,11 +1072,40 @@
         display: flex;
         justify-content: space-around;
     }
+    .chart-1 {
+        width: 30%;
+        /*  margin-bottom: 20px;*/
+        height: max-content;
+    }
+
+    .chart-2 {
+        width: 30%;
+        /* margin-bottom: 20px;*/
+        height: max-content;
+    }
+
+    .chart-3 {
+        width: 30%;
+        height: max-content;
+    }
+    .row-chart-2 .left-chart {
+        width: 70%;
+    }
+
+    .row-chart-2 .right-chart {
+        width: 30%;
+    }
+
+    .row-chart-2 {
+        display: flex;
+        width: 100%;
+    }
 }
 @media screen and (min-width:1900px) and (max-width: 2000px) {
     .left-sidebar {
         width: 270px;
     }
+
     .box {
         display: flex;
         justify-content: space-evenly
@@ -668,9 +1142,58 @@
     .num {
         font-size: 25px;
     }
+
     .row-chart {
         display: flex;
         justify-content: space-around;
+    }
+
+    .chart-1 {
+        width: 30%;
+        /*  margin-bottom: 20px;*/
+        height: max-content;
+    }
+
+    .chart-2 {
+        width: 30%;
+        /* margin-bottom: 20px;*/
+        height: max-content;
+    }
+
+    .chart-3 {
+        width: 30%;
+        height: max-content;
+    }
+
+    .row-chart-2 .left-chart {
+        width: 70%;
+    }
+
+    .row-chart-2 .right-chart {
+        width: 30%;
+    }
+
+    .row-chart-2 {
+        display: flex;
+        width: 100%;
+    }
+
+    .row-table {
+        width: 100%;
+        height: max-content;
+        display: flex;
+        justify-content:space-between;
+    }
+    .row-table .table{
+        width:70%;
+
+    }
+    .row-table .chart-table{
+        background-color:white;
+        padding:10px;
+        height:max-content;
+        width:30%;
+        border-radius:10px;
     }
 }
 @media screen and (min-width:2001px){
@@ -719,6 +1242,35 @@
     .row-chart {
         display: flex;
         justify-content: space-around;
+    }
+    .chart-1 {
+        width: 30%;
+        /*  margin-bottom: 20px;*/
+        height: max-content;
+    }
+
+    .chart-2 {
+        width: 30%;
+        /* margin-bottom: 20px;*/
+        height: max-content;
+    }
+
+    .chart-3 {
+        width: 30%;
+        height: max-content;
+    }
+
+    .row-chart-2 .left-chart {
+        width: 70%;
+    }
+
+    .row-chart-2 .right-chart {
+        width: 30%;
+    }
+
+    .row-chart-2 {
+        display: flex;
+        width: 100%;
     }
 }
  

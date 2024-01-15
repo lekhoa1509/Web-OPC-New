@@ -657,10 +657,10 @@
                     <div id="locBC">
                         <span id="spanText" class="text-loading">[usp_SoQuyTienMat_SAP]</span>
                         <a>Từ Ngày</a><br /><br />
-                        <input class="tu_ngay" placeholder="Từ Ngày" id="tu_ngay" name="From_date" type="date" format="YYYY-MM-DD" value="@Request.QueryString["From_date"]" />
+                        <input class="tu_ngay" placeholder="Từ Ngày" id="tu_ngay" name="From_date" type="date" format="YYYY-MM-DD" value="@Request.Cookies["From_date"].Value" />
                         <script>$("#tu_ngay").datetimepicker({ timepicker: false, format: 'Y-m-d' });</script><br /><br />
                         <a>Đến Ngày</a><br /><br />
-                        <input class="den_ngay" id="den_ngay" placeholder=" Đến Ngày" name="To_date" type="DATE" format="YYYY-MM-DD" value="@Request.QueryString["To_date"]" /><br /><br />
+                        <input class="den_ngay" id="den_ngay" placeholder=" Đến Ngày" name="To_date" type="DATE" format="YYYY-MM-DD" value="@Request.Cookies["To_date"].Value" /><br /><br />
                         <script>$("#den_ngay").datetimepicker({ timepicker: false, format: 'Y-m-d' });</script>
                     </div>
                     <h6>Chọn Tài Khoản</h6>
@@ -675,7 +675,7 @@
                     <h6>Chọn Ngân Hàng</h6>
 
                     <div class="select-btn2" style="width:250px;margin-top:10px">
-                        <input type="text" id="searchInput" oninput="filterDropdown()" placeholder="Tìm kiếm...">
+                        <input type="text" id="searchInput" oninput="filterDropdown()" placeholder="Tìm kiếm..."autocomplete="off">
                         <select name="Nhom" id="nhomtheoselect2" size="5" onchange="saveSelectedValueToCookie2()">
 
                             <option value="001-033554-001">(OPC)Ngân hàng TNHH MTC HSBC</option>
@@ -885,15 +885,24 @@
 
     </script>
     <script>
-        function filterDropdown() {
-            var input, filter, select, option, i, txtValue;
-            input = document.getElementById("searchInput");
-            filter = input.value.toUpperCase();
-            select = document.getElementById("nhomtheoselect2");
-            option = select.getElementsByTagName("option");
+        // Lấy các phần tử cần sử dụng
+        var input = document.getElementById("searchInput");
+        var select = document.getElementById("nhomtheoselect2");
 
-            for (i = 0; i < option.length; i++) {
-                txtValue = option[i].textContent || option[i].innerText;
+        // Thêm event listener cho sự kiện click trên toàn bộ trang
+        document.addEventListener("click", function (event) {
+            // Kiểm tra nếu sự kiện click không phải từ ô input hoặc dropdown
+            if (event.target !== input && event.target !== select) {
+                // Ẩn dropdown
+                select.style.display = "none";
+            }
+        });
+        function filterDropdown() {
+            var filter = input.value.toUpperCase();
+            var option = select.getElementsByTagName("option");
+
+            for (var i = 0; i < option.length; i++) {
+                var txtValue = option[i].textContent || option[i].innerText;
                 if (txtValue.toUpperCase().indexOf(filter) > -1) {
                     option[i].style.display = "";
                 } else {
@@ -903,7 +912,9 @@
 
             // Tự động mở rộng dropdown
             select.size = Math.min(5, select.options.length);
-            select.style.display = (filter !== "") ? "block" : "none";
+
+            // Hiển thị dropdown khi ô input được click
+            select.style.display = "block";
         }
         function saveSelectedValueToCookie2() {
             var select = document.getElementById("nhomtheoselect2");
@@ -926,13 +937,7 @@
 
             // Gọi hàm để nhóm dữ liệu dựa trên giá trị đã chọn
         }
-        //function saveSelectedValueToCookie() {
-        //    var select = document.getElementById("nhomtheoselect");
-        //    var selectedValue = select.value;
-
-        //    // Thêm mã lưu giá trị vào cookie hoặc thực hiện các bước khác theo yêu cầu của bạn.
-        //    console.log("Giá trị đã chọn: " + selectedValue);
-        //}
+     
     </script>
     @*<script>
             document.getElementById("exportbutton").addEventListener('click', function () {
@@ -1074,32 +1079,7 @@
 
 
     </script>
-    <script>
-        // Set the "Từ Ngày" input to the first day of the current month
-        function setFirstDayOfCurrentMonth() {
-            const currentDate = new Date();
-            const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
-            const formattedDate = formatDate(firstDayOfMonth);
-
-            document.getElementById("tu_ngay").value = formattedDate;
-        }
-        function setCurrentDate() {
-            const currentDate = new Date();
-            const formattedToDate = formatDate(currentDate);
-            document.getElementById("den_ngay").value = formattedToDate;
-        }
-        // Format the date as "yyyy-mm-dd" for input type="date"
-        function formatDate(date) {
-            const year = date.getFullYear();
-            const month = (date.getMonth() + 1).toString().padStart(2, "0");
-            const day = date.getDate().toString().padStart(2, "0");
-            return `${year}-${month}-${day}`;
-        }
-
-        // Call the function to set the "Từ Ngày" input on page load
-        setFirstDayOfCurrentMonth();
-        setCurrentDate();
-    </script>
+   
     <script>
         function runReport() {
 
@@ -1251,6 +1231,32 @@
             });
         });
 
+    </script>
+    <script>
+        function getCookie(name) {
+            var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+            if (match) return match[2];
+        }
+
+        // Hàm để đặt giá trị mặc định cho dropdown
+        function setDefaultDropdownValue() {
+            // Lấy giá trị của cookie 'Ma_TK'
+            var maTKValue = getCookie('Ma_TK');
+            var maNHValue = getCookie('Ma_NH');
+            // Nếu cookie tồn tại và giá trị là một trong các giá trị của dropdown
+            if (maTKValue && document.getElementById('nhomtheoselect').querySelector('option[value="' + maTKValue + '"]')) {
+                // Đặt giá trị mặc định cho dropdown
+                document.getElementById('nhomtheoselect').value = maTKValue;
+            }
+            if (maNHValue) {
+                document.getElementById('searchInput').value = maNHValue;
+            }
+        }
+
+        // Gọi hàm setDefaultDropdownValue khi trang được tải
+        window.onload = function () {
+            setDefaultDropdownValue();
+        };
     </script>
     <script>
         function printPage() {

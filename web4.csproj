@@ -1221,6 +1221,7 @@
     <Content Include="Views\MauInChungTu\PhieuXacNhanTTTCK.cshtml" />
     <Content Include="Views\BaoCaoChiPhiKhuyenMai\BaoCaoChiPhiKM_Fill.cshtml" />
     <Content Include="Views\BaoCaoChiPhiKhuyenMai\BaoCaoChiPhiKM.cshtml" />
+    <Content Include="Views\MauInChungTu\PhieuXacNhanTTTCK_Fill.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

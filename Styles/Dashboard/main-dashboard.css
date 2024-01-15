@@ -12,7 +12,7 @@ body {
     top: 0;
     width: 100%;
     background-color: #3f5161;
-   
+
   
    
 }
@@ -28,8 +28,9 @@ body {
 }
 .main-container {
     height: 100%;
-    width: 100%;
+    width: calc(100%-276px);
     background-color: #ecf0f4;
+   /* position: fixed;*/
 }
 
 .main-container .header .header-left{
@@ -69,6 +70,11 @@ body {
                 left: 0;
                 background-color: yellow;
             }
+    .main-container .main-content {
+        padding: 10px;
+        width: 100%;
+        height: max-content;
+    }
 .header-left i {
     font-size: 40px;
     color: #3483bd;
@@ -239,7 +245,7 @@ nav {
     border-top-right-radius: 20px;
     border-bottom-right-radius: 10px;
     transition: ease-in 0.2s;
-    z-index: 100;
+
 }
 
     nav.hide {
@@ -312,14 +318,16 @@ nav {
     }
 
 section {
+   
     align-items: flex-start;
     position: absolute;
     top: 0;
     left: 270px;
     height: 100vh;
-    width: calc(100% - 270px);
+    width: 100%;
     z-index:1;
     transition: ease-in 0.3s;
+
 }
 
     section.expand {
@@ -336,13 +344,7 @@ section {
         section h1.dark-mode {
             color: white;
         }
-.main-container .main-content{
-    padding:10px;
 
-    width:100%;
-    height:max-content;
-   
-}
 .main-content .box {
   
   /*  flex-direction: column;*/
@@ -354,7 +356,7 @@ section {
         justify-content:center;
         align-items:center;
         /*text-align:center;*/
-        height: 100%;
+    /*    height: 100%;*/
         background: radial-gradient(circle at top left, #74b3f9 50%, #60a8fc 50%);
         margin-bottom: 10px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
@@ -366,7 +368,7 @@ section {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100%;
+/*    height: 100%;*/
     background: radial-gradient(circle at top left, #9294ff 50%, #7c88ff 50%);
     margin-bottom: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
@@ -377,7 +379,7 @@ section {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100%;
+  /*  height: 100%;*/
     background: radial-gradient(circle at top left, #65e7c0 50%, #4ddbab 50%);
     margin-bottom: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
@@ -388,7 +390,7 @@ section {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100%;
+   /* height: 100%;*/
     background: radial-gradient(circle at top left, #f38eae 50%, #f37d9f 50%);
     margin-bottom: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
@@ -398,10 +400,23 @@ section {
 .row-chart{
  margin-top:20px;
 width:100%;
-display:flex;
+
 align-items:center;
 }
+#gaugeChart1{
+    height:100%;
+    width:100%;
+}
+#gaugeChart2 {
+    height: 100%;
+    width: 100%;
+}
+#gaugeChart3 {
+    height: 100%;
+    width: 100%;
+}
     .row-chart .chart-1 {
+        
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         border-radius: 10px;
         background-color: white;
@@ -431,22 +446,28 @@ align-items:center;
         /* width: 220px;*/
         height: 300px;
     }
+
 .row-table{
     margin-top:20px;
-
-width:100%;
-height:500px;
+    padding:10px;
+    width:100%;
+    height:500px;
 }
-.row-table .table{
-    background-color:white;
-    width:60%;
-    height:max-content;
-}
-table {
-    border-collapse: collapse;
+    .row-table .table {
+        background-color: white;
+        border-radius: 10px;
+        /*   width:100%;*/
+        height: max-content;
+    }
+.table {
+    padding: 10px;
     width: 100%;
+    /*   border-collapse: collapse;*/
+    /* width: 100%;*/
 }
-
+table{
+   width:100%;
+}
 thead {
     background-color: #3f5161;
     color:white;
@@ -454,12 +475,19 @@ thead {
 
 thead, tbody, tfoot {
     border: 1px solid #dddddd;
+    
 }
-
-th, td {
+tbody tr{
+    margin-bottom:10px;
+}
+tbody{
+    font-size:18px;
+    padding:20px 0 20px 0;
+}
+/*th, td {
     padding: 8px;
     text-align: left;
-}
+}*/
 
 tfoot {
     font-weight: bold;
@@ -469,3 +497,40 @@ tfoot {
     tfoot td {
         border-top: 2px solid #dddddd;
     }
+.row-chart-2{
+
+    margin-top:20px;
+    margin-bottom:20px;
+   
+   
+  height:max-content;
+}
+    .row-chart-2 .left-chart {
+      /*  width: 70%;*/
+        height: 100%;
+        border-radius: 10px;
+        padding:10px;
+    }
+#revenueChart{
+    border-radius:10px;
+}
+#container{
+    border-radius:10px;
+}
+.row-chart-2 .right-chart {
+   /* width:40%;*/
+  /*  height:100%;*/
+    border-radius:10px;
+    padding:10px;
+}
+.mobile-menu-overlay{
+    position:fixed;
+    left:0;
+    top:0;
+    width:100%;height:100%;
+    background:black;
+    opacity:.6;
+    z-index:123;
+    background-size:20px;
+    background-position:98% 15px;
+}

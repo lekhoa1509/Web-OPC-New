@@ -2167,8 +2167,10 @@ namespace web4.Controllers
                     worksheet.Cells[startRow - 1, startColumn + 4].Value = "NGÀY THANH TOÁN";
                     worksheet.Cells[startRow - 1, startColumn + 5].Value = "GN THU";
                     worksheet.Cells[startRow - 1, startColumn + 6].Value = "TDV THU";
-                    worksheet.Cells[startRow - 1, startColumn + 7].Value = "TỔNG TIỀN";
-                    for (int col = 0; col < 8; col++)
+                    worksheet.Cells[startRow - 1, startColumn + 7].Value = "TIỀN TRƯỚC THUẾ";
+                    worksheet.Cells[startRow - 1, startColumn + 8].Value = "TIỀN THUẾ";
+                    worksheet.Cells[startRow - 1, startColumn + 9].Value = "TỔNG TIỀN";
+                    for (int col = 0; col < 10; col++)
                     {
                         var columnHeaderCell = worksheet.Cells[startRow - 1, startColumn + col];
                         columnHeaderCell.Style.Font.Bold = true;
@@ -2188,8 +2190,9 @@ namespace web4.Controllers
                     worksheet.Column(startColumn + 4).Width = 25;
                     worksheet.Column(startColumn + 5).Width = 15;
                     worksheet.Column(startColumn + 6).Width = 25;
-                    worksheet.Column(startColumn + 7).Width = 15;
-
+                    worksheet.Column(startColumn + 7).Width = 25;
+                    worksheet.Column(startColumn + 8).Width = 25;
+                    worksheet.Column(startColumn + 9).Width = 25;
                     if (combinedData != null && combinedData.Any())
                     {
                         // Lặp qua từng hàng dữ liệu trong tableData và ghi vào tệp Excel

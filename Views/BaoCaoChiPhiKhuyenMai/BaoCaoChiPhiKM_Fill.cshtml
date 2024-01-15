@@ -662,7 +662,12 @@
                     uncheckedCheckboxIndexes.push(index);
                 }
             });
+            var from_date = document.getElementById("tu_ngay").value;
+            var to_date = document.getElementById("den_ngay").value;
+            // Lưu giá trị vào cookie với tên là "Dvcs3" và thời gian sống là 1 ngày (86400 giây)
 
+            document.cookie = "From_date=" + from_date;
+            document.cookie = "To_date=" + to_date;
             // Lưu trạng thái vào Local Storage
             localStorage.setItem('uncheckedCheckboxIndexes', JSON.stringify(uncheckedCheckboxIndexes));
             // Hiển thị thẻ span có id là "spanText"

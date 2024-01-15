@@ -589,10 +589,10 @@
                     <div id="locBC">
                         <span id="spanText" class="text-loading">[usp_SoChiTietPhaiThuKH_SAP]</span>
                         <a>Từ Ngày</a><br /><br />
-                        <input class="tu_ngay" placeholder="Từ Ngày" id="tu_ngay" name="From_date" type="date" format="YYYY-MM-DD" value="@Request.QueryString["From_date"]" />
+                        <input class="tu_ngay" placeholder="Từ Ngày" id="tu_ngay" name="From_date" type="date" format="YYYY-MM-DD" value="@Request.Cookies["From_date"].Value" />
                         <script>$("#tu_ngay").datetimepicker({ timepicker: false, format: 'Y-m-d' });</script><br /><br />
                         <a>Đến Ngày</a><br /><br />
-                        <input class="den_ngay" id="den_ngay" placeholder=" Đến Ngày" name="To_date" type="DATE" format="YYYY-MM-DD" value="@Request.QueryString["To_date"]" /><br /><br />
+                        <input class="den_ngay" id="den_ngay" placeholder=" Đến Ngày" name="To_date" type="DATE" format="YYYY-MM-DD" value="@Request.Cookies["To_date"].Value" /><br /><br />
                         <script>$("#den_ngay").datetimepicker({ timepicker: false, format: 'Y-m-d' });</script>
                     </div>
                     <h6>Chọn Đối Tượng:</h6>
@@ -920,7 +920,7 @@
 
 
 
-    <script>
+    @*<script>
         // Set the "Từ Ngày" input to the first day of the current month
         function setFirstDayOfCurrentMonth() {
             const currentDate = new Date();
@@ -945,7 +945,7 @@
         // Call the function to set the "Từ Ngày" input on page load
         setFirstDayOfCurrentMonth();
         setCurrentDate();
-    </script>
+    </script>*@
     <script>
         function runReport() {
 
@@ -1081,7 +1081,51 @@
         });
 
     </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var dropdownInput = document.getElementById('dropdownInputTDV');
+            var selectedOption = document.getElementById('selectedOptionTDV');
 
+            // Lấy giá trị từ cookie
+            var mavtFromCookie = getCookie('Ma_TDV');
+
+            // Đặt giá trị cho trường input và hidden input
+            if (mavtFromCookie) {
+                dropdownInput.value = mavtFromCookie;
+                selectedOption.value = mavtFromCookie;
+            }
+        });
+        document.addEventListener('DOMContentLoaded', function () {
+            var dropdownInput = document.getElementById('dropdownInput');
+            var selectedOption = document.getElementById('selectedOption');
+
+            // Lấy giá trị từ cookie
+            var mavtFromCookie = getCookie('Ma_Dt');
+
+            // Đặt giá trị cho trường input và hidden input
+            if (mavtFromCookie) {
+                dropdownInput.value = mavtFromCookie;
+                selectedOption.value = mavtFromCookie;
+            }
+        });
+        // Hàm lấy giá trị từ cookie
+        function getCookie(cookieName) {
+            var name = cookieName + "=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var cookieArray = decodedCookie.split(';');
+
+            for (var i = 0; i < cookieArray.length; i++) {
+                var cookie = cookieArray[i];
+                while (cookie.charAt(0) == ' ') {
+                    cookie = cookie.substring(1);
+                }
+                if (cookie.indexOf(name) == 0) {
+                    return cookie.substring(name.length, cookie.length);
+                }
+            }
+            return null;
+        }
+    </script>
 </body>
 
 </html>
