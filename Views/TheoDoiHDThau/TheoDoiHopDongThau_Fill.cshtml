@@ -579,35 +579,28 @@
                         <script>$("#den_ngay").datetimepicker({ timepicker: false, format: 'Y-m-d' });</script>
                     </div>
 
-                    <div class="select-btnDt" style="width:100px">
-                        <select id="dropdownDt" class="select2" style="width: 200px" name="Ma_DT" onchange="saveSelectedDTValueToCookie()">
-                            <option value="">Chọn Khách Hàng</option>
-                            @if (ViewBag.DataDt != null)
-                            {
-                                var listdt = ViewBag.DataDt;
-                                foreach (var item in listdt)
-                                {
-                                    <option value="@item.Ma_CbNv" data-hoten="@item.Ma_CbNv">@item.Ma_CbNv @item.hoten</option>
-                                }
-                            }
-                        </select>
+                    <h6>Chọn Đối Tượng</h6>
 
-                    </div>
-                    <input type="hidden" name="Ma_CbNv" id="selectedOption">
-                    <div class="select-btn" style="width:100px;margin-top:10px">
-                        <select id="dropdownMaTDV" class="select2" style="width: 200px" name="Ma_TDV" onchange="saveSelectedTDVValueToCookie()">
-                            <option value="">Chọn mã TDV</option>
-                            @if (ViewBag.DataTDV != null)
-                            {
-                                var list = ViewBag.DataTDV;
-                                foreach (var item in list)
-                                {
-                                    <option value="@item.Ma_CbNv" data-hoten="@item.Ma_CbNv">@item.Ma_CbNv @item.hoten</option>
-                                }
-                            }
-                        </select>
+                    <input type="text" id="dropdownInput" list="dropdownList" placeholder="Tìm kiếm đối tượng">
+                    <datalist id="dropdownList">
+                        @foreach (var item in ViewBag.DataItems)
+                        {
+                            <option value="@item.Ma_Dt" data-ten="@item.Ten_Dt" data-maDt="@item.Ma_Dt" data-dvcs="@item.Dvcs" data-dvcs1="@item.Dvcs1">@item.Ten_Dt</option>
+                        }
+                    </datalist>
+                    <input type="hidden" name="Ma_Dt" id="selectedOption"><br /><br />
+                    <h6>Chọn TDV</h6>
 
-                    </div>
+
+
+                    <input type="text" id="dropdownInputTDV" list="dropdownListTDV" placeholder="Tìm kiếm TDV" autocomplete="off">
+                    <datalist id="dropdownListTDV">
+                        @foreach (var item in ViewBag.DataTDV)
+                        {
+                            <option value="@item.Ma_CbNv" data-Ma_CbNv="@item.Ma_CbNv">@*@item.Ma_CbNv*@ @item.hoten</option>
+                        }
+                    </datalist>
+                    <input type="hidden" name="Ma_TDV" id="selectedOptionTDV">
                     <div class="select-btn" style="width:100px;margin-top:10px">
                         <select name="Ma_Dvcs" id="maDvCsSelect" onchange="saveSelectedValueToCookie()">
                             <option value="" style="background-color: #020024;color:white">Đơn Vị Cơ Sở</option>
@@ -641,23 +634,23 @@
     </div>
 
 
-    <header class="header_part"  style="background-color: #aec9e0; color: #3483bd ">
+    <header class="header_part" style="background-color: #aec9e0; color: #3483bd ">
         @*@if (Request.Cookies["UserName"].Value == "Admin-cnct" || Request.Cookies["UserName"].Value == "Admin-cntg" || Request.Cookies["UserName"].Value == "Admin-cnmd" || Request.Cookies["UserName"].Value == "Admin-cnh1" || Request.Cookies["UserName"].Value == "Admin-cnvt"
-                          || Request.Cookies["UserName"].Value == "Admin-cnnt" || Request.Cookies["UserName"].Value == "Admin - cndn" || Request.Cookies["UserName"].Value == "Admin - cnna" || Request.Cookies["UserName"].Value == "Admin - cnhn")
-        {
-
-
-
-                <a href="/Home/AboutCN" style="cursor:pointer">
-                    <img src="~/Images/opc.png" style="height:60px;width:60px;margin-left:10px">
-                </a>
-            }
-            else
+                              || Request.Cookies["UserName"].Value == "Admin-cnnt" || Request.Cookies["UserName"].Value == "Admin - cndn" || Request.Cookies["UserName"].Value == "Admin - cnna" || Request.Cookies["UserName"].Value == "Admin - cnhn")
             {
-                <a href="/Home/About" style="cursor:pointer">
-                    <img src="~/Images/opc.png" style="height:60px;width:60px;margin-left:10px">
-                </a>
-            }*@
+
+
+
+                    <a href="/Home/AboutCN" style="cursor:pointer">
+                        <img src="~/Images/opc.png" style="height:60px;width:60px;margin-left:10px">
+                    </a>
+                }
+                else
+                {
+                    <a href="/Home/About" style="cursor:pointer">
+                        <img src="~/Images/opc.png" style="height:60px;width:60px;margin-left:10px">
+                    </a>
+                }*@
         <h4 style="color: #3483bd">THEO DÕI HỢP ĐỒNG THẦU</h4>
     </header>
     <!-- =======  Data-Table  = Start  ========================== -->
@@ -749,6 +742,115 @@
         });
     </script>
     <script>
+        document.getElementById("dropdownInput").addEventListener("input", function () {
+            var inputValue = this.value;
+            var options = document.querySelectorAll("#dropdownList option");
+
+            for (var i = 0; i < options.length; i++) {
+                if (options[i].getAttribute("value") === inputValue) {
+                    document.getElementById("selectedOption").value = inputValue;
+
+                    break;
+                }
+            }
+        });
+
+
+
+        document.addEventListener("DOMContentLoaded", function () {
+            var runReportButton = document.getElementById("xemTungHD");
+
+            if (runReportButton) {
+                runReportButton.addEventListener("click", function () {
+                    var dropdownInput = document.getElementById("dropdownInput");
+                    var selectedOption = document.querySelector("#dropdownList option[value='" + dropdownInput.value + "']");
+
+                    if (selectedOption) {
+                        var tenDt = selectedOption.getAttribute('data-maDt');
+                        document.cookie = 'Ma_Dt=' + tenDt;
+                    } else {
+                        var selected = "";
+                        document.cookie = 'Ma_Dt=' + selected;
+                    }
+                });
+            }
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            var runReportButton = document.getElementById("xemTatCa");
+
+            if (runReportButton) {
+                runReportButton.addEventListener("click", function () {
+                    var dropdownInput = document.getElementById("dropdownInput");
+                    var selectedOption = document.querySelector("#dropdownList option[value='" + dropdownInput.value + "']");
+
+                    if (selectedOption) {
+                        var tenDt = selectedOption.getAttribute('data-maDt');
+                        document.cookie = 'Ma_Dt=' + tenDt;
+                    } else {
+                        var selected = "";
+                        document.cookie = 'Ma_Dt=' + selected;
+                    }
+                });
+            }
+        });
+    </script>
+
+    <script>
+        document.getElementById("dropdownInputTDV").addEventListener("input", function () {
+            var inputValue = this.value;
+            var options = document.querySelectorAll("#dropdownListTDV option");
+
+            for (var i = 0; i < options.length; i++) {
+                if (options[i].getAttribute("value") === inputValue) {
+                    document.getElementById("selectedOptionTDV").value = inputValue;
+
+                    break;
+                }
+            }
+        });
+
+
+
+        document.addEventListener("DOMContentLoaded", function () {
+            var runReportButton = document.getElementById("xemTungHD");
+
+            if (runReportButton) {
+                runReportButton.addEventListener("click", function () {
+                    var dropdownInput = document.getElementById("dropdownInputTDV");
+                    var selectedOption = document.querySelector("#dropdownListTDV option[value='" + dropdownInput.value + "']");
+
+                    if (selectedOption) {
+                        var MaTDV = selectedOption.getAttribute('data-Ma_CbNv');
+                        document.cookie = 'Ma_TDV=' + MaTDV;
+                    } else {
+                        var selected = "";
+                        document.cookie = 'Ma_TDV=' + selected;
+                    }
+                });
+            }
+        });
+        document.addEventListener("DOMContentLoaded", function () {
+            var runReportButton = document.getElementById("xemTatCa");
+
+            if (runReportButton) {
+                runReportButton.addEventListener("click", function () {
+                    var dropdownInput = document.getElementById("dropdownInputTDV");
+                    var selectedOption = document.querySelector("#dropdownListTDV option[value='" + dropdownInput.value + "']");
+
+                    if (selectedOption) {
+                        var MaTDV = selectedOption.getAttribute('data-Ma_CbNv');
+                        document.cookie = 'Ma_TDV=' + MaTDV;
+                    } else {
+                        var selected = "";
+                        document.cookie = 'Ma_TDV=' + selected;
+                    }
+                });
+            }
+        });
+
+    </script>
+    <script>
         function handleXemTungHD(actionUrl) {
             var select = document.getElementById("maDvCsSelect");
             var selectedValue = select.options[select.selectedIndex].value;
@@ -761,9 +863,9 @@
                /* showLoader();*/
                 // Thực hiện các tác vụ cần thiết cho Xem Từng HD
                 runReport();
-                saveSelectedDTValueToCookie();
-                saveSelectedTDVValueToCookie();
-                checkAndUpdateCookies();
+                /*saveSelectedDTValueToCookie();*/
+              /*  saveSelectedTDVValueToCookie();*/
+               /* checkAndUpdateCookies();*/
                 saveNgay();
 
                 // Chuyển hướng đến action TheoDoiHopDongThau
@@ -788,9 +890,9 @@
               /*  showLoader();*/
                 // Thực hiện các tác vụ cần thiết cho Xem Tất Cả
                 runReport();
-                saveSelectedDTValueToCookie();
-                saveSelectedTDVValueToCookie();
-                checkAndUpdateCookies();
+               /* saveSelectedDTValueToCookie();*/
+               /* saveSelectedTDVValueToCookie();*/
+            
                 saveNgay();
                 document.getElementById("dateForm").action = "TheoDoiHopDongThau_All";
             /*    document.getElementById("dateForm").submit();*/
@@ -808,38 +910,21 @@
             var newWindow = window.open('', '_blank');
             newWindow.location.href = url;
         }
-        function saveSelectedDTValueToCookie() {
-            var dropdown = document.getElementById("dropdownDt");
-            var selectedOption = dropdown.options[dropdown.selectedIndex];
-            var selectedHoten = selectedOption.getAttribute("data-hoten");
+        //function saveSelectedDTValueToCookie() {
+        //    var dropdown = document.getElementById("dropdownDt");
+        //    var selectedOption = dropdown.options[dropdown.selectedIndex];
+        //    var selectedHoten = selectedOption.getAttribute("data-hoten");
 
-            // Nếu người dùng không chọn giá trị, gán giá trị là "null"
-            if (!selectedHoten) {
-                selectedHoten = "";
-            }
+        //    // Nếu người dùng không chọn giá trị, gán giá trị là "null"
+        //    if (!selectedHoten) {
+        //        selectedHoten = "";
+        //    }
 
-            document.cookie = "Ma_DT=" + selectedHoten;
-        }
+        //    document.cookie = "Ma_DT=" + selectedHoten;
+        //}
     </script>
     <script>
-        function checkAndUpdateCookies() {
-            const dropdownDt = document.getElementById("dropdownDt");
-            const dropdownMaTDV = document.getElementById("dropdownMaTDV");
-            const dropdownMaDvcs = document.getElementById("maDvCsSelect");
-            const selectedDtValue = dropdownDt.value;
-            const selectedMaTDVValue = dropdownMaTDV.value;
-            const selectedMaDvcsValue = dropdownMaDvcs.value;
-            if (selectedDtValue === "") {
-                // Cả hai dropdown đều rỗng, cập nhật giá trị vào cookie là rỗng
-                document.cookie = "Ma_DT=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-
-            } else if (selectedMaTDVValue === "") {
-                document.cookie = "Ma_CbNv=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-            } else if (selectedMaDvcsValue === "") {
-                document.cookie = "MA_DVCS=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-            }
-
-        }
+     
 
     </script>
     <script>

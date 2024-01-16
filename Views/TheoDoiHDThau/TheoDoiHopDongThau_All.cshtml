@@ -496,7 +496,7 @@
 </head>
 <!-- =============== Design & Develop By = MJ MARAZ   ====================== -->
 
-<body  style="background-color: #e0e8ee">
+<body style="background-color: #e0e8ee">
 
     <div class="loader" style="z-index:3"></div>
     <span id="spanText" class="text-loading">[usp_TheoDoiHopDongThau_SAP]</span>
@@ -516,33 +516,28 @@
                         <input class="den_ngay" id="den_ngay" placeholder=" Đến Ngày" name="To_date" type="DATE" format="YYYY-MM-DD" value="@Request.Cookies["To_date"].Value" /><br /><br />
                         <script>$("#den_ngay").datetimepicker({ timepicker: false, format: 'Y-m-d' });</script>
                     </div>
-                    <div class="select-btnDt" style="width:100px">
-                        <select id="dropdownDt" class="select2" style="width: 200px" name="Ma_DT" onchange="saveSelectedDTValueToCookie()">
-                            <option value="">Chọn Khách Hàng</option>
-                            @if (ViewBag.DataDt != null)
-                            {
-                                foreach (var item in ViewBag.DataDt)
-                                {
-                                    <option value="@item.Ma_CbNv" data-hoten="@item.Ma_CbNv">@item.Ma_CbNv @item.hoten</option>
-                                }
-                            }
-                        </select>
+                    <h6>Chọn Đối Tượng</h6>
 
-                    </div>
-                    <input type="hidden" name="Ma_CbNv" id="selectedOption">
-                    <div class="select-btn" style="width:100px;margin-top:10px">
-                        <select id="dropdownMaTDV" class="select2" style="width: 200px" name="Ma_TDV" onchange="saveSelectedTDVValueToCookie()">
-                            <option value="">Chọn mã TDV</option>
-                            @if (ViewBag.DataTDV != null)
-                            {
-                                foreach (var item in ViewBag.DataTDV)
-                                {
-                                    <option value="@item.Ma_CbNv" data-hoten="@item.Ma_CbNv">@item.Ma_CbNv @item.hoten</option>
-                                }
-                            }
-                        </select>
+                    <input type="text" id="dropdownInput" list="dropdownList" placeholder="Tìm kiếm đối tượng">
+                    <datalist id="dropdownList">
+                        @foreach (var item in ViewBag.DataItems)
+                        {
+                            <option value="@item.Ma_Dt" data-ten="@item.Ten_Dt" data-maDt="@item.Ma_Dt" data-dvcs="@item.Dvcs" data-dvcs1="@item.Dvcs1">@item.Ten_Dt</option>
+                        }
+                    </datalist>
+                    <input type="hidden" name="Ma_Dt" id="selectedOption"><br /><br />
+                    <h6>Chọn TDV</h6>
 
-                    </div>
+
+
+                    <input type="text" id="dropdownInputTDV" list="dropdownListTDV" placeholder="Tìm kiếm TDV" autocomplete="off">
+                    <datalist id="dropdownListTDV">
+                        @foreach (var item in ViewBag.DataTDV)
+                        {
+                            <option value="@item.Ma_CbNv" data-Ma_CbNv="@item.Ma_CbNv">@*@item.Ma_CbNv*@ @item.hoten</option>
+                        }
+                    </datalist>
+                    <input type="hidden" name="Ma_TDV" id="selectedOptionTDV">
                     <div class="select-btn" style="width:80px;margin-top:10px;">
                         <select name="Ma_Dvcs" id="maDvCsSelect" onchange="saveSelectedValueToCookie()" style="width:200px">
                             <option value="" style="background-color: #020024;color:white">Đơn Vị Cơ Sở</option>
@@ -587,8 +582,8 @@
                 <img src="~/Images/opc.png" style="height:60px;width:60px;margin-left:10px">
             </a>
         }
-        <h4  style="color: #3483bd">Xem Tất Cả Hợp Đồng Thầu</h4>
-        <h5  style="color: #3483bd">Từ @Request.Cookies["From_date"].Value đến @Request.Cookies["To_date"].Value</h5>
+        <h4 style="color: #3483bd">Xem Tất Cả Hợp Đồng Thầu</h4>
+        <h5 style="color: #3483bd">Từ @Request.Cookies["From_date"].Value đến @Request.Cookies["To_date"].Value</h5>
     </header>
     <!-- =======  Data-Table  = Start  ========================== -->
 
@@ -629,32 +624,32 @@
                             @{ var list = Model.Tables[0].Rows;
                                 foreach (DataRow row2 in list)
                                 {
-                                <tr>
-                                    <td>@row2["Ma_Don_Vi"]</td>
-                                    <td>@row2["Ten_Don_Vi"]</td>
-                                    <td>@row2["So_Bao_Gia"]</td>
-                                    <td>@row2["Ten_Bao_Gia"]</td>
-                                    <td>@row2["So_Hop_Dong"]</td>
-                                    <td>@row2["Ten_Hop_Dong"]</td>
-                                    <td>@row2["Ngay_Bat_Dau"]</td>
-                                    <td>@row2["Ngay_Ket_Thuc"]</td>
-                                    <td>@row2["Ma_Dt"]</td>
-                                    <td>@row2["Ten_Dt"]</td>
-                                    <td>@row2["Ma_Vt"]</td>
-                                    <td>@row2["Ten_Vt"]</td>
-                                    <td>@row2["Tinh_Trang"]</td>
-                                    <td>@row2["Ma_TDV"]</td>
-                                    <td>@row2["Ten_TDV"]</td>
-                                    <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["So_Luong_TT"]))</td>
-                                    <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Gia_Tri_TT"]))</td>
-                                    <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["So_Luong_Ban"]))</td>
-                                    <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Gia_Tri_Ban"]))</td>
-                                    <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["So_Luong_Con_Lai"]))</td>
-                                    <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Gia_Tri_Con_Lai"]))</td>
-                                  
+                                    <tr>
+                                        <td>@row2["Ma_Don_Vi"]</td>
+                                        <td>@row2["Ten_Don_Vi"]</td>
+                                        <td>@row2["So_Bao_Gia"]</td>
+                                        <td>@row2["Ten_Bao_Gia"]</td>
+                                        <td>@row2["So_Hop_Dong"]</td>
+                                        <td>@row2["Ten_Hop_Dong"]</td>
+                                        <td>@row2["Ngay_Bat_Dau"]</td>
+                                        <td>@row2["Ngay_Ket_Thuc"]</td>
+                                        <td>@row2["Ma_Dt"]</td>
+                                        <td>@row2["Ten_Dt"]</td>
+                                        <td>@row2["Ma_Vt"]</td>
+                                        <td>@row2["Ten_Vt"]</td>
+                                        <td>@row2["Tinh_Trang"]</td>
+                                        <td>@row2["Ma_TDV"]</td>
+                                        <td>@row2["Ten_TDV"]</td>
+                                        <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["So_Luong_TT"]))</td>
+                                        <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Gia_Tri_TT"]))</td>
+                                        <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["So_Luong_Ban"]))</td>
+                                        <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Gia_Tri_Ban"]))</td>
+                                        <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["So_Luong_Con_Lai"]))</td>
+                                        <td style="text-align:right">@String.Format("{0:n0}", Convert.ToDecimal(row2["Gia_Tri_Con_Lai"]))</td>
 
-                                </tr>
-                                    } }
+
+                                    </tr>
+                                } }
 
 
                         </tbody>
@@ -743,6 +738,172 @@
 
     </script>
     <script>
+        document.getElementById("dropdownInput").addEventListener("input", function () {
+            var inputValue = this.value;
+            var options = document.querySelectorAll("#dropdownList option");
+
+            for (var i = 0; i < options.length; i++) {
+                if (options[i].getAttribute("value") === inputValue) {
+                    document.getElementById("selectedOption").value = inputValue;
+
+                    break;
+                }
+            }
+        });
+
+
+
+        document.addEventListener("DOMContentLoaded", function () {
+            var runReportButton = document.getElementById("xemTungHD");
+
+            if (runReportButton) {
+                runReportButton.addEventListener("click", function () {
+                    var dropdownInput = document.getElementById("dropdownInput");
+                    var selectedOption = document.querySelector("#dropdownList option[value='" + dropdownInput.value + "']");
+
+                    if (selectedOption) {
+                        var tenDt = selectedOption.getAttribute('data-maDt');
+                        document.cookie = 'Ma_Dt=' + tenDt;
+                    } else {
+                        var selected = "";
+                        document.cookie = 'Ma_Dt=' + selected;
+                    }
+                });
+            }
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            var runReportButton = document.getElementById("xemTatCa");
+
+            if (runReportButton) {
+                runReportButton.addEventListener("click", function () {
+                    var dropdownInput = document.getElementById("dropdownInput");
+                    var selectedOption = document.querySelector("#dropdownList option[value='" + dropdownInput.value + "']");
+
+                    if (selectedOption) {
+                        var tenDt = selectedOption.getAttribute('data-maDt');
+                        document.cookie = 'Ma_Dt=' + tenDt;
+                    } else {
+                        var selected = "";
+                        document.cookie = 'Ma_Dt=' + selected;
+                    }
+                });
+            }
+        });
+    </script>
+    <script>
+        document.getElementById("dropdownInputTDV").addEventListener("input", function () {
+            var inputValue = this.value;
+            var options = document.querySelectorAll("#dropdownListTDV option");
+
+            for (var i = 0; i < options.length; i++) {
+                if (options[i].getAttribute("value") === inputValue) {
+                    document.getElementById("selectedOptionTDV").value = inputValue;
+
+                    break;
+                }
+            }
+        });
+
+
+
+        document.addEventListener("DOMContentLoaded", function () {
+            var runReportButton = document.getElementById("xemTungHD");
+
+            if (runReportButton) {
+                runReportButton.addEventListener("click", function () {
+                    var dropdownInput = document.getElementById("dropdownInputTDV");
+                    var selectedOption = document.querySelector("#dropdownListTDV option[value='" + dropdownInput.value + "']");
+
+                    if (selectedOption) {
+                        var MaTDV = selectedOption.getAttribute('data-Ma_CbNv');
+                        document.cookie = 'Ma_TDV=' + MaTDV;
+                    } else {
+                        var selected = "";
+                        document.cookie = 'Ma_TDV=' + selected;
+                    }
+                });
+            }
+        });
+        document.addEventListener("DOMContentLoaded", function () {
+            var runReportButton = document.getElementById("xemTatCa");
+
+            if (runReportButton) {
+                runReportButton.addEventListener("click", function () {
+                    var dropdownInput = document.getElementById("dropdownInputTDV");
+                    var selectedOption = document.querySelector("#dropdownListTDV option[value='" + dropdownInput.value + "']");
+
+                    if (selectedOption) {
+                        var MaTDV = selectedOption.getAttribute('data-Ma_CbNv');
+                        document.cookie = 'Ma_TDV=' + MaTDV;
+                    } else {
+                        var selected = "";
+                        document.cookie = 'Ma_TDV=' + selected;
+                    }
+                });
+            }
+        });
+
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var dropdownInput = document.getElementById('dropdownInput');
+            var selectedOption = document.getElementById('selectedOption');
+
+            // Lấy giá trị từ cookie
+            var maDtFromCookie = getCookie('Ma_Dt');
+
+            // Đặt giá trị cho trường input và hidden input
+            if (maDtFromCookie) {
+                dropdownInput.value = maDtFromCookie;
+                selectedOption.value = maDtFromCookie;
+            }
+        });
+        document.addEventListener('DOMContentLoaded', function () {
+            var dropdownInput = document.getElementById('dropdownInputTDV');
+            var selectedOption = document.getElementById('selectedOption');
+
+            // Lấy giá trị từ cookie
+            var matdvFromCookie = getCookie('Ma_TDV');
+
+            // Đặt giá trị cho trường input và hidden input
+            if (matdvFromCookie) {
+                dropdownInput.value = matdvFromCookie;
+                selectedOption.value = matdvFromCookie;
+            }
+        });
+        document.addEventListener('DOMContentLoaded', function () {
+            var dropdownInput = document.getElementById('dropdownInputVT');
+            var selectedOption = document.getElementById('selectedOption');
+
+            // Lấy giá trị từ cookie
+            var mavtFromCookie = getCookie('Ma_Vt');
+
+            // Đặt giá trị cho trường input và hidden input
+            if (mavtFromCookie) {
+                dropdownInput.value = mavtFromCookie;
+                selectedOption.value = mavtFromCookie;
+            }
+        });
+        // Hàm lấy giá trị từ cookie
+        function getCookie(cookieName) {
+            var name = cookieName + "=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var cookieArray = decodedCookie.split(';');
+
+            for (var i = 0; i < cookieArray.length; i++) {
+                var cookie = cookieArray[i];
+                while (cookie.charAt(0) == ' ') {
+                    cookie = cookie.substring(1);
+                }
+                if (cookie.indexOf(name) == 0) {
+                    return cookie.substring(name.length, cookie.length);
+                }
+            }
+            return null;
+        }
+    </script>
+    <script>
 
         function handleFormSubmit(event) {
 
@@ -827,9 +988,7 @@
                 showLoader();
                 // Thực hiện các tác vụ cần thiết cho Xem Từng HD
                 runReport();
-                checkAndUpdateCookies();
-                saveSelectedDTValueToCookie();
-                saveSelectedTDVValueToCookie();
+
                 saveNgay();
 
                 // Chuyển hướng đến action TheoDoiHopDongThau
@@ -838,48 +997,7 @@
             }
 
         }
-        function checkAndUpdateCookies() {
-            const dropdownDt = document.getElementById("dropdownDt");
-            const dropdownMaTDV = document.getElementById("dropdownMaTDV");
-            const dropdownMaDvcs = document.getElementById("maDvCsSelect");
-            const selectedDtValue = dropdownDt.value;
-            const selectedMaTDVValue = dropdownMaTDV.value;
-            const selectedMaDvcsValue = dropdownMaDvcs.value;
-            if (selectedDtValue === "") {
-                // Cả hai dropdown đều rỗng, cập nhật giá trị vào cookie là rỗng
-                document.cookie = "Ma_DT=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 
-            } else if (selectedMaTDVValue === "") {
-                document.cookie = "Ma_CbNv=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-            } else if (selectedMaDvcsValue === "") {
-                document.cookie = "MA_DVCS=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-            }
-
-        }
-        function saveSelectedTDVValueToCookie() {
-            var dropdown = document.getElementById("dropdownMaTDV");
-            var selectedOption = dropdown.options[dropdown.selectedIndex];
-            var selectedHoten = selectedOption.getAttribute("data-hoten");
-
-            // Nếu người dùng không chọn giá trị, gán giá trị là "null"
-            if (!selectedHoten) {
-                selectedHoten = "";
-            }
-
-            document.cookie = "Ma_CbNv=" + selectedHoten;
-        }
-        function saveSelectedDTValueToCookie() {
-            var dropdown = document.getElementById("dropdownDt");
-            var selectedOption = dropdown.options[dropdown.selectedIndex];
-            var selectedHoten = selectedOption.getAttribute("data-hoten");
-
-            // Nếu người dùng không chọn giá trị, gán giá trị là "null"
-            if (!selectedHoten) {
-                selectedHoten = "";
-            }
-
-            document.cookie = "Ma_DT=" + selectedHoten;
-        }
         function runReport() {
 
             const uncheckedCheckboxIndexes = [];

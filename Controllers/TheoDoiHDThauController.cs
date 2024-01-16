@@ -23,45 +23,35 @@ namespace web4.Controllers
         {
             con.ConnectionString = "Data source= " + "118.69.109.109" + ";database=" + "SAP_OPC" + ";uid=sa;password=Hai@thong";
         }
-        public List<BKHoaDonGiaoHang> LoadDmDt()
+        public List<MauInChungTu> LoadDmDt(string Ma_dvcs)
         {
-            string ma_dvcs = Request.Cookies["Ma_dvcs"] != null ? Request.Cookies["Ma_dvcs"].Value : string.Empty;
             connectSQL();
 
-            List<BKHoaDonGiaoHang> dataItems = new List<BKHoaDonGiaoHang>();
-            string appendedString = ma_dvcs == "OPC_B1" ? "_010203" : "_01"; // Dòng này cộng chuỗi dựa trên giá trị của Ma_dvcs
+            Ma_dvcs = Request.Cookies["ma_dvcs"].Value;
+            List<MauInChungTu> dataItems = new List<MauInChungTu>();
+            string appendedString = Ma_dvcs == "OPC_B1" ? "_010203" : "_01"; // Dòng này cộng chuỗi dựa trên giá trị của Ma_dvcs
             using (SqlConnection connection = new SqlConnection(con.ConnectionString))
             {
                 connection.Open();
 
                 using (SqlCommand command = new SqlCommand("[usp_DmDtTdv_SAP_MauIn]", connection))
                 {
-                    command.CommandTimeout = 950;
                     command.CommandType = CommandType.StoredProcedure;
-
-                    command.Parameters.AddWithValue("@_Ma_Dvcs", ma_dvcs+ appendedString);
-
-                    using (SqlDataAdapter sda = new SqlDataAdapter(command))
+                    command.Parameters.AddWithValue("@_Ma_Dvcs", Ma_dvcs + appendedString);
+                    command.CommandTimeout = 950;
+                    using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        DataSet ds = new DataSet();
-                        sda.Fill(ds);
-
-                        // Kiểm tra xem DataSet có bảng dữ liệu hay không
-                        if (ds.Tables.Count > 0)
+                        while (reader.Read())
                         {
-                            DataTable dt = ds.Tables[0];
-
-                            foreach (DataRow row in dt.Rows)
+                            MauInChungTu dataItem = new MauInChungTu
                             {
-                                BKHoaDonGiaoHang dataItem = new BKHoaDonGiaoHang
-                                {
-                                    Ma_CbNv = row["Ma_Dt"].ToString(),
-                                    hoten = row["Ten_Dt"].ToString(),
-                                    Ma_Dvcs = row["Dvcs"].ToString()
-                                };
-
-                                dataItems.Add(dataItem);
-                            }
+                                Ma_Dt = reader["ma_dt"].ToString(),
+                                Ten_Dt = reader["ten_dt"].ToString(),
+                                Dia_Chi = reader["Dia_Chi"].ToString(),
+                                Dvcs = reader["Dvcs"].ToString(),
+                                Dvcs1 = reader["Dvcs1"].ToString()
+                            };
+                            dataItems.Add(dataItem);
                         }
                     }
                 }
@@ -78,22 +68,22 @@ namespace web4.Controllers
             }
 
             // Gọi LoadDmHD với Ma_TDV để lấy dữ liệu đã lọc theo Ma_TDV
-            List<BKHoaDonGiaoHang> dmDList = LoadDmTDV();
-            List<BKHoaDonGiaoHang> dmDListDt = LoadDmDt();
+            List<BKHoaDonGiaoHang> dmDlistTDV = LoadDmTDV();
+            List<MauInChungTu> dmDlist = LoadDmDt("");
             //var distinctDataTDV = dmDList
             //    .GroupBy(x => x.Ten_TDV)
             //    .Select(x => x.First())
             //    .ToList();
 
-           //// var distinctDataItems = dmDList
-           ////.GroupBy(x => x.So_Ct_E)
-           ////.Select(x => x.First())
-           //.ToList();
+            //// var distinctDataItems = dmDList
+            ////.GroupBy(x => x.So_Ct_E)
+            ////.Select(x => x.First())
+            //.ToList();
 
 
-            ViewBag.DataTDV = dmDList;
-            ViewBag.DataDt = dmDListDt;
-          
+            ViewBag.DataTDV = dmDlistTDV;
+            ViewBag.DataItems = dmDlist;
+
 
             DataSet ds = new DataSet();
             connectSQL();
@@ -121,8 +111,8 @@ namespace web4.Controllers
         {
             DataSet ds = new DataSet();
             connectSQL();
-            List<BKHoaDonGiaoHang> dmDList = LoadDmTDV();
-            List<BKHoaDonGiaoHang> dmDListDt = LoadDmDt();
+            List<BKHoaDonGiaoHang> dmDlistTDV = LoadDmTDV();
+            List<MauInChungTu> dmDlist = LoadDmDt("");
             //string query = "exec usp_Vth_BC_BHCNTK_CN @_ngay_Ct1 = '" + Acc.From_date + "',@_Ngay_Ct2 ='"+ Acc.To_date+"',@_Ma_Dvcs='"+ Acc.Ma_DvCs_1+"'";
             string Pname = "[usp_TheoDoiHopDongThau_SAP]";
             var fromDate = Request.Cookies["From_date"].Value;
@@ -131,8 +121,8 @@ namespace web4.Controllers
             var Dvcs = Request.Cookies["MA_DVCS"].Value==""? Request.Cookies["Dvcs3"].Value : Request.Cookies["MA_DVCS"].Value;
             var MaTDV = Request.Cookies["Ma_CbNv"] != null ? Request.Cookies["Ma_CbNv"].Value : string.Empty;
             var MaDt = Request.Cookies["Ma_DT"] != null ? Request.Cookies["Ma_DT"].Value : string.Empty;
-            ViewBag.DataTDV = dmDList;
-            ViewBag.DataDt = dmDListDt;
+            ViewBag.DataTDV = dmDlistTDV;
+            ViewBag.DataItems = dmDlist;
 
             using (SqlCommand cmd = new SqlCommand(Pname, con))
             {
@@ -159,8 +149,8 @@ namespace web4.Controllers
         {
             DataSet ds = new DataSet();
             connectSQL();
-            List<BKHoaDonGiaoHang> dmDList = LoadDmTDV();
-            List<BKHoaDonGiaoHang> dmDListDt = LoadDmDt();
+            List<BKHoaDonGiaoHang> dmDlistTDV = LoadDmTDV();
+            List<MauInChungTu> dmDlist = LoadDmDt("");
             //string query = "exec usp_Vth_BC_BHCNTK_CN @_ngay_Ct1 = '" + Acc.From_date + "',@_Ngay_Ct2 ='"+ Acc.To_date+"',@_Ma_Dvcs='"+ Acc.Ma_DvCs_1+"'";
             string Pname = "[usp_TheoDoiHopDongThau_SAP]";
             var fromDate = Request.Cookies["From_date"].Value;
@@ -169,8 +159,8 @@ namespace web4.Controllers
             var Dvcs = Request.Cookies["MA_DVCS"].Value == "" ? Request.Cookies["Dvcs3"].Value : Request.Cookies["MA_DVCS"].Value;
             var MaTDV = Request.Cookies["Ma_CbNv"] != null ? Request.Cookies["Ma_CbNv"].Value : string.Empty;
             var MaDt = Request.Cookies["Ma_DT"] != null ? Request.Cookies["Ma_DT"].Value : string.Empty;
-            ViewBag.DataTDV = dmDList;
-            ViewBag.DataDt = dmDListDt;
+            ViewBag.DataTDV = dmDlistTDV;
+            ViewBag.DataItems = dmDlist;
 
             using (SqlCommand cmd = new SqlCommand(Pname, con))
             {
@@ -196,7 +186,7 @@ namespace web4.Controllers
 
         public List<BKHoaDonGiaoHang> LoadDmTDV()
         {
-            string ma_dvcs = Request.Cookies["Ma_dvcs"] != null ? Request.Cookies["Ma_dvcs"].Value : "";
+            string ma_dvcs = Request.Cookies["MA_DVCS"] != null ? Request.Cookies["MA_DVCS"].Value : "";
             connectSQL();
             if (string.IsNullOrEmpty(ma_dvcs))
             {
@@ -213,7 +203,7 @@ namespace web4.Controllers
                     command.CommandTimeout = 950;
                     command.CommandType = CommandType.StoredProcedure;
 
-                    command.Parameters.AddWithValue("@_ma_dvcs", ma_dvcs);
+                    command.Parameters.AddWithValue("@_Ma_Dvcs", ma_dvcs);
 
                     using (SqlDataAdapter sda = new SqlDataAdapter(command))
                     {
@@ -229,7 +219,7 @@ namespace web4.Controllers
                             {
                                 BKHoaDonGiaoHang dataItem = new BKHoaDonGiaoHang
                                 {
-                                    Ma_CbNv = row["Ma_Business"].ToString(),
+                                    Ma_CbNv = row["Ma_CbNv"].ToString(),
                                     hoten = row["hoten"].ToString(),
                                     Ma_Dvcs = row["Ma_Dvcs"].ToString()
                                 };
