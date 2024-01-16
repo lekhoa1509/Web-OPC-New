@@ -142,10 +142,22 @@
         #active {
             background-color: #427cac;
         }
+        .dvcs{
+            display:none;
+        }
+        .dropdown {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            padding: 12px;
+            z-index: 1;
+        }
     </style>
 </head>
 <body style="background-color: #e0e8ee">
-    <div class="loader" style="z-index:1"></div>
+    @*<div class="loader" style="z-index:1"></div>*@
     <div class="sidebar close" style="background-color: #3f5161; color: #3483bd ">
         <div class="logo-details">
             <img src="~/Images/opc.png" style="height:50px;width:50px;margin-left:10px">
@@ -218,7 +230,7 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                     <li class="liTitle"><a href="/MauInChungTu/TonNo_Fill">8.Sổ Chi Tiết Tồn Nợ Phải Thu</a></li>
                     <li class="liTitle"><a href="/MauInChungTu/BienBanBanGiaoNTHH_Fill">9.Biên Bản Bàn Giao & Nghiệm Thu Hàng Hóa</a></li>
                     @*<li><a href="#">Login Form</a></li>
-                <li><a href="#">Card Design</a></li>*@
+                        <li><a href="#">Card Design</a></li>*@
                 </ul>
             </li>
 
@@ -318,14 +330,14 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                 </ul>
             </li>
             @*<li>
-            <a href="/Home/tabControl">
-                <i class='bx bx-cog'></i>
-                <span class="link_name">Demo</span>
-            </a>
-            <ul class="sub-menu blank">
-                <li><a class="link_name" href="/home/tabControl">Demo</a></li>
-            </ul>
-        </li>*@
+                    <a href="/Home/tabControl">
+                        <i class='bx bx-cog'></i>
+                        <span class="link_name">Demo</span>
+                    </a>
+                    <ul class="sub-menu blank">
+                        <li><a class="link_name" href="/home/tabControl">Demo</a></li>
+                    </ul>
+                </li>*@
 
 
 
@@ -522,19 +534,20 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                                 </tr>
                                 <tr style="height:30px">
                                     <td style="text-align: left">
-                                        @if (string.Equals(ViewBag.UserName, "OPCTCKT001", StringComparison.OrdinalIgnoreCase)) {
+                                        @if (string.Equals(ViewBag.UserName, "OPCTCKT001", StringComparison.OrdinalIgnoreCase))
+                                        {
 
                                             <li style=" list-style-type: none;" class="liTitle">
                                                 <a href="" onclick="runReport('@Url.Action("BaoCaoDTTinhLuongCTV_Fill_CongTy", "BaoCaoBanHangCTV")'
                                                       )">9.Báo Cáo Doanh Thu Tính Lương CTV</a>
                                             </li>}
-                                     else
-                                         {
-                                    <li style=" list-style-type: none;" class="liTitle">
-                                        <a href="" onclick="runReport('@Url.Action("BaoCaoDTTinhLuongCTV_Fill", "BaoCaoBanHangCTV")'
+                                        else
+                                        {
+                                            <li style=" list-style-type: none;" class="liTitle">
+                                                <a href="" onclick="runReport('@Url.Action("BaoCaoDTTinhLuongCTV_Fill", "BaoCaoBanHangCTV")'
                                                       )">9.Báo Cáo Doanh Thu Tính Lương CTV</a>
-                                    </li> }
-                                        
+                                            </li>}
+
                                     </td>
                                 </tr>
                                 @*<tr style="height:30px">
@@ -693,10 +706,20 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                                 </tr>
                                 <tr style="height:30px">
                                     <td style="text-align: left">
-                                        <li style=" list-style-type: none;" class="liTitle">
-                                            <a href="" onclick="runReport('@Url.Action("CongNoChiTietKH_Fill", "CongNoChiTiet")'
+                                        @if (string.Equals(ViewBag.Username, "vpct-nhatanh", StringComparison.OrdinalIgnoreCase))
+                                        {
+                                            <li style=" list-style-type: none;" class="liTitle">
+                                                <a href="" onclick="runReport('@Url.Action("CongNoChiTietKH2_Fill", "CongNoChiTiet")'
                                                       )">3.Công Nợ Chi Tiết Của KH(PL5)</a>
-                                        </li>
+                                            </li>
+                                        }
+                                        else
+                                        {
+                                            <li style=" list-style-type: none;" class="liTitle">
+                                                <a href="" onclick="runReport('@Url.Action("CongNoChiTietKH_Fill", "CongNoChiTiet")'
+                                                      )">3.Công Nợ Chi Tiết Của KH(PL5)</a>
+                                            </li>
+                                        }
                                     </td>
                                 </tr>
                                 <tr style="height:30px">
@@ -831,21 +854,21 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                                 </tr>
 
                                 @*<tr style="height:30px">
-            <td style="text-align: left">
-                <li style=" list-style-type: none;" class="liTitle">
-                    <a href="" onclick="runReport('@Url.Action("BangDoiChieuCongNo_Fill", "MauInChungTu")'
-                              )">5.Bảng Đối Chiếu Doanh Thu - Công Nợ</a>
-                </li>
-            </td>
-        </tr>
-        <tr style="height:30px">
-            <td style="text-align: left">
-                <li style=" list-style-type: none;" class="liTitle">
-                    <a href="" onclick="runReport('@Url.Action("BangDoiChieuDTCN_Fill", "MauInChungTu")'
-                              )">6.Bảng Đối Chiếu Công Nợ</a>
-                </li>
-            </td>
-        </tr>*@
+                                        <td style="text-align: left">
+                                            <li style=" list-style-type: none;" class="liTitle">
+                                                <a href="" onclick="runReport('@Url.Action("BangDoiChieuCongNo_Fill", "MauInChungTu")'
+                                                          )">5.Bảng Đối Chiếu Doanh Thu - Công Nợ</a>
+                                            </li>
+                                        </td>
+                                    </tr>
+                                    <tr style="height:30px">
+                                        <td style="text-align: left">
+                                            <li style=" list-style-type: none;" class="liTitle">
+                                                <a href="" onclick="runReport('@Url.Action("BangDoiChieuDTCN_Fill", "MauInChungTu")'
+                                                          )">6.Bảng Đối Chiếu Công Nợ</a>
+                                            </li>
+                                        </td>
+                                    </tr>*@
                                 <tr style="height:30px">
                                     <td style="text-align: left">
                                         <li style=" list-style-type: none;" class="liTitle">
@@ -965,13 +988,120 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
 
 
     <div class="fixed">
+        @*<div class="dvcs">
+            @if (Request.Cookies["MA_DVCS"].Value == "OPC_B1")
+            {
+                <a href="" onclick="showDropdown('A01: Công ty Cổ Phần Dược Phẩm OPC')">A01: Công ty Cổ Phần Dược Phẩm OPC</a>
+
+            }
+            else if (Request.Cookies["MA_DVCS"].Value == "OPC_TP")
+            {
+                <a href="" onclick="showDropdown('A02: Chi Nhánh Hồ Chí Minh')">A02: Chi Nhánh Hồ Chí Minh</a>
+            }
+            else if (Request.Cookies["MA_DVCS"].Value == "OPC_CT")
+            {
+                <a href="" onclick="showDropdown('A03: Chi Nhánh Cần Thơ')">A03: Chi Nhánh Cần Thơ</a>
+            }
+            else if (Request.Cookies["MA_DVCS"].Value == "OPC_TG")
+            {
+                <a href="" onclick="showDropdown('A04: Chi Nhánh Tiền Giang')">A04: Chi Nhánh Tiền Giang</a>
+            }
+            else if (Request.Cookies["MA_DVCS"].Value == "OPC_MD")
+            {
+                <a href="" onclick="showDropdown('A05: Chi Nhánh Miền Đông')">A05: Chi Nhánh Miền Đông</a>
+            }
+            else if (Request.Cookies["MA_DVCS"].Value == "OPC_VT")
+            {
+                <a href="" onclick="showDropdown('A06: Chi Nhánh Vũng Tàu')">A06: Chi Nhánh Vũng Tàu</a>
+            }
+            else if (Request.Cookies["MA_DVCS"].Value == "OPC_NT")
+            {
+                <a href="" onclick="showDropdown('A07: Chi Nhánh Nha Trang')">A07: Chi Nhánh Nha Trang</a>
+            }
+            else if (Request.Cookies["MA_DVCS"].Value == "OPC_DN")
+            {
+                <a href="" onclick="showDropdown('A08: Chi Nhánh Đà Năng')">A08: Chi Nhánh Đà Nẵng</a>
+            }
+            else if (Request.Cookies["MA_DVCS"].Value == "OPC_NA")
+            {
+                <a href="" onclick="showDropdown('A09: Chi Nhánh Nghệ An')">A09: Chi Nhánh Nghệ An</a>
+            }
+            else if (Request.Cookies["MA_DVCS"].Value == "OPC_HN")
+            {
+                <a href="" onclick="showDropdown('A10: Chi Nhánh Hà Nội')">A02: Chi Nhánh Hà Nội</a>
+            }
+        </div>*@
         SAP_OPC | @ViewBag.UserName
+    </div>
+    <div id="dropdown" class="dropdown">
+        <select id="dropdownSelect" onchange="closeDropdown()">
+            <!-- Dropdown options will be dynamically added here -->
+        </select>
     </div>
     @*<div class="tab-control">
             <ul class="tabs" style="background-color: #1d1b31; bottom: 0; left: 0; right: 0;">
                 <li class="tab selected" style="padding-right:10px"><a href="#">Home</a></li>
             </ul>
         </div>*@
+    <script>
+        function showDropdown(selectedValue) {
+            // Hiển thị hộp thoại dropdown
+            const dropdown = document.getElementById('dropdown');
+            dropdown.style.top = event.clientY + 'px';
+            dropdown.style.left = event.clientX + 'px';
+            dropdown.style.display = 'block';
+
+            // Thêm giá trị vào dropdown
+            const dropdownSelect = document.getElementById('dropdownSelect');
+            dropdownSelect.innerHTML = '';
+            const option = document.createElement('option');
+            option.text = selectedValue;
+            dropdownSelect.add(option);
+
+            // Thêm các giá trị khác vào dropdown (cần thay đổi tùy theo nhu cầu)
+            const otherOptions = ['Option 1', 'Option 2', 'Option 3'];
+            for (const value of otherOptions) {
+                const option = document.createElement('option');
+                option.text = value;
+                dropdownSelect.add(option);
+            }
+
+            // Tắt sự kiện mặc định cho dropdown để tránh đóng nó khi chọn một lựa chọn
+            dropdownSelect.addEventListener('click', function (event) {
+                event.stopPropagation();
+            });
+
+            // Đặt sự kiện cho việc đóng dropdown khi click bên ngoài
+            document.addEventListener('click', closeDropdown);
+        }
+
+        function closeDropdown() {
+            // Ẩn hộp thoại dropdown
+            const dropdown = document.getElementById('dropdown');
+            dropdown.style.display = 'none';
+
+            // Xóa sự kiện để tránh gọi nhiều lần
+            document.removeEventListener('click', closeDropdown);
+        }
+    </script>
+    <script>
+        // Kiểm tra giá trị của cookie
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+        }
+
+        // Lấy giá trị của cookie MA_DVCS
+        const maDvcsCookieValue = getCookie('UserName');
+
+        // Kiểm tra và thay đổi thuộc tính hiển thị của thẻ div
+        if (maDvcsCookieValue === 'vpct-nhatanh') {
+            document.querySelector('.dvcs').style.display = 'block'; // Hiển thị thẻ div nếu giá trị là "OPC_B1"
+        } else {
+            document.querySelector('.dvcs').style.display = 'none'; // Ẩn thẻ div nếu giá trị khác "OPC_B1"
+        }
+    </script>
     <script>
         // ham xu ly dang nhap va xoa mang tabArray
         function logout() {

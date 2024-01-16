@@ -1,5 +1,6 @@
 ﻿
 
+
 @{ ViewBag.Title = "CÔNG NỢ CHI TIẾT CỦA KHÁCH HÀNG"; }
 @using System.Data;
 <!DOCTYPE html>
@@ -569,7 +570,7 @@
         </div>
         <ul class="nav-links" style="justify-content: center; display:flex;margin-left:10px">
             <li>
-                <form id="dateForm" action="CongNoChiTietKH" method="post" onsubmit="handleFormSubmit(event)">
+                <form id="dateForm" action="" method="post" onsubmit="handleFormSubmit(event)">
                     <div id="locBC">
                         <span id="spanText" class="text-loading">[usp_RpCongNoPL5_SAP]</span>
                         <a>Từ Ngày</a><br /><br />
@@ -596,7 +597,7 @@
                         </select>
                     </div>
                     <br />
-                    <h6>Chọn Đối Tượng:</h6>
+                    <!--<h6>Chọn Đối Tượng:</h6>
 
                     <input type="text" id="dropdownInput" list="dropdownList" placeholder="Tìm kiếm đối tượng">
                     <datalist id="dropdownList">
@@ -615,7 +616,7 @@
                             <option value="@item.Ma_CbNv" data-Ma_CbNv="@item.Ma_CbNv">@item.Ma_CbNv @item.hoten</option>
                         }
                     </datalist>
-                    <input type="hidden" name="Ma_TDV" id="selectedOptionTDV">
+                    <input type="hidden" name="Ma_TDV" id="selectedOptionTDV">-->
 
 
                     @*<div class="select-btn" style="width:100px;margin-top:10px">
@@ -632,7 +633,8 @@
 
                         </div>*@
                     <div>
-                        <button class="submit" type="submit" id="runReportButton" onclick="runReport();saveNgay()">
+                        <button class="submit" type="submit" id="runReportButton" onclick=" nextPage('@Url.Action("CongNoChiTietKH2_Index", "CongNoChiTiet")'
+                                                      )">
                             Chạy Báo Cáo
                         </button>
 
@@ -738,7 +740,13 @@
                     });
                 }
             });
-        </script>*@<script>
+        </script>*@
+    <script>
+        function nextPage(actionUrl) {
+            var url = actionUrl;
+            var newWindow = window.open('', '_blank');
+            newWindow.location.href = url;
+        }
             function saveSelectedValueToCookie2() {
                 var selectedValue = $("#chitietselect").val();
 
@@ -754,10 +762,10 @@
 
                 if (existingCookieValue) {
                     // Nếu cookie đã tồn tại, cập nhật giá trị của nó và thiết lập thời gian hết hạn
-                    document.cookie = 'MA_DVCS=' + selectedValue + '; expires=' + expirationDate.toUTCString();
+                    document.cookie = 'MA_DVCS_2=' + selectedValue + '; expires=' + expirationDate.toUTCString();
                 } else {
                     // Nếu cookie chưa tồn tại, tạo một cookie mới với thời gian hết hạn
-                    document.cookie = 'MA_DVCS=' + selectedValue + '; expires=' + expirationDate.toUTCString();
+                    document.cookie = 'MA_DVCS_2=' + selectedValue + '; expires=' + expirationDate.toUTCString();
                 }
             }
 
@@ -769,7 +777,7 @@
             }
 
 
-</script>
+    </script>
     <script>
         document.getElementById("dropdownInput").addEventListener("input", function () {
             var inputValue = this.value;

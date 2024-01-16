@@ -782,7 +782,7 @@ namespace web4.Controllers
                     worksheet.Cells[startRow, startColumn + 3].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
                     worksheet.Cells[startRow, startColumn + 3].Style.Font.Bold = true;
                     var KHTT = worksheet.Cells[startRow - 1, startColumn + 4, startRow - 1, startColumn + 8];
-                    KHTT.Merge = true;
+                    KHTT.Merge = true; 
                     KHTT.Value = "KHÁCH HÀNG THANH TOÁN/TRẢ HÀNG BÙ TRỪ";
                     KHTT.Style.Font.Bold = true;
                     KHTT.Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);

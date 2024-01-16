@@ -1,5 +1,7 @@
 ﻿
 
+
+
 @{ ViewBag.Title = "CÔNG NỢ CHI TIẾT CỦA KHÁCH HÀNG"; }
 @using System.Data;
 <!DOCTYPE html>
@@ -569,17 +571,17 @@
         </div>
         <ul class="nav-links" style="justify-content: center; display:flex;margin-left:10px">
             <li>
-                <form id="dateForm" action="CongNoChiTietKH" method="post" onsubmit="handleFormSubmit(event)">
+                <form id="dateForm" action="CongNoChiTietKH2" method="post" onsubmit="handleFormSubmit(event)">
                     <div id="locBC">
                         <span id="spanText" class="text-loading">[usp_RpCongNoPL5_SAP]</span>
                         <a>Từ Ngày</a><br /><br />
-                        <input class="tu_ngay" placeholder="Từ Ngày" id="tu_ngay" name="From_date" type="date" format="YYYY-MM-DD" value="@Request.QueryString["From_date"]" />
+                        <input class="tu_ngay" placeholder="Từ Ngày" id="tu_ngay" name="From_date" type="date" format="YYYY-MM-DD" value="@Request.Cookies["From_date"].Value" />
                         <script>$("#tu_ngay").datetimepicker({ timepicker: false, format: 'Y-m-d' });</script><br /><br />
                         <a>Đến Ngày</a><br /><br />
-                        <input class="den_ngay" id="den_ngay" placeholder=" Đến Ngày" name="To_date" type="DATE" format="YYYY-MM-DD" value="@Request.QueryString["To_date"]" /><br /><br />
+                        <input class="den_ngay" id="den_ngay" placeholder=" Đến Ngày" name="To_date" type="DATE" format="YYYY-MM-DD" value="@Request.Cookies["To_date"].Value" /><br /><br />
                         <script>$("#den_ngay").datetimepicker({ timepicker: false, format: 'Y-m-d' });</script>
                     </div>
-                    <h6>Chọn Chi Nhánh</h6>
+                    @*<h6>Chọn Chi Nhánh</h6>
                     <div class="select-btn" style="width:100px;margin-top:10px">
                         <select name="Chitiet" id="chitietselect" onchange="saveSelectedValueToCookie2()">
                             <option value="" style="background-color: #020024;color:white">Chọn giá trị</option>
@@ -594,7 +596,7 @@
                             <option value="OPC_HN">Chi Nhánh Hà Nội</option>
                             <option value="OPC_B1">Công Ty</option>
                         </select>
-                    </div>
+                    </div>*@
                     <br />
                     <h6>Chọn Đối Tượng:</h6>
 
@@ -615,10 +617,8 @@
                             <option value="@item.Ma_CbNv" data-Ma_CbNv="@item.Ma_CbNv">@item.Ma_CbNv @item.hoten</option>
                         }
                     </datalist>
-                    <input type="hidden" name="Ma_TDV" id="selectedOptionTDV">
-
-
-                    @*<div class="select-btn" style="width:100px;margin-top:10px">
+                    @*<input type="hidden" name="Ma_TDV" id="selectedOptionTDV">
+                    <div class="select-btn" style="width:100px;margin-top:10px">
                             <select id="dropdownMaTDV" class="select2" style="width: 200px" name="Ma_TDV" onchange="saveSelectedTDVValueToCookie()">
                                 <option value="">Chọn mã TDV</option>
                                 @if (ViewBag.DataTDV != null)
@@ -630,8 +630,8 @@
                                 }
                             </select>
 
-                        </div>*@
-                    <div>
+                        </div>
+                    <div>*@
                         <button class="submit" type="submit" id="runReportButton" onclick="runReport();saveNgay()">
                             Chạy Báo Cáo
                         </button>
@@ -738,7 +738,8 @@
                     });
                 }
             });
-        </script>*@<script>
+        </script>*@
+    <script>
             function saveSelectedValueToCookie2() {
                 var selectedValue = $("#chitietselect").val();
 
@@ -769,7 +770,7 @@
             }
 
 
-</script>
+    </script>
     <script>
         document.getElementById("dropdownInput").addEventListener("input", function () {
             var inputValue = this.value;
