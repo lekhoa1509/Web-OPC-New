@@ -198,7 +198,7 @@ namespace web4.Controllers
             DataSet ds = new DataSet();
             connectSQL();
             List<MauInChungTu> dmDlist = LoadDmDt("");
-
+            var dvcs = Request.Cookies["MA_DVCS"].Value;
             ViewBag.DataItems = dmDlist;
             string Pname = "[usp_XacNhanCKTT_SAP]";
             //var fromDate = Request.Cookies["From_date"].Value;
@@ -216,7 +216,7 @@ namespace web4.Controllers
                 cmd.Parameters.AddWithValue("@_Tu_Ngay", MauIn.From_date);
                 cmd.Parameters.AddWithValue("@_Den_Ngay", MauIn.To_date);
                 cmd.Parameters.AddWithValue("@_Ma_Dt", MaDt);
-
+                cmd.Parameters.AddWithValue("@_ma_dvcs", dvcs);
                 using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
                 {
                     sda.Fill(ds);

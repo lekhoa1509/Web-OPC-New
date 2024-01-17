@@ -1,4 +1,4 @@
-﻿﻿﻿﻿﻿﻿
+﻿﻿﻿﻿﻿﻿﻿
 @{ ViewBag.Title = "Phiếu Xác Nhận Thanh Toán";
 
     string Dvcs = Request.Cookies["Dvcs"] != null ? HttpUtility.UrlDecode(Request.Cookies["Dvcs"].Value) : "";
@@ -83,7 +83,7 @@
             align-items: center;
             margin-left: auto;
             margin-right: auto;
-            height: 50px;
+            height: 30px;
             font-size: 12px
         }
 
@@ -425,10 +425,9 @@
                 <h3 style="font-weight:bold;color:black; font-size:13px;margin-left:-500px">@Dvcs</h3>
             </div>
 
-            <br />
 
             <div>
-                <h3 style="font-size: 25px; color: black; font-weight: bold">XÁC NHẬN THANH TOÁN</h3>
+                <h3 style="font-size: 18px; color: black; font-weight: bold">XÁC NHẬN THANH TOÁN</h3>
 
                 <h5>Từ @Request.Cookies["fromIn"].Value đến @Request.Cookies["toIn"].Value</h5>
 
@@ -437,29 +436,25 @@
                 <h5 style="text-align:left">-Căn cứ Luật thương mại số 36/2005/QH11 ngày 14/06/2005;</h5>
                 <h5 style="text-align: left">-Căn cứ vào hợp đồng số: ................../thỏa thuận của đôi bên.</h5>
             </div>
-            <br />
             <div class="flex-container" style="width:600px">
                 <h5 style="display: inline-block; color: black; font-weight: bold; text-align: left;">Khách hàng: <span style="font-size: 15px;">@Request.Cookies["Ten_Dt"].Value</span></h5>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <h5 style="display: inline-block; color: black; font-weight: bold"></h5>
             </div>
             <div style="color:black;font-weight:bold; font-size:15px;width:600px">
                 <h5 style="text-align: left;">Địa chỉ: @Request.Cookies["Dia_Chi"].Value</h5>
             </div>
-
-            <br />
             <div style="text-align:left;color:black;font-weight:bold;margin-left:-530px">
                 <h5>Điều kiện thanh toán: </h5>
             </div>
 
             <div style="width:600px">
                 <h5 style="font-size: 14px;text-align:left;">Khi thanh toán ngay, Quý khách hàng được chiết khấu 2% trên giá trị thanh toán của những hóa đơn cụ thể như sau: </h5>
-            </div><br />
+            </div>
             <div>
                 <table border="1" border-collapse="collapse" style="width:700px">
                     <thead stye="display: table-header-group;">
                         <tr style="font-size: 10px; font-weight: bold; color: black; page-break-inside:avoid">
-                            <th style="padding:10px">SỐ</th>
+                            <th style="">SỐ</th>
                             <th style="width:100px">NGÀY HĐ</th>
                             <th style="width:100px">NGÀY ĐẾN HẠN</th>
                             <th style="width:120px">TIỀN HĐ</th>
@@ -471,16 +466,16 @@
                         @foreach (DataRow row3 in Model.Tables[0].Rows)
                         {
                             <tr data-soct="@row3["So_Ct"]">
-                                <td style="padding:10px">@row3["So_Ct"]</td>
-                                <td style="padding:10px">
+                                <td style="">@row3["So_Ct"]</td>
+                                <td style="">
                                     @row3["Ngay_Ct1"]
                                 </td>
-                                <td style="padding:10px">
+                                <td style="">
                                     @row3["Han_Thanh_Toan"]
                                 </td>
-                                <td style="padding:10px;text-align:right">@row3["Tong_Tien"]</td>
-                                <td style="padding:10px;text-align:right">@row3["CKTT"]</td>
-                                <td style="padding:10px;text-align:right">@row3["Tien_TT"]</td>
+                                <td style="text-align:right">@row3["Tong_Tien"]</td>
+                                <td style="text-align:right">@row3["CKTT"]</td>
+                                <td style="text-align:right">@row3["Tien_TT"]</td>
 
 
                             </tr>
@@ -490,10 +485,10 @@
                         {
 
 
-                        <td style="padding:10px;color:black;font-weight:bold" colspan="3">Tổng Cộng</td>
-                        <td style="padding:10px;text-align:right;color:black;font-weight:bold">@row3["Tong_Tien"]</td>
-                        <td style="padding:10px;text-align:right;color:black;font-weight:bold">@row3["CKTT"]</td>
-                        <td style="padding:10px;text-align:right;color:black;font-weight:bold">@row3["Tong_TienTT"]</td>
+                        <td style="color:black;font-weight:bold" colspan="3">Tổng Cộng</td>
+                        <td style="text-align:right;color:black;font-weight:bold">@row3["Tong_Tien"]</td>
+                        <td style="text-align:right;color:black;font-weight:bold">@row3["CKTT"]</td>
+                        <td style="text-align:right;color:black;font-weight:bold">@row3["Tong_TienTT"]</td>
                     }
                         </tbody>
 

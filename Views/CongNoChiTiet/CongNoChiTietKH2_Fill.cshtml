@@ -597,43 +597,42 @@
                         </select>
                     </div>
                     <br />
-                    <!--<h6>Chọn Đối Tượng:</h6>
+                    @*<h6>Chọn Đối Tượng:</h6>
 
-                    <input type="text" id="dropdownInput" list="dropdownList" placeholder="Tìm kiếm đối tượng">
-                    <datalist id="dropdownList">
-                        @foreach (var item in ViewBag.DataItems)
+        <input type="text" id="dropdownInput" list="dropdownList" placeholder="Tìm kiếm đối tượng">
+        <datalist id="dropdownList">
+            @foreach (var item in ViewBag.DataItems)
+            {
+                <option value="@item.Ma_Dt" data-ten="@item.Ten_Dt" data-maDt="@item.Ma_Dt" data-dvcs="@item.Dvcs" data-dvcs1="@item.Dvcs1">@item.Ten_Dt</option>
+            }
+        </datalist>
+        <input type="hidden" name="Ma_Dt" id="selectedOption"><br />
+        <br />
+        <a>Tìm TDV:</a>
+        <input type="text" id="dropdownInputTDV" list="dropdownListTDV" placeholder="Tìm kiếm TDV">
+        <datalist id="dropdownListTDV">
+            @foreach (var item in ViewBag.DataTDV)
+            {
+                <option value="@item.Ma_CbNv" data-Ma_CbNv="@item.Ma_CbNv">@item.Ma_CbNv @item.hoten</option>
+            }
+        </datalist>*@
+                    @*<input type="hidden" name="Ma_TDV" id="selectedOptionTDV">
+        <div class="select-btn" style="width:100px;margin-top:10px">
+                <select id="dropdownMaTDV" class="select2" style="width: 200px" name="Ma_TDV" onchange="saveSelectedTDVValueToCookie()">
+                    <option value="">Chọn mã TDV</option>
+                    @if (ViewBag.DataTDV != null)
+                    {
+                        foreach (var item in ViewBag.DataTDV)
                         {
-                            <option value="@item.Ma_Dt" data-ten="@item.Ten_Dt" data-maDt="@item.Ma_Dt" data-dvcs="@item.Dvcs" data-dvcs1="@item.Dvcs1">@item.Ten_Dt</option>
+                            <option value="@item.Ma_CbNv" data-hoten="@item.Ma_CbNv">@item.Ma_CbNv @item.hoten</option>
                         }
-                    </datalist>
-                    <input type="hidden" name="Ma_Dt" id="selectedOption"><br />
-                    <br />
-                    <a>Tìm TDV:</a>
-                    <input type="text" id="dropdownInputTDV" list="dropdownListTDV" placeholder="Tìm kiếm TDV">
-                    <datalist id="dropdownListTDV">
-                        @foreach (var item in ViewBag.DataTDV)
-                        {
-                            <option value="@item.Ma_CbNv" data-Ma_CbNv="@item.Ma_CbNv">@item.Ma_CbNv @item.hoten</option>
-                        }
-                    </datalist>
-                    <input type="hidden" name="Ma_TDV" id="selectedOptionTDV">-->
+                    }
+                </select>
 
-
-                    @*<div class="select-btn" style="width:100px;margin-top:10px">
-                            <select id="dropdownMaTDV" class="select2" style="width: 200px" name="Ma_TDV" onchange="saveSelectedTDVValueToCookie()">
-                                <option value="">Chọn mã TDV</option>
-                                @if (ViewBag.DataTDV != null)
-                                {
-                                    foreach (var item in ViewBag.DataTDV)
-                                    {
-                                        <option value="@item.Ma_CbNv" data-hoten="@item.Ma_CbNv">@item.Ma_CbNv @item.hoten</option>
-                                    }
-                                }
-                            </select>
-
-                        </div>*@
+            </div>
+        <div>*@
                     <div>
-                        <button class="submit" type="submit" id="runReportButton" onclick=" nextPage('@Url.Action("CongNoChiTietKH2_Index", "CongNoChiTiet")'
+                        <button class="submit" type="submit" id="runReportButton" onclick="saveNgay();nextPage('@Url.Action("Index", "CongNoChiTiet")'
                                                       )">
                             Chạy Báo Cáo
                         </button>
@@ -647,22 +646,10 @@
 
 
     <header class="header_part" style="background-color: #aec9e0; color: #3483bd ">
-        @if (Request.Cookies["UserName"].Value == "Admin-cnct" || Request.Cookies["UserName"].Value == "Admin-cntg" || Request.Cookies["UserName"].Value == "Admin-cnmd" || Request.Cookies["UserName"].Value == "Admin-cnh1" || Request.Cookies["UserName"].Value == "Admin-cnvt"
-                      || Request.Cookies["UserName"].Value == "Admin-cnnt" || Request.Cookies["UserName"].Value == "Admin - cndn" || Request.Cookies["UserName"].Value == "Admin - cnna" || Request.Cookies["UserName"].Value == "Admin - cnhn")
-        {
-
-
-
-            <a href="/Home/AboutCN" style="cursor:pointer">
-                <img src="~/Images/opc.png" style="height:60px;width:60px;margin-left:10px">
-            </a>
-        }
-        else
-        {
             <a href="/Home/About" style="cursor:pointer">
                 <img src="~/Images/opc.png" style="height:60px;width:60px;margin-left:10px">
             </a>
-        }
+   
         <h4 style="color:#3483bd">CÔNG NỢ CHI TIẾT CỦA KHÁCH HÀNG (PL5)</h4>
     </header>
     <!-- =======  Data-Table  = Start  ========================== -->
@@ -742,6 +729,12 @@
             });
         </script>*@
     <script>
+        function saveNgay() {
+            var from_date = document.getElementById("tu_ngay").value;
+            var to_date = document.getElementById("den_ngay").value;
+            document.cookie = "From_date=" + from_date;
+            document.cookie = "To_date=" + to_date;
+        }
         function nextPage(actionUrl) {
             var url = actionUrl;
             var newWindow = window.open('', '_blank');
@@ -762,10 +755,10 @@
 
                 if (existingCookieValue) {
                     // Nếu cookie đã tồn tại, cập nhật giá trị của nó và thiết lập thời gian hết hạn
-                    document.cookie = 'MA_DVCS_2=' + selectedValue + '; expires=' + expirationDate.toUTCString();
+                    document.cookie = 'MA_DVCS_2=' + selectedValue;
                 } else {
                     // Nếu cookie chưa tồn tại, tạo một cookie mới với thời gian hết hạn
-                    document.cookie = 'MA_DVCS_2=' + selectedValue + '; expires=' + expirationDate.toUTCString();
+                    document.cookie = 'MA_DVCS_2=' + selectedValue;
                 }
             }
 

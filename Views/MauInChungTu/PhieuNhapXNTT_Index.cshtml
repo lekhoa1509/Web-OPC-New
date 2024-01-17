@@ -577,6 +577,26 @@
 
     </script>
     <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var runReportButton = document.getElementById("runReportButton");
+
+            if (runReportButton) {
+                runReportButton.addEventListener("click", function () {
+                    var dropdownInput = document.getElementById("dropdownInput");
+                    var selectedOption = document.querySelector("#dropdownList option[value='" + dropdownInput.value + "']");
+
+                    if (selectedOption) {
+                        var tenDt = selectedOption.getAttribute('data-maDt');
+                        document.cookie = 'Ma_DT=' + tenDt;
+                    } else {
+                        var selected = "";
+                        document.cookie = 'Ma_DT=' + selected;
+                    }
+                });
+            }
+        });
+    </script>
+    <script>
         function changeTime() {
             // Lấy giá trị từ ngày và đến ngày từ các trường input
             var fromDate3 = document.getElementById("tu_ngay").value;

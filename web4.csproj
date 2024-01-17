@@ -1223,8 +1223,10 @@
     <Content Include="Views\BaoCaoChiPhiKhuyenMai\BaoCaoChiPhiKM.cshtml" />
     <Content Include="Views\MauInChungTu\PhieuXacNhanTTTCK_Fill.cshtml" />
     <Content Include="Views\CongNoChiTiet\CongNoChiTietKH2_Fill.cshtml" />
-    <Content Include="Views\CongNoChiTiet\CongNoChiTietKH2_Index.cshtml" />
     <Content Include="Views\CongNoChiTiet\CongNoChiTietKH2.cshtml" />
+    <Content Include="Views\CongNoChiTiet\CongNoChiTietKH2_Index.cshtml" />
+    <Content Include="Views\CongNoChiTiet\CongNoChiTietKH2_Sub.cshtml" />
+    <Content Include="Views\CongNoChiTiet\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

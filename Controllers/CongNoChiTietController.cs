@@ -65,11 +65,11 @@ namespace web4.Controllers
 
             return dataItems;
         }
-        public List<MauInChungTu> LoadDmDt2(string Ma_dvcs)
+        public List<MauInChungTu> LoadDmDt2()
         {
             connectSQL();
 
-            Ma_dvcs = Request.Cookies["ma_dvcs_2"].Value;
+            var Ma_dvcs = Request.Cookies["ma_dvcs_2"].Value;
             List<MauInChungTu> dataItems = new List<MauInChungTu>();
             string appendedString = Ma_dvcs == "OPC_B1" ? "_010203" : "_01"; // Dòng này cộng chuỗi dựa trên giá trị của Ma_dvcs
             using (SqlConnection connection = new SqlConnection(con.ConnectionString))
@@ -268,25 +268,44 @@ namespace web4.Controllers
         }
         public ActionResult CongNoChiTietKH2_Fill()
         {
-            string ma_dvcs = Request.Cookies["MA_DVCS_2"] != null ? Request.Cookies["MA_DVCS_2"].Value : string.Empty;
-            List<MauInChungTu> dmDlist = LoadDmDt2("");
-            List<BKHoaDonGiaoHang> dmDlistTDV = LoadDmTDV2();
-            ViewBag.DataItems = dmDlist;
-            ViewBag.DataTDV = dmDlistTDV;
+            //string ma_dvcs = Request.Cookies["MA_DVCS_2"] != null ? Request.Cookies["MA_DVCS_2"].Value : string.Empty;
+            //List<MauInChungTu> dmDlist = LoadDmDt2();
+            //List<BKHoaDonGiaoHang> dmDlistTDV = LoadDmTDV2();
+            //ViewBag.DataItems = dmDlist;
+            //ViewBag.DataTDV = dmDlistTDV;
             return View();
         }
         public ActionResult CongNoChiTietKH2_Index()
         {
             string ma_dvcs = Request.Cookies["MA_DVCS_2"] != null ? Request.Cookies["MA_DVCS_2"].Value : string.Empty;
-            List<MauInChungTu> dmDlist = LoadDmDt2("");
+            List<MauInChungTu> dmDlist = LoadDmDt2();
             List<BKHoaDonGiaoHang> dmDlistTDV = LoadDmTDV2();
             ViewBag.DataItems = dmDlist;
             ViewBag.DataTDV = dmDlistTDV;
             return View();
         }
+        public ActionResult Index()
+        {
+            List<MauInChungTu> dmDlist = LoadDmDt2();
+            List<BKHoaDonGiaoHang> dmDlistTDV = LoadDmTDV2();
+            ViewBag.DataTDV = dmDlistTDV;
+            ViewBag.DataItems = dmDlist;
+           
+            return View();
+        }
+        public ActionResult CongNoChiTietKH2_Sub()
+        {
+            //string ma_dvcs = Request.Cookies["MA_DVCS_2"] != null ? Request.Cookies["MA_DVCS_2"].Value : string.Empty;
+            //List<MauInChungTu> dmDlist = LoadDmDt2();
+            //List<BKHoaDonGiaoHang> dmDlistTDV = LoadDmTDV2();
+            //ViewBag.DataItems = dmDlist;
+            //ViewBag.DataTDV = dmDlistTDV;
+           
+            return View();
+        }
         public ActionResult CongNoChiTietKH2()
         {
-            List<MauInChungTu> dmDlist = LoadDmDt2("");
+            List<MauInChungTu> dmDlist = LoadDmDt2();
             List<BKHoaDonGiaoHang> dmDlistTDV = LoadDmTDV2();
             string ma_dvcs = Request.Cookies["MA_DVCS_2"].Value;
             var fromDate = Request.Cookies["From_date"].Value;
