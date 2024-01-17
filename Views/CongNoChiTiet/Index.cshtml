@@ -1,6 +1,47 @@
 ﻿
 
+@{ 
+    var dvcs = "";
+    if (Request.Cookies["MA_DVCS_2"].Value == "OPC_CT")
+    {
+        dvcs = "Chi Nhánh Cần Thơ";
+    }else if (Request.Cookies["MA_DVCS_2"].Value == "OPC_TG")
+    {
+        dvcs = "Chi Nhánh Tiền Giang";
+    }
+    else if (Request.Cookies["MA_DVCS_2"].Value == "OPC_MD")
+    {
+        dvcs = "Chi Nhánh Miền Đông";
+    }
+    else if (Request.Cookies["MA_DVCS_2"].Value == "OPC_TP")
+    {
+        dvcs = "Chi Nhánh Hồ Chí Minh";
+    }
+    else if (Request.Cookies["MA_DVCS_2"].Value == "OPC_VT")
+    {
+        dvcs = "Chi Nhánh Vũng Tàu";
+    }
+    else if (Request.Cookies["MA_DVCS_2"].Value == "OPC_NT")
+    {
+        dvcs = "Chi Nhánh Nha Trang";
+    }
+    else if (Request.Cookies["MA_DVCS_2"].Value == "OPC_DN")
+    {
+        dvcs = "Chi Nhánh Đà Nẵng";
+    }
+    else if (Request.Cookies["MA_DVCS_2"].Value == "OPC_NA")
+    {
+        dvcs = "Chi Nhánh Nghệ An ";
+    }
+    else if (Request.Cookies["MA_DVCS_2"].Value == "OPC_HN")
+    {
+        dvcs = "Chi Nhánh Hà Nội";
+    }else if (Request.Cookies["MA_DVCS_2"].Value == "OPC_B1")
+    {
+        dvcs = "Công Ty";
+    }
 
+}
 @using System.Data;
 <!DOCTYPE html>
 <html lang="en">
@@ -561,17 +602,17 @@
 <!-- =============== Design & Develop By = MJ MARAZ   ====================== -->
 
 <body style="background-color: #e0e8ee ">
-    <div class="loader" style="z-index:1"></div>
+    @*<div class="loader" style="z-index:1"></div>*@
 
     <div class="sidebar">
         <div class="logo-details">
-
+            <span id="spanText" class="text-loading">[usp_RpCongNoPL5_SAP]</span>
         </div>
         <ul class="nav-links" style="justify-content: center; display:flex;margin-left:10px">
             <li>
                 @*<form id="dateForm" action="CongNoChiTiet/CongNoChiTietKH2" method="post" onsubmit="handleFormSubmit(event)">*@
                     @*<div id="locBC">
-                        <span id="spanText" class="text-loading">[usp_RpCongNoPL5_SAP]</span>
+                       
                         <a>Từ Ngày</a><br /><br />
                         <input class="tu_ngay" placeholder="Từ Ngày" id="tu_ngay" name="From_date" type="date" format="YYYY-MM-DD" value="@Request.Cookies["From_date"].Value" />
                         <script>$("#tu_ngay").datetimepicker({ timepicker: false, format: 'Y-m-d' });</script><br /><br />
@@ -580,7 +621,7 @@
                         <script>$("#den_ngay").datetimepicker({ timepicker: false, format: 'Y-m-d' });</script>
                     </div>*@
 
-
+                    <h5 style="font-size:20px">@dvcs</h5>
                     <h6>Chọn Đối Tượng:</h6>
 
                         <input type="text" id="dropdownInput" list="dropdownList" placeholder="Tìm kiếm đối tượng">
@@ -602,7 +643,7 @@
                         </datalist>
                         <input type="hidden" name="Ma_TDV" id="selectedOptionTDV">
                         <div>
-                            <button class="submit" type="submit" id="runReportButton" onclick="runReport(); saveNgay();nextPage('@Url.Action("CongNoChiTietKH2", "CongNoChiTiet")'
+                            <button class="submit" type="submit" id="runReportButton" onclick="runReport();nextPage('@Url.Action("CongNoChiTietKH2", "CongNoChiTiet")'
                                                       )">
                                 Chạy Báo Cáo
                             </button>
@@ -813,15 +854,15 @@
     </script>
    
     <script>
-        function saveNgay() {
-            var from_date = document.getElementById("tu_ngay").value;
-            var to_date = document.getElementById("den_ngay").value;
-            document.cookie = "From_date=" + from_date;
-            document.cookie = "To_date=" + to_date;
-        }
+        //function saveNgay() {
+        //    var from_date = document.getElementById("tu_ngay").value;
+        //    var to_date = document.getElementById("den_ngay").value;
+        //    document.cookie = "From_date=" + from_date;
+        //    document.cookie = "To_date=" + to_date;
+        //}
         function handleFormSubmit(event) {
             event.preventDefault();
-            showLoader();
+        
             // Show the loader when the form is submitted
 
 
@@ -864,7 +905,7 @@
             event.preventDefault();
             displaySelectedDate();
             // Show the loader when the form is submitted
-            showLoader();
+          /*  showLoader();*/
 
             // Lấy các giá trị ngày đã chọn từ trường nhập liệu
             const fromDate = document.getElementById('tu_ngay').value;
