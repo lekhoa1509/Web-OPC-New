@@ -32,4 +32,15 @@ namespace ASPNET_MVC_ChartsDemo.Models
 
 
     }
+
+    public class B20DmDvt
+    {
+        public string Ma_Dvcs { get; set; }
+        public string tendangnhap { get; set; }
+        public string hoten { get; set; }
+       
+        public string Ten_Dvcs { get; set; }
+        // Các thuộc tính khác tương ứng với cột trong bảng B20DmDvt
+    }
+
 }

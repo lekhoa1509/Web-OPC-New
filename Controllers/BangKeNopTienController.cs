@@ -206,6 +206,11 @@ namespace web4.Controllers
             ViewBag.DataTDV = dmDlistTDV;
             ViewBag.DataItems = dmDlist;
             connectSQL();
+            if(ma_dvcs == "OPC_B1")
+            {
+                ma_dvcs = "OPC";
+            }
+
             //var SoCT = Request.Cookies["So_Ct"] != null ? Request.Cookies["So_Ct"].Value : "";
             //MauIn.So_Ct = Request.Cookies["SoCt"].Value;
 

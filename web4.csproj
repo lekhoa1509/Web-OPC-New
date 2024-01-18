@@ -1227,6 +1227,7 @@
     <Content Include="Views\CongNoChiTiet\CongNoChiTietKH2_Index.cshtml" />
     <Content Include="Views\CongNoChiTiet\CongNoChiTietKH2_Sub.cshtml" />
     <Content Include="Views\CongNoChiTiet\Index.cshtml" />
+    <Content Include="Views\Chart\Demo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
