@@ -192,6 +192,7 @@
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
@@ -322,6 +323,7 @@
     <Compile Include="Controllers\PhanTichBanHangController.cs" />
     <Compile Include="Controllers\PhieuKeToanController.cs" />
     <Compile Include="Controllers\SoChiTietPhaiThuController.cs" />
+    <Compile Include="Controllers\SoChiTietPhaiTraController.cs" />
     <Compile Include="Controllers\SoQuyTienMatController.cs" />
     <Compile Include="Controllers\TheKhoController.cs" />
     <Compile Include="Controllers\TheoDoiGiaoHangController.cs" />
@@ -370,6 +372,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Detail.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\GetData.cs" />
     <Compile Include="Models\MauInChungTu.cs" />
     <Compile Include="Models\StudentMarkDetails.cs" />
     <Compile Include="Models\TheoDoiGiaoHang.Context.cs">
@@ -1228,6 +1231,9 @@
     <Content Include="Views\CongNoChiTiet\CongNoChiTietKH2_Sub.cshtml" />
     <Content Include="Views\CongNoChiTiet\Index.cshtml" />
     <Content Include="Views\Chart\Demo.cshtml" />
+    <Content Include="Views\SoChiTietPhaiTra\SoChiTietPhaiTra_Fill.cshtml" />
+    <Content Include="Views\SoChiTietPhaiTra\SoChiTietPhaiTra.cshtml" />
+    <Content Include="Views\SoChiTietPhaiTra\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

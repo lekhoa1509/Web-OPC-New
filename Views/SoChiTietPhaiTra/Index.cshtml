@@ -1,17 +1,79 @@
 ﻿﻿﻿﻿﻿
-@{ ViewBag.Title = "Sổ Tồn Nợ Phải Thu";
-    var ma_TDV = Request.Cookies["Ma_TDV"].Value;
-    var Ten_TDV = Request.Cookies["Ten_TDV"].Value;
+@{ ViewBag.Title = "Sổ Chi Tiết Phải Trả";
+    //var ma_TDV = Request.Cookies["Ma_TDV"].Value;
+    //var Ten_TDV = Request.Cookies["Ten_TDV"].Value;
     var DenNgay = Request.Cookies["To_date"].Value;
+    var TuNgay = Request.Cookies["From_date"].Value;
     DateTime ngay = DateTime.ParseExact(DenNgay, "yyyy-MM-dd", CultureInfo.InvariantCulture);
-
+    DateTime tongay = DateTime.ParseExact(TuNgay, "yyyy-MM-dd", CultureInfo.InvariantCulture);
     // Chuyển đổi thành chuỗi theo định dạng "DD/MM/YYYY"
     string ngayDaChinhSua = ngay.ToString("dd/MM/yyyy");
+    string ngayChinhSua = tongay.ToString("dd/MM/yyyy");
     HttpCookie ngayDaChinhSuaCookie = new HttpCookie("NgayDaChinhSua", ngayDaChinhSua);
-    ngayDaChinhSuaCookie.Expires = DateTime.Now.AddDays(1); // Ví dụ: sống trong 1 ngày
+    HttpCookie ngayChinhSuaCookie = new HttpCookie("TuNgayChinhSua", ngayChinhSua);
+  
 
     // Thêm cookie vào Response để nó được gửi về trình duyệt
     Response.Cookies.Add(ngayDaChinhSuaCookie);
+    Response.Cookies.Add(ngayChinhSuaCookie);
+    var TK = "";
+    if (Request.Cookies["Ma_TK"].Value =="3311")
+    {
+        TK = "3311 - Phải Trả Người Bán";
+    }else if(Request.Cookies["Ma_TK"].Value == "141")
+    {
+        TK = "141 - Tạm Ứng";
+    }
+    else if (Request.Cookies["Ma_TK"].Value == "3368")
+    {
+        TK = "3368 - Phải Trả Nội Bộ";
+    }
+    else if (Request.Cookies["Ma_TK"].Value == "33881")
+    {
+        TK = "33881 - Phải Trả, Phải Nộp Khác - Ngắn Hạn ";
+    }
+
+    var dvcs = "";
+    if (Request.Cookies["MA_DVCS"].Value == "OPC_CT")
+    {
+        dvcs = "Chi Nhánh Cần Thơ";
+    }
+    else if (Request.Cookies["MA_DVCS"].Value == "OPC_TG")
+    {
+        dvcs = "Chi Nhánh Tiền Giang";
+    }
+    else if (Request.Cookies["MA_DVCS"].Value == "OPC_MD")
+    {
+        dvcs = "Chi Nhánh Miền Đông";
+    }
+    else if (Request.Cookies["MA_DVCS"].Value == "OPC_TP")
+    {
+        dvcs = "Chi Nhánh Hồ Chí Minh";
+    }
+    else if (Request.Cookies["MA_DVCS"].Value == "OPC_VT")
+    {
+        dvcs = "Chi Nhánh Vũng Tàu";
+    }
+    else if (Request.Cookies["MA_DVCS"].Value == "OPC_NT")
+    {
+        dvcs = "Chi Nhánh Nha Trang";
+    }
+    else if (Request.Cookies["MA_DVCS"].Value == "OPC_DN")
+    {
+        dvcs = "Chi Nhánh Đà Nẵng";
+    }
+    else if (Request.Cookies["MA_DVCS"].Value == "OPC_NA")
+    {
+        dvcs = "Chi Nhánh Nghệ An ";
+    }
+    else if (Request.Cookies["MA_DVCS"].Value == "OPC_HN")
+    {
+        dvcs = "Chi Nhánh Hà Nội";
+    }
+    else if (Request.Cookies["MA_DVCS"].Value == "OPC_B1")
+    {
+        dvcs = "Công Ty";
+    }
 }
 @using System.Data;
 @using System.Diagnostics;
@@ -515,12 +577,7 @@
     </style>
 </head>
 <body>
-    @*<div class="tab-control" style="position:fixed;bottom:0">
-            <ul class="tabs" style="background-color: #1d1b31; bottom: 0; left: 0; right: 0;">
-                <li class="tab selected"><a href="/Home/About" style="padding-right:5px">Home</a></li>
-
-            </ul>
-        </div>*@
+   
 
     <div class="forms-container">
         <ul class="nav-links" style="display: flex; justify-content: center;">
@@ -550,26 +607,28 @@
 
 
         <form class="data-form" id="data-form">
-            @*<div>
-                    <h3 style="margin-left:-500px; font-size:13px;">CÔNG TY CỔ PHẦN DƯỢC PHẨM OPC</h3>
-                    <h3 style="font-weight:bold;color:black; font-size:13px;margin-left:-500px">CHI NHÁNH ĐÀ NẴNG</h3>
-                </div>*@
+       
+            <div style="display:flex;justify-content:space-between">
 
-
-
-            <div>
-                <h3 style="font-size: 25px; color: black; font-weight: bold">SỔ CHI TIẾT TỒN NỢ PHẢI THU ĐẾN NGÀY @ngayDaChinhSua</h3>
-
+                <h3 style="font-weight:bold;color:black; font-size:13px;">@dvcs</h3>
+                <h5 style="color:black;font-size:10px;margin-right:-10px">(Ban hành theo Thông Tư số 200/2014/TT-BTC Ngày 22/12/2024 của Bộ Tài Chính)</h5>
             </div>
-            <div style="text-align:left;margin-left:100px;color:black">
-                <h5>(Kế hoạch thu từ ngày ...../.....đến ngày...../.....)</h5>
+              
+        
 
+
+                <h3 style="font-size: 25px; color: black; font-weight: bold">SỔ CHI TIẾT CÔNG NỢ PHẢI TRẢ @*ĐẾN NGÀY @ngayDaChinhSua*@</h3>
+                <h5 style="color:black">Details of Account Payable</h5>
+           
+            <div style="text-align:center;color:black">
+                <h5>Từ ngày @Request.Cookies["TuNgayChinhSua"].Value đến ngày @Request.Cookies["NgayDaChinhSua"].Value</h5>
+                <h5>@TK</h5>
             </div>
             <br />
             <div class="flex-container" style="text-align:left;line-height:20px">
-                <h5 style="color: black; font-weight: bold; text-align: left">Trình Dược Viên: @ma_TDV - @Ten_TDV<span style="font-size: 15px;"></span></h5>
-                <h5 style="color: black; font-weight: bold; text-align: left">Nhân Viên Giao Nhận: <span style="font-size: 15px;"></span></h5>
-                <h5 style="color: black; font-weight: bold; text-align: left">Kế Toán Công Nợ: <span style="font-size: 15px;"></span></h5>
+                @*<h5 style="color: black; font-weight: bold; text-align: left">Trình Dược Viên: @ma_TDV - @Ten_TDV<span style="font-size: 15px;"></span></h5>*@
+                @*<h5 style="color: black; font-weight: bold; text-align: left">Nhân Viên Giao Nhận: <span style="font-size: 15px;"></span></h5>
+                <h5 style="color: black; font-weight: bold; text-align: left">Kế Toán Công Nợ: <span style="font-size: 15px;"></span></h5>*@
 
             </div>
 
@@ -578,113 +637,88 @@
                 <table id="export" border="1" border-collapse="collapse" style="width:700px">
                     <thead style="display: table-header-group">
                         <tr style="font-size: 13px; font-weight: bold; color: black;">
-                            <th style="padding:5px">SỐ</th>
-                            <th style="padding:5px">KHÁCH HÀNG</th>
-                            <th style="padding:5px">NGÀY HÓA ĐƠN</th>
-                            <th style="padding:5px">SỐ HÓA ĐƠN</th>
-                            <th style="padding:5px">NGÀY THANH TOÁN</th>
-                            <th style="padding:5px">GN THU</th>
-                            <th style="padding:5px">TDV THU</th>
-                            <th style="padding:5px">TIỀN TRƯỚC THUẾ</th>
-                            <th style="padding:5px">TIỀN THUẾ</th>
-                            <th style="padding:5px">TỔNG TIỀN</th>
+                            <th style="padding:5px">NGÀY</th>
+                            <th style="padding:5px">SỐ CHỨNG TỪ</th>
+                            <th style="padding:5px">DIỄN GIẢI</th>
+                            <th style="padding:5px">TK ĐỐI ỨNG</th>
+                         
+                            <th style="padding:5px">NỢ</th>
+                            <th style="padding:5px">CÓ</th>
+
                         </tr>
                     </thead>
                     <tbody style="font-size:13px;color:black">
-                        @{
-                            int stt = 1;
-                            string currentDT = null;
-                            decimal totalCongNo = 0;
-                            decimal totalCongTT = 0;
-                            decimal totalcongST = 0;
-                            bool firstTenDt = true;
-
-                            foreach (DataRow row3 in Model.Tables[0].Rows)
-                            {
-                                if (currentDT == null || currentDT != row3["Ma_Dt"].ToString())
-                                {
-                                    // Nếu cột "Ten_Dt" thay đổi, thêm hàng mới
-                                    if (currentDT != null)
-                                    {
-                                        <tr style="padding:5px">
-                                            <td colspan="7" style="text-align:center;color:black;font-weight:bold;padding:5px">Tổng cộng:</td>
-                                            <td style="text-align:right;color:black;font-weight:bold;padding:5px">@totalCongTT.ToString("N0").Replace(",", ".")</td>
-                                            <td style="text-align:right;color:black;font-weight:bold;padding:5px">@totalcongST.ToString("N0").Replace(",", ".")</td>
-                                            <td style="text-align:right;color:black;font-weight:bold;padding:5px">@totalCongNo.ToString("N0").Replace(",", ".")</td>
-                                        </tr>
-                                        totalCongNo = 0;
-                                        totalcongST = 0;
-                                        totalCongTT = 0;
-                                    }
-                                    currentDT = row3["Ma_Dt"].ToString();
-                                    firstTenDt = true;
-                                }
-
-                                <tr>
-                                    <td>@stt </td>
-                                    @if (firstTenDt)
-                                    {
-                                        <td style="text-align:left;height:max-content">@row3["Ten_Dt"]</td>
-                                        firstTenDt = false;
-                                    }
-                                    else
-                                    {
-                                        <td></td>
-                                    }
-                                    <td>@row3["Ngay_Ct1"]</td>
-                                    <td>@row3["So_Ct_Einv"]</td>
-                                    <td>@row3["Ngay_Den_Han1"]</td>
-                                    <td></td>
-                                    <td>@row3["Ghi_Chu"]</td>
-                                    <td style="text-align:right;padding-right:5px">@string.Format("{0:#,###}", row3["Cong_No_TT"]).Replace(",", ".")</td>
-                                    <td style="text-align:right;padding-right:5px">@string.Format("{0:#,###}", row3["Tien_Thue"]).Replace(",", ".")</td>
-                                    <td style="text-align:right;padding-right:5px">@string.Format("{0:#,###}", row3["Cong_No"]).Replace(",", ".")</td>
-                                </tr>
-
-                                stt++;
-                                var congnoST = string.Format("{0:#,###}", row3["Tien_Thue"]);
-                                var congnoTT = string.Format("{0:#,###}", row3["Cong_No_TT"]);
-                                var congnofirst = string.Format("{0:#,###}", row3["Cong_No"]);
-                                string congNoString = congnofirst.Replace(".", ""); // Gỡ bỏ dấu phẩy
-                                string congNoTT = congnoTT.Replace(".", "");
-                                string congNoST = congnoST.Replace(".", "");
-                                Debug.WriteLine("CongNo: " + congNoString);
-
-                                decimal cong_NoST = Convert.ToDecimal(row3["Tien_Thue"]);
-                                decimal cong_NoTT = Convert.ToDecimal(row3["Cong_No_TT"]);
-                                decimal congNo = Convert.ToDecimal(row3["Cong_No"]);
-                                totalCongNo += congNo;
-                                totalcongST += cong_NoST;
-                                totalCongTT += cong_NoTT;
-                                //if (int.TryParse(congNoString, out congNo))
-                                //{
-                                //    totalCongNo += congNo;
-                                //}
-
-                                Debug.WriteLine("Total: " + totalCongNo);
-                            }
-
-                            //Thêm hàng cuối cùng
-                            if (currentDT != null)
-                            {
-                                <tr style="padding:5px">
-                                    <td colspan="7" style="text-align:center;color:black;font-weight:bold">Tổng cộng:</td>
-                                    <td style="text-align:right;font-weight:bold;color:black">@totalCongTT.ToString("N0").Replace(",", ".")</td>
-                                    <td style="text-align:right;font-weight:bold;color:black">@totalcongST.ToString("N0").Replace(",", ".")</td>
-                                    <td style="text-align:right;font-weight:bold;color:black">@totalCongNo.ToString("N0").Replace(",", ".")</td>
-                                </tr>
-                            }
-
-                            // Hiển thị tổng cộng công nợ ở cuối
+                        @foreach (DataRow row2 in Model.Tables[1].Rows)
+                        {
                             <tr>
-                                <td colspan="7" style="color:black;font-weight:bold">TỔNG CÔNG NỢ:</td>
-                                @foreach (DataRow row2 in Model.Tables[1].Rows)
-                                {
-                                    <td style="text-align:right;font-weight:bold;color:black">@string.Format("{0:n0}", row2["Tong_CN_TT"]).Replace(",", ".")</td>
-                                    <td style="text-align:right;font-weight:bold;color:black">@string.Format("{0:n0}", row2["Tong_CN_ST"]).Replace(",", ".")</td>
-                                    <td style="text-align:right;font-weight:bold;color:black">@string.Format("{0:n0}", row2["Tong_CN"]).Replace(",", ".")</td>
-                                }
+                                <td></td>
+                                <td></td>
+                                <td style="font-weight:bold;text-align:left;padding-left:5px">Dư Đầu Kỳ</td>
+                                <td></td>
+
+                                <td></td>
+                                <td style="text-align: right; font-weight: bold; padding-right: 5px"> @String.Format("{0:n0}", Convert.ToDecimal(row2["Du_DauKy"]))</td>
+
+
+
                             </tr>
+
+
+
+                        }
+                        @foreach (DataRow row2 in Model.Tables[0].Rows)
+                        {
+                            <tr>
+                                <td>@row2["Ngay_Ct1"]</td>
+                                <td>@row2["So_Ct"]</td>
+                                <td style="text-align:left;padding-left:5px">@row2["Dien_Gia"]</td>
+
+                                <td>@row2["Tk"]</td>
+
+                                <td style="text-align:right;padding-right:5px">@String.Format("{0:n0}", Convert.ToDecimal(row2["Ps_No"]))</td>
+                                <td style="text-align: right; padding-right: 5px">@String.Format("{0:n0}", Convert.ToDecimal(row2["Ps_Co"]))</td>
+
+
+                            </tr>
+
+
+
+                        }
+                        @foreach (DataRow row2 in Model.Tables[1].Rows)
+                        {
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+
+                                <td></td>
+                                <td style="text-align: right; font-weight: bold;padding-right:5px">@String.Format("{0:n0}", Convert.ToDecimal(row2["PS_No"]))</td>
+                                <td style="text-align: right; font-weight: bold; padding-right: 5px"> @String.Format("{0:n0}", Convert.ToDecimal(row2["Ps_Co"]))</td>
+
+
+
+                            </tr>
+
+
+
+                        }
+                        @foreach (DataRow row2 in Model.Tables[1].Rows)
+                        {
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td style="font-weight: bold; text-align: left; padding-left: 5px">Dư Cuối Kỳ</td>
+                                <td></td>
+
+                                <td></td>
+                                <td style="text-align: right; font-weight: bold; padding-right: 5px"> @String.Format("{0:n0}", Convert.ToDecimal(row2["Du_CuoiKy"]))</td>
+
+
+
+
+                            </tr>
+
+
 
                         }
                     </tbody>
@@ -697,50 +731,27 @@
 
 
                 <br />
-                <h5 style="font-size: 15px; text-align: left;color:black">BÁO CÁO CỦA NGƯỜI PHỤ TRÁCH THU: </h5>
-                <div style="display:flex;justify-content:space-between;align-items:center">
-                    <div style="text-align:left;line-height:20px;color:black">
-
-                        <h5 style="font-size: 13px; text-align: left">-Tổng giá trị nợ:................................................................... </h5>
-                        <h5 style="font-size: 13px; text-align: left">-Tổng giá trị kế hoạch giao nhận thu:..........................................  </h5>
-                        <h5 style="font-size: 13px; text-align: left">-Tổng giá trị nợ giao nhận thu được: .......................................... </h5>
-                        <h5 style="font-size: 13px; text-align: left">-Tổng giá trị kế hoạch khách hàng CK: ..................................... </h5>
-                        <h5 style="font-size: 13px; text-align: left">-Tổng giá trị nợ khách hàng CK:.................................................  </h5>
-                        <h5 style="font-size: 13px; text-align: left">-Tổng giá trị kế hoạch trình dược viên thu:................................  </h5>
-                        <h5 style="font-size: 13px; text-align: left">-Tổng giá trị nợ trình dược viên thu được: ................................ </h5>
-                    </div>
-                    <div style="text-align:right;line-height:20px;color:black;margin-right:30px">
-                        <h5 style="font-size: 13px; text-align: left"></h5>
-                        <h5 style="font-size: 13px; text-align: left">-Tỷ lệ % kế hoạch GN so với nợ:....................................... </h5>
-                        <h5 style="font-size: 13px; text-align: left">-Tỷ lệ % GN thu được so với kế hoạch: ........................... </h5>
-                        <h5 style="font-size: 13px; text-align: left">-Tỷ lệ % KH chiết khấu so với nợ:.................................... </h5>
-                        <h5 style="font-size: 13px; text-align: left">-Tỷ lệ % KH chiết khấu so với kế hoạch:.........................</h5>
-                        <h5 style="font-size: 13px; text-align: left">-Tỷ lệ % kế hoạch TDV thu so với nợ:.............................. </h5>
-                        <h5 style="font-size: 13px; text-align: left">-Tỷ lệ % TDV thu được so với kế hoạch:..........................</h5>
-                    </div>
-                </div>
+               
                 <br />
                 <div style="text-align:right;margin-left:10px">
                     <h4 style="color:black">Ngày&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tháng&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;năm&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h4>
                 </div>
                 @*<h4 style="margin-left:auto">P. KHCU &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Thủ kho&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Xưởng sản xuất</h4>*@
-                <div style="display:inline-block">
-                    <h4 style="display:inline-block;color:black">PGĐ.Tài Chính</h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <h4 style="display: inline-block; color: black">Giám Sát</h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <h4 style="display: inline-block; color: black">Kế Toán Công Nợ</h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <h4 style="display: inline-block; color: black">Người Phụ Trách Thu</h4>
-                </div><br />
-                <div style="display:flex;justify-content:space-between;align-items:center">
-                    <h5 style="font-style: italic; ">(Ký, ghi họ tên)</h5>
-                    <h5 style="font-style: italic;  ">(Ký, ghi họ tên)</h5>
-                    <h5 style="font-style: italic; ">(Ký, ghi họ tên)</h5>
-                    <h5 style="font-style: italic; ">(Ký, ghi họ tên)</h5>
+                <div style="display:inline-block;justify-content:space-between;display:flex">
+                    <h4 style="display:inline-block;color:black;margin-left:50px">Người lập</h4>
+                    <h4 style="display: inline-block; color: black;margin-right:20px">Giám Đốc Chi Nhánh</h4>
+                   
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center;color:black">
+                    <h5 style="font-style: italic;margin-left:40px ">(Ký, ghi họ tên)</h5>
+                    <h5 style="font-style: italic;margin-right:40px  ">(Ký, ghi họ tên)</h5>
+                   
                 </div>
             </div>
 
         </form>
     </div>
-    <button id="export-button" @*onclick="exportExcel()"*@>Xuất Excel</button>
+    @*<button id="export-button" onclick="exportExcel()">Xuất Excel</button>*@
     <input type="file" id="file-input" style="display: none">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}" />
@@ -883,45 +894,12 @@
             for (var i = 0; i < parts.length; i++) {
                 var partJSON = JSON.stringify(parts[i]);
                 var cookieName = "tableDataCookie" + (i + 1);
-                if (partJSON.length > 0) {
-                    Cookies.set(cookieName, partJSON);
-                }
+                Cookies.set(cookieName, partJSON);
             }
-
         });
 
     </script>
     <script>
-        $("#export-button").click(function () {
-            // Lấy dữ liệu từ Local Storage hoặc từ nguồn dữ liệu khác
-            var localStorageData = localStorage.getItem("data");
-
-            // Kiểm tra xem có dữ liệu không
-            if (localStorageData) {
-                // Gửi dữ liệu lên server thông qua AJAX
-                $.ajax({
-                    type: "POST",
-                    url: "/MauInChungTu/ExportSoTonNo",
-                    contentType: "application/json",  // Thiết lập loại nội dung
-                    data: JSON.stringify({ localStorageData: localStorageData }),  // Chuyển đổi thành chuỗi JSON
-                    success: function (response) {
-                        // Xử lý phản hồi từ server nếu cần
-                        console.log(response);
-                    },
-                    error: function (error) {
-                        console.error("Lỗi khi gửi dữ liệu lên server.", error);
-                    }
-                });
-            } else {
-                // Hiển thị thông báo hoặc thực hiện hành động khác nếu không có dữ liệu
-                console.log("Không có dữ liệu trong Local Storage.");
-            }
-        });
-    </script>
-
-
-    <script>
-
         // Đợi cho tài liệu HTML được tải hoàn thành
         document.addEventListener("DOMContentLoaded", function () {
             // Lấy thẻ tbody của bảng
@@ -944,40 +922,11 @@
                 // Thêm mảng rowData vào mảng tableData
                 tableData.push(rowData);
             });
-            localStorage.setItem("data", JSON.stringify(tableData));
+
             // Xuất mảng tableData lên console
-            console.log("Gia tri mang:", tableData);
-
-            document.getElementById("export-button").addEventListener("click", function () {
-                // Gửi dữ liệu lên server
-                sendTableDataToServer(tableData);
-
-
-            });
+            console.log(tableData);
         });
-        function sendTableDataToServer(tableData) {
-            // Sử dụng AJAX để gửi dữ liệu lên server
-            $.ajax({
-                type: "POST",
-                url: "/MauInChungTu/ExportSoTonNo", // Điều chỉnh đúng đường dẫn tới action của bạn
-                contentType: "application/json; charset=utf-8",
-                /* dataType: "text",*/
-                data: JSON.stringify(tableData),
-                success: function (response) {
-                    // Xử lý phản hồi từ server nếu cần
-                    console.log("Received response from server:", response);
-                    console.log("Received tableData from server:", response.tableData);
-                    console.log("Thành công");
-                },
-                error: function (error) {
-                    // Xử lý lỗi nếu có
-                    console.error(error);
-                }
-            });
-        }
-
     </script>
-
     <script>
 
         document.addEventListener('keydown', function (event) {

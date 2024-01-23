@@ -1,6 +1,7 @@
 ﻿* {
     font-family: 'Times New Roman',sans-serif;
     box-sizing: border-box;
+    
 }
 body {
    
@@ -17,20 +18,22 @@ body {
    
 }
 .left-sidebar{
-   
+
     top:0;
   float:left;
     font-family: Tahoma,sans-serif;
     height:100%;
-
     z-index:1000;
   
 }
+nav button .sidebar-title div, nav .submenu-container.submenu-btn {
+    font-size: 15px;
+}
 .main-container {
     height: 100%;
-    width: calc(100%-276px);
+    width: calc(100%-270px);
     background-color: #ecf0f4;
-   /* position: fixed;*/
+    position: sticky;
 }
 
 .main-container .header .header-left{
@@ -131,7 +134,7 @@ body {
     
         padding: 15px 20px;
         text-decoration: none;
-        font-size: 18px;
+        font-size: 15px;
         color: white;
         display: block;
         border-left: 4px solid transparent;
@@ -145,7 +148,7 @@ body {
 
 .dropdown-btn, .submenu-btn {
     padding: 15px 20px;
-    font-size: 18px;
+    font-size: 15px;
     background-color: #3f5161;
     color: white;
     border: none;
@@ -165,13 +168,14 @@ body {
 }
 .dropdown-container, .submenu-container {
     display: none;
-
+   
     padding-left: 20px;
     border-radius:5px;
 }
+
 .submenu-container {
     background-color: #3f5161;
-
+   
 }
 .submenu-btn:hover{
     border-left-color:cyan;
@@ -203,17 +207,21 @@ button:hover {
 }
 .sidebar-title div{
   margin-left:20px;
-  font-size:20px;
+  font-size:15px;
 
 }
 .dropdown-btn  .icon-arrow{
 margin-left:60px;
-font-size:20px;
+font-size:18px;
 }
 .dropdown-btn .icon-arrow-2 {
+    margin-left: 74px;
+    font-size: 18px;
+}
+.dropdown-btn .icon-arrow-3 {
     margin-left: 48px;
-    font-size: 20px;
-}   
+    font-size: 18px;
+}  
 .subicon-arrow{
 margin-left:10px;
 }
@@ -316,7 +324,12 @@ nav {
         background: rgba(52, 138, 189, 0.653);
         color: white;
     }
-
+    .table .title-table{
+        text-align:center;
+        font-weight:bold;
+        color:black;
+        font-size:20px;
+    }
 section {
    
     align-items: flex-start;
@@ -324,7 +337,7 @@ section {
     top: 0;
     left: 270px;
     height: 100vh;
-    width: 100%;
+   
     z-index:1;
     transition: ease-in 0.3s;
 
@@ -397,23 +410,79 @@ section {
     border-radius: 10px;
     color: white;
 }
+.line-chart{
+/*    width:70%;*/
+    padding:10px;
+    background-color:white;
+/*    float:right;*/
+    border-radius:10px
+}
 .row-chart{
+ background-color:blue;
  margin-top:20px;
 width:100%;
 
-align-items:center;
+
 }
-#gaugeChart1{
-    height:100%;
-    width:100%;
+.pie {
+    height: 90%;
+
+    width: 100%;
+ flex-direction:column;
+    justify-content:center;
 }
-#gaugeChart2 {
+#myPieChart{
+    width:400px;
+   position:relative;
+    text-align:center;
+   justify-content:center;
+ top:0;
+/* left:30%;*/
+}
+#myPieChart2 {
+    width: 400px;
+    position: relative;
+    text-align: center;
+    justify-content: center;
+    top: 0;
+  /*  left: 30%;*/
+}
+#gaugeChart1 {
     height: 100%;
     width: 100%;
+}
+
+#gaugeChart2 {
+    height: 50%;
+    width: 100%;
+   
+
+    border-radius:10px;
 }
 #gaugeChart3 {
-    height: 100%;
-    width: 100%;
+    height: 50%;
+    width: 50%;
+}
+.top {
+    height:50%;
+    margin-bottom:10px;
+    background-color:white;
+    border-radius:10px;
+}
+.bottom{
+    background-color:white;
+    height:50%;
+   display:flex;
+    justify-content:center;
+    border-radius:10px;
+}
+.top h5 {
+    font-size: 20px;
+    text-align: center
+}
+.bottom h5{
+    font-size:20px;
+    text-align:center
 }
     .row-chart .chart-1 {
         
@@ -426,6 +495,11 @@ align-items:center;
         /* width:220px;*/
         height: 300px;
     }
+    .column-charts{
+        flex-direction:column;
+        height:100%;
+
+    }
     .row-chart .chart-2 {
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         border-radius: 10px;
@@ -434,7 +508,7 @@ align-items:center;
         border: 2px solid #e0e0e0;
         justify-content: center;
         /* width: 220px;*/
-        height: 300px;
+        height: 400px;
     }
     .row-chart .chart-3 {
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
@@ -505,6 +579,18 @@ tfoot {
     tfoot td {
         border-top: 2px solid #dddddd;
     }
+    .row-chart-1{
+       /* display:flex;*/
+   
+        height:max-content;
+    }
+    .row-chart-1 .line-chart{
+       /* width:70%;*/
+    }
+.row-chart-1 .percent-chart {
+    padding: 10px;
+  /*  width:30%;*/
+}
 .row-chart-2{
 
     margin-top:20px;
