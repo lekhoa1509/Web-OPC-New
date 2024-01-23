@@ -437,11 +437,33 @@
                 <h5 style="text-align: left">-Căn cứ vào hợp đồng số: ................../thỏa thuận của đôi bên.</h5>
             </div>
             <div class="flex-container" style="width:600px">
-                <h5 style="display: inline-block; color: black; font-weight: bold; text-align: left;">Khách hàng: <span style="font-size: 15px;">@Request.Cookies["Ten_Dt"].Value</span></h5>
-                <h5 style="display: inline-block; color: black; font-weight: bold"></h5>
+                <h5 style="display: inline-block; color: black; font-weight: bold; text-align: left;">
+                    Khách hàng: <span style="font-size: 15px;">
+                        @foreach (DataRow row in Model.Tables[0].Rows)
+                        {
+                            @row["Ten_Dt"]
+                            break;
+                        }
+                </span>
+            </h5>
+            <h5 style="display: inline-block; color: black; font-weight: bold; text-align: left;">
+                Tên trình dược viên: <span style="font-size: 15px;">
+                    @foreach (DataRow row in Model.Tables[0].Rows)
+                    {
+                        @row["Ten_TDV"]
+                        break;
+                    }
+            </span>
+            </h5>
             </div>
             <div style="color:black;font-weight:bold; font-size:15px;width:600px">
-                <h5 style="text-align: left;">Địa chỉ: @Request.Cookies["Dia_Chi"].Value</h5>
+                <h5 style="text-align: left;">
+                    Địa chỉ:   @foreach (DataRow row in Model.Tables[0].Rows)
+                    {
+                        @row["Dia_Chi"]
+                        break;
+                    }
+                </h5>
             </div>
             <div style="text-align:left;color:black;font-weight:bold;margin-left:-530px">
                 <h5>Điều kiện thanh toán: </h5>
@@ -457,28 +479,30 @@
                             <th style="">SỐ</th>
                             <th style="width:100px">NGÀY HĐ</th>
                             <th style="width:100px">NGÀY ĐẾN HẠN</th>
+                            <th style="width:100px">TIỀN TRƯỚC THUẾ</th>
                             <th style="width:120px">TIỀN HĐ</th>
                             <th style="width:120px">CKTT</th>
-                            <th styl="width:100px">TIỀN THANH TOÁN</th>
+                            <th style="width:100px">TIỀN THANH TOÁN</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (DataRow row3 in Model.Tables[0].Rows)
                         {
-                            <tr data-soct="@row3["So_Ct"]">
-                                <td style="">@row3["So_Ct"]</td>
-                                <td style="">
-                                    @row3["Ngay_Ct1"]
-                                </td>
-                                <td style="">
-                                    @row3["Han_Thanh_Toan"]
-                                </td>
-                                <td style="text-align:right">@row3["Tong_Tien"]</td>
-                                <td style="text-align:right">@row3["CKTT"]</td>
-                                <td style="text-align:right">@row3["Tien_TT"]</td>
+                        <tr data-soct="@row3["So_Ct"]">
+                            <td style="">@row3["So_Ct"]</td>
+                            <td style="">
+                                @row3["Ngay_Ct1"]
+                            </td>
+                            <td style="">
+                                @row3["Han_Thanh_Toan"]
+                            </td>
+                            <td style="text-align:right">@row3["Tien_Truoc_Thue"]</td>
+                            <td style="text-align:right">@row3["Tong_Tien"]</td>
+                            <td style="text-align:right">@row3["CKTT"]</td>
+                            <td style="text-align:right">@row3["Tien_TT"]</td>
 
 
-                            </tr>
+                        </tr>
 
                         }
                         @foreach (DataRow row3 in Model.Tables[1].Rows)
@@ -486,6 +510,7 @@
 
 
                         <td style="color:black;font-weight:bold" colspan="3">Tổng Cộng</td>
+                        <td style="text-align:right;color:black;font-weight:bold">@row3["Tien_Truoc_Thue"]</td>
                         <td style="text-align:right;color:black;font-weight:bold">@row3["Tong_Tien"]</td>
                         <td style="text-align:right;color:black;font-weight:bold">@row3["CKTT"]</td>
                         <td style="text-align:right;color:black;font-weight:bold">@row3["Tong_TienTT"]</td>

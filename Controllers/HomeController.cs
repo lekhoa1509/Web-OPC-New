@@ -78,7 +78,37 @@ namespace web4.Controllers
         {
             var username = Request.Cookies["UserName"].Value;
             ViewBag.Username = username;
-            return View();
+
+            string ma_dvcs = Request.Cookies["MA_DVCS"].Value;
+            DataSet ds = new DataSet();
+            connectSQL();
+
+            string Pname = "[tbl_doanhthuthang_CN]";
+
+            using (SqlCommand cmd = new SqlCommand(Pname, con))
+            {
+                cmd.CommandTimeout = 950;
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                con.Open();
+                
+
+                using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                {
+                    
+                    cmd.Parameters.AddWithValue("@_ma_dvcs", ma_dvcs);
+
+                    sda.Fill(ds);
+                }
+
+                // Truyền DataSet tới View thông qua ViewBag
+                ViewBag.ChartData = ds;
+            }
+            ViewBag.Username = username;
+
+            return View(ds);
+            
         }
         public ActionResult About1()
         {

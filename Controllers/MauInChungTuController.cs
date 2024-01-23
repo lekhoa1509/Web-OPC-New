@@ -16,6 +16,8 @@ using System.IO;
 using OfficeOpenXml.Table;
 using Newtonsoft.Json;
 using System.Globalization;
+using System.Web.Http;
+using System.Runtime.Caching;
 
 namespace web4.Controllers
 {
@@ -115,7 +117,7 @@ namespace web4.Controllers
 
             Ma_dvcs = Request.Cookies["ma_dvcs"].Value;
             List<MauInChungTu> dataItems = new List<MauInChungTu>();
-            string appendedString = Ma_dvcs == "OPC_B1" ? "_010203" : "_01"; // Dòng này cộng chuỗi dựa trên giá trị của Ma_dvcs
+            string appendedString = Ma_dvcs == "OPC_B1" ? "_0120" : "_01"; // Dòng này cộng chuỗi dựa trên giá trị của Ma_dvcs
             using (SqlConnection connection = new SqlConnection(con.ConnectionString))
             {
                 connection.Open();
@@ -2120,7 +2122,9 @@ namespace web4.Controllers
 
             return dataItems;
         }
-         public ActionResult ExportSoTonNo()
+
+
+        public ActionResult ExportSoTonNo()
         {
             var fileName = $"SoTonNo{DateTime.Now:yyyyMMddHHmmss}.xlsx";
             // Lấy dữ liệu từ cookie
@@ -2131,7 +2135,7 @@ namespace web4.Controllers
             // Kiểm tra xem có dữ liệu từ cookie không
             if (!string.IsNullOrEmpty(jsonData))
             {
-               
+
                 List<List<string>> tableData = JsonConvert.DeserializeObject<List<List<string>>>(jsonData);
                 List<List<string>> tableData1 = JsonConvert.DeserializeObject<List<List<string>>>(jsonData1);
                 List<List<string>> tableData2 = JsonConvert.DeserializeObject<List<List<string>>>(jsonData2);
@@ -2182,10 +2186,10 @@ namespace web4.Controllers
                         columnHeaderCell.Style.Fill.BackgroundColor.SetColor(Color.White);
                         columnHeaderCell.Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
                     }
-                  
-                    worksheet.Column(startColumn).Width = 10; 
-                    worksheet.Column(startColumn + 1).Width = 35; 
-                    worksheet.Column(startColumn + 2).Width = 25; 
+
+                    worksheet.Column(startColumn).Width = 10;
+                    worksheet.Column(startColumn + 1).Width = 35;
+                    worksheet.Column(startColumn + 2).Width = 25;
                     worksheet.Column(startColumn + 3).Width = 15;
                     worksheet.Column(startColumn + 4).Width = 25;
                     worksheet.Column(startColumn + 5).Width = 15;
@@ -2228,7 +2232,7 @@ namespace web4.Controllers
                                     worksheet.Cells[startRow + row, startColumn + col].Value = rowData[col];
                                     worksheet.Cells[startRow + row, startColumn + col].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
                                     worksheet.Cells[startRow + row, startColumn + col].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                            
+
                                     worksheet.Cells[startRow + row, startColumn + col].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
                                 }
                             }
@@ -2251,53 +2255,53 @@ namespace web4.Controllers
                     //worksheet.Cells[startRow + combinedData.Count - 2, startColumn + 6].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
                     //worksheet.Cells[startRow + combinedData.Count - 2, startColumn + 7].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
                     var endRow = startRow + combinedData.Count;
-               
-                    worksheet.Cells[endRow, startColumn +1].Value = "BÁO CÁO CỦA NGƯỜI PHỤ TRÁCH THU: ";
-                    worksheet.Cells[endRow+1, startColumn+1].Value = "-Tổng giá trị nợ:.................................................................. ";
-                    worksheet.Cells[endRow+2, startColumn+1].Value = "-Tổng giá trị kế hoạch giao nhận thu:.................................. ";
+
+                    worksheet.Cells[endRow, startColumn + 1].Value = "BÁO CÁO CỦA NGƯỜI PHỤ TRÁCH THU: ";
+                    worksheet.Cells[endRow + 1, startColumn + 1].Value = "-Tổng giá trị nợ:.................................................................. ";
+                    worksheet.Cells[endRow + 2, startColumn + 1].Value = "-Tổng giá trị kế hoạch giao nhận thu:.................................. ";
                     worksheet.Cells[endRow + 3, startColumn + 1].Value = "-Tổng giá trị nợ giao nhận thu được:................................... ";
                     worksheet.Cells[endRow + 4, startColumn + 1].Value = "-Tổng giá trị kế hoạch khách hàng CK:............................... ";
                     worksheet.Cells[endRow + 5, startColumn + 1].Value = "-Tổng giá trị nợ khách hàng CK:.........................................";
                     worksheet.Cells[endRow + 6, startColumn + 1].Value = "-Tổng giá trị kế hoạch trình dược viên thu:......................... ";
                     worksheet.Cells[endRow + 7, startColumn + 1].Value = "-Tổng giá trị nợ trình dược viên thu được:.......................... ";
-                
+
 
 
                     worksheet.Cells[endRow + 1, startColumn + 4].Value = "-Tỷ lệ % kế hoạch GN thu so với nợ:................................";
                     worksheet.Cells[endRow + 2, startColumn + 4].Value = "-Tỷ lệ % GN thu được so với kế hoạch:............................";
                     worksheet.Cells[endRow + 3, startColumn + 4].Value = "-Tỷ lệ % KH CK so với nợ:............................................... ";
-                   worksheet.Cells[endRow + 4, startColumn + 4].Value = "-Tỷ lệ % KH CK so với kế hoạch: ....................................";
+                    worksheet.Cells[endRow + 4, startColumn + 4].Value = "-Tỷ lệ % KH CK so với kế hoạch: ....................................";
                     worksheet.Cells[endRow + 5, startColumn + 4].Value = "-Tỷ lệ % kế hoạch TDV thu so với nợ:..............................";
                     worksheet.Cells[endRow + 6, startColumn + 4].Value = "-Tỷ lệ % TDV thu được so với kế hoạch: ..........................";
                     int nextRow = endRow + 7;
-                    worksheet.Cells[nextRow , startColumn + 7].Value = $"Ngày     tháng     năm";
+                    worksheet.Cells[nextRow, startColumn + 7].Value = $"Ngày     tháng     năm";
                     worksheet.Cells[nextRow, startColumn + 7].Style.Font.Bold = true;
-                    worksheet.Cells[nextRow+1, startColumn + 1].Value = $"PGĐ.Tài Chính";
-                    worksheet.Cells[nextRow +1, startColumn + 1].Style.Font.Bold = true;
-                    worksheet.Cells[nextRow+1, startColumn + 2].Value = $"Giám Sát";
+                    worksheet.Cells[nextRow + 1, startColumn + 1].Value = $"PGĐ.Tài Chính";
+                    worksheet.Cells[nextRow + 1, startColumn + 1].Style.Font.Bold = true;
+                    worksheet.Cells[nextRow + 1, startColumn + 2].Value = $"Giám Sát";
                     worksheet.Cells[nextRow + 1, startColumn + 2].Style.Font.Bold = true;
-                    worksheet.Cells[nextRow+1, startColumn + 2].Style.Indent = 3;
+                    worksheet.Cells[nextRow + 1, startColumn + 2].Style.Indent = 3;
                     worksheet.Cells[nextRow + 2, startColumn + 2].Value = "(Ký, họ tên)";
                     worksheet.Cells[nextRow + 2, startColumn + 2].Style.Font.Italic = true;
                     worksheet.Cells[nextRow + 2, startColumn + 2].Style.Indent = 3;
                     worksheet.Cells[nextRow + 2, startColumn + 2].Style.Font.Bold = true;
-                    worksheet.Cells[nextRow+1, startColumn + 1].Style.Font.Bold = true;
-                    worksheet.Cells[nextRow+1, startColumn + 4].Value = $"Kế Toán Công Nợ";
+                    worksheet.Cells[nextRow + 1, startColumn + 1].Style.Font.Bold = true;
+                    worksheet.Cells[nextRow + 1, startColumn + 4].Value = $"Kế Toán Công Nợ";
                     worksheet.Cells[nextRow + 2, startColumn + 4].Value = "(Ký, họ tên)";
                     worksheet.Cells[nextRow + 2, startColumn + 4].Style.Font.Italic = true;
                     worksheet.Cells[nextRow + 2, startColumn + 4].Style.Font.Bold = true;
                     worksheet.Cells[nextRow + 2, startColumn + 4].Style.Indent = 7;
-                    worksheet.Cells[nextRow+1, startColumn + 4].Style.Indent = 7;
-                    worksheet.Cells[nextRow+1, startColumn + 4].Style.Font.Bold = true;
+                    worksheet.Cells[nextRow + 1, startColumn + 4].Style.Indent = 7;
+                    worksheet.Cells[nextRow + 1, startColumn + 4].Style.Font.Bold = true;
                     worksheet.Cells[nextRow + 2, startColumn + 1].Value = "(Ký, họ tên)";
                     worksheet.Cells[nextRow + 2, startColumn + 1].Style.Font.Bold = true;
                     worksheet.Cells[nextRow + 2, startColumn + 1].Style.Font.Italic = true;
-                    worksheet.Cells[nextRow+1, startColumn + 7].Value = $"Người Phụ Trách Thu";
-                    worksheet.Cells[nextRow +2, startColumn + 7].Value = "(Ký, họ tên)";
-                    worksheet.Cells[nextRow+1, startColumn + 7].Style.Font.Bold = true;
+                    worksheet.Cells[nextRow + 1, startColumn + 7].Value = $"Người Phụ Trách Thu";
+                    worksheet.Cells[nextRow + 2, startColumn + 7].Value = "(Ký, họ tên)";
+                    worksheet.Cells[nextRow + 1, startColumn + 7].Style.Font.Bold = true;
                     worksheet.Cells[nextRow + 2, startColumn + 7].Style.Font.Bold = true;
                     worksheet.Cells[nextRow + 2, startColumn + 7].Style.Font.Italic = true;
-                   
+
 
                     package.Save();
                     byte[] fileBytes = package.GetAsByteArray();

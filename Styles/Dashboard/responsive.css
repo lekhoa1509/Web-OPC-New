@@ -17,7 +17,7 @@
 }
 
     @media screen and (min-width:300px) and (max-width: 400px) {
-
+        
         .left-sidebar {
             width: 250px;
             z-index:1000;
@@ -26,7 +26,23 @@
         .main-container{
         
         }
-
+        .row-chart-1{
+     
+            flex-direction:column;
+            justify-content:center;
+        }
+        #myPieChart{
+            left:0;
+        }
+        #myPieChart2{
+            left:0;
+        }
+        .row-chart-1 .percent-chart {
+            width: 100%;
+        }
+        .line-chart{
+            width:100%;
+        }
             .left-sidebar.expand {
                 transition: transform 0.3s ease;
                 position: fixed;
@@ -325,6 +341,15 @@
         width:400px;
         height:100%;
     }*/
+   .line-chart{
+       width:70%;
+   }
+   .row-chart-1{
+       display:flex;
+   }
+   .percent-chart{
+       width:30%;
+   }
 }
 @media screen and (min-width:800px) and (max-width: 900px) {
     .left-sidebar {
@@ -381,6 +406,17 @@
         width: 90%;
         height: max-content;
     }
+    .line-chart {
+        width: 70%;
+    }
+
+    .row-chart-1 {
+        display: flex;
+    }
+
+    .percent-chart {
+        width: 30%;
+    }
 }
 @media screen and (min-width:900px) and (max-width: 1000px) {
     .left-sidebar {
@@ -436,6 +472,17 @@
     .chart-3 {
         width: 90%;
         height: max-content;
+    }
+    .line-chart {
+        width: 70%;
+    }
+
+    .row-chart-1 {
+        display: flex;
+    }
+
+    .percent-chart {
+        width: 30%;
     }
 }
 @media screen and (min-width:1000px) and (max-width: 1100px) {
@@ -500,6 +547,26 @@
         display: flex;
         width: 100%;
     }
+        .row-chart-2 .left-chart {
+            width: 70%;
+        }
+
+        .row-chart-2 .right-chart {
+            width: 30%;
+        }
+
+  
+    .line-chart {
+        width: 70%;
+    }
+
+    .row-chart-1 {
+        display: flex;
+    }
+
+    .percent-chart {
+        width: 30%;
+    }
 }
 @media screen and (min-width:1100px) and (max-width: 1200px) {
     .left-sidebar {
@@ -555,7 +622,7 @@
 
     .row-chart-2 {
         display: flex;
-        width: 100%;
+     /*   width: 100%;*/
     }
     .chart-1 {
         width: 30%;
@@ -573,7 +640,17 @@
         width: 30%;
         height: max-content;
     }
+    .line-chart {
+        width: 70%;
+    }
 
+    .row-chart-1 {
+        display: flex;
+    }
+
+    .percent-chart {
+        width: 30%;
+    }
 }
 @media screen and (min-width:1200px) and (max-width: 1300px) {
     .left-sidebar {
@@ -648,6 +725,17 @@
         display: flex;
         width: 100%;
     }
+    .line-chart {
+        width: 70%;
+    }
+
+    .row-chart-1 {
+        display: flex;
+    }
+
+    .percent-chart {
+        width: 30%;
+    }
 }
 @media screen and (max-width:1300px){
    /* .mobile-menu-overlay{
@@ -717,7 +805,9 @@
         width: 30%;
         height: max-content;
     }
-
+    .chart-table{
+        height:100%;
+    }
     .row-chart {
         display: flex;
         justify-content: space-around;
@@ -757,6 +847,17 @@
         width: 100%;
         /* height:100%;*/
         height: 200px;
+    }
+    .line-chart {
+        width: 70%;
+    }
+
+    .row-chart-1 {
+        display: flex;
+    }
+
+    .percent-chart {
+        width: 30%;
     }
 }
 @media screen and (min-width:1400px) and (max-width: 1500px) {
@@ -848,6 +949,17 @@
             width: 30%;
             border-radius: 10px;
         }
+    .line-chart {
+        width: 70%;
+    }
+
+    .row-chart-1 {
+        display: flex;
+    }
+
+    .percent-chart {
+        width: 30%;
+    }
 }
 @media screen and (min-width:1500px) and (max-width: 1600px) {
     .left-sidebar {
@@ -942,6 +1054,17 @@
             width: 30%;
             border-radius: 10px;
         }
+    .line-chart {
+        width: 70%;
+    }
+
+    .row-chart-1 {
+        display: flex;
+    }
+
+    .percent-chart {
+        width: 30%;
+    }
 }
 @media screen and (min-width:1600px) and (max-width: 1700px) {
     .left-sidebar {
@@ -1035,6 +1158,17 @@
             width: 30%;
             border-radius: 10px;
         }
+    .line-chart {
+        width: 70%;
+    }
+
+    .row-chart-1 {
+        display: flex;
+    }
+
+    .percent-chart {
+        width: 30%;
+    }
 }
 @media screen and (min-width:1700px) and (max-width: 1800px) {
     .left-sidebar {
@@ -1127,6 +1261,17 @@
             width: 30%;
             border-radius: 10px;
         }
+    .line-chart {
+        width: 70%;
+    }
+
+    .row-chart-1 {
+        display: flex;
+    }
+
+    .percent-chart {
+        width: 30%;
+    }
 }
 @media screen and (min-width:1800px) and (max-width: 1900px) {
     .left-sidebar {
@@ -1218,7 +1363,18 @@
             margin-left:20px;
             width: 30%;
             border-radius: 10px;
-        }   
+        }
+    .line-chart {
+        width: 70%;
+    }
+
+    .row-chart-1 {
+        display: flex;
+    }
+
+    .percent-chart {
+        width: 30%;
+    }
 }
 @media screen and (min-width:1900px) and (max-width: 2000px) {
     .left-sidebar {
@@ -1314,6 +1470,17 @@
         height:max-content;
         width:30%;
         border-radius:10px;
+    }
+    .line-chart {
+        width: 70%;
+    }
+
+    .row-chart-1 {
+        display: flex;
+    }
+
+    .percent-chart {
+        width: 30%;
     }
 }
 @media screen and (min-width:2001px){
@@ -1411,5 +1578,16 @@
             width: 30%;
             border-radius: 10px;
         }
+    .line-chart {
+        width: 70%;
+    }
+
+    .row-chart-1 {
+        display: flex;
+    }
+
+    .percent-chart {
+        width: 30%;
+    }
 }
  
