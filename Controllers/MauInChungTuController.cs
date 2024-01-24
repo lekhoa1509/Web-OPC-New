@@ -2023,6 +2023,110 @@ namespace web4.Controllers
             }
             return View(ds);
         }
+        public ActionResult TonNo()
+        {
+            List<MauInChungTu> dmDlist = LoadDmDt("");
+            List<BKHoaDonGiaoHang> dmDlistTDV = LoadDmTDV();
+            ViewBag.DataItems = dmDlist;
+            ViewBag.DataTDV = dmDlistTDV;
+            DataSet ds = new DataSet();
+            connectSQL();
+
+            //var So_Ct = SoCt;
+            var ma_Cbnv = Request.Cookies["Ma_TDV"].Value;
+            var ma_dvcs = Request.Cookies["MA_DVCS"].Value;
+            var ma_dt = Request.Cookies["Ma_Dt"].Value;
+            //string query = "exec usp_Vth_BC_BHCNTK_CN @_ngay_Ct1 = '" + Acc.From_date + "',@_Ngay_Ct2 ='"+ Acc.To_date+"',@_Ma_Dvcs='"+ Acc.Ma_DvCs_1+"'";
+            string Pname = "[usp_RpCongNoChiTietTDV_SAP]";
+
+
+
+            using (SqlCommand cmd = new SqlCommand(Pname, con))
+            {
+                cmd.CommandTimeout = 950;
+
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                var fromDate = Request.Cookies["From_date"].Value;
+                var toDate = Request.Cookies["To_Date"].Value;
+
+
+                con.Open();
+
+                using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                {
+                    cmd.Parameters.AddWithValue("@_Tu_Ngay", fromDate);
+                    cmd.Parameters.AddWithValue("@_Den_Ngay", toDate);
+                    cmd.Parameters.AddWithValue("@_Ma_DvCs", ma_dvcs);
+                    cmd.Parameters.AddWithValue("@_Ma_CbNv", ma_Cbnv);
+                    cmd.Parameters.AddWithValue("@_Ma_Dt", ma_dt);
+
+
+                    sda.Fill(ds);
+
+                }
+            }
+            return View(ds);
+        }
+        public List<GetData> LoadData()
+        {
+            connectSQL();
+            List<GetData> dataItems = new List<GetData>();
+            using (SqlConnection connection = new SqlConnection(con.ConnectionString))
+            {
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand("[usp_RpCongNoChiTietTDV_SAP]", connection))
+                {
+                    var fromDate = Request.Cookies["From_date"].Value;
+                    var toDate = Request.Cookies["To_Date"].Value;
+                    var ma_Cbnv = Request.Cookies["Ma_TDV"].Value;
+                    var ma_dvcs = Request.Cookies["MA_DVCS"].Value;
+                    var ma_dt = Request.Cookies["Ma_Dt"].Value;
+                    command.CommandTimeout = 950;
+                    command.CommandType = CommandType.StoredProcedure;
+                    using (SqlDataAdapter sda = new SqlDataAdapter(command))
+                    {
+                        DataSet ds = new DataSet();
+                        command.Parameters.AddWithValue("@_Tu_Ngay", fromDate);
+                        command.Parameters.AddWithValue("@_Den_Ngay", toDate);
+                        command.Parameters.AddWithValue("@_Ma_DvCs", ma_dvcs);
+                        command.Parameters.AddWithValue("@_Ma_CbNv", ma_Cbnv);
+                        command.Parameters.AddWithValue("@_Ma_Dt", ma_dt);
+                        sda.Fill(ds);
+
+                        // Kiểm tra xem DataSet có bảng dữ liệu hay không
+                        if (ds.Tables.Count > 0)
+                        {
+                            DataTable dt = ds.Tables[0];
+
+                            foreach (DataRow row in dt.Rows)
+                            {
+                                GetData dataItem = new GetData
+                                {
+                                    TenDt = row["Ten_Dt"].ToString(),
+                                    NgayCt = row["Ngay_Ct1"].ToString(),
+                                    SoCtEinv = row["So_Ct_Einv"].ToString(),
+                                    NgayDenHan = row["Ngay_Den_Han1"].ToString(),
+                                    CongNoTT = Convert.ToDecimal(row["Cong_No_TT"].ToString()),
+                                    TienThue = Convert.ToDecimal(row["Tien_Thue"].ToString()),
+                                    CongNo = Convert.ToDecimal(row["Cong_No"].ToString()),
+                                    //TotalCongNoTT = Convert.ToDecimal(row["Tong_CN_TT"].ToString()),
+                                    //TotalCongNoST = Convert.ToDecimal(row["Tong_CN_ST"].ToString()),
+                                    //TotalCongNo = Convert.ToDecimal(row["Tong_CN"].ToString()),
+
+
+
+                                };
+
+                                dataItems.Add(dataItem);
+                            }
+                        }
+                    }
+                }
+            }
+            return dataItems;
+        }
         public ActionResult TonNo_Fill()
         {
             //List<MauInChungTu> dmDlist = LoadDmDt("");
@@ -2123,25 +2227,39 @@ namespace web4.Controllers
             return dataItems;
         }
 
+        private void FormatCell(ExcelRangeBase cell)
+        {
+            cell.Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+            cell.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            cell.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+            cell.Style.Font.Bold = true;
+            // Các định dạng khác của ô có thể thêm vào tại đây
+        }
+        void CreateEmptyRow(ExcelWorksheet worksheet, int startColumn, int currentRow, decimal tongCongNoTT, decimal tongCongNoST, decimal tongCongNo)
+        {
+            worksheet.Cells[currentRow, startColumn].Value = "Tổng cộng";
+            FormatCell(worksheet.Cells[currentRow, startColumn]);
+
+            // Các phần khác của mã
+
+            worksheet.Cells[currentRow, startColumn + 7].Value = $"{tongCongNoTT}";
+            FormatCell(worksheet.Cells[currentRow, startColumn + 7]);
+            worksheet.Cells[currentRow, startColumn + 8].Value = $"{tongCongNoST}";
+            FormatCell(worksheet.Cells[currentRow, startColumn + 8]);
+            worksheet.Cells[currentRow, startColumn + 9].Value = $"{tongCongNo}";
+            FormatCell(worksheet.Cells[currentRow, startColumn + 9]);
+        }
 
         public ActionResult ExportSoTonNo()
         {
             var fileName = $"SoTonNo{DateTime.Now:yyyyMMddHHmmss}.xlsx";
             // Lấy dữ liệu từ cookie
-            string jsonData = Request.Cookies["tableDataCookie1"] != null ? HttpUtility.UrlDecode(Request.Cookies["tableDataCookie1"].Value) : "";
-            string jsonData1 = Request.Cookies["tableDataCookie2"] != null ? HttpUtility.UrlDecode(Request.Cookies["tableDataCookie2"].Value) : "";
-            string jsonData2 = Request.Cookies["tableDataCookie3"] != null ? HttpUtility.UrlDecode(Request.Cookies["tableDataCookie3"].Value) : "";
-            List<List<string>> combinedData = new List<List<string>>();
+           
+            List<GetData> combinedData = LoadData();
             // Kiểm tra xem có dữ liệu từ cookie không
-            if (!string.IsNullOrEmpty(jsonData))
-            {
+           
 
-                List<List<string>> tableData = JsonConvert.DeserializeObject<List<List<string>>>(jsonData);
-                List<List<string>> tableData1 = JsonConvert.DeserializeObject<List<List<string>>>(jsonData1);
-                List<List<string>> tableData2 = JsonConvert.DeserializeObject<List<List<string>>>(jsonData2);
-                combinedData.AddRange(tableData);
-                combinedData.AddRange(tableData1);
-                combinedData.AddRange(tableData2);
+               
                 ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
                 using (var package = new ExcelPackage())
                 {
@@ -2151,6 +2269,9 @@ namespace web4.Controllers
                     string maTDV = Request.Cookies["Ma_CbNv"] != null ? HttpUtility.UrlDecode(Request.Cookies["Ma_CbNv"].Value) : "";
                     string tenTDV = Request.Cookies["Ten_TDV"] != null ? HttpUtility.UrlDecode(Request.Cookies["Ten_TDV"].Value) : "";
                     string ngay = Request.Cookies["NgayDaChinhSua"] != null ? HttpUtility.UrlDecode(Request.Cookies["NgayDaChinhSua"].Value) : "";
+                    string TongCN = Request.Cookies["TongCN"] != null ? HttpUtility.UrlDecode(Request.Cookies["TongCN"].Value) : "";
+                    string TongCNTT = Request.Cookies["TongCNTT"] != null ? HttpUtility.UrlDecode(Request.Cookies["TongCNTT"].Value) : "";
+                    string TongCNST = Request.Cookies["TongCNST"] != null ? HttpUtility.UrlDecode(Request.Cookies["TongCNST"].Value) : "";
                     worksheet.Cells.Style.Font.Name = "Times New Roman";
 
                     worksheet.Cells["C3"].Value = $"SỔ CHI TIẾT TỒN NỢ PHẢI THU ĐẾN NGÀY {ngay}";
@@ -2197,113 +2318,170 @@ namespace web4.Controllers
                     worksheet.Column(startColumn + 7).Width = 25;
                     worksheet.Column(startColumn + 8).Width = 25;
                     worksheet.Column(startColumn + 9).Width = 25;
-                    if (combinedData != null && combinedData.Any())
+                var end = 1;
+                if (combinedData != null && combinedData.Any())
+                {
+                    // Lặp qua từng hàng dữ liệu trong tableData và ghi vào tệp Excel
+                    var stt = 1;
+                    int currentRow = startRow;
+                    string previousTenDt = null;
+                    Dictionary<string, decimal> tongCongNoTT = new Dictionary<string, decimal>();
+                    Dictionary<string, decimal> tongCongNoST = new Dictionary<string, decimal>();
+                    Dictionary<string, decimal> tongCongNo = new Dictionary<string, decimal>();
+                    for (int row = 0; row < combinedData.Count; row++)
                     {
-                        // Lặp qua từng hàng dữ liệu trong tableData và ghi vào tệp Excel
-                        for (int row = 0; row < combinedData.Count; row++)
+                        var rowData = combinedData[row];
+
+                        // Kiểm tra nếu giá trị TenDt thay đổi
+                        if (rowData.TenDt != previousTenDt)
                         {
-                            var rowData = combinedData[row];
-                            for (int col = 0; col < rowData.Count; col++)
+                            // Tạo hàng rỗng nếu không phải là hàng đầu tiên
+                            if (currentRow > startRow)
                             {
-                                if (rowData.Count == 2 && col == 0)
-                                {
-                                    // Gộp 6 cột kế tiếp, chỉ gộp cho cột đầu tiên
-                                    worksheet.Cells[startRow + row, startColumn + col, startRow + row, startColumn + col + 6].Merge = true;
-                                    worksheet.Cells[startRow + row, startColumn + col, startRow + row, startColumn + col + 6].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
-                                    // Ghi giá trị của cột đầu tiên
-                                    worksheet.Cells[startRow + row, startColumn + col].Value = rowData[col];
-                                    worksheet.Cells[startRow + row, startColumn + col].Style.Font.Bold = true;
-                                    worksheet.Cells[startRow + row, startColumn + col].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
-                                    worksheet.Cells[startRow + row, startColumn + col].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                                    worksheet.Cells[startRow + row, startColumn + col].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                                CreateEmptyRow(worksheet, startColumn, currentRow,
+                                 tongCongNoTT[previousTenDt],
+                                 tongCongNoST[previousTenDt],
+                                 tongCongNo[previousTenDt]);
+                                currentRow++;
+                            }
 
-                                    // Đặt giá trị thứ hai vào cột thứ 8
-                                    worksheet.Cells[startRow + row, startColumn + col + 7].Value = rowData[col + 1];
-                                    worksheet.Cells[startRow + row, startColumn + col + 7].Style.Font.Bold = true;
-                                    worksheet.Cells[startRow + row, startColumn + col + 7].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
-                                    worksheet.Cells[startRow + row, startColumn + col + 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                                    worksheet.Cells[startRow + row, startColumn + col + 7].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                            // Ghi tên công ty vào ô đầu tiên
+                            worksheet.Cells[currentRow, startColumn+1].Value = rowData.TenDt;
+                            FormatCell(worksheet.Cells[currentRow, startColumn+1]);
 
-                                    // Bỏ qua 6 cột kế tiếp
-                                    col += 6;
-                                }
-                                else
-                                {
-                                    worksheet.Cells[startRow + row, startColumn + col].Value = rowData[col];
-                                    worksheet.Cells[startRow + row, startColumn + col].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
-                                    worksheet.Cells[startRow + row, startColumn + col].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                            // Cập nhật giá trị previousTenDt
+                            previousTenDt = rowData.TenDt;
 
-                                    worksheet.Cells[startRow + row, startColumn + col].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
-                                }
+                            // Reset số thứ tự
+                            stt = 1;
+                            if (!tongCongNoTT.ContainsKey(rowData.TenDt))
+                            {
+                                tongCongNoTT[rowData.TenDt] = 0;
+                                tongCongNoST[rowData.TenDt] = 0;
+                                tongCongNo[rowData.TenDt] = 0;
                             }
                         }
+                        else
+                        {
+                            // Nếu giá trị TenDt trùng nhau, bỏ trống giá trị TenDt
+                            worksheet.Cells[currentRow, startColumn+1].Value = "";
+                            FormatCell(worksheet.Cells[currentRow, startColumn+1]);
+                        }
+
+                        // Ghi các giá trị cột khác
+                        worksheet.Cells[currentRow, startColumn].Value = stt;
+                        FormatCell(worksheet.Cells[currentRow, startColumn ]);
+                        worksheet.Cells[currentRow, startColumn + 2].Value = rowData.NgayCt;
+                        FormatCell(worksheet.Cells[currentRow, startColumn + 2]);
+                        worksheet.Cells[currentRow, startColumn + 3].Value = rowData.SoCtEinv;
+                        FormatCell(worksheet.Cells[currentRow, startColumn + 3]);
+                        worksheet.Cells[currentRow, startColumn + 4].Value = rowData.NgayDenHan;
+                        FormatCell(worksheet.Cells[currentRow, startColumn + 4]);
+                        FormatCell(worksheet.Cells[currentRow , startColumn + 5]);
+                        worksheet.Cells[currentRow, startColumn + 6].Value = rowData.GhiChu;
+                        FormatCell(worksheet.Cells[currentRow, startColumn + 6]);
+                        worksheet.Cells[currentRow, startColumn + 7].Value = rowData.CongNoTT;
+                        FormatCell(worksheet.Cells[currentRow, startColumn + 7]);
+                        worksheet.Cells[currentRow, startColumn + 8].Value = rowData.TienThue;
+                        FormatCell(worksheet.Cells[currentRow, startColumn + 8]);
+                        worksheet.Cells[currentRow, startColumn + 9].Value = rowData.CongNo;
+                        FormatCell(worksheet.Cells[currentRow, startColumn + 9]);
+
+                        // Tăng số thứ tự và dòng
+                        stt++;
+                        currentRow++;
+                        tongCongNoTT[rowData.TenDt] += rowData.CongNoTT;
+                        tongCongNoST[rowData.TenDt] += rowData.TienThue;
+                        tongCongNo[rowData.TenDt] += rowData.CongNo;
                     }
+                    CreateEmptyRow(worksheet, startColumn, currentRow,
+                  tongCongNoTT[previousTenDt],
+                  tongCongNoST[previousTenDt],
+                  tongCongNo[previousTenDt]);
+                    var sttCell = worksheet.Cells[currentRow + 1, startColumn, currentRow + 1, startColumn+6];
+                    sttCell.Merge = true;
+                    sttCell.Value = "TỔNG CÔNG NỢ";
+                    
+                    FormatCell(sttCell);
+                    FormatCell(worksheet.Cells[currentRow + 1, startColumn]);
+                    FormatCell(worksheet.Cells[currentRow + 1, startColumn + 2]);
+                    FormatCell(worksheet.Cells[currentRow + 1, startColumn + 3]);
+                    FormatCell(worksheet.Cells[currentRow + 1, startColumn + 4]);
+                    FormatCell(worksheet.Cells[currentRow + 1, startColumn + 5]);
+                    FormatCell(worksheet.Cells[currentRow + 1, startColumn + 6]);
+                    worksheet.Cells[currentRow+1, startColumn + 7].Value = $"{TongCNTT}";
+                    FormatCell(worksheet.Cells[currentRow+1, startColumn + 7]);
+                    worksheet.Cells[currentRow+1, startColumn + 8].Value = $"{TongCNST}";
+                    FormatCell(worksheet.Cells[currentRow+1, startColumn + 8]);
+                    worksheet.Cells[currentRow+1, startColumn + 9].Value = $"{TongCN}";
+                    FormatCell(worksheet.Cells[currentRow+1, startColumn + 9]);
+                    end = currentRow + 1;
+                }
+                else
+                {
+                    worksheet.Cells[startRow, startColumn].Value = "Không có dữ liệu bảng từ cookie.";
+                    FormatCell(worksheet.Cells[startRow, startColumn]);
+                }
+                //worksheet.Cells[startRow + combinedData.Count -2, startColumn + 1].Value = "Tổng cộng";
+                //worksheet.Cells[startRow + combinedData.Count-2, startColumn + 1].Style.Font.Bold = true;
+                //worksheet.Cells[startRow + combinedData.Count-2, startColumn].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+                //worksheet.Cells[startRow + combinedData.Count-2, startColumn + 1].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+                //worksheet.Cells[startRow + combinedData.Count-2, startColumn + 2].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+                //worksheet.Cells[startRow + combinedData.Count-2, startColumn + 3].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+                //worksheet.Cells[startRow + combinedData.Count - 2, startColumn + 4].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+                //worksheet.Cells[startRow + combinedData.Count - 2, startColumn + 5].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+                //worksheet.Cells[startRow + combinedData.Count - 2, startColumn + 6].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+                //worksheet.Cells[startRow + combinedData.Count - 2, startColumn + 7].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+                var endRow = startRow + end +1-11;
+
+                worksheet.Cells[endRow, startColumn + 1].Value = "BÁO CÁO CỦA NGƯỜI PHỤ TRÁCH THU: ";
+                worksheet.Cells[endRow + 1, startColumn + 1].Value = "-Tổng giá trị nợ:.................................................................. ";
+                worksheet.Cells[endRow + 2, startColumn + 1].Value = "-Tổng giá trị kế hoạch giao nhận thu:.................................. ";
+                worksheet.Cells[endRow + 3, startColumn + 1].Value = "-Tổng giá trị nợ giao nhận thu được:................................... ";
+                worksheet.Cells[endRow + 4, startColumn + 1].Value = "-Tổng giá trị kế hoạch khách hàng CK:............................... ";
+                worksheet.Cells[endRow + 5, startColumn + 1].Value = "-Tổng giá trị nợ khách hàng CK:.........................................";
+                worksheet.Cells[endRow + 6, startColumn + 1].Value = "-Tổng giá trị kế hoạch trình dược viên thu:......................... ";
+                worksheet.Cells[endRow + 7, startColumn + 1].Value = "-Tổng giá trị nợ trình dược viên thu được:.......................... ";
 
 
-                    else
-                    {
-                        worksheet.Cells[startRow, startColumn].Value = "Không có dữ liệu bảng từ cookie.";
-                    }
-                    //worksheet.Cells[startRow + combinedData.Count -2, startColumn + 1].Value = "Tổng cộng";
-                    //worksheet.Cells[startRow + combinedData.Count-2, startColumn + 1].Style.Font.Bold = true;
-                    //worksheet.Cells[startRow + combinedData.Count-2, startColumn].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
-                    //worksheet.Cells[startRow + combinedData.Count-2, startColumn + 1].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
-                    //worksheet.Cells[startRow + combinedData.Count-2, startColumn + 2].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
-                    //worksheet.Cells[startRow + combinedData.Count-2, startColumn + 3].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
-                    //worksheet.Cells[startRow + combinedData.Count - 2, startColumn + 4].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
-                    //worksheet.Cells[startRow + combinedData.Count - 2, startColumn + 5].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
-                    //worksheet.Cells[startRow + combinedData.Count - 2, startColumn + 6].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
-                    //worksheet.Cells[startRow + combinedData.Count - 2, startColumn + 7].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
-                    var endRow = startRow + combinedData.Count;
 
-                    worksheet.Cells[endRow, startColumn + 1].Value = "BÁO CÁO CỦA NGƯỜI PHỤ TRÁCH THU: ";
-                    worksheet.Cells[endRow + 1, startColumn + 1].Value = "-Tổng giá trị nợ:.................................................................. ";
-                    worksheet.Cells[endRow + 2, startColumn + 1].Value = "-Tổng giá trị kế hoạch giao nhận thu:.................................. ";
-                    worksheet.Cells[endRow + 3, startColumn + 1].Value = "-Tổng giá trị nợ giao nhận thu được:................................... ";
-                    worksheet.Cells[endRow + 4, startColumn + 1].Value = "-Tổng giá trị kế hoạch khách hàng CK:............................... ";
-                    worksheet.Cells[endRow + 5, startColumn + 1].Value = "-Tổng giá trị nợ khách hàng CK:.........................................";
-                    worksheet.Cells[endRow + 6, startColumn + 1].Value = "-Tổng giá trị kế hoạch trình dược viên thu:......................... ";
-                    worksheet.Cells[endRow + 7, startColumn + 1].Value = "-Tổng giá trị nợ trình dược viên thu được:.......................... ";
-
-
-
-                    worksheet.Cells[endRow + 1, startColumn + 4].Value = "-Tỷ lệ % kế hoạch GN thu so với nợ:................................";
-                    worksheet.Cells[endRow + 2, startColumn + 4].Value = "-Tỷ lệ % GN thu được so với kế hoạch:............................";
-                    worksheet.Cells[endRow + 3, startColumn + 4].Value = "-Tỷ lệ % KH CK so với nợ:............................................... ";
-                    worksheet.Cells[endRow + 4, startColumn + 4].Value = "-Tỷ lệ % KH CK so với kế hoạch: ....................................";
-                    worksheet.Cells[endRow + 5, startColumn + 4].Value = "-Tỷ lệ % kế hoạch TDV thu so với nợ:..............................";
-                    worksheet.Cells[endRow + 6, startColumn + 4].Value = "-Tỷ lệ % TDV thu được so với kế hoạch: ..........................";
-                    int nextRow = endRow + 7;
-                    worksheet.Cells[nextRow, startColumn + 7].Value = $"Ngày     tháng     năm";
-                    worksheet.Cells[nextRow, startColumn + 7].Style.Font.Bold = true;
-                    worksheet.Cells[nextRow + 1, startColumn + 1].Value = $"PGĐ.Tài Chính";
-                    worksheet.Cells[nextRow + 1, startColumn + 1].Style.Font.Bold = true;
-                    worksheet.Cells[nextRow + 1, startColumn + 2].Value = $"Giám Sát";
-                    worksheet.Cells[nextRow + 1, startColumn + 2].Style.Font.Bold = true;
-                    worksheet.Cells[nextRow + 1, startColumn + 2].Style.Indent = 3;
-                    worksheet.Cells[nextRow + 2, startColumn + 2].Value = "(Ký, họ tên)";
-                    worksheet.Cells[nextRow + 2, startColumn + 2].Style.Font.Italic = true;
-                    worksheet.Cells[nextRow + 2, startColumn + 2].Style.Indent = 3;
-                    worksheet.Cells[nextRow + 2, startColumn + 2].Style.Font.Bold = true;
-                    worksheet.Cells[nextRow + 1, startColumn + 1].Style.Font.Bold = true;
-                    worksheet.Cells[nextRow + 1, startColumn + 4].Value = $"Kế Toán Công Nợ";
-                    worksheet.Cells[nextRow + 2, startColumn + 4].Value = "(Ký, họ tên)";
-                    worksheet.Cells[nextRow + 2, startColumn + 4].Style.Font.Italic = true;
-                    worksheet.Cells[nextRow + 2, startColumn + 4].Style.Font.Bold = true;
-                    worksheet.Cells[nextRow + 2, startColumn + 4].Style.Indent = 7;
-                    worksheet.Cells[nextRow + 1, startColumn + 4].Style.Indent = 7;
-                    worksheet.Cells[nextRow + 1, startColumn + 4].Style.Font.Bold = true;
-                    worksheet.Cells[nextRow + 2, startColumn + 1].Value = "(Ký, họ tên)";
-                    worksheet.Cells[nextRow + 2, startColumn + 1].Style.Font.Bold = true;
-                    worksheet.Cells[nextRow + 2, startColumn + 1].Style.Font.Italic = true;
-                    worksheet.Cells[nextRow + 1, startColumn + 7].Value = $"Người Phụ Trách Thu";
-                    worksheet.Cells[nextRow + 2, startColumn + 7].Value = "(Ký, họ tên)";
-                    worksheet.Cells[nextRow + 1, startColumn + 7].Style.Font.Bold = true;
-                    worksheet.Cells[nextRow + 2, startColumn + 7].Style.Font.Bold = true;
-                    worksheet.Cells[nextRow + 2, startColumn + 7].Style.Font.Italic = true;
+                worksheet.Cells[endRow + 1, startColumn + 4].Value = "-Tỷ lệ % kế hoạch GN thu so với nợ:................................";
+                worksheet.Cells[endRow + 2, startColumn + 4].Value = "-Tỷ lệ % GN thu được so với kế hoạch:............................";
+                worksheet.Cells[endRow + 3, startColumn + 4].Value = "-Tỷ lệ % KH CK so với nợ:............................................... ";
+                worksheet.Cells[endRow + 4, startColumn + 4].Value = "-Tỷ lệ % KH CK so với kế hoạch: ....................................";
+                worksheet.Cells[endRow + 5, startColumn + 4].Value = "-Tỷ lệ % kế hoạch TDV thu so với nợ:..............................";
+                worksheet.Cells[endRow + 6, startColumn + 4].Value = "-Tỷ lệ % TDV thu được so với kế hoạch: ..........................";
+                int nextRow = endRow + 7;
+                worksheet.Cells[nextRow, startColumn + 7].Value = $"Ngày     tháng     năm";
+                worksheet.Cells[nextRow, startColumn + 7].Style.Font.Bold = true;
+                worksheet.Cells[nextRow + 1, startColumn + 1].Value = $"PGĐ.Tài Chính";
+                worksheet.Cells[nextRow + 1, startColumn + 1].Style.Font.Bold = true;
+                worksheet.Cells[nextRow + 1, startColumn + 2].Value = $"Giám Sát";
+                worksheet.Cells[nextRow + 1, startColumn + 2].Style.Font.Bold = true;
+                worksheet.Cells[nextRow + 1, startColumn + 2].Style.Indent = 3;
+                worksheet.Cells[nextRow + 2, startColumn + 2].Value = "(Ký, họ tên)";
+                worksheet.Cells[nextRow + 2, startColumn + 2].Style.Font.Italic = true;
+                worksheet.Cells[nextRow + 2, startColumn + 2].Style.Indent = 3;
+                worksheet.Cells[nextRow + 2, startColumn + 2].Style.Font.Bold = true;
+                worksheet.Cells[nextRow + 1, startColumn + 1].Style.Font.Bold = true;
+                worksheet.Cells[nextRow + 1, startColumn + 4].Value = $"Kế Toán Công Nợ";
+                worksheet.Cells[nextRow + 2, startColumn + 4].Value = "(Ký, họ tên)";
+                worksheet.Cells[nextRow + 2, startColumn + 4].Style.Font.Italic = true;
+                worksheet.Cells[nextRow + 2, startColumn + 4].Style.Font.Bold = true;
+                worksheet.Cells[nextRow + 2, startColumn + 4].Style.Indent = 7;
+                worksheet.Cells[nextRow + 1, startColumn + 4].Style.Indent = 7;
+                worksheet.Cells[nextRow + 1, startColumn + 4].Style.Font.Bold = true;
+                worksheet.Cells[nextRow + 2, startColumn + 1].Value = "(Ký, họ tên)";
+                worksheet.Cells[nextRow + 2, startColumn + 1].Style.Font.Bold = true;
+                worksheet.Cells[nextRow + 2, startColumn + 1].Style.Font.Italic = true;
+                worksheet.Cells[nextRow + 1, startColumn + 7].Value = $"Người Phụ Trách Thu";
+                worksheet.Cells[nextRow + 2, startColumn + 7].Value = "(Ký, họ tên)";
+                worksheet.Cells[nextRow + 1, startColumn + 7].Style.Font.Bold = true;
+                worksheet.Cells[nextRow + 2, startColumn + 7].Style.Font.Bold = true;
+                worksheet.Cells[nextRow + 2, startColumn + 7].Style.Font.Italic = true;
 
 
-                    package.Save();
+                package.Save();
                     byte[] fileBytes = package.GetAsByteArray();
 
                     // Trả về tệp Excel dưới dạng dữ liệu binary
@@ -2312,11 +2490,8 @@ namespace web4.Controllers
                 }
 
 
-            }
-            else
-            {
-                return Content("Không có dữ liệu từ cookie.");
-            }
+            
+           
         }
         public ActionResult BienBanBanGiaoNTHH()
         {
@@ -2518,11 +2693,104 @@ namespace web4.Controllers
         }
         public ActionResult PhieuXacNhanTTTCK_Fill()
         {
+            string ma_dvcs = Request.Cookies["MA_DVCS"] != null ? Request.Cookies["MA_DVCS"].Value : string.Empty;
+            List<MauInChungTu> dmDlist = LoadDmDt("");
+            List<BKHoaDonGiaoHang> dmDlistTDV = LoadDmTDV();
+            ViewBag.DataItems = dmDlist;
+            ViewBag.DataTDV = dmDlistTDV;
             return View();
+        }
+        public ActionResult PhieuXacNhanTTTCK_In()
+        {
+            List<MauInChungTu> dmDlist = LoadDmDt("");
+            List<BKHoaDonGiaoHang> dmDlistTDV = LoadDmTDV();
+            string ma_dvcs = Request.Cookies["MA_DVCS"].Value;
+            var fromDate = Request.Cookies["From_date"].Value;
+            var toDate = Request.Cookies["To_Date"].Value;
+            var MaDt = Request.Cookies["Ma_Dt"] != null ? Request.Cookies["Ma_Dt"].Value : string.Empty;
+            var MaTDV = Request.Cookies["Ma_TDV"].Value;
+
+            DataSet ds = new DataSet();
+
+            ViewBag.DataTDV = dmDlistTDV;
+            ViewBag.DataItems = dmDlist;
+            connectSQL();
+            //var SoCT = Request.Cookies["So_Ct"] != null ? Request.Cookies["So_Ct"].Value : "";
+            //MauIn.So_Ct = Request.Cookies["SoCt"].Value;
+
+            //string query = "exec usp_Vth_BC_BHCNTK_CN @_ngay_Ct1 = '" + Acc.From_date + "',@_Ngay_Ct2 ='"+ Acc.To_date+"',@_Ma_Dvcs='"+ Acc.Ma_DvCs_1+"'";
+            string Pname = "[usp_XacNhanThanhToanCKTT_SAP]";
+
+            using (SqlCommand cmd = new SqlCommand(Pname, con))
+            {
+                cmd.CommandTimeout = 950;
+
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                //MauIn.From_date = Request.Cookies["From_date"].Value;
+                //MauIn.To_date = Request.Cookies["To_Date"].Value;
+                con.Open();
+
+                using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                {
+                    cmd.Parameters.AddWithValue("@_Tu_Ngay", fromDate);
+                    cmd.Parameters.AddWithValue("@_Den_Ngay", toDate);
+                    cmd.Parameters.AddWithValue("@_Ma_Dt", MaDt);
+
+                    cmd.Parameters.AddWithValue("@_Ma_CbNv", MaTDV);
+                    cmd.Parameters.AddWithValue("@_Ma_DvCs", ma_dvcs);
+                    sda.Fill(ds);
+
+                }
+            }
+            return View(ds);
         }
         public ActionResult PhieuXacNhanTTTCK()
         {
-            return View();
+            List<MauInChungTu> dmDlist = LoadDmDt("");
+            List<BKHoaDonGiaoHang> dmDlistTDV = LoadDmTDV();
+            string ma_dvcs = Request.Cookies["MA_DVCS"].Value;
+            var fromDate = Request.Cookies["From_date"].Value;
+            var toDate = Request.Cookies["To_Date"].Value;
+            var MaDt = Request.Cookies["Ma_Dt"] != null ? Request.Cookies["Ma_Dt"].Value : string.Empty;
+            var MaTDV = Request.Cookies["Ma_TDV"].Value;
+          
+            DataSet ds = new DataSet();
+
+            ViewBag.DataTDV = dmDlistTDV;
+            ViewBag.DataItems = dmDlist;
+            connectSQL();
+            //var SoCT = Request.Cookies["So_Ct"] != null ? Request.Cookies["So_Ct"].Value : "";
+            //MauIn.So_Ct = Request.Cookies["SoCt"].Value;
+
+            //string query = "exec usp_Vth_BC_BHCNTK_CN @_ngay_Ct1 = '" + Acc.From_date + "',@_Ngay_Ct2 ='"+ Acc.To_date+"',@_Ma_Dvcs='"+ Acc.Ma_DvCs_1+"'";
+            string Pname = "[usp_XacNhanThanhToanCKTT_SAP]";
+
+            using (SqlCommand cmd = new SqlCommand(Pname, con))
+            {
+                cmd.CommandTimeout = 950;
+
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                //MauIn.From_date = Request.Cookies["From_date"].Value;
+                //MauIn.To_date = Request.Cookies["To_Date"].Value;
+                con.Open();
+
+                using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                {
+                    cmd.Parameters.AddWithValue("@_Tu_Ngay", fromDate);
+                    cmd.Parameters.AddWithValue("@_Den_Ngay", toDate);
+                    cmd.Parameters.AddWithValue("@_Ma_Dt", MaDt);
+                  
+                    cmd.Parameters.AddWithValue("@_Ma_CbNv", MaTDV);
+                    cmd.Parameters.AddWithValue("@_Ma_DvCs", ma_dvcs);
+                    sda.Fill(ds);
+
+                }
+            }
+            return View(ds);
         }
     }
 
