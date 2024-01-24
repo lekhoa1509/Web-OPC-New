@@ -239,13 +239,18 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
         </nav>
         <div class="main" style="width:auto">
 
-            <div class="home-content1" style="width:100%">
-                <div class="overview-boxes" style="background-color:red">
-                    <div class="box" style="overflow: auto; height: 200px; border-color: #3483bd">
-                        <table style="width: 500px; height: 200px; border-collapse: collapse; overflow: scroll; ">
-                            <tr class="title">
-                                <th colspan="4" class="top10" style="font-size: 18px; padding: 5px; background-color: #aec9e0; color: #3483bd ">BÁO CÁO QUẢN TRỊ</th>
-                            </tr>
+                <a href="#" onclick="runReport('@Url.Action("MauInNLCB_Fill", "MauInChungTu")'
+                                                      )">1.Chứng Từ Phiếu Nhập</a>
+                <a href="#" onclick="runReport('@Url.Action("PhieuNhapXNTT_Fill", "MauInChungTu")'
+                                                      )">2.Phiếu Xác Nhận Thanh Toán</a>
+                <a href="#" onclick="runReport('@Url.Action("PhieuXacNhanTTCK_Fill", "MauInChungTu")'
+                                                      )">3.Phiếu Xác Nhận Thanh Toán CTKM</a>
+                <a href="#" onclick="runReport('@Url.Action("PhieuXuatKho_SO", "MauInChungTu")'
+                                                      )">4.Phiếu Xuất Kho</a>
+                <a href="#" onclick="runReport('@Url.Action("PhieuNhapKho_Fill", "MauInChungTu")'
+                                                      )">5.Phiếu Nhập Xuất Kho Khác</a>
+                <a href="#" onclick="runReport('@Url.Action("BienBanBanGiaoNTHH_Fill", "MauInChungTu")'
+                                                      )">6.Biên Bản Bàn Giao Và Nghiệm Thu Hàng Hóa</a>
 
                             <tbody style="float:left">
                                 <tr style="height:30px">
