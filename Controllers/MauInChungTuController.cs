@@ -445,19 +445,67 @@ namespace web4.Controllers
         }
 
 
-      
+        public List<GetData> LoadDataTBNoQH()
+        {
+            connectSQL();
+            List<GetData> dataItems = new List<GetData>();
+            using (SqlConnection connection = new SqlConnection(con.ConnectionString))
+            {
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand("[usp_ThongBaoNoQuaHan_SAP]", connection))
+                {
+                    var fromDate = Request.Cookies["From_date"].Value;
+                    var toDate = Request.Cookies["To_Date"].Value;
+                  
+                    var ma_dvcs = Request.Cookies["MA_DVCS"].Value;
+                    var ma_dt = Request.Cookies["Ma_Dt"].Value;
+                    command.CommandTimeout = 950;
+                    command.CommandType = CommandType.StoredProcedure;
+                    using (SqlDataAdapter sda = new SqlDataAdapter(command))
+                    {
+                        DataSet ds = new DataSet();
+                        command.Parameters.AddWithValue("@_Tu_Ngay", fromDate);
+                        command.Parameters.AddWithValue("@_Den_Ngay", toDate);
+                        command.Parameters.AddWithValue("@_ma_dvcs", ma_dvcs);
+                        command.Parameters.AddWithValue("@_Ma_Dt", ma_dt);
+                        sda.Fill(ds);
+
+                        // Kiểm tra xem DataSet có bảng dữ liệu hay không
+                        if (ds.Tables.Count > 0)
+                        {
+                            DataTable dt = ds.Tables[1];
+
+                            foreach (DataRow row in dt.Rows)
+                            {
+                                GetData dataItem = new GetData
+                                {
+                                    SoHD = row["So_Ct"].ToString(),
+                                    NgayXuat = row["Ngay_Ct1"].ToString(),
+                                    HanTT = row["Han_Thanh_Toan"].ToString(),
+                                   
+                                    NgayQH = Convert.ToInt32(row["So_Ngay_Qua_Han"].ToString()),
+                                    TienNo = Convert.ToDecimal(row["Tong_No"].ToString()),
+                                
+                                  
+
+
+
+                                };
+
+                                dataItems.Add(dataItem);
+                            }
+                        }
+                    }
+                }
+            }
+            return dataItems;
+        }
         public ActionResult ExportToExcel()
         {
             var fileName = $"MauThongBaoNoQH{DateTime.Now:yyyyMMddHHmmss}.xlsx";
             // Lấy dữ liệu từ cookie
-            string jsonData = Request.Cookies["tableDataCookie"] != null ? HttpUtility.UrlDecode(Request.Cookies["tableDataCookie"].Value) : "";
-
-            // Kiểm tra xem có dữ liệu từ cookie không
-            if (!string.IsNullOrEmpty(jsonData))
-            {
-                // Parse chuỗi JSON thành mảng JavaScript
-                List<List<string>> tableData = JsonConvert.DeserializeObject<List<List<string>>>(jsonData);
-
+            List<GetData> combinedData = LoadDataTBNoQH();
                 ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
                 using (var package = new ExcelPackage())
                 {
@@ -517,18 +565,18 @@ namespace web4.Controllers
                     worksheet.Cells[startRow - 1, startColumn + 3].Value = "TIỀN NỢ";
                     worksheet.Cells[startRow - 1, startColumn + 4].Value = "HẠN THANH TOÁN";
                     worksheet.Cells[startRow - 1, startColumn + 5].Value = "NGÀY QUÁ HẠN";
-                    for (int col = 0; col < 6; col++)
-                    {
-                        var columnHeaderCell = worksheet.Cells[startRow - 1, startColumn + col];
-                        columnHeaderCell.Style.Font.Bold = true;
-                        columnHeaderCell.Style.Font.Size = 10;
-                        columnHeaderCell.Style.Font.Color.SetColor(Color.Black);
-                        columnHeaderCell.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                        columnHeaderCell.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
-                        columnHeaderCell.Style.Fill.PatternType = ExcelFillStyle.Solid;
-                        columnHeaderCell.Style.Fill.BackgroundColor.SetColor(Color.White);
-                    }
-                    var columnHeaderStyle = worksheet.Cells[startRow - 1, startColumn, startRow - 1, startColumn + 5].Style;
+                for (int col = 0; col < 6; col++)
+                {
+                    var columnHeaderCell = worksheet.Cells[startRow - 1, startColumn + col];
+                    columnHeaderCell.Style.Font.Bold = true;
+                    columnHeaderCell.Style.Font.Size = 10;
+                    columnHeaderCell.Style.Font.Color.SetColor(Color.Black);
+                    columnHeaderCell.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    columnHeaderCell.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                    columnHeaderCell.Style.Fill.PatternType = ExcelFillStyle.Solid;
+                    columnHeaderCell.Style.Fill.BackgroundColor.SetColor(Color.White);
+                }
+                var columnHeaderStyle = worksheet.Cells[startRow - 1, startColumn, startRow - 1, startColumn + 5].Style;
                     columnHeaderStyle.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black); // Đóng khung solid đen
                     worksheet.Column(startColumn).Width = 5; // Độ rộng cột cho "STT"
                     worksheet.Column(startColumn + 1).Width = 15; // Độ rộng cột cho "SỐ HÓA ĐƠN"
@@ -538,40 +586,60 @@ namespace web4.Controllers
                     worksheet.Column(startColumn + 5).Width = 15; // 
 
                     // Đảm bảo rằng có dữ liệu trong biến tableData
-                    if (tableData != null && tableData.Any())
+                    if (combinedData != null && combinedData.Any())
                     {
+                    var stt = 1;
                         // Lặp qua từng hàng dữ liệu trong tableData và ghi vào tệp Excel
-                        for (int row = 0; row < tableData.Count-1; row++)
+                        for (int row = 0; row < combinedData.Count; row++)
                         {
-                            var rowData = tableData[row];
-                            for (int col = 0; col < rowData.Count; col++)
-                            {
-                                worksheet.Cells[startRow + row, startColumn + col].Value = rowData[col];
-                            }
+                            var rowData = combinedData[row];
+                           
+                                worksheet.Cells[startRow + row, startColumn ].Value = stt;
+
+                        FormatCellNoQH(worksheet.Cells[startRow + row, startColumn]);
+                        worksheet.Cells[startRow + row, startColumn +1].Value = rowData.SoHD;
+                        FormatCellNoQH(worksheet.Cells[startRow + row, startColumn+1]);
+                        worksheet.Cells[startRow + row, startColumn + 2].Value = rowData.NgayXuat;
+                        FormatCellNoQH(worksheet.Cells[startRow + row, startColumn+2]);
+                        worksheet.Cells[startRow + row, startColumn+3 ].Value = rowData.TienNo;
+                        FormatCellNoQH(worksheet.Cells[startRow + row, startColumn+3]);
+                        worksheet.Cells[startRow + row, startColumn + 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                        worksheet.Cells[startRow + row, startColumn+4 ].Value = rowData.HanTT;
+                        FormatCellNoQH(worksheet.Cells[startRow + row, startColumn+4]);
+                        worksheet.Cells[startRow + row, startColumn+5 ].Value = rowData.NgayQH;
+                        FormatCellNoQH(worksheet.Cells[startRow + row, startColumn+5]);
+                        stt++;
                         }
+                        
                     }
                     else
                     {
                         worksheet.Cells[startRow, startColumn].Value = "Không có dữ liệu bảng từ cookie.";
                     }
-                    worksheet.Cells[startRow + tableData.Count, startColumn + 1].Value = "Tổng cộng";
-                    worksheet.Cells[startRow + tableData.Count, startColumn + 1].Style.Font.Bold = true;
-                    worksheet.Cells[startRow + tableData.Count, startColumn + 3].Value = $"{QuaHan}"; // Ví dụ: Ghi giá trị tổng vào cột thứ 4
-                    worksheet.Cells[startRow + tableData.Count, startColumn + 3].Style.Font.Bold = true;
-                    int defaultHeaderRowIndex = 13;
-                    // Xóa hàng tiêu đề mặc định
-                    worksheet.DeleteRow(defaultHeaderRowIndex);
-                    var dataRowStyle = worksheet.Cells[startRow, startColumn, startRow, startColumn + 5].Style;
+                    worksheet.Cells[startRow + combinedData.Count, startColumn + 1].Value = "Tổng cộng";
+                    worksheet.Cells[startRow + combinedData.Count, startColumn + 1].Style.Font.Bold = true;
+                    worksheet.Cells[startRow + combinedData.Count, startColumn + 3].Value = $"{QuaHan}"; // Ví dụ: Ghi giá trị tổng vào cột thứ 4
+                    worksheet.Cells[startRow + combinedData.Count, startColumn + 3].Style.Font.Bold = true;
+                worksheet.Cells[startRow + combinedData.Count, startColumn + 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                worksheet.Cells[startRow + combinedData.Count, startColumn ].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+                worksheet.Cells[startRow + combinedData.Count, startColumn +1].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+                worksheet.Cells[startRow + combinedData.Count, startColumn + 2].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+                worksheet.Cells[startRow + combinedData.Count, startColumn + 3].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+                worksheet.Cells[startRow + combinedData.Count, startColumn + 4].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+                worksheet.Cells[startRow + combinedData.Count, startColumn + 5].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+                // Xóa hàng tiêu đề mặc định
+
+                var dataRowStyle = worksheet.Cells[startRow, startColumn, startRow, startColumn + 5].Style;
                     dataRowStyle.Font.Bold = false;
                     dataRowStyle.Font.Color.SetColor(Color.Black);
                     dataRowStyle.Fill.PatternType = ExcelFillStyle.None;
                     // Tạo bảng trong tệp Excel
-                    var endRow = startRow + tableData.Count;
-                    var endColumn = 6;
-                    worksheet.DeleteRow(endRow, 1);
-                    var tableRange = worksheet.Cells[startRow, startColumn, endRow, endColumn];
-                    var table = worksheet.Tables.Add(tableRange, "MyTable");
-                    table.TableStyle = TableStyles.Light1;
+                    var endRow = startRow + combinedData.Count;
+          
+              
+                    //var tableRange = worksheet.Cells[startRow, startColumn, endRow, endColumn];
+                    //var table = worksheet.Tables.Add(tableRange, "MyTable");
+                    //table.TableStyle = TableStyles.Light1;
                     int nextRow = endRow + 1;
                     worksheet.Cells[nextRow, startColumn].Value = $"Kính đề nghị Quý khách vui lòng đối chiếu và xác nhận số tiền gửi về {Dvcs} - Công Ty Cổ Phần Dược Phẩm OPC";
                     worksheet.Cells[nextRow + 1, startColumn].Value = $"trước ngày {HanNgay}.Đồng thời sớm thanh toán số dư nợ quá hạn trên cho Chi Nhánh chúng tôi bằng tiền mặt hoặc chuyển vào";
@@ -602,11 +670,7 @@ namespace web4.Controllers
                 }
 
 
-            }
-            else
-            {
-                return Content("Không có dữ liệu từ cookie.");
-            }
+           
             return View("ThongBaoNoQH_In");
         }
 
@@ -1633,6 +1697,58 @@ namespace web4.Controllers
             }
 
         }
+        public List<GetData> LoadDataDTCN()
+        {
+            connectSQL();
+            List<GetData> dataItems = new List<GetData>();
+            using (SqlConnection connection = new SqlConnection(con.ConnectionString))
+            {
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand("[usp_DoiChieuDoanhThuCongNo_SAP]", connection))
+                {
+                    var fromDate = Request.Cookies["From_date"].Value;
+                    var toDate = Request.Cookies["To_Date"].Value;
+                    var NgayTT = Request.Cookies["Ngay_TT"].Value;
+                    var ma_dvcs = Request.Cookies["MA_DVCS"].Value;
+                    var ma_dt = Request.Cookies["Ma_Dt"].Value;
+                    var NgayKy = Request.Cookies["Ngay_Ky"].Value;
+                    command.CommandTimeout = 950;
+                    command.CommandType = CommandType.StoredProcedure;
+                    using (SqlDataAdapter sda = new SqlDataAdapter(command))
+                    {
+                        DataSet ds = new DataSet();
+                        command.Parameters.AddWithValue("@_Tu_Ngay", fromDate);
+                        command.Parameters.AddWithValue("@_Den_Ngay", toDate);
+                        command.Parameters.AddWithValue("@_Ma_DvCs", ma_dvcs);
+                        command.Parameters.AddWithValue("@_Ngay_TT", NgayTT);
+                        command.Parameters.AddWithValue("@_Ma_Dt", ma_dt);
+                        command.Parameters.AddWithValue("@_Ngay_Ky", NgayKy);
+                        sda.Fill(ds);
+
+                        // Kiểm tra xem DataSet có bảng dữ liệu hay không
+                        if (ds.Tables.Count > 0)
+                        {
+                            DataTable dt = ds.Tables[2];
+
+                            foreach (DataRow row in dt.Rows)
+                            {
+                                GetData dataItem = new GetData
+                                {
+                                    So = row["So_Ct"].ToString(),
+                                    Ngay = row["Ngay_Ct1"].ToString(),
+                                    GhiChu = row["Ghi_Chu"].ToString(),
+                                    TienHD = Convert.ToDecimal(row["Ton_No1"].ToString()),
+                                };
+
+                                dataItems.Add(dataItem);
+                            }
+                        }
+                    }
+                }
+            }
+            return dataItems;
+        }
         public ActionResult BangDoiChieuDTCN_Fill()
         {
             List<MauInChungTu> dmDlist = LoadDmDt("");
@@ -1693,21 +1809,10 @@ namespace web4.Controllers
         public ActionResult ExportDoiChieuCongNo()
         {
             var fileName = $"BangDoiChieuCongNo{DateTime.Now:yyyyMMddHHmmss}.xlsx";
-            // Lấy dữ liệu từ cookie
-            string cookie1Value = Request.Cookies["tableDataCookie1"] != null ? HttpUtility.UrlDecode(Request.Cookies["tableDataCookie1"].Value) : "";
-            string cookie2Value = Request.Cookies["tableDataCookie2"] != null ? HttpUtility.UrlDecode(Request.Cookies["tableDataCookie2"].Value) : "";
-            List<List<string>> combinedData = new List<List<string>>();
-            // Kiểm tra xem có dữ liệu từ cookie không
-            if (!string.IsNullOrEmpty(cookie1Value)&& !string.IsNullOrEmpty(cookie2Value))
-            {
-                // Parse chuỗi JSON thành mảng JavaScript
-             
-             
-              
-                List<List<string>> tableData1 = JsonConvert.DeserializeObject<List<List<string>>>(cookie2Value);
-                List<List<string>> tableData = JsonConvert.DeserializeObject<List<List<string>>>(cookie1Value);
-                combinedData.AddRange(tableData);
-                combinedData.AddRange(tableData1);
+     
+           
+            List<GetData>combinedData = LoadDataDTCN();
+    
                 ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
                 using (var package = new ExcelPackage())
                 {
@@ -1783,11 +1888,11 @@ namespace web4.Controllers
                     worksheet.Cells["A13"].Value = $"Chi tiết các hóa đơn chưa thanh toán: ";
                     var startRow = 14;
                     var startColumn = 1;
-         
-                    //var nextII = startRow + 1;
-                    //var startRowIII = nextII + 3;
 
-                    var sttIIICell = worksheet.Cells[startRow + 1, startColumn, startRow + 2, startColumn + 1];
+                //var nextII = startRow + 1;
+                //var startRowIII = nextII + 3;
+             
+                var sttIIICell = worksheet.Cells[startRow + 1, startColumn, startRow + 2, startColumn + 1];
                     sttIIICell.Merge = true;
                     worksheet.Column(startColumn).Width = 15; // Đặt chiều rộng của cột chứa ô "STT" thành 15 đơn vị.
 
@@ -1858,55 +1963,85 @@ namespace web4.Controllers
                     //// Đảm bảo rằng có dữ liệu trong biến tableData
                     if (combinedData != null && combinedData.Any())
                     {
+                    var stt = 1;
                         // Lặp qua từng hàng dữ liệu trong tableData và ghi vào tệp Excel
-                        for (int row = 0; row < combinedData.Count-1; row++)
+                        for (int row = 0; row < combinedData.Count; row++)    
                         {
                             var rowData = combinedData[row];
-                            for (int col = 0; col < rowData.Count; col++)
-                            {
-                        
+                        var sttCell = worksheet.Cells[startRow + 3 + row, startColumn, startRow + 3 + row, startColumn + 1];
+                        sttCell.Merge = true;
+                        sttCell.Value = stt;
+                        FormatCellNoQH(sttCell);
 
-                                var cell = worksheet.Cells[startRow + 1 + row, startColumn + col * 2];
-                                cell.Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
-                                cell.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                                cell.Value = rowData[col];
+                        var soCell = worksheet.Cells[startRow + 3 + row, startColumn+2, startRow + 3 + row, startColumn + 3];
+                        soCell.Merge = true;
+                        soCell.Value = rowData.So;
+                        FormatCellNoQH(soCell);
 
-                                var mergeCell = worksheet.Cells[startRow + 1 + row, startColumn + col * 2, startRow + 1 + row, startColumn + col * 2 + 1];
-                                mergeCell.Merge = true;
-                                mergeCell.Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
-                            }
-                        }
+                        var ngayCell = worksheet.Cells[startRow + 3 + row, startColumn + 4, startRow + 3 + row, startColumn + 5];
+                        ngayCell.Merge = true;
+                        ngayCell.Value = rowData.Ngay;
+                        FormatCellNoQH(ngayCell);
+
+                        var tienhdCell = worksheet.Cells[startRow + 3 + row, startColumn + 6, startRow + 3 + row, startColumn + 7];
+                        tienhdCell.Merge = true;
+                        tienhdCell.Value = rowData.TienHD;
+                        FormatCellNoQH(tienhdCell);
+                        tienhdCell.Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+
+                        var codekm = worksheet.Cells[startRow + 3 + row, startColumn + 8, startRow + 3 + row, startColumn + 9];
+                        codekm.Merge = true;
+                       
+                        FormatCellNoQH(codekm);
+
+                        var ghichu = worksheet.Cells[startRow + 3 + row, startColumn + 10, startRow + 3 + row, startColumn + 11];
+                        ghichu.Merge = true;
+                        ghichu.Value = rowData.GhiChu;
+                        FormatCellNoQH(ghichu);
+                        //for (int col = 0; col < rowData.Count; col++)
+                        //{
+                        //    var cell = worksheet.Cells[startRow + 1 + row, startColumn + col * 2];
+                        //    cell.Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+                        //    cell.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                        //    cell.Value = rowData[col];
+
+                        //    var mergeCell = worksheet.Cells[startRow + 1 + row, startColumn + col * 2, startRow + 1 + row, startColumn + col * 2 + 1];
+                        //    mergeCell.Merge = true;
+                        //    mergeCell.Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+                        //}
+                        stt++;
+                    }
                     }
                     else
                     {
                         worksheet.Cells[startRow, startColumn].Value = "Không có dữ liệu bảng từ cookie.";
                     }
                  
-                    var TC2 = worksheet.Cells[startRow  + combinedData.Count, startColumn, startRow  + combinedData.Count, startColumn + 5];
-                    TC2.Merge = true;
+                    var TC2 = worksheet.Cells[startRow  + combinedData.Count+3, startColumn, startRow  + combinedData.Count+3, startColumn + 5];
+                    TC2.Merge = true;   
                     TC2.Value = "Tổng cộng: ";
                     TC2.Style.Font.Bold = true;
                     TC2.Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
                     TC2.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center; // Đặt canh giữa ngang
                     TC2.Style.VerticalAlignment = ExcelVerticalAlignment.Center; // Đặt canh giữa dọc
 
-                    var TONNO2 = worksheet.Cells[startRow  + combinedData.Count, startColumn + 6, startRow  + combinedData.Count, startColumn + 7];
+                    var TONNO2 = worksheet.Cells[startRow  + combinedData.Count+3, startColumn + 6, startRow  + combinedData.Count+3, startColumn + 7];
                     TONNO2.Merge = true;
                     TONNO2.Value = $"{TonNo2}"; 
                     //worksheet.Cells[startRowIII + 1 + combinedDataHD.Count, startColumn + 6].Value = $"{TonNo2}";
                     TONNO2.Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                     TONNO2.Style.Font.Bold = true;
                     TONNO2.Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
-                    worksheet.Cells[startRow  + combinedData.Count, startColumn + 5].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+                    worksheet.Cells[startRow  + combinedData.Count+3, startColumn + 5].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
 
-                    var Null1 = worksheet.Cells[startRow  + combinedData.Count, startColumn +8, startRow  + combinedData.Count, startColumn + 9];
+                    var Null1 = worksheet.Cells[startRow  + combinedData.Count+3, startColumn +8, startRow  + combinedData.Count+3, startColumn + 9];
                     Null1.Merge = true;
                     Null1.Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
-                    var Null2 = worksheet.Cells[startRow  + combinedData.Count, startColumn + 10, startRow  + combinedData.Count, startColumn + 11];
+                    var Null2 = worksheet.Cells[startRow  + combinedData.Count+3, startColumn + 10, startRow  + combinedData.Count+3, startColumn + 11];
                     Null2.Merge = true;
                     Null2.Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
-                    worksheet.Cells[startRow  + combinedData.Count, startColumn + 7].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
-                    var end = startRow + combinedData.Count + 2;
+                    worksheet.Cells[startRow  + combinedData.Count+3, startColumn + 7].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+                    var end = startRow + combinedData.Count + 4;
                     worksheet.Cells[end +1, startColumn].Value = $"Quý khách vui lòng xác nhận số nợ trên tại thời điểm ngày {DenNgay}/ {DenThang}/ {DenNam} và gửi về Công Ty Cổ Phần Dược Phẩm OPC - {Dvcs} trước ngày {NgayTT}";
                     worksheet.Cells[end + 2, startColumn].Value = $"Địa chỉ: {DiaChi}";
                     worksheet.Cells[end + 3, startColumn].Value = $"Điện thoại: {SDT}";
@@ -1939,13 +2074,6 @@ namespace web4.Controllers
                     return File(fileBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
 
                 }
-
-
-            }
-            else
-            {
-                return Content("Không có dữ liệu từ cookie.");
-            }
         }
 
         public ActionResult PhieuNhapKho_Fill()
@@ -2235,10 +2363,21 @@ namespace web4.Controllers
             cell.Style.Font.Bold = true;
             // Các định dạng khác của ô có thể thêm vào tại đây
         }
+        private void FormatCellNoQH(ExcelRangeBase cell)
+        {
+            cell.Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+            cell.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            cell.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+           
+            // Các định dạng khác của ô có thể thêm vào tại đây
+        }
         void CreateEmptyRow(ExcelWorksheet worksheet, int startColumn, int currentRow, decimal tongCongNoTT, decimal tongCongNoST, decimal tongCongNo)
         {
-            worksheet.Cells[currentRow, startColumn].Value = "Tổng cộng";
-            FormatCell(worksheet.Cells[currentRow, startColumn]);
+            var sttCell = worksheet.Cells[currentRow, startColumn, currentRow, startColumn + 6];
+            sttCell.Merge = true;
+            sttCell.Value = "Tổng cộng:";
+            //worksheet.Cells[currentRow, startColumn].Value = "Tổng cộng";
+            FormatCell(sttCell);
 
             // Các phần khác của mã
 
@@ -2346,8 +2485,11 @@ namespace web4.Controllers
                             }
 
                             // Ghi tên công ty vào ô đầu tiên
-                            worksheet.Cells[currentRow, startColumn+1].Value = rowData.TenDt;
-                            FormatCell(worksheet.Cells[currentRow, startColumn+1]);
+                            worksheet.Cells[currentRow, startColumn + 1].Value = rowData.TenDt;
+                            var cell = worksheet.Cells[currentRow, startColumn + 1];
+                            cell.Style.HorizontalAlignment = ExcelHorizontalAlignment.Left; // Đặt giá trị canh lề
+                            FormatCell(cell);
+
 
                             // Cập nhật giá trị previousTenDt
                             previousTenDt = rowData.TenDt;

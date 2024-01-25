@@ -484,6 +484,7 @@
     .percent-chart {
         width: 30%;
     }
+    
 }
 @media screen and (min-width:1000px) and (max-width: 1100px) {
     .left-sidebar {
@@ -566,6 +567,15 @@
 
     .percent-chart {
         width: 30%;
+    }
+    section{
+        padding-left:270px;
+    }
+    section.expand{
+        padding-left:0;
+    }
+    canvas {
+        margin-left: 25px;
     }
 }
 @media screen and (min-width:1100px) and (max-width: 1200px) {
@@ -651,6 +661,16 @@
     .percent-chart {
         width: 30%;
     }
+    section {
+        padding-left: 270px;
+    }
+
+        section.expand {
+            padding-left: 0;
+        }
+    canvas {
+        margin-left: 45px;
+    }
 }
 @media screen and (min-width:1200px) and (max-width: 1300px) {
     .left-sidebar {
@@ -735,6 +755,16 @@
 
     .percent-chart {
         width: 30%;
+    }
+    section {
+        padding-left: 270px;
+    }
+
+        section.expand {
+            padding-left: 0;
+        }
+    canvas {
+        margin-left: 55px;
     }
 }
 @media screen and (max-width:1300px){
@@ -859,6 +889,16 @@
     .percent-chart {
         width: 30%;
     }
+    section {
+        padding-left: 270px;
+    }
+
+        section.expand {
+            padding-left: 0;
+        }
+    canvas {
+        margin-left: 70px;
+    }
 }
 @media screen and (min-width:1400px) and (max-width: 1500px) {
     .left-sidebar {
@@ -959,6 +999,16 @@
 
     .percent-chart {
         width: 30%;
+    }
+    section {
+        padding-left: 270px;
+    }
+
+        section.expand {
+            padding-left: 0;
+        }
+    canvas {
+        margin-left: 80px;
     }
 }
 @media screen and (min-width:1500px) and (max-width: 1600px) {
@@ -1065,6 +1115,16 @@
     .percent-chart {
         width: 30%;
     }
+    section {
+        padding-left: 270px;
+    }
+
+        section.expand {
+            padding-left: 0;
+        }
+        canvas{
+            margin-left:80px;
+        }
 }
 @media screen and (min-width:1600px) and (max-width: 1700px) {
     .left-sidebar {
@@ -1169,6 +1229,16 @@
     .percent-chart {
         width: 30%;
     }
+    section {
+        padding-left: 270px;
+    }
+
+        section.expand {
+            padding-left: 0;
+        }
+    canvas {
+        margin-left: 80px;
+    }
 }
 @media screen and (min-width:1700px) and (max-width: 1800px) {
     .left-sidebar {
@@ -1272,6 +1342,16 @@
     .percent-chart {
         width: 30%;
     }
+    section {
+        padding-left: 270px;
+    }
+
+        section.expand {
+            padding-left: 0;
+        }
+    canvas {
+        margin-left: 100px;
+    }
 }
 @media screen and (min-width:1800px) and (max-width: 1900px) {
     .left-sidebar {
@@ -1374,6 +1454,16 @@
 
     .percent-chart {
         width: 30%;
+    }
+    section {
+        padding-left: 270px;
+    }
+
+        section.expand {
+            padding-left: 0;
+        }
+    canvas {
+        margin-left: 100px;
     }
 }
 @media screen and (min-width:1900px) and (max-width: 2000px) {
@@ -1482,6 +1572,16 @@
     .percent-chart {
         width: 30%;
     }
+    section {
+        padding-left: 270px;
+    }
+
+        section.expand {
+            padding-left: 0;
+        }
+    canvas {
+        margin-left: 120px;
+    }
 }
 @media screen and (min-width:2001px){
     .left-sidebar{
@@ -1588,6 +1688,17 @@
 
     .percent-chart {
         width: 30%;
+    }
+    section {
+        padding-left: 270px;
+    }
+
+        section.expand {
+            padding-left: 0;
+        }
+    
+    canvas {
+        margin-left: 120px;
     }
 }
  

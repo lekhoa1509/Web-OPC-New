@@ -426,13 +426,13 @@
                         <datalist id="dropdownList">
                             @foreach (var item in ViewBag.DataItems)
                             {
-                <option value="@item.Ma_Dt" data-ten="@item.Ten_Dt" data-diachi="@item.Dia_Chi" data-dvcs="@item.Dvcs" data-dvcs1= "@item.Dvcs1">@item.Ten_Dt</option>}
+                <option value="@item.Ma_Dt" data-ten="@item.Ten_Dt"data-maDt="@item.Ma_Dt" data-diachi="@item.Dia_Chi" data-dvcs="@item.Dvcs" data-dvcs1= "@item.Dvcs1">@item.Ten_Dt</option>}
                         </datalist>
                         <input type="hidden" name="Ma_Dt" id="selectedOption">
 
 
                         <div>
-                            <button class="submit" type="submit" id="runReportButton" onclick="runReport()"> Chạy Báo Cáo </button>
+                            <button class="submit" type="submit" id="runReportButton" onclick="saveNgay();runReport()"> Chạy Báo Cáo </button>
                         </div>
                     </div>
                 </form>
@@ -561,7 +561,44 @@
             </form>
         </div>
         <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-      
+      <script>
+          document.getElementById("dropdownInput").addEventListener("input", function () {
+              var inputValue = this.value;
+              var options = document.querySelectorAll("#dropdownList option");
+
+              for (var i = 0; i < options.length; i++) {
+                  if (options[i].getAttribute("value") === inputValue) {
+                      document.getElementById("selectedOption").value = inputValue;
+
+                      break;
+                  }
+              }
+          });
+          document.addEventListener("DOMContentLoaded", function () {
+              var runReportButton = document.getElementById("runReportButton");
+
+              if (runReportButton) {
+                  runReportButton.addEventListener("click", function () {
+                      var dropdownInput = document.getElementById("dropdownInput");
+                      var selectedOption = document.querySelector("#dropdownList option[value='" + dropdownInput.value + "']");
+
+                      if (selectedOption) {
+                          var tenDt = selectedOption.getAttribute('data-maDt');
+                          document.cookie = 'Ma_Dt=' + tenDt;
+                      } else {
+                          var selected = "";
+                          document.cookie = 'Ma_Dt=' + selected;
+                      }
+                  });
+              }
+          });
+          function saveNgay() {
+              var from_date = document.getElementById("tu_ngay").value;
+              var to_date = document.getElementById("den_ngay").value;
+              document.cookie = "From_date=" + from_date;
+              document.cookie = "To_date=" + to_date;
+          }
+      </script>
         <script>
             document.getElementById("dropdownInput").addEventListener("input", function () {
                 var inputValue = this.value;

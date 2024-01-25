@@ -10,6 +10,7 @@ namespace web4.Models
 {
     public class GetData
     {
+        //Mau So Ton No Chi Tiet Phai Thu
         public int Stt { get; set; }
         public string TenDt { get; set; }
         public string NgayCt { get; set; }
@@ -22,5 +23,16 @@ namespace web4.Models
         public decimal TotalCongNoTT { get; set; }
         public decimal TotalCongNoST { get; set; }
         public decimal TotalCongNo { get; set; }
+        //Mau Thong Bao No QH
+        public string  SoHD { get; set; }
+        public string NgayXuat { get; set; }
+        public decimal TienNo { get; set; }
+        public string HanTT { get; set; }
+        public int NgayQH { get; set; }
+        //Mau Doi Chieu Cong No
+         public string So { get; set; }
+        public string Ngay { get; set; }
+        public decimal TienHD { get; set; }
+
     }
 }
