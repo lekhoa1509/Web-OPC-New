@@ -1,4 +1,4 @@
-﻿﻿@{ ViewBag.Title = "Trang Chủ | OPCPHARMA";
+﻿﻿﻿@{ ViewBag.Title = "Trang Chủ | OPCPHARMA";
     @model System.Data.DataSet
     string username;
     username = Request.Cookies["UserName"].Value;
@@ -213,31 +213,30 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                     </a>
                 </div>
 
+                <button class="submenu-btn" onclick="toggleSubmenu('submenu1_6','arrow-subicon_6')">
+                    6.Báo Cáo Tồn Kho <div id="arrow-subicon_6" class="subicon-arrow">
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                </button>
+                <div id="submenu1_6" class="submenu-container">
+                    <a href="#" style="display:flex" onclick="runReport('@Url.Action("TheKho_Fill", "TheKho")'
+                                                      )">
+                        6.1 Thẻ Kho
+                    </a>
 
+                </div>
+            </div>
 
-            <li onclick="logout()">
-                <a>
-                    <i class='bx bx-log-out'></i>
-                    <span class="link_name">Đăng xuất</span>
-                </a>
-                <ul class="sub-menu blank">
-                    <li><a class="link_name">Đăng xuất</a></li>
-                </ul>
-            </li>
-        </ul>
-    </div>
-    <section class="home-section" style="background-color: #e0e8ee">
-        <nav>
-            <div class="home-content">
-                <i class='bx bx-menu' style="color: #3483bd"></i>
-                <span class="text" style="color: #3483bd">Trang chủ</span>
-            </div>
-            <div class="search-box">
-                <input type="text" placeholder="Search...">
-                <i class='bx bx-search'></i>
-            </div>
-        </nav>
-        <div class="main" style="width:auto">
+            <button class="dropdown-btn" onclick="toggleSubmenu('submenu2','arrow2')">
+                <div class="sidebar-title">
+                    <i class="fa-solid fa-print"></i>
+                    <div>Mẫu In</div>
+                </div>
+                <div id="arrow2" class="icon-arrow-2">
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+            </button>
+            <div id="submenu2" class="dropdown-container submenu-container">
 
                 <a href="#" onclick="runReport('@Url.Action("MauInNLCB_Fill", "MauInChungTu")'
                                                       )">1.Chứng Từ Phiếu Nhập</a>
@@ -252,433 +251,126 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                 <a href="#" onclick="runReport('@Url.Action("BienBanBanGiaoNTHH_Fill", "MauInChungTu")'
                                                       )">6.Biên Bản Bàn Giao Và Nghiệm Thu Hàng Hóa</a>
 
-                            <tbody style="float:left">
-                                <tr style="height:30px">
-                                    <td style="text-align: left">
-                                        @if (string.Equals(ViewBag.UserName, "admin", StringComparison.OrdinalIgnoreCase) || string.Equals(ViewBag.UserName, "opcadmin", StringComparison.OrdinalIgnoreCase) || string.Equals(ViewBag.UserName, "vpct-nhatanh", StringComparison.OrdinalIgnoreCase))
-                                        {
-                                            <li style=" list-style-type: none;" class="liTitle">
-                                                <a href="" onclick="runReport('@Url.Action("DoanhThuChiNhanhKGam_Fill", "DoanhThuChiNhanh")'
-                                                      )">1.Doanh Thu Chi Nhánh</a>
-                                            </li>
-                                        }
-                                        else
-                                        {
-                                            <li style=" list-style-type: none;" class="liTitle">
-                                                <a href="" onclick="runReport('@Url.Action("DoanhThuChiNhanhKGam_CN_Fill", "DoanhThuChiNhanh")'
-                                                      )">1.Doanh Thu Chi Nhánh</a>
-                                            </li>
-                                        }
-                                    </td>
-                                </tr>
-                                <tr style="height:30px">
-                                    <td style="text-align: left">
-                                        @if (string.Equals(ViewBag.UserName, "admin", StringComparison.OrdinalIgnoreCase) ||
-string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase) || string.Equals(ViewBag.UserName, "opcadmin", StringComparison.OrdinalIgnoreCase) || string.Equals(ViewBag.UserName, "vpct-nhatanh", StringComparison.OrdinalIgnoreCase))
-                                        {
-                                            <li style=" list-style-type: none;" class="liTitle">
-                                                <a href="" onclick="runReport('@Url.Action("DoanhThuChiNhanh_Admin_Fill", "DoanhThuChiNhanh")'
-                                                      )">2.Doanh Thu Chi Nhánh Theo Gam</a>
-                                            </li>
-                                        }
-                                        else
-                                        {
-                                            <li style=" list-style-type: none;" class="liTitle">
-                                                <a href="" onclick="runReport('@Url.Action("DoanhThuChiNhanh_Fill", "DoanhThuChiNhanh")'
-                                                      )">2.Doanh Thu Chi Nhánh Theo Gam</a>
-                                            </li>
-                                        }
-                                    </td>
-                                </tr>
-                                <tr style="height:30px">
-                                    <td style="text-align: left">
-                                        <li style=" list-style-type: none;" class="liTitle">
-                                            <a href="" onclick="runReport('@Url.Action("DoanhThuChiNhanhTinhLuong_Fill", "DoanhThuChiNhanh")'
-                                                      )">3.Doanh Thu Chi Nhánh Tính Lương</a>
-                                        </li>
-                                    </td>
-                                </tr>
-                                <tr style="height:30px">
-                                    <td style="text-align: left">
-                                        <li style=" list-style-type: none;" class="liTitle">
-                                            <a href="" onclick="runReport('@Url.Action("BaoCaoKetQuaKinhDoanh_Fill", "BaoCaoKetQuaKinhDoanh")'
-                                                      )">4.Báo Cáo Doanh Thu Tổng Hợp - Chi Tiết</a>
-                                        </li>
-                                    </td>
-                                </tr>
-                            </tbody>
+            </div>
 
 
-                        </table>
-                    </div>
-
-
-
+            <button class="dropdown-btn" onclick="toggleSubmenu('submenu3','arrow3')">
+                <div class="sidebar-title">
+                    <i class="fa-solid fa-table-list"></i>
+                    <div>Danh Mục</div>
                 </div>
+                <div id="arrow3" class="icon-arrow-3">
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+            </button>
+            <div id="submenu3" class="dropdown-container submenu-container">
+                @if (string.Equals(ViewBag.UserName, "admin", StringComparison.OrdinalIgnoreCase) ||
+            string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase))
+                {
+                    <a href="#" onclick="runReport('@Url.Action("ViewDanhMucKH_Fill", "DanhMuc")'
+                                                      )">1.Danh Mục Khách Hàng</a>
+                }
+                else if (string.Equals(ViewBag.UserName, "OPCHCM001", StringComparison.OrdinalIgnoreCase))
+                {
+
+
+                    <a href="#" onclick="runReport('@Url.Action("ViewDanhMucKH_FillCN", "DanhMuc")'
+                                                      )">1.Danh Mục Khách Hàng</a>
+                }
+                else
+                {
+                    <a href="#" onclick="runReport('@Url.Action("ViewDanhMucKHCN", "DanhMuc")'
+                                                      )">1.Danh Mục Khách Hàng</a>
+                }
+                <a href="#" onclick="runReport('@Url.Action("Index", "CongTacVien")'
+                                                      )">2.Danh Mục Hạn Mức CTV</a>
+                <a href="#" onclick="runReport('@Url.Action("Index", "TheoDoiGiaoHang")'
+                                                      )">3.Theo Dõi Giao Hàng</a>
+                @*<button class="submenu-btn" onclick="toggleSubmenu('submenu2_2')">Báo Cáo Quản Trị</button>
+                    <div id="submenu2_2" class="submenu-container">
+                        <a href="#">Submenu 1.2.1</a>
+                        <a href="#">Submenu 1.2.2</a>
+                    </div>
+                    <button class="submenu-btn" onclick="toggleSubmenu('submenu3_3')">Báo Cáo Nghiệp Vụ</button>
+                    <div id="submenu3_3" class="submenu-container">
+                        <a href="#">Submenu 1.3.1</a>
+                        <a href="#">Submenu 1.3.2</a>
+                    </div>*@
+            </div>
+            <a onclick="ChangePassword()" href="/Home/DoiMatKhau"><div class="sidebar-title"><i class="fa-solid fa-lock"></i> <div>Đổi Mật Khẩu</div></div></a>
+            <a onclick="logout()"><div class="sidebar-title"><i class="fa-solid fa-right-from-bracket"></i> <div>Đăng Xuất</div></div></a>
+        </div>
+    </nav>
+    @*<div class="mobile-menu-overlay"></div>*@
+    <section class="main-container">
+        <div class="header">
+            <div class="header-left">
+
+
+
 
             </div>
-            <div class="home-content1" style="width:100%">
-                <div class="overview-boxes" style="background-color:red">
-                    <div class="box" style="overflow: auto; height: 200px; border-color: #3483bd">
-                        <table style="width:500px;height:200px; border-collapse: collapse;overflow:scroll">
-
-                            <tr class="title">
-                                <th colspan="4" class="top10" style="font-size: 18px; padding: 5px; height: 50px ;background-color: #aec9e0; color: #3483bd ">BÁO CÁO NGHIỆP VỤ</th>
-                            </tr>
-
-                            <tbody style="float:left">
-
-                                <tr style="height:30px">
-                                    <td style="text-align: left">
-                                        @if (string.Equals(ViewBag.UserName, "OPCHCM001", StringComparison.OrdinalIgnoreCase))
-                                        {
-
-
-                                            <li class="liTitle" style="list-style-type:none">
-                                                <a href="" onclick="runReport('@Url.Action("bangkehoadon_Fill_HCM", "bangkehoadon")'
-                                                      )">1.Bảng Kê Chứng Từ SO</a>
-                                            </li> }
-                                        else
-                                        {
-                                            <li class="liTitle" style="list-style-type:none">
-                                                <a href="" onclick="runReport('@Url.Action("bangkehoadon_Fill", "bangkehoadon")'
-                                                      )">1.Bảng Kê Chứng Từ SO</a>
-                                            </li>}
-                                    </td>
-                                </tr>
-                                <tr style="height:30px">
-                                    <td style="text-align: left">
-                                        @if (string.Equals(ViewBag.UserName, "OPCHCM001", StringComparison.OrdinalIgnoreCase))
-                                        {
-
-
-                                            <li class="liTitle" style="list-style-type:none">
-                                                <a href="" onclick="runReport('@Url.Action("DanhSachHoaDon_Fill_HCM", "bangkehoadon")'
-                                                      )">2.Bảng Kê Hóa Đơn</a>
-                                            </li> }
-                                        else
-                                        {
-                                            <li class="liTitle" style="list-style-type:none">
-                                                <a href="" onclick="runReport('@Url.Action("DanhSachHoaDon_Fill", "bangkehoadon")'
-                                                      )">2.Bảng Kê Hóa đơn</a>
-                                            </li>}
-                                    </td>
-                                </tr>
-                                <tr style="height:30px">
-                                    <td style="text-align: left">
-                                        <li style=" list-style-type: none;" class="liTitle">
-                                            <a href="" onclick="runReport('@Url.Action("BaoCaoBanHangCN_Fill", "BaoCaobanHangCN")'
-                                                      )">3.Báo Cáo Bán Hàng CN</a>
-                                        </li>
-                                    </td>
-                                </tr>
-                                <tr style="height:30px">
-                                    <td style="text-align: left">
-                                        <li style=" list-style-type: none;" class="liTitle">
-                                            <a href="" onclick="runReport('@Url.Action("BaoCaoBanHangTDV_Fill", "BaoCaoBanHangTDV")'
-                                                      )">4.Báo Cáo Bán Hàng TDV</a>
-                                    </td>
-                                </tr>
-                                <tr style="height:30px">
-                                    <td style="text-align: left">
-                                        <li style=" list-style-type: none;" class="liTitle">
-                                            <a href="" onclick="runReport('@Url.Action("BaoCaoTienVeCN_Fill", "BaoCaoTienVeCN")'
-                                                      )">5.Báo Cáo Tiền Về CN</a>
-                                        </li>
-                                    </td>
-                                </tr>
-                                <tr style="height:30px">
-                                    <td style="text-align: left">
-                                        <li style=" list-style-type: none;" class="liTitle">
-                                            <a href="" onclick="runReport('@Url.Action("BaoCaoTienVeTDV_Fill", "BaoCaoTienVeCN")'
-                                                      )">6.Báo Cáo Tiền Về TDV</a>
-                                        </li>
-                                    </td>
-                                </tr>
-                                <tr style="height:30px">
-                                    <td style="text-align: left">
-                                        <li style=" list-style-type: none;" class="liTitle">
-                                            <a href="" onclick="runReport('@Url.Action("BaoCaoDoanhThuGamHangTheoDoiTuong_Fill", "BaoCaoDoanhThuGamHangTheoDoiTuong")'
-                                                      )">7.Báo Cáo Doanh Thu Gam Theo Đối Tượng</a>
-                                        </li>
-                                    </td>
-                                </tr>
-                                <tr style="height:30px">
-                                    <td style="text-align: left">
-                                        <li style=" list-style-type: none;" class="liTitle">
-                                            <a href="" @*onclick="runReport('@Url.Action("BangKeHoaDonGiaoHang", "BKHoaDonGiaoHang")'
-                                                      )"*@>8.Bảng Kê Hóa Đơn Giao Hàng</a>
-                                        </li>
-                                    </td>
-                                </tr>
-                                <tr style="height:30px">
-                                    <td style="text-align: left">
-                                        @if (string.Equals(ViewBag.UserName, "OPCTCKT001", StringComparison.OrdinalIgnoreCase))
-                                        {
-
-                                            <li style=" list-style-type: none;" class="liTitle">
-                                                <a href="" onclick="runReport('@Url.Action("BaoCaoDTTinhLuongCTV_Fill_CongTy", "BaoCaoBanHangCTV")'
-                                                      )">9.Báo Cáo Doanh Thu Tính Lương CTV</a>
-                                            </li>}
-                                        else
-                                        {
-                                            <li style=" list-style-type: none;" class="liTitle">
-                                                <a href="" onclick="runReport('@Url.Action("BaoCaoDTTinhLuongCTV_Fill", "BaoCaoBanHangCTV")'
-                                                      )">9.Báo Cáo Doanh Thu Tính Lương CTV</a>
-                                            </li>}
-
-                                    </td>
-                                </tr>
-                                @*<tr style="height:30px">
-                                        <td style="text-align: left">
-                                            <li style=" list-style-type: none;" class="liTitle">
-                                                <a href="" onclick="runReport('@Url.Action("CongNoChiTietKH_Fill", "CongNoChiTiet")'
-                                                          )">10.Công Nợ Chi Tiết Của KH(PL5)</a>
-                                            </li>
-                                        </td>
-                                    </tr>*@
-                            </tbody>
-
-
-                        </table>
-                    </div>
-
-
-
-                </div>
-
+            <div class="header-right">
+                <div class="welcome-txt">WELCOME BACK</div>
+                <div class="user-txt">@Request.Cookies["UserName"].Value</div>
             </div>
         </div>
-        <div class="main" style="width:auto;">
-            @*<div class="home-content1" style="width:100%;height:100%">
-                    <div class="overview-boxes" style="background-color:red">
-                        <div class="box" style="overflow:auto;width:400px;height:200px">
-                            <table id="product" style="width:500px;height:200px; border-collapse: collapse;overflow:scroll">
-
-                                <tr class="title">
-                                    <th colspan="4" class="top10" style="font-size:18px;padding:5px">Top 10 sản phẩm bán chạy</th>
-                                </tr>
-                                <tr class="title" style="background-color:black;color:white;width:30px;padding:5px">
-                                    <td style="padding-right:10px">STT</td>
-                                    <td>Mã Vật Tư</td>
-                                    <td>Tên Vật Tư</td>
-                                    <td>Doanh Thu</td>
-                                </tr>
-                                <tbody>
-                                    @if (Model != null && Model.Tables.Count > 0 && Model.Tables[0].Rows.Count > 0)
-                                    {
-                                        int stt = 1;
-                                        foreach (DataRow row4 in Model.Tables[0].Rows)
-                                        {
-                                            <tr>
-                                                <td style="padding:10px">@stt</td>
-                                                <td>@row4["Ma_Vt"]</td>
-                                                <td>@row4["Ten_Vt"]</td>
-                                                <td>@String.Format("{0:n0}", Convert.ToDecimal(row4["Doanh_Thu"]))</td>
-                                            </tr>
-                                            stt++;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        <tr>
-                                            <td colspan="4">No data available.</td>
-                                        </tr>
-                                    }
-                                </tbody>
-
-                            </table>
+        <div class="main-content">
+            <div class="box">
+                <div class="box-row">
+                    <div class="box-1">
+                        <div>
+                            <h5 class="text">TỔNG DOANH THU</h5>
+                            <h5 class="num">
+                                @foreach (DataRow row3 in Model.Tables[0].Rows)
+                                    { 
+                                    @row3["Tong_Doanh_Thu_Nam"]
+                                    } </h5>
                         </div>
-
-
-
                     </div>
-
-                </div>*@
-            <div class="home-content1">
-                <div class="overview-boxes" style="background-color:red">
-                    <div class="box" style="overflow: auto;height: 200px; border-color: #3483bd">
-                        <table style="width:500px;height:200px; border-collapse: collapse;overflow:scroll">
-
-                            <tr class="title">
-                                <th colspan="4" class="top10" style="font-size: 18px; padding: 5px; height: 10px; background-color: #aec9e0; color: #3483bd ">BÁO CÁO HỢP ĐỒNG</th>
-                            </tr>
-
-                            <tbody style="float:left">
-
-                                @*<tr style="height:30px">
-                                        <td style="text-align: left">
-                                            <li style=" list-style-type: none;" class="liTitle">
-                                                <a href="" onclick="runReport('@Url.Action("BaoCaoHopDongMar_Fill", "BaoCaoHopDong")'
-                                                          )">1.BÁO CÁO HỢP ĐỒNG MARKETING</a>
-                                            </li>
-                                        </td>
-                                    </tr>
-                                    <tr style="height:30px">
-                                        <td style="text-align: left">
-                                            <li style=" list-style-type: none;" class="liTitle">
-                                                <a href="" onclick="runReport('@Url.Action("BaoCaoChiTietHD_Fill", "BaoCaoHopDong")'
-                                                          )">2.BÁO CÁO CHI TIẾT HỢP ĐỒNG </a>
-                                            </li>
-                                        </td>
-                                    </tr>*@
-                                <tr style="height:30px">
-                                    <td style="text-align: left">
-                                        <li style=" list-style-type: none;" class="liTitle">
-                                            <a href="" onclick="runReport('@Url.Action("TheoDoiHopDongThau_Fill", "TheoDoiHDThau")'
-                                                      )">1.THEO DÕI HỢP ĐỒNG THẦU</a>
-                                        </li>
-                                    </td>
-                                </tr>
-                                <tr style="height:30px">
-                                    <td style="text-align: left">
-                                        <li style=" list-style-type: none;" class="liTitle">
-                                            <a href="" onclick="runReport('@Url.Action("BangKeNopTien_Fill", "BangKeNopTien")'
-                                                      )">2.THEO DÕI BẢNG KÊ NỘP TIỀN</a>
-                                        </li>
-                                    </td>
-                                </tr>
-                                <tr style="height:30px">
-                                    <td style="text-align: left">
-                                        <li style=" list-style-type: none;" class="liTitle">
-                                            <a href="" onclick="runReport('@Url.Action("PhanTichBanHang_Fill", "PhanTichBanHang")'
-                                                      )">3.PHÂN TÍCH BÁN HÀNG</a>
-                                        </li>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-
-
-                </div>
-
-
-            </div>
-            <div class="home-content1" style="width:100%">
-                <div class="overview-boxes" style="background-color:red">
-                    <div class="box" style="overflow: auto; height: 200px; border-color: #3483bd">
-                        <table style="width:500px;height:200px; border-collapse: collapse;overflow:scroll">
-
-                            <tr class="title">
-                                <th colspan="4" class="top10" style="font-size: 18px; padding: 5px; height: 10px; background-color: #aec9e0; color: #3483bd ">BÁO CÁO CÔNG NỢ</th>
-                            </tr>
-
-                            <tbody style="float:left">
-
-                                <tr style="height:30px">
-                                    <td style="text-align: left">
-                                        <li style=" list-style-type: none;" class="liTitle">
-                                            <a href="" onclick="runReport('@Url.Action("BangDoiChieuCongNo_Fill", "MauInChungTu")'
-                                                      )">1.Bảng Đối Chiếu Doanh Thu - Công Nợ</a>
-                                        </li>
-                                    </td>
-                                </tr>
-                                <tr style="height:30px">
-                                    <td style="text-align: left">
-                                        <li style=" list-style-type: none;" class="liTitle">
-                                            <a href="" onclick="runReport('@Url.Action("BangDoiChieuDTCN_Fill", "MauInChungTu")'
-                                                      )">2.Bảng Đối Chiếu Công Nợ</a>
-                                        </li>
-                                    </td>
-                                </tr>
-                                <tr style="height:30px">
-                                    <td style="text-align: left">
-                                        @if (string.Equals(ViewBag.Username, "vpct-nhatanh", StringComparison.OrdinalIgnoreCase))
-                                        {
-                                            <li style=" list-style-type: none;" class="liTitle">
-                                                <a href="" onclick="runReport('@Url.Action("CongNoChiTietKH2_Fill", "CongNoChiTiet")'
-                                                      )">3.Công Nợ Chi Tiết Của KH(PL5)</a>
-                                            </li>
-                                        }
-                                        else
-                                        {
-                                            <li style=" list-style-type: none;" class="liTitle">
-                                                <a href="" onclick="runReport('@Url.Action("CongNoChiTietKH_Fill", "CongNoChiTiet")'
-                                                      )">3.Công Nợ Chi Tiết Của KH(PL5)</a>
-                                            </li>
-                                        }
-                                    </td>
-                                </tr>
-                                <tr style="height:30px">
-                                    <td style="text-align: left">
-                                        <li style=" list-style-type: none;" class="liTitle">
-                                            <a href="" onclick="runReport('@Url.Action("ThongBaoNoQH_Fill", "MauInChungTu")'
-                                                      )">4.Thông Báo Nợ QH</a>
-                                        </li>
-                                    </td>
-                                </tr>
-                                <tr style="height:30px">
-                                    <td style="text-align: left">
-                                        <li style=" list-style-type: none;" class="liTitle">
-                                            <a href="" onclick="runReport('@Url.Action("TonNo_Index", "MauInChungTu")'
-                                                      )">5.Sổ Chi Tiết Tồn Nợ Phải Thu</a>
-                                        </li>
-                                    </td>
-                                </tr>
-                                <tr style="height:30px">
-                                    <td style="text-align: left">
-                                        <li style=" list-style-type: none;" class="liTitle">
-                                            <a href="" onclick="runReport('@Url.Action("SoChiTietPhaiThu_Fill", "SoChiTietPhaiThu")'
-                                                      )">6.Sổ Chi Tiết Phải Thu Của Khách Hàng</a>
-                                        </li>
-                                    </td>
-                                </tr>
-                                <tr style="height:30px">
-                                    <td style="text-align: left">
-                                        <li style=" list-style-type: none;" class="liTitle">
-                                            <a href="" onclick="runReport('@Url.Action("CongNoChiTietKH_ETC_Fill", "CongNoChiTiet")'
-                                                      )">7.Công Nợ Chi Tiết Của KH ETC</a>
-                                        </li>
-                                    </td>
-                                </tr>
-                            </tbody>
-
-
-                        </table>
-                    </div>
-
-
-
-                </div>
-
-            </div>
-
-            @*<div class="home-content1" style="width:100%">
-                    <div class="overview-boxes" style="background-color:red">
-                        <div class="box" style="overflow:auto;width:400px;height:200px">
-                            <table style="width:500px;height:200px; border-collapse: collapse;overflow:scroll">
-
-                                <tr class="title">
-                                    <th colspan="4" class="top10" style="font-size:18px;padding:5px;height:50px">BÁO CÁO NGHIỆP VỤ</th>
-                                </tr>
-
-                                <tbody style="float:left">
-
-                                    <tr style="height:30px">
-                                        <td style="text-align: left"> <li style=" list-style-type: none;" class="liTitle"><a href="/bangkehoadon/bangkehoadon_Fill">1.Bảng Kê Chứng Từ SO</a></li></td>
-                                    </tr>
-                                    <tr style="height:30px">
-                                        <td style="text-align: left"> <li style=" list-style-type: none;" class="liTitle"><a href="/BaoCaobanHangCN/BaoCaoBanHangCN_Fill">2.Báo Cáo Bán Hàng CN</a></li></td>
-                                    </tr>
-                                    <tr style="height:30px">
-                                        <td style="text-align: left"> <li style=" list-style-type: none;" class="liTitle"><a href="/BaoCaoBanHangTDV/BaoCaoBanHangTDV_Fill">3.Báo Cáo Bán Hàng TDV</a></td>
-                                    </tr>
-                                    <tr style="height:30px">
-                                        <td style="text-align: left"> <li style=" list-style-type: none;" class="liTitle"><a href="/BaoCaoTienVeCN/BaoCaoTienVeCN_Fill">4.Báo Cáo Tiền Về CN</a></li></td>
-                                    </tr>
-                                    <tr style="height:30px">
-                                        <td style="text-align: left"> <li style=" list-style-type: none;" class="liTitle"><a href="/BaoCaoTienVeCN/BaoCaoTienVeTDV_Fill">5.Báo Cáo Tiền Về TDV</a></li></td>
-                                    </tr>
-                                    <tr style="height:30px">
-                                        <td style="text-align: left"> <li style=" list-style-type: none;" class="liTitle"><a href="/BaoCaoDoanhThuGamHangTheoDoiTuong/BaoCaoDoanhThuGamHangTheoDoiTuong_Fill">6.Báo Cáo Doanh Thu Gam Theo Đối Tượng</a></li></td>
-                                    </tr>
-                                </tbody>
-
-
-                            </table>
+                    <div class="box-2">
+                        <div>
+                            <h5 class="text">DOANH THU THÁNG HIỆN TẠI</h5>
+                            <h5 class="num">
+                                @foreach (DataRow row3 in Model.Tables[1].Rows)
+                                {
+                                    @row3["Tong_Doanh_Thu_Thang"]
+                                }
+                            </h5>
                         </div>
+                    </div>
+                </div>
+                <div class="box-row">
+                    <div class="box-3">
+                        <div>
+                            <h5 class="text">TỔNG ĐƠN HÀNG THÁNG HIỆN TẠI</h5>
+                            <h5 class="num">
+                                @foreach (DataRow row3 in Model.Tables[2].Rows)
+                                {
+                                    @row3["So_Luong_HD"]
+                                }
+                            </h5>
+                        </div>
+                    </div>
+                    <div class="box-4">
+                        <div>
+                            <h5 class="text">TỔNG GIÁ TRỊ TỒN KHO</h5>
+                            <h5 class="num">
+                                @foreach (DataRow row3 in Model.Tables[3].Rows)
+                                {
+                                    @row3["gia_tri_ton"]
+                                }
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row-chart-1">
+                <div class="percent-chart">
+                    <div class="top"><div class="pie"><h5>Tỷ lệ % so với kế hoạch</h5><canvas id="myPieChart2" style="width:100%;height:100%"></canvas></div></div>
+                    <div class="bottom"> <div class="pie"><h5>Tỷ lệ % so với kế hoạch</h5><canvas id="myPieChart" style="width:100%;height:100%"></canvas></div></div>
+                </div>
+                <div class="line-chart"><div id="combinedChartContainer" style="height: 100%;"></div></div>
 
 
 
@@ -799,7 +491,44 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
             </div>
 
         </div>
-        <div class="main" style="width:auto">
+    </section>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+    <script src="https://code.highcharts.com/highcharts-3d.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        function ChangPassword() {
+                                    // Điều hướng đến trang thay đổi mật khẩu
+                                    window.location.href = "/home/DoiMatKhau";
+                                }
+                                function runReport(actionUrl) {
+                                    var url = actionUrl;
+                                    var newWindow = window.open('', '_blank');
+                                    newWindow.location.href = url;
+                                }
+                                window.onload = function () {
+                                    var username = localStorage.getItem("username");
+                                    if (username) {
+                                        var nameInput = document.getElementById("Name");
+                                        if (nameInput) {
+                                            nameInput.value = username;
+                                        }
+                                        localStorage.removeItem("username");
+                                    }
+
+                                };
+    </script>
+    <script>
+        function logout() {
+            // Làm rỗng mảng tabArray
+            const tabArray = JSON.parse(localStorage.getItem("tabsArray")) || [];
+            tabArray.length = 0;
+            localStorage.setItem("tabsArray", JSON.stringify(tabArray));
 
             // Điều hướng đến trang đăng nhập
             window.location.href = "/home/login";
@@ -1001,7 +730,10 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                 name: 'Browser share',
                 innerSize: '50%',
                 data: [
-                    ['Đạt được', 70.00],
+                    ['Đạt được',  @foreach (DataRow row3 in Model.Tables[0].Rows)
+                                    {
+                                    @row3["Tong_Doanh_Thu_Nam"]
+                                    },
                     //['Edge', 11.97],
                     //['Firefox', 5.52],
                     //['Safari', 2.98],
