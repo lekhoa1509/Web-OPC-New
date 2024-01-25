@@ -309,6 +309,7 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
 
 
 
+
             </div>
             <div class="header-right">
                 <div class="welcome-txt">WELCOME BACK</div>
@@ -1156,8 +1157,10 @@ string.Equals(ViewBag.UserName, "opcmar001", StringComparison.OrdinalIgnoreCase)
                         format: '{value} M',
                         style: {
                             color: Highcharts.getOptions().colors[1]
-                        }
-                    }
+                        },
+                      
+                    },
+                      max: 300,
                 },
                 {
                     title: {
