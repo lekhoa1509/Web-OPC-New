@@ -112,40 +112,40 @@ namespace web4.Controllers
         }
         public ActionResult About1()
         {
-            var username = Request.Cookies["UserName"].Value;
-            ViewBag.Username = username;
+            //var username = Request.Cookies["UserName"].Value;
+            //ViewBag.Username = username;
 
-            string ma_dvcs = Request.Cookies["MA_DVCS"].Value;
-            DataSet ds = new DataSet();
-            connectSQL();
+            //string ma_dvcs = Request.Cookies["MA_DVCS"].Value;
+            //DataSet ds = new DataSet();
+            //connectSQL();
 
-            string Pname = "[usp_DartBoardDT_SAP]";
+            //string Pname = "[usp_DartBoardDT_SAP]";
 
-            using (SqlCommand cmd = new SqlCommand(Pname, con))
-            {
-                cmd.CommandTimeout = 950;
-                cmd.Connection = con;
-                cmd.CommandType = CommandType.StoredProcedure;
+            //using (SqlCommand cmd = new SqlCommand(Pname, con))
+            //{
+            //    cmd.CommandTimeout = 950;
+            //    cmd.Connection = con;
+            //    cmd.CommandType = CommandType.StoredProcedure;
 
-                con.Open();
-                DateTime firstDayOfMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-                string firstDayOfMonthFormatted = firstDayOfMonth.ToString("yyyyMMdd");
+            //    con.Open();
+            //    DateTime firstDayOfMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+            //    string firstDayOfMonthFormatted = firstDayOfMonth.ToString("yyyyMMdd");
 
-                DateTime currentDate = DateTime.Now;
-                string currentDateFormatted = currentDate.ToString("yyyyMMdd");
+            //    DateTime currentDate = DateTime.Now;
+            //    string currentDateFormatted = currentDate.ToString("yyyyMMdd");
 
-                using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
-                {
-                    cmd.Parameters.AddWithValue("@_Tu_Ngay", firstDayOfMonthFormatted);
-                    cmd.Parameters.AddWithValue("@_Den_Ngay", currentDateFormatted);
-                    cmd.Parameters.AddWithValue("@_ma_dvcs", ma_dvcs);
+            //    using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+            //    {
+            //        cmd.Parameters.AddWithValue("@_Tu_Ngay", firstDayOfMonthFormatted);
+            //        cmd.Parameters.AddWithValue("@_Den_Ngay", currentDateFormatted);
+            //        cmd.Parameters.AddWithValue("@_ma_dvcs", ma_dvcs);
 
-                    sda.Fill(ds);
-                }
+            //        sda.Fill(ds);
+            //    }
 
-                // Truyền DataSet tới View thông qua ViewBag
-                ViewBag.ChartData = ds;
-            }
+            //    // Truyền DataSet tới View thông qua ViewBag
+            //    ViewBag.ChartData = ds;
+            //}
 
             return View();
         }

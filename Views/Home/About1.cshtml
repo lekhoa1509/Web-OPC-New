@@ -698,14 +698,14 @@ var chartData = {
     }]
 };
 
-@foreach (DataRow row in ViewBag.ChartData.Tables[0].Rows)
+@*@foreach (DataRow row in ViewBag.ChartData.Tables[0].Rows)
 {
    <text>
         chartData.labels.push("Tháng @row["Thang"]");
         var doanhThu = parseFloat(@row["Tong_Doanh_Thu"]);
         chartData.datasets[0].data.push(doanhThu.toFixed(2));
     </text>
-}
+}*@
         Chart.register(ChartDataLabels);
 
         var lineChartCanvas = document.getElementById('lineChart').getContext('2d');
