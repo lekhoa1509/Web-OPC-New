@@ -1236,6 +1236,9 @@
     <Content Include="Views\SoChiTietPhaiTra\Index.cshtml" />
     <Content Include="Views\MauInChungTu\PhieuXacNhanTTTCK_In.cshtml" />
     <Content Include="Views\MauInChungTu\TonNo.cshtml" />
+    <Content Include="Views\SoQuyTienMat\SoQuyTienMat.cshtml" />
+    <Content Include="Views\SoQuyTienMat\SoQuyTienMat_Fill.cshtml" />
+    <Content Include="Views\SoQuyTienMat\SoQuyTienMat_In.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

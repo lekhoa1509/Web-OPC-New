@@ -110,8 +110,7 @@ namespace web4.Controllers
                                 TheoDoiGiaoHang dataItem = new TheoDoiGiaoHang
                                 {
                                     So_HD = row["so_ct"].ToString(),
-                                    Ngay_HD = Convert.ToDateTime(row["Ngay_Ct1"]),
-                                    
+                                    Ngay_HD = row["Ngay_Ct1"].ToString(),
                                     Ma_Dt = row["Ma_dt"].ToString(),
                                     Ten_Dt = row["Ten_Dt"].ToString(),
                                     Ma_NVGH = row["Ma_nvgh"].ToString(),
@@ -167,8 +166,7 @@ namespace web4.Controllers
                                 TheoDoiGiaoHang dataItem = new TheoDoiGiaoHang
                                 {
                                     So_HD = row["so_ct"].ToString(),
-                                    Ngay_HD = Convert.ToDateTime(row["Ngay_Ct1"]),
-
+                                    Ngay_HD = row["Ngay_Ct1"].ToString(),
                                     Ma_Dt = row["Ma_dt"].ToString(),
                                     Ten_Dt = row["Ten_Dt"].ToString(),
                                     Ma_NVGH = row["Ma_nvgh"].ToString(),
@@ -208,6 +206,8 @@ namespace web4.Controllers
             TDGH.Dvcs = Request.Cookies["MA_DVCS"] != null ? Request.Cookies["MA_DVCS"].Value : "";
             TDGH.Ma_NVGH = Request.Cookies["Ma_NVGH"] != null ? Request.Cookies["Ma_NVGH"].Value : "";
             TDGH.Ten_NVGH = Request.Cookies["Ten_NVGH"] != null ? Request.Cookies["Ten_NVGH"].Value : "";
+            TDGH.NV_GiaoNhan = Request.Cookies["NV_GiaoNhan"] != null ? Request.Cookies["NV_GiaoNhan"].Value : "";
+            TDGH.Ly_do = Request.Cookies["Ly_Do"] != null ? Request.Cookies["Ly_Do"].Value : "";
 
 
             string result = "Error!";
@@ -243,7 +243,7 @@ namespace web4.Controllers
                             command.Parameters.AddWithValue("@_so_Ct", TDGH.So_Ct);
                             command.Parameters.AddWithValue("@_NV_GiaoHang", TDGH.Ma_NVGH);
                             command.Parameters.AddWithValue("@_Ten_NVGiaoHang", TDGH.Ten_NVGH);
-
+                            command.Parameters.AddWithValue("@_Ten_NVPhuKho", TDGH.NV_GiaoNhan);
                             command.Parameters.AddWithValue("@_Dvcs", TDGH.Dvcs);
                             command.Parameters.AddWithValue("@_Ly_Do", TDGH.Ly_do);
 
@@ -339,6 +339,7 @@ namespace web4.Controllers
 
             string Pname = "[EditTheoDoiGiaoHang]";
             string Stt = Request.QueryString["STT"];
+          
             using (SqlCommand cmd = new SqlCommand(Pname, con))
             {
                 cmd.CommandTimeout = 950;
@@ -361,12 +362,14 @@ namespace web4.Controllers
         }
         public ActionResult SaveUpdate(TheoDoiGiaoHang TDGH)
         {
+
+
+
             TDGH.Dvcs = Request.Cookies["MA_DVCS"] != null ? Request.Cookies["MA_DVCS"].Value : "";
             TDGH.Ma_NVGH = Request.Cookies["Ma_NVGH"] != null ? Request.Cookies["Ma_NVGH"].Value : "";
             TDGH.Ten_NVGH = Request.Cookies["Ten_NVGH"] != null ? Request.Cookies["Ten_NVGH"].Value : "";
-
-            string Stt = Request.QueryString["STT"];
-
+            TDGH.NV_GiaoNhan = Request.Cookies["NV_GiaoNhan"] != null ? Request.Cookies["NV_GiaoNhan"].Value : "";
+            TDGH.Ly_do = Request.Cookies["Ly_Do"] != null ? Request.Cookies["Ly_Do"].Value : "";
             string result = "Error!";
             connectSQL();
             if (TDGH != null && TDGH.Details != null)
@@ -397,10 +400,11 @@ namespace web4.Controllers
                             command.CommandType = CommandType.StoredProcedure;
 
                             command.Parameters.AddWithValue("@_Ngay_Ct", TDGH.Ngay_Ct);
-                          
                             command.Parameters.AddWithValue("@_NV_GiaoHang", TDGH.Ma_NVGH);
                             command.Parameters.AddWithValue("@_Ten_NVGiaoHang", TDGH.Ten_NVGH);
-                            command.Parameters.AddWithValue("@_Stt", Stt);
+                            command.Parameters.AddWithValue("@_Ten_NVPhuKho", TDGH.NV_GiaoNhan);
+                            command.Parameters.AddWithValue("@_Ly_Do", TDGH.Ly_do);
+                            command.Parameters.AddWithValue("@_Stt", TDGH.Stt);
 
 
                             // Pass details as a TVP parameter
@@ -425,42 +429,7 @@ namespace web4.Controllers
         }
 
 
-        public ActionResult ExportToExcel()
-        {
-            // Đường dẫn đến file mẫu Excel
-            var templatePath = Server.MapPath("~/PathToYourTemplate/template.xlsx");
-            FileInfo fileInfo = new FileInfo(templatePath);
-
-            using (var package = new ExcelPackage(fileInfo))
-            {
-                // Chỉ định worksheet
-                var worksheet = package.Workbook.Worksheets["Sheet1"]; // Hoặc tên sheet mẫu của bạn
-
-                // Lấy dữ liệu từ database
-                var dataItems = LoadHD();
-
-                // Bắt đầu điền dữ liệu từ hàng nào đó, giả sử hàng thứ 10
-                int row = 10;
-                foreach (var item in dataItems)
-                {
-                    worksheet.Cells[row, 1].Value = item.So_HD;
-                    worksheet.Cells[row, 2].Value = item.Ngay_HD.ToString("dd/MM/yyyy");
-                    worksheet.Cells[row, 3].Value = item.Ten_Dt;
-                    worksheet.Cells[row, 4].Value = item.Tien_HD;
-                    // Điền tiếp các cột khác nếu cần
-                    row++;
-                }
-
-                // Tự động điều chỉnh kích thước các cột
-                worksheet.Cells[worksheet.Dimension.Address].AutoFitColumns();
-
-                // Lưu vào luồng và trả về file để tải về
-                var stream = new MemoryStream();
-                package.SaveAs(stream);
-                stream.Position = 0;
-
-                return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "TheoDoiGiaoHang.xlsx");
-            }
-        }
+       
+        
     }
 }

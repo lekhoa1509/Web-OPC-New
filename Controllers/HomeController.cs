@@ -76,8 +76,8 @@ namespace web4.Controllers
         }
         public ActionResult About(Account Acc)
         {
-            var username = Request.Cookies["UserName"].Value;
-            ViewBag.Username = username;
+            //var username = Request.Cookies["UserName"].Value;
+            //ViewBag.Username = username;
 
             string ma_dvcs = Request.Cookies["MA_DVCS"].Value;
             DataSet ds = new DataSet();
@@ -105,7 +105,7 @@ namespace web4.Controllers
                 // Truyền DataSet tới View thông qua ViewBag
                 ViewBag.ChartData = ds;
             }
-            ViewBag.Username = username;
+            //ViewBag.Username = username;
 
             return View(ds);
             

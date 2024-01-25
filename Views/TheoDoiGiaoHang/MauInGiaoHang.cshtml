@@ -97,9 +97,15 @@
             }
         </div>
         <div>
-            Người giao hàng:  @foreach (DataRow row2 in Model.Tables[1].Rows)
+            Trình Dược Viên:  @foreach (DataRow row2 in Model.Tables[0].Rows)
             {
-                @row2["NV_GiaoNhan"];
+                @row2["Ten_NVGiaoHang"];
+            }
+        </div>
+        <div>
+           Nhân Viên Giao Nhận:  @foreach (DataRow row2 in Model.Tables[0].Rows)
+            {
+                @row2["Ten_NVPhuKho"];
             }
         </div>
 
@@ -176,14 +182,10 @@
                 <p class="text-center signature-line">(Ký và ghi rõ họ tên)</p>
             </div>
         </div>
-        <button id="exportToExcel">Xuất ra Excel</button>
+       
 
     </div>
-    <script>
-document.getElementById("exportToExcel").addEventListener("click", function() {
-    window.location.href = '/TheoDoiGiaoHang/ExportToExcel'; // Đường dẫn đến action trong controller của bạn
-});
-    </script>
+    
 
 </body>
 </html>
