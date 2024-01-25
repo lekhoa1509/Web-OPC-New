@@ -526,22 +526,25 @@
                         </tr>
                     </thead>
                     <tbody>
-
+                        @{
+                            var stt = 1;}
                         @foreach (DataRow row3 in Model.Tables[1].Rows)
                         {
+
                             <tr class="table2-data hidden-row" data-soct="@row3["Ma_Dt"]">
 
-                                <td style="text-align:center;">@row3["STT"]</td>
+                                <td style="text-align:center;">@stt</td>
                                 <td style="text-align:center;">@row3["So_Ct"]</td>
                                 <td style="text-align:center;">@row3["Ngay_Ct1"]</td>
-                                <td class="num" style="text-align:right">@row3["Tong_No"]</td>
+                                <td class="num" style="text-align:right;padding-right:5px">@row3["Tong_No"]</td>
                                 <td style="text-align:center;">@row3["Han_Thanh_Toan"] </td>
                                 <td class="num" style="text-align:center">@row3["So_Ngay_Qua_Han"]</td>
                             </tr>
+                            stt++;
                         }
                         <tr>
                             <td colspan="3" style="font-weight:bold;color:black;text-align:center">Tổng cộng</td>
-                            <td class="num" style="text-align:right;font-weight:bold;">
+                            <td class="num" style="text-align:right;font-weight:bold;padding-right:5px">
                                 @foreach (DataRow row3 in Model.Tables[2].Rows)
                                 {
                                     @row3["Tong_No2"]
