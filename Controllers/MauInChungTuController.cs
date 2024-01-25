@@ -1053,88 +1053,88 @@ namespace web4.Controllers
                     //// Xóa ô hoặc thực hiện các thao tác khác
                     //worksheet.Cells["A21:B22"].Clear();
 
-                    //if (combinedDataHD != null && combinedDataHD.Any())
-                    //{
-                    //// Lặp qua từng hàng dữ liệu trong tableData và ghi vào tệp Excel
-                    //var stt = 1;
-                    //    for (int row = 0; row < combinedDataHD.Count; row++)
-                    //    {
-                    //    var rowData = combinedDataHD[row];
-                    //    //worksheet.Cells[startRowIII + row+3, startColumn].Value = stt;
-                    //    var sttCell2 = worksheet.Cells[startRowIII + row + 3, startColumn, startRowIII + row + 3, startColumn + 1];
-                    //    sttCell2.Merge = true;
-                    //    sttCell2.Value = stt;
-                    //    FormatCellNoQH(sttCell2);
+                    if (combinedDataHD != null && combinedDataHD.Any())
+                    {
+                    // Lặp qua từng hàng dữ liệu trong tableData và ghi vào tệp Excel
+                    var stt = 1;
+                        for (int row = 0; row < combinedDataHD.Count; row++)
+                        {
+                        var rowData = combinedDataHD[row];
+                        //worksheet.Cells[startRowIII + row+3, startColumn].Value = stt;
+                        var sttCell2 = worksheet.Cells[startRowIII + row + 3, startColumn, startRowIII + row + 3, startColumn + 1];
+                        sttCell2.Merge = true;
+                        sttCell2.Value = stt;
+                        FormatCellNoQH(sttCell2);
 
 
-                    //    var soCell = worksheet.Cells[startRowIII + row + 3, startColumn + 2, startRowIII + row + 3, startColumn + 3];
-                    //    soCell.Merge = true;
-                    //    soCell.Value = rowData.So;
-                    //    FormatCellNoQH(soCell);
-                    //    //worksheet.Cells[startRowIII + row + 3, startColumn+1].Value = rowData.So;
-                    //    //FormatCellNoQH(worksheet.Cells[startRowIII + row + 3, startColumn+1]);
+                        var soCell = worksheet.Cells[startRowIII + row + 3, startColumn + 2, startRowIII + row + 3, startColumn + 3];
+                        soCell.Merge = true;
+                        soCell.Value = rowData.So;
+                        FormatCellNoQH(soCell);
+                        //worksheet.Cells[startRowIII + row + 3, startColumn+1].Value = rowData.So;
+                        //FormatCellNoQH(worksheet.Cells[startRowIII + row + 3, startColumn+1]);
 
-                    //    var ngayCell = worksheet.Cells[startRowIII + row + 3, startColumn + 4, startRowIII + row + 3, startColumn + 5];
-                    //    ngayCell.Merge = true;
-                    //    ngayCell.Value = rowData.Ngay;
-                    //    FormatCellNoQH(ngayCell);
+                        var ngayCell = worksheet.Cells[startRowIII + row + 3, startColumn + 4, startRowIII + row + 3, startColumn + 5];
+                        ngayCell.Merge = true;
+                        ngayCell.Value = rowData.Ngay;
+                        FormatCellNoQH(ngayCell);
 
-                    //    var tienhdCell = worksheet.Cells[startRowIII + row + 3, startColumn + 6];
-                    //    //tienhdCell.Merge = true;
-                    //    tienhdCell.Value = rowData.TienHD;
-                    //    worksheet.Column(startColumn + 6).Width = 30;
-                    //    FormatCellNoQH(tienhdCell);
-                    //    tienhdCell.Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                        var tienhdCell = worksheet.Cells[startRowIII + row + 3, startColumn + 6];
+                        //tienhdCell.Merge = true;
+                        tienhdCell.Value = rowData.TienHD;
+                        worksheet.Column(startColumn + 6).Width = 30;
+                        FormatCellNoQH(tienhdCell);
+                        tienhdCell.Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
 
-                    //    //worksheet.Cells[startRowIII + row + 3, startColumn + 2].Value = rowData.Ngay;
-                    //    //FormatCellNoQH(worksheet.Cells[startRowIII + row + 3, startColumn+2]);
-                    //    //worksheet.Cells[startRowIII + row + 3, startColumn + 3].Value = rowData.TienHD;
-                    //    //FormatCellNoQH(worksheet.Cells[startRowIII + row + 3, startColumn+3]);
+                        //worksheet.Cells[startRowIII + row + 3, startColumn + 2].Value = rowData.Ngay;
+                        //FormatCellNoQH(worksheet.Cells[startRowIII + row + 3, startColumn+2]);
+                        //worksheet.Cells[startRowIII + row + 3, startColumn + 3].Value = rowData.TienHD;
+                        //FormatCellNoQH(worksheet.Cells[startRowIII + row + 3, startColumn+3]);
 
-                    //    var ghichu = worksheet.Cells[startRowIII + row + 3, startColumn + 7, startRowIII + row + 3, startColumn + 8];
-                    //    ghichu.Merge = true;
-                    //    ghichu.Value = rowData.GhiChu;
-                    //    FormatCellNoQH(ghichu);
-                    //    //worksheet.Cells[startRowIII + row + 3, startColumn + 4].Value = rowData.GhiChu;
-                    //    //FormatCellNoQH(worksheet.Cells[startRowIII + row + 3, startColumn + 4]);
-                    //    //var sttCell = worksheet.Cells[startRow + 3 + row, startColumn, startRow + 3 + row, startColumn + 1];
-                    //    //sttCell.Merge = true;
-                    //    //sttCell.Value = stt;
-                    //    //FormatCellNoQH(sttCell);
+                        var ghichu = worksheet.Cells[startRowIII + row + 3, startColumn + 7, startRowIII + row + 3, startColumn + 8];
+                        ghichu.Merge = true;
+                        ghichu.Value = rowData.GhiChu;
+                        FormatCellNoQH(ghichu);
+                        //worksheet.Cells[startRowIII + row + 3, startColumn + 4].Value = rowData.GhiChu;
+                        //FormatCellNoQH(worksheet.Cells[startRowIII + row + 3, startColumn + 4]);
+                        //var sttCell = worksheet.Cells[startRow + 3 + row, startColumn, startRow + 3 + row, startColumn + 1];
+                        //sttCell.Merge = true;
+                        //sttCell.Value = stt;
+                        //FormatCellNoQH(sttCell);
 
-                    //    //var soCell = worksheet.Cells[startRow + 3 + row, startColumn + 2, startRow + 3 + row, startColumn + 3];
-                    //    //soCell.Merge = true;
-                    //    //soCell.Value = rowData.So;
-                    //    //FormatCellNoQH(soCell);
+                        //var soCell = worksheet.Cells[startRow + 3 + row, startColumn + 2, startRow + 3 + row, startColumn + 3];
+                        //soCell.Merge = true;
+                        //soCell.Value = rowData.So;
+                        //FormatCellNoQH(soCell);
 
-                    //    //var ngayCell = worksheet.Cells[startRow + 3 + row, startColumn + 4, startRow + 3 + row, startColumn + 5];
-                    //    //ngayCell.Merge = true;
-                    //    //ngayCell.Value = rowData.Ngay;
-                    //    //FormatCellNoQH(ngayCell);
+                        //var ngayCell = worksheet.Cells[startRow + 3 + row, startColumn + 4, startRow + 3 + row, startColumn + 5];
+                        //ngayCell.Merge = true;
+                        //ngayCell.Value = rowData.Ngay;
+                        //FormatCellNoQH(ngayCell);
 
-                    //    //var tienhdCell = worksheet.Cells[startRow + 3 + row, startColumn + 6];
-                    //    ////tienhdCell.Merge = true;
-                    //    //tienhdCell.Value = rowData.TienHD;
-                    //    //worksheet.Column(startColumn + 6).Width = 30;
-                    //    //FormatCellNoQH(tienhdCell);
-                    //    //tienhdCell.Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                        //var tienhdCell = worksheet.Cells[startRow + 3 + row, startColumn + 6];
+                        ////tienhdCell.Merge = true;
+                        //tienhdCell.Value = rowData.TienHD;
+                        //worksheet.Column(startColumn + 6).Width = 30;
+                        //FormatCellNoQH(tienhdCell);
+                        //tienhdCell.Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
 
-                    //    //var codekm = worksheet.Cells[startRow + 3 + row, startColumn + 7, startRow + 3 + row, startColumn + 8];
-                    //    //codekm.Merge = true;
+                        //var codekm = worksheet.Cells[startRow + 3 + row, startColumn + 7, startRow + 3 + row, startColumn + 8];
+                        //codekm.Merge = true;
 
-                    //    //FormatCellNoQH(codekm);
+                        //FormatCellNoQH(codekm);
 
-                    //    //var ghichu = worksheet.Cells[startRow + 3 + row, startColumn + 9, startRow + 3 + row, startColumn + 10];
-                    //    //ghichu.Merge = true;
-                    //    //ghichu.Value = rowData.GhiChu;
-                    //    //FormatCellNoQH(ghichu);
-                    //    stt++;
-                    //}
-                    //}
-                    //else
-                    //{
-                    //    worksheet.Cells[startRowIII, startColumn].Value = "Không có dữ liệu bảng từ cookie.";
-                    //}
+                        //var ghichu = worksheet.Cells[startRow + 3 + row, startColumn + 9, startRow + 3 + row, startColumn + 10];
+                        //ghichu.Merge = true;
+                        //ghichu.Value = rowData.GhiChu;
+                        //FormatCellNoQH(ghichu);
+                        stt++;
+                    }
+                    }
+                    else
+                    {
+                        worksheet.Cells[startRowIII, startColumn].Value = "Không có dữ liệu bảng từ cookie.";
+                    }
                     var TC2 = worksheet.Cells[startRowIII  +2+ combinedDataHD.Count+1, startColumn, startRowIII+2  + combinedDataHD.Count+1, startColumn + 5];
                     TC2.Merge = true;
                     TC2.Value = "Tổng cộng: ";
