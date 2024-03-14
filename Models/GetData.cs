@@ -29,10 +29,25 @@ namespace web4.Models
         public decimal TienNo { get; set; }
         public string HanTT { get; set; }
         public int NgayQH { get; set; }
-        //Mau Doi Chieu Cong No
+        //Mau Doi Chieu Cong No - Doi Chieu Doanh Thu Cong No
          public string So { get; set; }
         public string Ngay { get; set; }
         public decimal TienHD { get; set; }
+        public string So1 { get; set; }
+        public string Ngay1 { get; set; }
+        public string SoTien { get; set; }
+        public string So2 { get; set; }
+        public string Ngay2 { get; set; }
+        public decimal SoTien2 { get; set; }
+        public string CKTT { get; set; }
+        public string TongTien { get; set; }
+       public string GhiChu1 { get; set; }
+
+
+        public string So3 { get; set; }
+        public string Ngay3 { get; set; }
+        public decimal TienHD2 { get; set; }
+        public string GhiChu2 { get; set; }
 
     }
 }

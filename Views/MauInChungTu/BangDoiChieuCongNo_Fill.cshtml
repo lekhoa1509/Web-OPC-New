@@ -708,11 +708,13 @@
             // Get values from date inputs
             var fromDate = document.getElementById('tu_ngay').value;
             var toDate = document.getElementById('den_ngay').value;
-
+            var ngayTT = document.getElementById("Ngay_TT").value;
+            var ngayKy = document.getElementById("Ngay_Ky").value;
             // Save values in cookies 
             document.cookie = 'From_date=' + fromDate + '; path=/';
             document.cookie = 'To_date=' + toDate + '; path=/';
-
+            document.cookie = "Ngay_Ky=" + ngayKy;
+            document.cookie = "Ngay_TT=" + ngayTT;
             const spanElement = document.getElementById("spanText");
             spanElement.style.display = "block";
         }
