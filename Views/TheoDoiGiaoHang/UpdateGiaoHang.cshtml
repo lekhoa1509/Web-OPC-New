@@ -479,16 +479,18 @@
             var soCt = document.getElementById('So_Ct').value;
             var maNVGH = document.getElementById('dropdownInput').value;
             var tenNVGH = document.getElementById('selectedOption').value;
+            var TenGH = document.getElementById('Ten_NVPhuKho').value;
+
 
             // Set the cookie for Ma_NVGH
             setCookie('Ma_NVGH', maNVGH, 7);
             setCookie('Ten_NVGH', tenNVGH, 7);// The cookie will expire in 7 days
-
+            setCookie('Ten_NVPhuKho', Ten_NVPhuKho, 7);
             var queryParams = 'Ngay_Ct=' + encodeURIComponent(ngayCt) +
                 '&So_Ct=' + encodeURIComponent(soCt) +
                 '&Ma_NVGH=' + encodeURIComponent(maNVGH) +
                 '&Ten_NVGH=' + encodeURIComponent(tenNVGH);
-
+            '&Ten_NVPhuKho=' + encodeURIComponent(TenGH);
             // Redirect or submit form after a short delay
             setTimeout(function () {
                 window.location.href = 'InsetGiaoHangLoadHD?' + queryParams;
@@ -500,21 +502,23 @@
 
 
     <script>
-        //function getParameterByName(name, url = window.location.href) {
-        //    name = name.replace(/[\[\]]/g, '\\$&');
-        //    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-        //        results = regex.exec(url);
-        //    if (!results) return null;
-        //    if (!results[2]) return '';
-        //    return decodeURIComponent(results[2].replace(/\+/g, ' '));
-        //}
+        function getParameterByName(name, url = window.location.href) {
+            name = name.replace(/[\[\]]/g, '\\$&');
+            var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
 
-        //document.addEventListener('DOMContentLoaded', (event) => {
-        //    document.getElementById('Ngay_Ct').value = getParameterByName('Ngay_Ct');
-        //    document.getElementById('So_Ct').value = getParameterByName('So_Ct');
-        //    document.getElementById('dropdownInput').value = getParameterByName('Ma_NVGH');
-        //    document.getElementById('selectedOption').value = getParameterByName('Ten_NVGH');
-        //});
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.getElementById('Ngay_Ct').value = getParameterByName('Ngay_Ct');
+            document.getElementById('So_Ct').value = getParameterByName('So_Ct');
+            document.getElementById('dropdownInput').value = getParameterByName('Ma_NVGH');
+            document.getElementById('selectedOption').value = getParameterByName('Ten_NVGH');
+            document.getElementById('Ten_NVPhuKho').value = getParameterByName('Ten_NVPhuKho');
+
+        });
     </script>
 
 
